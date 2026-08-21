@@ -244,20 +244,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Back to top');
       btn.textContent = '↑';
-      // Hide immediately (inline) so it never flashes before styles.css loads
       btn.style.cssText = 'position:fixed;right:22px;bottom:22px;z-index:9999;width:48px;height:48px;border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:22px;line-height:1;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);box-shadow:0 12px 28px -10px rgba(196,46,139,.55);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px)';
       document.body.appendChild(btn);
       var lastY = pbScrollY();
       var goingDown = false;
-      var ready = false;
-      function shouldShow() {
-        if (!ready) return false;
-        if (pbScrollY() < 120) return false;
-        var hero = document.querySelector('.hero-grid');
-        if (hero && hero.getBoundingClientRect().bottom > 140) return false;
+      var scrollTimer = null;
+      function pastCreations() {
         var el = document.getElementById('creations');
         if (!el) return false;
-        return el.getBoundingClientRect().top <= 100;
+        // "What our users have created" has reached under the fixed nav
+        return el.getBoundingClientRect().top <= 110;
       }
       function setVisible(on) {
         if (on) {
@@ -279,23 +275,30 @@ document.addEventListener('DOMContentLoaded', async function() {
         var delta = y - lastY;
         if (Math.abs(delta) > 4) goingDown = delta > 0;
         lastY = y;
-        setVisible(shouldShow() && !goingDown);
+        var onSection = pastCreations();
+        if (!onSection) {
+          setVisible(false);
+        } else if (goingDown) {
+          setVisible(false);
+        } else {
+          setVisible(true);
+        }
+        // After scroll stops, show again if we're on/past creations
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function () {
+          goingDown = false;
+          setVisible(pastCreations());
+        }, 140);
       }
-      // Wait a tick for layout so hero/creations rects are real (avoids false show)
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          ready = true;
-          sync();
-        });
-      });
+      setVisible(false);
       window.addEventListener('scroll', sync, { passive: true });
       document.addEventListener('scroll', sync, { passive: true });
-      setVisible(false);
       btn.addEventListener('click', function () {
         var startY = pbScrollY();
         if (startY < 8) return;
         goingDown = false;
         setVisible(false);
+        clearTimeout(scrollTimer);
         var tok = ++pbScrollTok;
         var t0 = performance.now();
         var dur = 550;
