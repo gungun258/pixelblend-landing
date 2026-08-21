@@ -246,13 +246,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.textContent = '↑';
       btn.style.cssText = 'position:fixed;right:22px;bottom:22px;z-index:9999;width:48px;height:48px;border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:22px;line-height:1;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);box-shadow:0 12px 28px -10px rgba(196,46,139,.55);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px)';
       document.body.appendChild(btn);
-      var lastY = pbScrollY();
-      var goingDown = false;
-      var scrollTimer = null;
-      function pastCreations() {
+      function inArrowRange() {
+        // Visible from "What our users have created" all the way through footer
         var el = document.getElementById('creations');
         if (!el) return false;
-        // "What our users have created" has reached under the fixed nav
         return el.getBoundingClientRect().top <= 110;
       }
       function setVisible(on) {
@@ -271,24 +268,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       }
       function sync() {
-        var y = pbScrollY();
-        var delta = y - lastY;
-        if (Math.abs(delta) > 4) goingDown = delta > 0;
-        lastY = y;
-        var onSection = pastCreations();
-        if (!onSection) {
-          setVisible(false);
-        } else if (goingDown) {
-          setVisible(false);
-        } else {
-          setVisible(true);
-        }
-        // After scroll stops, show again if we're on/past creations
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(function () {
-          goingDown = false;
-          setVisible(pastCreations());
-        }, 140);
+        setVisible(inArrowRange());
       }
       setVisible(false);
       window.addEventListener('scroll', sync, { passive: true });
@@ -296,9 +276,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.addEventListener('click', function () {
         var startY = pbScrollY();
         if (startY < 8) return;
-        goingDown = false;
         setVisible(false);
-        clearTimeout(scrollTimer);
         var tok = ++pbScrollTok;
         var t0 = performance.now();
         var dur = 550;
@@ -309,6 +287,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           var ease = 1 - Math.pow(1 - p, 3);
           pbSetY(startY * (1 - ease));
           if (p < 1) requestAnimationFrame(tick);
+          else sync();
         }
         requestAnimationFrame(tick);
       });
