@@ -277,5 +277,16 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   line-height: 1 !important;
   background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) !important;
   box-shadow: 0 12px 28px -10px rgba(196, 46, 139, 0.55);
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(8px);
+  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+#pb-to-top.pb-on {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: none;
 }
 #pb-to-top:hover { filter: brightness(1.05); }

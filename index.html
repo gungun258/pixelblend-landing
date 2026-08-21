@@ -244,33 +244,29 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Back to top');
       btn.textContent = '↑';
-      btn.style.cssText = 'position:fixed;right:22px;bottom:22px;z-index:9999;width:48px;height:48px;border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:22px;line-height:1;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);box-shadow:0 12px 28px -10px rgba(196,46,139,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease';
       document.body.appendChild(btn);
       var lastY = pbScrollY();
       var goingDown = false;
-      function pastCreations() {
+      function shouldShow() {
+        // Never on hero / very top
+        if (pbScrollY() < 120) return false;
+        var hero = document.querySelector('.hero-grid');
+        if (hero && hero.getBoundingClientRect().bottom > 140) return false;
         var el = document.getElementById('creations');
-        if (!el) return pbScrollY() > 900;
-        // Show once the creations gallery reaches near the top (under fixed nav)
-        return el.getBoundingClientRect().top <= 96;
+        if (!el) return false;
+        // Start showing once "What our users have created" reaches under the nav
+        return el.getBoundingClientRect().top <= 100;
       }
       function setVisible(on) {
-        if (on) {
-          btn.style.opacity = '1';
-          btn.style.pointerEvents = 'auto';
-          btn.style.transform = 'none';
-        } else {
-          btn.style.opacity = '0';
-          btn.style.pointerEvents = 'none';
-          btn.style.transform = 'translateY(8px)';
-        }
+        if (on) btn.classList.add('pb-on');
+        else btn.classList.remove('pb-on');
       }
       function sync() {
         var y = pbScrollY();
         var delta = y - lastY;
         if (Math.abs(delta) > 4) goingDown = delta > 0;
         lastY = y;
-        setVisible(pastCreations() && !goingDown);
+        setVisible(shouldShow() && !goingDown);
       }
       window.addEventListener('scroll', sync, { passive: true });
       document.addEventListener('scroll', sync, { passive: true });
