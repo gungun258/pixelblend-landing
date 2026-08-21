@@ -248,10 +248,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       document.body.appendChild(btn);
       var lastY = pbScrollY();
       var goingDown = false;
-      function pastHero() {
-        var h = document.querySelector('header');
-        if (!h) return pbScrollY() > 480;
-        return h.getBoundingClientRect().bottom < 80;
+      function pastCreations() {
+        var el = document.getElementById('creations');
+        if (!el) return pbScrollY() > 900;
+        // Show once the creations gallery reaches near the top (under fixed nav)
+        return el.getBoundingClientRect().top <= 96;
       }
       function setVisible(on) {
         if (on) {
@@ -269,8 +270,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var delta = y - lastY;
         if (Math.abs(delta) > 4) goingDown = delta > 0;
         lastY = y;
-        // Hide while scrolling down; show only when scrolling up past hero
-        setVisible(pastHero() && !goingDown);
+        setVisible(pastCreations() && !goingDown);
       }
       window.addEventListener('scroll', sync, { passive: true });
       document.addEventListener('scroll', sync, { passive: true });
@@ -294,7 +294,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         requestAnimationFrame(tick);
       });
     })();
-
   } catch (err) {
     setStatus('Error unpacking: ' + err.message);
     console.error('Bundle unpack error:', err);
