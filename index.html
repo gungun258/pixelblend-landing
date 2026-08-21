@@ -246,13 +246,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       btn.textContent = '↑';
       btn.style.cssText = 'position:fixed;right:22px;bottom:22px;z-index:9999;width:48px;height:48px;border:none;border-radius:50%;cursor:pointer;color:#fff;font-size:22px;line-height:1;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);box-shadow:0 12px 28px -10px rgba(196,46,139,.55);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease';
       document.body.appendChild(btn);
+      var lastY = pbScrollY();
+      var goingDown = false;
       function pastHero() {
         var h = document.querySelector('header');
         if (!h) return pbScrollY() > 480;
         return h.getBoundingClientRect().bottom < 80;
       }
-      function sync() {
-        if (pastHero()) {
+      function setVisible(on) {
+        if (on) {
           btn.style.opacity = '1';
           btn.style.pointerEvents = 'auto';
           btn.style.transform = 'none';
@@ -262,12 +264,22 @@ document.addEventListener('DOMContentLoaded', async function() {
           btn.style.transform = 'translateY(8px)';
         }
       }
+      function sync() {
+        var y = pbScrollY();
+        var delta = y - lastY;
+        if (Math.abs(delta) > 4) goingDown = delta > 0;
+        lastY = y;
+        // Hide while scrolling down; show only when scrolling up past hero
+        setVisible(pastHero() && !goingDown);
+      }
       window.addEventListener('scroll', sync, { passive: true });
       document.addEventListener('scroll', sync, { passive: true });
       sync();
       btn.addEventListener('click', function () {
         var startY = pbScrollY();
         if (startY < 8) return;
+        goingDown = false;
+        setVisible(false);
         var tok = ++pbScrollTok;
         var t0 = performance.now();
         var dur = 550;
