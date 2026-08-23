@@ -129,7 +129,7 @@
     .nav-burger { display: inline-flex !important; }
     .hero-grid, .anywhere-grid, .how-grid, .ba-grid, .vs-grid, .sellers-grid, .ref-grid, .dl-grid, .wear-grid { grid-template-columns: 1fr !important; }
     .hero-grid, .anywhere-grid, .ba-grid, .vs-grid, .sellers-grid, .dl-grid, .wear-grid { gap: 30px !important; }
-    .hero-grid h1 { font-size: 48px !important; }
+    .hero-grid h1 { font-size: 56px !important; }
 
     /* two-ways stacks; OR separator goes horizontal */
     .twoway-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
@@ -143,7 +143,17 @@
     /* How It Works: cap width + tame image height so it isn't image-heavy */
     .how-grid { grid-template-columns: 1fr !important; max-width: 560px !important; margin-left: auto !important; margin-right: auto !important; gap: 12px !important; }
     .how-grid > div > div:first-child { height: 208px !important; }
-    .how-op span { width: 50px !important; height: 50px !important; font-size: 30px !important; }
+    .how-op > span { width: 50px !important; height: 50px !important; font-size: 30px !important; }
+    .ba-grid > div:last-child { text-align: center !important; }
+    .ba-grid { margin-bottom: 24px !important; }
+    #marketplace > div:first-child {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+    }
+    #marketplace > div:first-child > div {
+      max-width: 100% !important;
+    }
   }
 
   /* ============ MOBILE ============ */
@@ -168,6 +178,39 @@
     .uc-stage { gap: 5px !important; }
     .uc-arrow { width: 36px !important; }
 
+    #video div[style*="cursor: pointer"] {
+      padding-top: 0 !important;
+      height: 230px !important;
+    }
+    #video div[style*="cursor: pointer"] > div {
+      gap: 10px !important;
+    }
+    #video div[style*="cursor: pointer"] > div > span:first-child {
+      width: 52px !important;
+      height: 52px !important;
+    }
+    #video div[style*="cursor: pointer"] > div > span:first-child span {
+      font-size: 18px !important;
+      margin-left: 3px !important;
+    }
+    #video div[style*="cursor: pointer"] > div > div > div:first-child {
+      font-size: 16px !important;
+      line-height: 1.25 !important;
+      padding: 0 16px !important;
+    }
+    #video div[style*="cursor: pointer"] > div > div > div:last-child {
+      font-size: 12px !important;
+      margin-top: 2px !important;
+    }
+    #video div[style*="cursor: pointer"] > span:last-child {
+      left: 12px !important;
+      bottom: 12px !important;
+      padding: 5px 10px !important;
+      font-size: 11px !important;
+    }
+    .wear-grid > div:last-child {
+      grid-template-columns: 1fr !important;
+    }
     .market-grid, .usecase-grid, .cat-grid, .testi-grid {
       margin-left: -22px !important;
       margin-right: -22px !important;
@@ -233,7 +276,7 @@ img, video, canvas { max-width: 100%; }
 h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 
 @media (max-width: 640px) {
-  h1, .hero-grid h1 { font-size: 32px !important; line-height: 1.12 !important; }
+  h1, .hero-grid h1 { font-size: 44px !important; line-height: 1.1 !important; }
   h2 { font-size: 26px !important; }
   #hero-cta { flex-direction: column !important; align-items: stretch !important; }
   #hero-cta a { justify-content: center !important; width: 100%; box-sizing: border-box; }
@@ -243,9 +286,9 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 }
 
 @media (max-width: 430px) {
-  h1, .hero-grid h1 { font-size: 28px !important; }
-  h2 { font-size: 24px !important; }
-  h3 { font-size: 19px !important; }
+  h1, .hero-grid h1 { font-size: 38px !important; }
+  h2 { font-size: 26px !important; }
+  h3 { font-size: 20px !important; }
   section, header { padding-left: 16px !important; padding-right: 16px !important; }
   .respad { padding: 22px 16px !important; }
   .stat-strip { grid-template-columns: 1fr 1fr !important; }
@@ -254,10 +297,29 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
     margin-left: -16px !important; margin-right: -16px !important;
     padding-left: 16px !important; padding-right: 16px !important;
   }
+  .twoway-grid > div > div:not([style*="position: absolute"]) {
+    gap: 6px !important;
+  }
+  .twoway-grid > div > div > span:first-child {
+    white-space: nowrap !important;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+  }
+  .twoway-grid > div > div > span:last-child {
+    white-space: nowrap !important;
+    font-size: 12px !important;
+  }
+  #categories .cat-grid + div {
+    gap: 6px !important;
+  }
+  #categories .cat-grid + div span {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
 }
 
 @media (max-width: 360px) {
-  h1, .hero-grid h1 { font-size: 26px !important; }
+  h1, .hero-grid h1 { font-size: 34px !important; }
   h2 { font-size: 22px !important; }
 }
 
