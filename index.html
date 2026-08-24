@@ -301,19 +301,36 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (!document.getElementById('pb-to-top-css')) {
         var hideCss = document.createElement('style');
         hideCss.id = 'pb-to-top-css';
-        hideCss.textContent = '#pb-to-top:not(.pb-on){opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(18px) scale(0.88)!important}';
+        hideCss.textContent = '#pb-to-top:not(.pb-on),#pb-to-top:not(.pb-layout){opacity:0!important;visibility:hidden!important;pointer-events:none!important}';
         document.head.appendChild(hideCss);
       }
       var goingTop = false;
+      function heroLaidOut(grid) {
+        if (!grid) return false;
+        var r = grid.getBoundingClientRect();
+        return r.height > 120;
+      }
       function pastHero() {
         if (goingTop) return false;
         var grid = document.querySelector('.hero-grid');
-        if (!grid) return pbScrollY() > Math.max(window.innerHeight * 0.85, 480);
+        if (!heroLaidOut(grid)) return false;
         return grid.getBoundingClientRect().bottom < 56;
       }
       function syncToTop(btn) {
         if (!btn) return;
-        if (pastHero()) btn.classList.add('pb-on');
+        var grid = document.querySelector('.hero-grid');
+        if (!heroLaidOut(grid)) {
+          btn.classList.remove('pb-on');
+          return;
+        }
+        var show = pastHero();
+        if (!btn.classList.contains('pb-layout')) {
+          if (show) btn.classList.add('pb-on');
+          else btn.classList.remove('pb-on');
+          btn.classList.add('pb-layout');
+          return;
+        }
+        if (show) btn.classList.add('pb-on');
         else btn.classList.remove('pb-on');
       }
       function mountToTop() {
