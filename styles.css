@@ -345,8 +345,8 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  transform: translateY(8px);
-  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+  transform: translateY(18px) scale(0.88);
+  transition: opacity .32s cubic-bezier(0.22, 1, 0.36, 1), transform .32s cubic-bezier(0.22, 1, 0.36, 1), visibility .32s ease;
 }
 #pb-to-top.pb-on {
   opacity: 1 !important;
