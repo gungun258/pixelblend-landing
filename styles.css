@@ -334,6 +334,9 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   border: none !important;
   border-radius: 50% !important;
   cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
   color: #fff !important;
   font-size: 22px !important;
   line-height: 1 !important;
