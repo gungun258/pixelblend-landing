@@ -329,19 +329,27 @@ document.addEventListener('DOMContentLoaded', async function() {
       var popIo = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
-          if (en.target.classList.contains('pb-play')) {
-            popIo.unobserve(en.target);
-            return;
+          var el = en.target;
+          popIo.unobserve(el);
+          if (el.classList.contains('pb-play') || el.classList.contains('pb-done')) return;
+          el.classList.add('pb-play');
+          function freeze(ev) {
+            if (ev && ev.target !== el) return;
+            el.classList.add('pb-done');
+            el.removeEventListener('animationend', freeze);
           }
-          en.target.classList.add('pb-play');
-          popIo.unobserve(en.target);
+          el.addEventListener('animationend', freeze);
         });
-      }, { threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
+      }, { threshold: 0.2, rootMargin: '0px' });
       function watchPop(el) {
         if (!el || el.__pbPop) return;
         if (el.closest && (el.closest('.hero-grid') || el.closest('.lb-stage'))) return;
         if (el.closest && (el.closest('.how-grid') || el.closest('.market-grid') || el.closest('.cat-grid') || el.closest('.creations-grid') || el.closest('.sellers-vcards'))) return;
+        if (el.offsetHeight > window.innerHeight * 0.42) return;
         el.__pbPop = 1;
+        el.style.opacity = '';
+        el.style.transform = '';
+        el.style.transition = '';
         el.classList.add('pb-pop');
         popIo.observe(el);
       }

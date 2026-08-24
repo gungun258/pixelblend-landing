@@ -516,7 +516,12 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   to { opacity: 1; transform: none; }
 }
 .pb-pop.pb-play {
-  animation: pbFadeUp .7s cubic-bezier(.22, 1, .36, 1) both;
+  animation: pbFadeUp .55s cubic-bezier(.22, 1, .36, 1) 1 forwards;
+}
+.pb-pop.pb-done {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
 }
 .pb-reveal {
   opacity: 0;
