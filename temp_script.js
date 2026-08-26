@@ -301,83 +301,120 @@ document.addEventListener('DOMContentLoaded', async function() {
       if (heroCards.length < 1) return false;
       document.documentElement.setAttribute('data-pb-motion', '1');
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
-      var list = [];
-      function add(el) {
-        if (!el || el.__pbR) return;
-        if (el.closest && (el.closest('.lb-stage') || el.closest('nav') || el.id === 'pb-to-top')) return;
-        if (el.closest && el.closest('.hero-grid') && el.classList && el.classList.contains('store-btn')) return;
-        el.__pbR = 1;
-        list.push(el);
-      }
+
+      /* ---- Hero: keep strong immediate entrance ---- */
       var heroLeft = document.querySelector('header .hero-grid > div:first-child');
       if (heroLeft) {
         Array.prototype.forEach.call(heroLeft.children, function (ch, i) {
-          add(ch);
-          if (ch.__pbR) {
-            ch.classList.add('pb-from-left');
-            ch.style.setProperty('--pb-d', (80 + i * 110) + 'ms');
-          }
+          if (!ch || ch.classList.contains('store-btn') || ch.classList.contains('hero-stores')) return;
+          if (ch.classList && ch.classList.contains('store-btns')) return;
+          ch.classList.add('pb-reveal', 'pb-from-left');
+          ch.style.setProperty('--pb-d', (80 + i * 110) + 'ms');
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { ch.classList.add('pb-in'); });
+          });
         });
       }
       Array.prototype.forEach.call(heroCards, function (card, i) {
-        add(card);
-        card.classList.add('pb-from-right');
-        card.classList.add('pb-card');
+        card.classList.add('pb-reveal', 'pb-from-right', 'pb-card');
         card.style.setProperty('--pb-d', (220 + i * 160) + 'ms');
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { card.classList.add('pb-in'); });
+        });
       });
-      Array.prototype.forEach.call(document.querySelectorAll('.creation-card, .creations-grid > *, .how-grid > *, .market-grid > *, .cat-grid > *, .sellers-vcards > *, .store-btn'), add);
-      var popIo = new IntersectionObserver(function (entries) {
+
+      /* ---- Rest of page: scroll-triggered fade-up (later + clearer) ---- */
+      var scrollEls = [];
+      function addScroll(el, delay, asCard) {
+        if (!el || el.__pbScroll) return;
+        if (el.closest && (el.closest('.hero-grid') || el.closest('.lb-stage') || el.closest('nav') || el.id === 'pb-to-top' || el.id === 'pb-dl-bar')) return;
+        if (el.classList && (el.classList.contains('how-op') || el.classList.contains('store-btn') || el.classList.contains('store-badge'))) return;
+        if (el.closest && el.closest('.hero-stores, .footer-stores, .dl-stores, .or-sep')) return;
+        el.__pbScroll = 1;
+        if (asCard) el.__pbIsCard = 1;
+        el.classList.add('pb-reveal-scroll');
+        if (typeof delay === 'number') el.style.setProperty('--pb-d', delay + 'ms');
+        scrollEls.push(el);
+      }
+
+      /* cards first so data-reveal wrappers don't steal the hover-lift flag */
+      var cardSel = [
+        '.how-grid > *:not(.how-op)',
+        '.creation-card',
+        '#marketplace .trend-grid > *',
+        '.market-grid > *',
+        '.cat-grid > *',
+        '.sellers-vcards > *',
+        '.seller-way-grid > *',
+        '.twoway-grid > div[data-reveal], .twoway-grid > div:not(.or-sep)',
+        '.price-grid > *',
+        '.offer-grid > *',
+        '.testi-grid > *',
+        '.usecase-grid > *'
+      ].join(', ');
+      var byParent = {};
+      Array.prototype.forEach.call(document.querySelectorAll(cardSel), function (el) {
+        var p = el.parentElement;
+        var key = p ? (p.id || p.className || 'p') : 'x';
+        if (!byParent[key]) byParent[key] = 0;
+        var i = byParent[key]++;
+        addScroll(el, (i % 5) * 90, true);
+      });
+
+      function markText(el) {
+        if (el && el.classList) el.classList.add('pb-reveal-text');
+      }
+
+      /* Section intros: eyebrow + heading + sub — stagger when section is well in view */
+      Array.prototype.forEach.call(document.querySelectorAll('section'), function (sec) {
+        if (!sec || (sec.closest && sec.closest('header, nav, footer, .lb-stage'))) return;
+        var h2 = sec.querySelector('h2');
+        if (!h2) return;
+        if (h2.closest && h2.closest('.how-grid, .price-grid, .offer-grid, .creation-card, .market-grid, .cat-grid, .testi-grid, .usecase-grid, .sellers-vcards, .seller-way-grid, .marquee-track, .twoway-grid')) return;
+
+        var wrap = h2.closest && h2.closest('[data-reveal]');
+        if (wrap && wrap !== h2 && wrap.children && wrap.children.length && wrap.children.length <= 8) {
+          Array.prototype.forEach.call(wrap.children, function (ch, i) {
+            addScroll(ch, i * 100, false);
+            markText(ch);
+          });
+          wrap.__pbScroll = 1;
+          return;
+        }
+
+        var group = [];
+        var prev = h2.previousElementSibling;
+        if (prev && prev.tagName === 'P') group.push(prev);
+        group.push(h2);
+        var next = h2.nextElementSibling;
+        if (next && next.tagName === 'P') group.push(next);
+        group.forEach(function (el, i) {
+          addScroll(el, i * 100, false);
+          markText(el);
+        });
+      });
+
+      Array.prototype.forEach.call(document.querySelectorAll('[data-reveal]'), function (el) {
+        if (el.parentElement && el.parentElement.closest && el.parentElement.closest('[data-reveal]')) return;
+        addScroll(el, 0, false);
+      });
+
+      var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
           var el = en.target;
-          popIo.unobserve(el);
-          if (el.classList.contains('pb-play') || el.classList.contains('pb-done')) return;
-          el.classList.add('pb-play');
-          function freeze(ev) {
-            if (ev && ev.target !== el) return;
-            el.classList.add('pb-done');
-            el.removeEventListener('animationend', freeze);
-          }
-          el.addEventListener('animationend', freeze);
-        });
-      }, { threshold: 0.2, rootMargin: '0px' });
-      function watchPop(el) {
-        if (!el || el.__pbPop) return;
-        if (el.closest && (el.closest('.hero-grid') || el.closest('.lb-stage'))) return;
-        if (el.closest && (el.closest('.how-grid') || el.closest('.market-grid') || el.closest('.cat-grid') || el.closest('.creations-grid') || el.closest('.sellers-vcards'))) return;
-        if (el.offsetHeight > window.innerHeight * 0.42) return;
-        el.__pbPop = 1;
-        el.style.opacity = '';
-        el.style.transform = '';
-        el.style.transition = '';
-        el.classList.add('pb-pop');
-        popIo.observe(el);
-      }
-      Array.prototype.forEach.call(document.querySelectorAll('[data-reveal]'), function (el) {
-        if (el.parentElement && el.parentElement.closest && el.parentElement.closest('[data-reveal]')) return;
-        watchPop(el);
-      });
-      Array.prototype.forEach.call(document.querySelectorAll('section h2'), function (el) {
-        if (el.closest && el.closest('[data-reveal]')) return;
-        watchPop(el);
-      });
-      list.forEach(function (el, i) {
-        var hero = el.classList.contains('pb-from-left') || el.classList.contains('pb-from-right');
-        if (hero) {
-          el.classList.add('pb-reveal');
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () { el.classList.add('pb-in'); });
-          });
-          return;
-        }
-        el.classList.add('pb-card');
-        el.classList.add('pb-in');
-      });
-      setTimeout(function () {
-        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal'), function (el) {
+          io.unobserve(el);
           el.classList.add('pb-in');
+          /* hover lift/glow only on real cards — not headings / intros */
+          if (el.__pbIsCard) el.classList.add('pb-card');
         });
-      }, 900);
+      }, {
+        threshold: 0.2,
+        /* fire once the block is clearly inside the section viewport */
+        rootMargin: '0px 0px -22% 0px'
+      });
+      scrollEls.forEach(function (el) { io.observe(el); });
+
       return true;
     }
     var motTries = 0;
@@ -393,20 +430,23 @@ document.addEventListener('DOMContentLoaded', async function() {
     function bindNavGlass() {
       var nav = document.querySelector('nav');
       if (!nav) return false;
-      nav.style.removeProperty('background');
-      nav.style.removeProperty('background-color');
-      nav.style.removeProperty('backdrop-filter');
-      nav.style.removeProperty('-webkit-backdrop-filter');
-      function syncNav() {
-        if (pbScrollY() > 8) nav.classList.add('pb-nav-scrolled');
-        else nav.classList.remove('pb-nav-scrolled');
+      var mo = null;
+      function applyGlass() {
+        if (mo) mo.disconnect();
+        nav.style.setProperty('background', 'rgba(255, 255, 255, 0.85)', 'important');
+        nav.style.setProperty('backdrop-filter', 'blur(15px)', 'important');
+        nav.style.setProperty('-webkit-backdrop-filter', 'blur(15px)', 'important');
+        nav.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.2)', 'important');
+        nav.style.setProperty('border-bottom', 'none', 'important');
+        nav.style.setProperty('box-shadow', 'none', 'important');
+        if (mo) mo.observe(nav, { attributes: true, attributeFilter: ['style'] });
       }
+      applyGlass();
       if (!nav.getAttribute('data-pb-glass')) {
         nav.setAttribute('data-pb-glass', '1');
-        window.addEventListener('scroll', syncNav, { passive: true });
-        document.addEventListener('scroll', syncNav, { passive: true, capture: true });
+        mo = new MutationObserver(applyGlass);
+        mo.observe(nav, { attributes: true, attributeFilter: ['style'] });
       }
-      syncNav();
       return true;
     }
     var navTries = 0;
@@ -416,19 +456,55 @@ document.addEventListener('DOMContentLoaded', async function() {
     }, 250);
     function bindLbNav() {
       var result = document.querySelector('.lb-result');
-      var prev = document.querySelector('.lb-nav-prev');
-      var next = document.querySelector('.lb-nav-next');
+      var prev = document.querySelector('.lb-nav-prev:not(.lb-nav-clone)');
+      var next = document.querySelector('.lb-nav-next:not(.lb-nav-clone)');
       if (!prev || !next) return false;
-      if (!prev._lbHome) prev._lbHome = prev.parentNode;
+      var panel = prev.parentNode;
+      var overlay = panel && panel.parentNode;
+      if (panel) {
+        panel.classList.add('lb-panel');
+        panel.style.setProperty('box-sizing', 'border-box', 'important');
+      }
+      if (overlay) {
+        overlay.classList.add('lb-overlay');
+        overlay.style.setProperty('z-index', '220', 'important');
+        overlay.style.setProperty('box-sizing', 'border-box', 'important');
+        overlay.style.setProperty('inset', '0', 'important');
+      }
       var mobile = window.matchMedia('(max-width: 640px)').matches;
+      if (mobile && panel) {
+        panel.style.setProperty('width', '100%', 'important');
+        panel.style.setProperty('max-width', '100%', 'important');
+      } else if (panel) {
+        panel.style.removeProperty('width');
+        panel.style.removeProperty('max-width');
+      }
+      if (mobile && overlay) {
+        overlay.style.setProperty('padding', '16px 20px', 'important');
+      } else if (overlay) {
+        overlay.style.setProperty('padding', '24px', 'important');
+      }
       if (mobile && result) {
-        if (prev.parentNode !== result) {
-          result.appendChild(prev);
-          result.appendChild(next);
+        if (!result.querySelector('.lb-nav-clone')) {
+          function cloneBtn(src) {
+            var b = src.cloneNode(true);
+            b.classList.add('lb-nav-clone');
+            b.removeAttribute('onclick');
+            b.style.setProperty('display', 'flex', 'important');
+            b.addEventListener('click', function (ev) {
+              ev.stopPropagation();
+              src.click();
+            });
+            return b;
+          }
+          result.appendChild(cloneBtn(prev));
+          result.appendChild(cloneBtn(next));
         }
-      } else if (prev._lbHome && prev.parentNode !== prev._lbHome) {
-        prev._lbHome.appendChild(prev);
-        prev._lbHome.appendChild(next);
+        prev.style.setProperty('display', 'none', 'important');
+        next.style.setProperty('display', 'none', 'important');
+      } else {
+        prev.style.removeProperty('display');
+        next.style.removeProperty('display');
       }
       return true;
     }
@@ -585,9 +661,23 @@ document.addEventListener('DOMContentLoaded', async function() {
         var r = sec.getBoundingClientRect();
         return r.top < window.innerHeight * 0.78 && r.bottom > 64;
       }
+      function drawerOpen() {
+        var d = document.querySelector('.pb-drawer');
+        if (!d) return false;
+        var t = (d.style.transform || '').replace(/\s/g, '');
+        if (t.indexOf('105%') !== -1) return false;
+        if (t.indexOf('translateX(0)') !== -1) return true;
+        var cs = window.getComputedStyle(d).transform;
+        if (!cs || cs === 'none') return false;
+        var m = cs.match(/matrix\(([^)]+)\)/);
+        if (!m) return false;
+        var tx = parseFloat(m[1].split(',')[4]);
+        return Math.abs(tx) < 24;
+      }
       function shouldShow() {
         if (!isMobileVp()) return false;
         if (hidden) return false;
+        if (drawerOpen()) return false;
         if (!pastHero()) return false;
         if (downloadInView()) return false;
         return true;
@@ -598,13 +688,34 @@ document.addEventListener('DOMContentLoaded', async function() {
         bar.classList.toggle('pb-on', on);
         document.body.classList.toggle('pb-has-dlbar', on);
       }
+      function bindDrawerSync() {
+        if (document.documentElement.getAttribute('data-pb-dl-drawer') === '1') {
+          var d = document.querySelector('.pb-drawer');
+          if (d && !d.getAttribute('data-pb-dl-obs')) {
+            d.setAttribute('data-pb-dl-obs', '1');
+            new MutationObserver(function () { sync(document.getElementById('pb-dl-bar')); }).observe(d, { attributes: true, attributeFilter: ['style'] });
+          }
+          return;
+        }
+        document.documentElement.setAttribute('data-pb-dl-drawer', '1');
+        function bump() { sync(document.getElementById('pb-dl-bar')); }
+        document.addEventListener('click', function (e) {
+          var t = e.target;
+          if (!t || !t.closest) return;
+          if (t.closest('.nav-burger') || t.closest('.pb-drawer') || t.closest('.pb-drawer-backdrop')) {
+            setTimeout(bump, 50);
+            setTimeout(bump, 420);
+          }
+        }, true);
+        bump();
+      }
       function mountDlBar() {
         var bar = document.getElementById('pb-dl-bar');
         if (!bar) {
           bar = document.createElement('div');
           bar.id = 'pb-dl-bar';
-          bar.innerHTML = '<a href="#download">Download the app</a><button type="button" aria-label="Dismiss">×</button>';
-          bar.querySelector('button').addEventListener('click', function (e) {
+          bar.innerHTML = '<button type="button" class="pb-dl-x" aria-label="Dismiss">×</button><div class="pb-dl-copy"><strong>Get the <em>PixelBlend</em> app</strong><span>Create from your phone</span></div><a class="pb-dl-cta" href="#download">Get the app</a>';
+          bar.querySelector('.pb-dl-x').addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
             hidden = true;
@@ -614,6 +725,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           window.addEventListener('scroll', function () { sync(document.getElementById('pb-dl-bar')); }, { passive: true });
           window.addEventListener('resize', function () { sync(document.getElementById('pb-dl-bar')); });
         }
+        bindDrawerSync();
         var host = document.body || document.documentElement;
         if (host && bar.parentNode !== host) host.appendChild(bar);
         sync(bar);

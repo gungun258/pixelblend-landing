@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery — PixelBlend</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="legal.css">
+</head>
+<body>
+  <div id="pb-chrome-header"></div>
+  <article class="lp-wrap lp-about lp-gallery-page">
+    <h1>Gallery</h1>
+    <p class="lp-meta">Real products, real scenes, real AI blends</p>
+
+    <p class="lp-lead lp-gallery-lead">Scan the gallery — tap any look to see the full <strong>product + background = result</strong> transformation up close.</p>
+
+    <div class="lp-gal-filters" role="tablist" aria-label="Gallery categories">
+      <button type="button" class="is-active" data-filter="all">All</button>
+      <button type="button" data-filter="Lifestyle">Lifestyle</button>
+      <button type="button" data-filter="Studio">Studio</button>
+      <button type="button" data-filter="Nature">Nature</button>
+      <button type="button" data-filter="Cosmetics">Cosmetics</button>
+      <button type="button" data-filter="Fragrance">Fragrance</button>
+      <button type="button" data-filter="Furniture">Furniture</button>
+      <button type="button" data-filter="Skincare">Skincare</button>
+      <button type="button" data-filter="Festive">Festive</button>
+      <button type="button" data-filter="Modern">Modern</button>
+    </div>
+
+    <section class="lp-gal-featured">
+      <div class="lp-gal-featured-copy">
+        <p class="lp-kicker">Featured blend</p>
+        <h2>Drag to see the transformation</h2>
+        <p>From plain product shot to finished visual — lighting, shadows and reflections matched to the scene.</p>
+      </div>
+      <div class="lp-ba" id="lp-ba" aria-label="Before and after comparison">
+        <img class="lp-ba-after" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1000&q=80&auto=format&fit=crop" alt="AI blended product in scene">
+        <div class="lp-ba-clip" style="width: 52%">
+          <div class="lp-ba-clip-inner" style="width: 192.3%">
+            <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1000&q=80&auto=format&fit=crop" alt="Original product shot">
+          </div>
+        </div>
+        <div class="lp-ba-handle" style="left: 52%" aria-hidden="true"></div>
+        <span class="lp-ba-tag lp-ba-tag-l">Before</span>
+        <span class="lp-ba-tag lp-ba-tag-r">After</span>
+      </div>
+    </section>
+
+    <div class="lp-gal-grid" id="lp-gal-grid">
+      <!-- cards injected by legal-pages.js -->
+    </div>
+
+    <p class="lp-gal-empty" id="lp-gal-empty" hidden>No looks in this category yet — try All.</p>
+
+    <section class="lp-cta-band">
+      <h2>Try this look in the app</h2>
+      <p>Upload your product, pick any scene, and get a studio-quality blend in seconds.</p>
+      <div class="lp-cta-actions">
+        <a href="index.html#download">Get the app</a>
+        <a href="how-it-works.html" class="lp-cta-ghost">How it works</a>
+      </div>
+    </section>
+  </article>
+
+  <div class="lp-lb" id="lp-lb" hidden aria-hidden="true">
+    <div class="lp-lb-backdrop" data-lb-close></div>
+    <div class="lp-lb-panel" role="dialog" aria-modal="true" aria-label="Blend detail">
+      <button type="button" class="lp-lb-x" data-lb-close aria-label="Close">×</button>
+      <button type="button" class="lp-lb-nav lp-lb-prev" data-lb-prev aria-label="Previous">‹</button>
+      <button type="button" class="lp-lb-nav lp-lb-next" data-lb-next aria-label="Next">›</button>
+      <div class="lp-lb-stage">
+        <div class="lp-lb-col">
+          <img id="lp-lb-user" alt="Product">
+          <span>Product</span>
+        </div>
+        <div class="lp-lb-op" aria-hidden="true">+</div>
+        <div class="lp-lb-col">
+          <img id="lp-lb-cloth" alt="Background">
+          <span>Background</span>
+        </div>
+        <div class="lp-lb-op lp-lb-eq" aria-hidden="true">=</div>
+        <div class="lp-lb-col lp-lb-result">
+          <img id="lp-lb-result" alt="AI result">
+          <span>AI result</span>
+        </div>
+      </div>
+      <div class="lp-lb-meta">
+        <strong id="lp-lb-handle"></strong>
+        <span id="lp-lb-cat"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="pb-chrome-footer"></div>
+  <script src="legal-chrome.js"></script>
+  <script src="legal-pages.js"></script>
+</body>
+</html>
