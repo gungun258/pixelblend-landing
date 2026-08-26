@@ -1047,28 +1047,30 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   #pb-dl-bar {
     display: flex;
     position: fixed;
-    left: 12px;
-    right: 12px;
+    left: 50%;
+    right: auto;
     bottom: max(12px, env(safe-area-inset-bottom, 0px));
-    width: auto;
+    width: max-content;
+    max-width: min(420px, calc(100vw - 24px));
     z-index: 90;
     align-items: center;
-    gap: 10px;
-    padding: 8px 8px 8px 6px;
+    gap: 12px;
+    padding: 10px 12px 10px 8px;
     border-radius: 999px;
     background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
     box-shadow: 0 12px 32px -12px rgba(196, 46, 139, 0.65);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(18px);
+    transform: translate(-50%, 18px);
     transition: opacity .28s ease, transform .28s ease, visibility .28s ease;
+    box-sizing: border-box;
   }
   #pb-dl-bar.pb-on {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: none;
+    transform: translate(-50%, 0);
   }
   #pb-dl-bar .pb-dl-x {
     flex: none;
@@ -1085,7 +1087,7 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
     cursor: pointer;
   }
   #pb-dl-bar .pb-dl-copy {
-    flex: 1;
+    flex: none;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -1114,43 +1116,15 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   #pb-dl-bar .pb-dl-cta {
     flex: none;
     text-align: center;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #1E1422;
     text-decoration: none;
-    padding: 10px 14px;
+    padding: 11px 16px;
     border-radius: 999px;
     background: #fff;
     box-shadow: 0 6px 16px rgba(30,20,34,.18);
     white-space: nowrap;
-  }
-  @media (max-width: 400px) {
-    #pb-dl-bar { left: 8px; right: 8px; gap: 6px; padding: 7px 6px 7px 2px; }
-    #pb-dl-bar .pb-dl-copy strong { font-size: 13px; }
-    #pb-dl-bar .pb-dl-copy span { font-size: 11px; }
-    #pb-dl-bar .pb-dl-cta { padding: 9px 11px; font-size: 12px; }
-  }
-  /* Tablet: don’t stretch edge-to-edge — snug centered pill like mobile density */
-  @media (min-width: 641px) and (max-width: 1024px) {
-    #pb-dl-bar {
-      left: 50%;
-      right: auto;
-      width: max-content;
-      max-width: min(440px, calc(100vw - 48px));
-      transform: translate(-50%, 18px);
-      gap: 14px;
-      padding: 10px 12px 10px 8px;
-    }
-    #pb-dl-bar.pb-on {
-      transform: translate(-50%, 0);
-    }
-    #pb-dl-bar .pb-dl-copy {
-      flex: none;
-    }
-    #pb-dl-bar .pb-dl-cta {
-      padding: 11px 18px;
-      font-size: 14px;
-    }
   }
   body.pb-has-dlbar #pb-to-top {
     bottom: 88px !important;
