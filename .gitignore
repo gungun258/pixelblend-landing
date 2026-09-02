@@ -2,3 +2,8 @@
 .env
 .env.*
 *.log
+index.bundled.html
+.vercel/
+.vscode/
+frame_*.png
+.vid_preview.png
