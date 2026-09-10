@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="pb-booting"><head><script>window.__resources = {"u_1542291026-7eec264c27ff":"assets/images/c816ad7d-e8d8-45c6-a9e3-0e38a7e82a1a.jpg","u_1517842645767-c639042777db":"assets/images/0b0e8e00-ee89-4104-83a9-177bbe5f3b92.jpg","u_1600185365483-26d7a4cc7519":"assets/images/f5dbe0a5-586c-4b82-9e66-874cac47823e.jpg","u_1523275335684-37898b6baf30":"assets/images/ecb36717-8e9e-49b1-ab88-52fc8027e1d4.jpg","u_1441974231531-c6227db76b6e":"assets/images/afeeef86-9fc2-4c64-886f-72a2bdf777f6.jpg","u_1557683316-973673baf926":"assets/images/4238099b-0adb-47fe-96f6-c26a11d2a87c.jpg","u_1541643600914-78b084683601":"assets/images/6e002e29-82f9-47fa-b7c2-723718c3e30f.jpg","u_1594035910387-fea47794261f":"assets/images/27426d2f-b07f-4034-a21d-c2e4937f961b.jpg","u_1511499767150-a48a237f0083":"assets/images/dc849ff4-2001-4a12-8347-f0440689ccd7.jpg","u_1519681393784-d120267933ba":"assets/images/b9969393-cb56-4c25-848a-7ce954aa225a.jpg","u_1507525428034-b723cf961d3e":"assets/images/266e5fa7-90bc-47a3-bcae-78d6958eceaf.jpg","u_1595950653106-6c9ebd614d3a":"assets/images/dc288c19-fc0c-4b39-97a1-743ed4ab211a.jpg","u_1586495777744-4413f21062fa":"assets/images/eab45aa3-5d01-4037-908f-450c02e8d877.jpg","u_1505740420928-5e560c06d30e":"assets/images/adde3938-4ba2-43d0-90f4-d422f81bd142.jpg","u_1434056886845-dac89ffe9b56":"assets/images/7ba77113-aac8-427a-90c6-d724db0248f7.jpg","u_1522335789203-aabd1fc54bc9":"assets/images/565399bd-088e-4c87-991c-ecb93f849681.jpg","u_1509042239860-f550ce710b93":"assets/images/740de8b4-a9d6-4215-80db-331e231e5145.jpg","u_1584917865442-de89df76afd3":"assets/images/84fb6a1b-6473-46c2-9c2b-431b80f7726c.jpg","u_1550226891-ef816aed4a98":"assets/images/bf9d6309-db6f-43a7-a144-1d68d10b3c14.jpg","u_1513694203232-719a280e022f":"assets/images/331e19be-1bb9-423b-b8fe-55467d242298.jpg","u_1460353581641-37baddab0fa2":"assets/images/829bbe1d-4bc2-4848-a0f5-68c4abb3de53.jpg","u_1493934558415-9d19f0b2b4d2":"assets/images/9e4aa08c-2100-4c09-a513-c2f9a5e51edb.jpg","u_1556228578-8c89e6adf883":"assets/images/c819345b-7c00-42c8-b907-59f659cc2672.jpg","u_1516035069371-29a1b244cc32":"assets/images/b5462d9a-c4b4-4591-9844-e94532720fbf.jpg","u_1618366712010-f4ae9c647dcb":"assets/images/272d36bf-5745-4678-91e3-2852072ff357.jpg","u_1495616811223-4d98c6e9c869":"assets/images/85d7b9d8-2bbd-4dad-a8ea-28c4978edf7c.jpg"};</script><style id="pb-boot-css">html.pb-booting,html.pb-booting body{background:#FAF4FB!important;overflow:hidden!important}html.pb-booting body{visibility:hidden!important}html.pb-booting #pb-boot-cover{visibility:visible!important}</style><link id="pb-responsive-fixes" rel="stylesheet" href="css/styles.css">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="assets/js/dc-runtime.js"></script>
   
   
@@ -290,7 +290,7 @@
 </style>
 </helmet>
 
-<div style="overflow-x: hidden;">
+<div class="pb-page">
 
 <nav style="{{ navStyle }}">
   <div style="max-width: 1160px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between;">
@@ -452,29 +452,31 @@
     </div>
 
     <!-- Try-on demo: three real use-case equations -->
-    <div data-reveal="" class="hero-demo-col" style="position: relative; display: flex; flex-direction: column; gap: 11px; max-width: 396px; width: 100%; min-width: 0; margin-left: auto;">
+    <div data-reveal="" class="hero-demo-col" style="position: relative; display: flex; flex-direction: column; gap: 11px; max-width: 500px; width: 100%; min-width: 0; margin-left: auto;">
       <sc-for list="{{ heroCases }}" as="hc" hint-placeholder-count="2">
         <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 18px; padding: 11px 13px 12px; box-shadow: 0 18px 42px -34px rgba(168,85,247,.7);">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 12px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">{{ hc.label }}</span>
-            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #C42E8B; background: #FCE7F0; padding: 3px 9px; border-radius: 999px;"><span style="width:5px;height:5px;border-radius:50%;background:#C42E8B;animation:blink 1.4s infinite;"></span>AI BLEND</span>
+            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #C42E8B; background: #FCE7F0; border: 1px solid #F2C4DC; padding: 3px 9px; border-radius: 999px;"><span style="width:5px;height:5px;border-radius:50%;background:#C42E8B;animation:blink 1.4s infinite;"></span>AI BLEND</span>
           </div>
-          <div class="hero-eq" style="display: flex; align-items: center; gap: 7px; min-width: 0; width: 100%;">
-            <div style="flex: 1; position: relative; aspect-ratio: 3/4; border-radius: 13px; overflow: hidden; box-shadow: 0 8px 20px -14px rgba(30,20,34,.5);">
-              <img src="{{ hc.photo }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="Your photo">
-              <span style="position: absolute; left: 6px; bottom: 6px; padding: 3px 7px; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 8.5px; font-weight: 800; letter-spacing: .03em; color: #1E1422;">PRODUCT</span>
+          <div class="hero-eq" style="display: flex; align-items: center; gap: 10px; min-width: 0; width: 100%;">
+            <div class="hero-eq-inputs">
+              <div class="hero-eq-thumb" style="position: relative; aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 20px -14px rgba(30,20,34,.5);">
+                <img src="{{ hc.photo }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="Your photo">
+                <span class="hero-eq-label">PRODUCT</span>
+              </div>
+              <div class="hero-eq-thumb" style="position: relative; aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 20px -14px rgba(30,20,34,.5);">
+                <img src="{{ hc.cloth }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="Clothing reference">
+                <span class="hero-eq-label">{{ hc.clothLabel }}</span>
+              </div>
+              <span class="hero-eq-plus" aria-hidden="true"></span>
             </div>
-            <span style="flex: none; font-size: 20px; font-weight: 800; color: #C9BECF;">+</span>
-            <div style="flex: 1; position: relative; aspect-ratio: 3/4; border-radius: 13px; overflow: hidden; box-shadow: 0 8px 20px -14px rgba(30,20,34,.5);">
-              <img src="{{ hc.cloth }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="Clothing reference">
-              <span style="position: absolute; left: 6px; bottom: 6px; padding: 3px 7px; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 8.5px; font-weight: 800; letter-spacing: .03em; color: #1E1422;">{{ hc.clothLabel }}</span>
-            </div>
-            <span style="flex: none; font-size: 20px; font-weight: 800; color: #EC4899;">=</span>
-            <div style="flex: 1.32; position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; padding: 3px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 16px 36px -18px rgba(196,46,139,.7);">
-              <div style="position: relative; width: 100%; height: 100%; border-radius: 11px; overflow: hidden;">
+            <span class="hero-eq-equals" aria-hidden="true"></span>
+            <div class="hero-eq-result" style="position: relative; border-radius: 16px; overflow: hidden; padding: 3px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 16px 36px -18px rgba(196,46,139,.7);">
+              <div style="position: relative; width: 100%; height: 100%; border-radius: 13px; overflow: hidden; background: #f3f3f3;">
                 <img src="{{ hc.result }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="AI try-on result">
                 <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.4) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.4s ease-in-out infinite; pointer-events: none;"></div>
-                <span style="position: absolute; left: 6px; bottom: 6px; padding: 3px 8px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); font-size: 8.5px; font-weight: 800; letter-spacing: .03em; color: #fff;">RESULT</span>
+                <span class="hero-eq-label hero-eq-label-result">RESULT</span>
               </div>
             </div>
           </div>
@@ -518,20 +520,18 @@
 
   <div class="creations-grid">
     <sc-for list="{{ creations }}" as="cr" hint-placeholder-count="10">
-      <div class="creation-card" onclick="{{ cr.open }}" style="position: relative; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #F0E6F2; box-shadow: 0 18px 44px -32px rgba(30,20,34,.5); cursor: pointer; transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-5px); box-shadow:0 30px 60px -34px rgba(196,46,139,.5);">
-        <div style="position: relative; width: 100%; height: {{ cr.h }}; overflow: hidden;">
-          <img src="{{ cr.result }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .55s;" style-hover="transform:scale(1.06);" alt="AI try-on result">
-          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(30,20,34,.62)); pointer-events: none;"></div>
-          <span class="cr-ai" style="position: absolute; left: 12px; top: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); font-size: 10px; font-weight: 800; letter-spacing: .03em; color: #fff;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:blink 1.4s infinite;"></span>AI RESULT</span>
-          <span class="cr-cat" style="position: absolute; right: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.92); backdrop-filter: blur(6px); font-size: 10.5px; font-weight: 800; color: #C42E8B;">{{ cr.category }}</span>
+      <div class="creation-card" onclick="{{ cr.open }}" style="position: relative; border-radius: 26px; overflow: hidden; background: #1a121c; box-shadow: 0 18px 44px -32px rgba(30,20,34,.55); cursor: pointer; transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-5px); box-shadow:0 30px 60px -34px rgba(196,46,139,.5);">
+        <div class="cr-media" style="position: relative; width: 100%; height: {{ cr.h }}; overflow: hidden;">
+          <img class="cr-result" src="{{ cr.result }}" alt="AI blend result">
+          <div class="cr-shade" aria-hidden="true"></div>
+          <span class="cr-cat"><span class="cr-dot" aria-hidden="true"></span>{{ cr.category }}</span>
+          <span class="cr-expand" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M10 20H4v-6"/><path d="M20 4L13 11"/><path d="M4 20l7-7"/></svg>
+          </span>
           <div class="cr-foot">
-            <div class="cr-recipe">
-              <span class="cr-mini"><img src="{{ cr.user }}" alt="Before"></span>
-              <span class="cr-op">+</span>
-              <span class="cr-mini"><img src="{{ cr.cloth }}" alt="After"></span>
-              <span class="cr-eq">=</span>
-            </div>
-            <span class="cr-expand" aria-hidden="true">⤢</span>
+            <span class="cr-mini"><img src="{{ cr.user }}" alt="Product"></span>
+            <span class="cr-op" aria-hidden="true">+</span>
+            <span class="cr-mini"><img src="{{ cr.cloth }}" alt="Backdrop"></span>
           </div>
         </div>
       </div>
@@ -626,17 +626,7 @@
   <div class="twoway-grid" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 0;">
     <!-- OPTION 1 -->
     <div data-reveal="" style="position: relative; overflow: hidden; background: linear-gradient(158deg, #F4E9FC 0%, #ECDDFA 55%, #F3E2F6 100%); border: 1px solid #ECD9F5; border-radius: 30px; padding: 40px 38px; box-shadow: 0 34px 80px -52px rgba(168,85,247,.6); display: flex; flex-direction: column;">
-      <svg class="byo-art" viewBox="0 0 240 220" aria-hidden="true" style="position: absolute; right: -40px; bottom: -36px; width: 78%; max-width: 480px; height: auto; opacity: .18; color: #7C2C9E; pointer-events: none; z-index: 0;" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="64" cy="46" r="22"></circle>
-        <path d="M22 206 q0 -82 42 -82 q24 0 35 26"></path>
-        <path d="M64 124 q40 4 58 38"></path>
-        <rect x="120" y="64" width="86" height="142" rx="16" fill="currentColor" fill-opacity=".06"></rect>
-        <rect x="134" y="80" width="58" height="70" rx="7"></rect>
-        <path d="M150 92 l8 -6 8 6 11 5 -7 9 v22 h-24 v-22 l-7 -9 z" fill="currentColor" fill-opacity=".14"></path>
-        <rect x="134" y="160" width="42" height="6" rx="3"></rect>
-        <rect x="134" y="174" width="28" height="6" rx="3"></rect>
-        <rect x="134" y="186" width="58" height="13" rx="6" fill="currentColor" fill-opacity=".12"></rect>
-      </svg>
+      <img class="opt2-line" src="assets/images/option2-lineart.png" alt="" aria-hidden="true">
       <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
         <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #fff; background: linear-gradient(113.667deg,#A855F7,#7C2C9E); padding: 5px 13px; border-radius: 999px;">OPTION 1</span>
         <span style="font-size: 13px; font-weight: 700; color: #8A6AA0;">You already have the scene</span>
@@ -718,7 +708,12 @@
       </div>
     </sc-for>
   </div>
-  <a class="trend-viewall" href="#download">View all</a>
+  <a class="trend-viewall" href="#download" aria-label="View all">
+    <span class="trend-viewall-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+    </span>
+    <span class="trend-viewall-label">View All</span>
+  </a>
   </div>
 </section>
 
@@ -846,21 +841,21 @@
       <h3 style="font-size: 34px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; color: #fff; margin: 0 0 10px;">Recharge <span style="font-family:'Instrument Serif',serif; font-weight:400; font-style:italic; background: linear-gradient(113.667deg,#F9A8D4,#fff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">any amount</span> you want</h3>
       <p style="font-size: 15.5px; line-height: 1.5; color: rgba(255,255,255,.78); margin: 0 auto 26px; max-width: 400px;">Top up whenever you need — starting from just <strong style="color:#fff;">₹30</strong>. Credits never expire.</p>
 
-      <!-- dummy recharge input (demo only) -->
+      <!-- recharge amount preview → download -->
       <div style="max-width: 400px; margin: 0 auto; text-align: left;">
         <label style="display: block; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.6); margin: 0 0 8px 2px;">Amount <span style="color: #F9A8D4;">(₹30 minimum)</span></label>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <div style="flex: 1; min-width: 190px; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,.97); border-radius: 14px; padding: 0 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);">
+        <div class="recharge-row">
+          <div class="recharge-amount">
             <span style="font-size: 24px; font-weight: 800; color: #82265F;">₹</span>
             <div style="flex: 1; min-width: 0; display: flex; align-items: center; overflow: hidden; height: 54px;">
               <span id="rechargeOdo" style="display: inline-block; font-size: 30px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">30</span>
               <span style="display: inline-block; width: 2px; height: 26px; margin-left: 3px; background: #C42E8B; animation: blink 1.1s steps(1) infinite;"></span>
             </div>
           </div>
-          <button type="button" disabled="" aria-disabled="true" style="flex: none; padding: 0 26px; border: none; border-radius: 14px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 15px; font-weight: 800; letter-spacing: .01em; cursor: not-allowed; opacity: .78; box-shadow: 0 14px 30px -14px rgba(236,72,153,.7);">Recharge</button>
+          <a class="recharge-cta" href="#download">Recharge</a>
         </div>
         <div style="display: flex; align-items: center; gap: 7px; margin: 12px 2px 0; font-size: 12px; color: rgba(255,255,255,.55);">
-          <span style="font-size: 13px;">🔒</span><span>Secure UPI, cards &amp; wallets · demo preview</span>
+          <span style="font-size: 13px;">🔒</span><span>Secure UPI, cards &amp; wallets</span>
         </div>
       </div>
     </div>
@@ -1099,51 +1094,51 @@
   </div><!-- /seller-way-grid -->
 
   <!-- benefits — one integrated panel, five statements -->
-  <div data-reveal="" style="margin-top: 22px; background: linear-gradient(160deg,#FDEBF4,#F3E4FB 55%,#F8E5FB); border: 1px solid #F0DAEE; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 64px -46px rgba(168,85,247,.55);">
+  <div data-reveal="" style="margin-top: 16px; background: linear-gradient(160deg,#FDEBF4,#F3E4FB 55%,#F8E5FB); border: 1px solid #F0DAEE; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 64px -46px rgba(168,85,247,.55);">
     <div class="seller-hl-grid" style="display: grid; grid-template-columns: repeat(5, 1fr);">
       <!-- +38% -->
-      <div style="padding: 34px 28px;">
+      <div style="padding: 20px 16px;">
         
         <div class="hl-big" style="font-size: 44px; line-height: .95; font-weight: 800; letter-spacing: -.04em; background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">+38%</div>
-        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 10px 0 4px;">more likely to license the scene</div>
+        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 8px 0 4px;">more likely to license the scene</div>
         <div style="font-size: 13px; line-height: 1.45; color: #8A7E92;">Brands who blend first.</div>
       </div>
       <!-- −52% -->
-      <div style="padding: 34px 28px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
         
         <div class="hl-big" style="font-size: 44px; line-height: .95; font-weight: 800; letter-spacing: -.04em; background: linear-gradient(113.667deg,#9333A8,#EC4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">−52%</div>
-        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 10px 0 4px;">fewer reshoots &amp; revision requests</div>
+        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 8px 0 4px;">fewer reshoots &amp; revision requests</div>
       </div>
       <!-- High-intent leads -->
-      <div style="padding: 34px 28px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">High-intent leads</div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 10px;">Brands message you after they've already seen their product in your scene.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">Brands message you after they've already seen their product in your scene.</div>
       </div>
       <!-- Free listing -->
-      <div style="padding: 34px 28px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">List your full catalogue — <span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Free</span></div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 10px;">Upload everything you sell at no cost.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">Upload everything you sell at no cost.</div>
       </div>
       <!-- Keep 100% -->
-      <div style="padding: 34px 28px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">Keep <span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">100%</span> of every sale</div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 10px;">No commission. No listing fees.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">No commission. No listing fees.</div>
       </div>
     </div>
   </div>
 
   <!-- seller testimonials -->
-  <div data-reveal="" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px;" class="sellers-vcards">
+  <div data-reveal="" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; align-items: stretch;" class="sellers-vcards">
     <sc-for list="{{ sellerTestimonials }}" as="t" hint-placeholder-count="3">
-      <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 24px; padding: 26px 24px; box-shadow: 0 16px 40px -32px rgba(30,20,34,.55);">
+      <div class="seller-review" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 24px; padding: 26px 24px; box-shadow: 0 16px 40px -32px rgba(30,20,34,.55); display: flex; flex-direction: column; height: 100%; min-width: 0;">
         <div style="font-size: 13px; color: #F43F5E; letter-spacing: 2px; margin-bottom: 12px;">★★★★★</div>
-        <p style="font-size: 14.5px; line-height: 1.55; color: #2c2330; margin: 0 0 18px;">“{{ t.quote }}”</p>
-        <div style="display: flex; align-items: center; gap: 11px;">
+        <p class="seller-review-quote" style="font-size: 14.5px; line-height: 1.55; color: #2c2330; margin: 0 0 18px; flex: 1;">“{{ t.quote }}”</p>
+        <div class="seller-review-meta" style="display: flex; align-items: center; gap: 11px; min-width: 0; margin-top: auto;">
           <span style="width: 40px; height: 40px; border-radius: 50%; background: {{ t.avatar }}; flex: none;"></span>
-          <div><div style="font-size: 14px; font-weight: 800; color: #1E1422;">{{ t.name }}</div><div style="font-size: 12.5px; color: #8A7E92;">{{ t.role }}</div></div>
+          <div style="min-width: 0;"><div style="font-size: 14px; font-weight: 800; color: #1E1422; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ t.name }}</div><div style="font-size: 12.5px; color: #8A7E92; line-height: 1.35;">{{ t.role }}</div></div>
         </div>
       </div>
     </sc-for>
@@ -1163,9 +1158,8 @@
 </section>
 
 <!-- ===================== LOVE IT OR REFUND IT ===================== -->
-<section style="padding: 20px 32px 44px; max-width: 1160px; margin: 0 auto;">
-  <div data-reveal="" class="respad" style="position: relative; max-width: 1040px; margin: 0 auto; background: linear-gradient(165deg, #FFFFFF, #F7ECF8); border: 1px solid #F0E6F2; border-radius: 32px; padding: 44px; overflow: hidden; box-shadow: 0 40px 90px -56px rgba(168,85,247,.5);">
-    <div style="position: absolute; top: -90px; right: -70px; width: 420px; height: 420px; background: radial-gradient(circle, rgba(236,72,153,.16), transparent 65%); filter: blur(16px); pointer-events: none;"></div>
+<section style="padding: 40px 32px 52px; max-width: 1160px; margin: 0 auto;">
+  <div data-reveal="" class="respad" style="position: relative; max-width: 1040px; margin: 0 auto;">
     <div style="position: relative; display: grid; grid-template-columns: .92fr 1.08fr; gap: 44px; align-items: center;" class="wear-grid">
       <div>
         <div style="display: inline-flex; align-items: center; gap: 9px; padding: 8px 16px; border-radius: 999px; background: #fff; border: 1px solid #F0E6F2; box-shadow: 0 6px 18px -10px rgba(196,46,139,.4); margin-bottom: 22px;">
@@ -1181,7 +1175,7 @@
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <sc-for list="{{ refundBadges }}" as="b" hint-placeholder-count="4">
-          <div data-reveal="" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 22px; padding: 26px 22px; box-shadow: 0 16px 40px -30px rgba(30,20,34,.55); transition: transform .3s;" style-hover="transform:translateY(-5px); border-color:#FCE7F0;">
+          <div data-reveal="" class="refund-badge" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 22px; padding: 26px 22px; box-shadow: 0 16px 40px -30px rgba(30,20,34,.55); transition: transform .3s;" style-hover="transform:translateY(-5px); border-color:#FCE7F0;">
             <span style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(135deg,#FCE7F0,#F7ECF8); color: #C42E8B; font-size: 22px; margin-bottom: 16px;">{{ b.icon }}</span>
             <div style="font-size: 16.5px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 5px;">{{ b.title }}</div>
             <div style="font-size: 13.5px; line-height: 1.5; color: #8A7E92;">{{ b.body }}</div>

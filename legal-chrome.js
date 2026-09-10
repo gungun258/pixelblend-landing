@@ -62,7 +62,7 @@
         '</a>' +
         '<div style="display: flex; align-items: center; gap: 30px;" class="nav-links">' +
           drawerLinks.map(function (l) {
-            return '<a href="' + ix(l.href) + '" style="font-size: 14.5px; font-weight: 500; color: #5b5060; text-decoration: none;">' + l.label.replace('FAQ', 'FAQ') + '</a>';
+            return '<a href="' + ix(l.href) + '" style="font-size: 14.5px; font-weight: 500; color: #5b5060; text-decoration: none;">' + l.label + '</a>';
           }).join('') +
         '</div>' +
         '<div style="display: flex; align-items: center; gap: 12px;" class="nav-cta">' +
@@ -91,7 +91,8 @@
       '<div class="pb-drawer-links" style="display: flex; flex-direction: column; margin-top: 14px;">' + drawerRow() + '</div>' +
       '<div class="pb-drawer-cta" style="display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 24px;">' +
         '<a href="' + ix('#download') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 14px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff;">Download App</a>' +
-        '<a href="' + ix('#hero-cta') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 20px rgba(236,72,153,.35);">Open Studio</a>' +
+        '<a href="' + ix('#hero-cta') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 26px rgba(236,72,153,.4);">Open Studio — Free</a>' +
+        '<a href="' + ix('#hero-cta') + '" data-pb-close style="text-align: center; font-size: 14.5px; font-weight: 600; color: #5b5060; text-decoration: none; padding: 4px;">Log in</a>' +
       '</div>' +
     '</aside>';
 
@@ -147,24 +148,28 @@
   var footerEl = document.getElementById('pb-chrome-footer');
   if (headerEl) headerEl.innerHTML = headerHtml;
   if (footerEl) footerEl.innerHTML = footerHtml;
+  document.body.classList.add('lp-page');
+
+  var strayBack = document.querySelector('.lp-back');
+  if (strayBack) strayBack.remove();
+  var titleRow = document.querySelector('.lp-title-row');
+  if (titleRow) {
+    var nestedTitle = titleRow.querySelector('h1');
+    if (nestedTitle) titleRow.parentNode.insertBefore(nestedTitle, titleRow);
+    titleRow.remove();
+  }
 
   var wrap = document.querySelector('.lp-wrap');
   var h1 = wrap && wrap.querySelector('h1');
-  if (wrap && h1 && !wrap.querySelector('.lp-title-row')) {
-    var row = document.createElement('div');
-    row.className = 'lp-title-row';
-    var back = document.createElement('button');
-    back.type = 'button';
-    back.className = 'lp-back';
-    back.setAttribute('aria-label', 'Go back');
-    back.innerHTML = '<svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.75"></circle><path fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M13.5 8.5L10 12l3.5 3.5"></path></svg>';
-    back.addEventListener('click', function () {
-      if (window.history.length > 1) window.history.back();
-      else window.location.href = 'index.html';
-    });
-    h1.parentNode.insertBefore(row, h1);
-    row.appendChild(back);
-    row.appendChild(h1);
+  if (wrap && h1 && !wrap.querySelector('.lp-crumbs')) {
+    var crumbs = document.createElement('nav');
+    crumbs.className = 'lp-crumbs';
+    crumbs.setAttribute('aria-label', 'Breadcrumb');
+    crumbs.innerHTML =
+      '<a href="index.html">Home</a>' +
+      '<svg class="lp-crumbs-sep" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M6 3.5L11 8l-5 4.5"/></svg>' +
+      '<span aria-current="page">' + h1.textContent + '</span>';
+    wrap.insertBefore(crumbs, wrap.firstChild);
   }
 
   function setMenu(open) {

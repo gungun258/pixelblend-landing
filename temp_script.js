@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (c && c.parentNode) c.parentNode.removeChild(c);
     var s = document.getElementById('pb-boot-css');
     if (s && s.parentNode) s.parentNode.removeChild(s);
+    /* Restore document scrolling so mobile browser chrome can collapse */
+    document.documentElement.style.removeProperty('overflow');
+    document.body.style.removeProperty('overflow');
+    document.documentElement.style.overflowX = '';
+    document.documentElement.style.overflowY = '';
+    document.body.style.overflowX = '';
+    document.body.style.overflowY = '';
   }
   function pbHydrated() {
     var body = document.body;
@@ -123,6 +130,10 @@ function bindBaSlider() {
 
     function bindPbMotion() {
       if (document.documentElement.getAttribute('data-pb-motion') === '1') return true;
+      /* Wait until CSS is ready and boot cover is gone — otherwise hero anim
+         finishes behind the cover / without transitions (intermittent). */
+      if (!cssReady) return false;
+      if (document.documentElement.classList.contains('pb-booting')) return false;
       if (!document.querySelector('section')) return false;
       var heroRight = document.querySelector('.hero-demo-col');
       if (!heroRight) return false;
@@ -135,6 +146,15 @@ function bindBaSlider() {
       document.documentElement.setAttribute('data-pb-motion', '1');
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
 
+      function playIn(el) {
+        if (!el) return;
+        /* Force layout so opacity:0 is applied before pb-in (needed for transition). */
+        void el.offsetWidth;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { el.classList.add('pb-in'); });
+        });
+      }
+
       /* ---- Hero: keep strong immediate entrance ---- */
       var heroLeft = document.querySelector('header .hero-grid > div:first-child');
       if (heroLeft) {
@@ -143,17 +163,13 @@ function bindBaSlider() {
           if (ch.classList && ch.classList.contains('store-btns')) return;
           ch.classList.add('pb-reveal', 'pb-from-left');
           ch.style.setProperty('--pb-d', (80 + i * 110) + 'ms');
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () { ch.classList.add('pb-in'); });
-          });
+          playIn(ch);
         });
       }
       Array.prototype.forEach.call(heroCards, function (card, i) {
         card.classList.add('pb-reveal', 'pb-from-right', 'pb-card');
         card.style.setProperty('--pb-d', (220 + i * 160) + 'ms');
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () { card.classList.add('pb-in'); });
-        });
+        playIn(card);
       });
 
       /* ---- Rest of page: scroll-triggered fade-up (later + clearer) ---- */
@@ -191,7 +207,7 @@ function bindBaSlider() {
         var key = p ? (p.id || p.className || 'p') : 'x';
         if (!byParent[key]) byParent[key] = 0;
         var i = byParent[key]++;
-        addScroll(el, (i % 5) * 90, true);
+        addScroll(el, (i % 5) * 40, true);
       });
 
             function markText(el) {
@@ -208,7 +224,7 @@ function bindBaSlider() {
         var wrap = h2.closest && h2.closest('[data-reveal]');
         if (wrap && wrap !== h2 && wrap.children && wrap.children.length && wrap.children.length <= 8) {
           Array.prototype.forEach.call(wrap.children, function (ch, i) {
-            addScroll(ch, i * 100, false);
+            addScroll(ch, i * 45, false);
             markText(ch);
           });
           wrap.__pbScroll = 1;
@@ -222,7 +238,7 @@ function bindBaSlider() {
         var next = h2.nextElementSibling;
         if (next && next.tagName === 'P') group.push(next);
         group.forEach(function (el, i) {
-          addScroll(el, i * 100, false);
+          addScroll(el, i * 45, false);
           markText(el);
         });
       });
@@ -232,29 +248,50 @@ function bindBaSlider() {
         addScroll(el, 0, false);
       });
 
+      function revealEl(el) {
+        if (!el || el.classList.contains('pb-in')) return;
+        el.classList.add('pb-in');
+        if (el.__pbIsCard) el.classList.add('pb-card');
+      }
+
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
           var el = en.target;
           io.unobserve(el);
-          el.classList.add('pb-in');
-          /* hover lift/glow only on real cards — not headings / intros */
-          if (el.__pbIsCard) el.classList.add('pb-card');
+          revealEl(el);
         });
       }, {
-        threshold: 0.2,
-        /* fire once the block is clearly inside the section viewport */
-        rootMargin: '0px 0px -22% 0px'
+        threshold: 0.08,
+        /* trigger as soon as content enters the viewport */
+        rootMargin: '0px 0px -6% 0px'
       });
       scrollEls.forEach(function (el) { io.observe(el); });
 
+      /* Safety: IO can miss already-visible nodes on some loads — force those in. */
+      function revealVisible() {
+        var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        scrollEls.forEach(function (el) {
+          if (!el || el.classList.contains('pb-in')) return;
+          var r = el.getBoundingClientRect();
+          if (r.bottom > 40 && r.top < vh * 0.94) {
+            io.unobserve(el);
+            revealEl(el);
+          }
+        });
+      }
+      requestAnimationFrame(function () {
+        revealVisible();
+        setTimeout(revealVisible, 120);
+        setTimeout(revealVisible, 400);
+      });
 
       return true;
     }
     var motTries = 0;
     var motTimer = setInterval(function () {
       motTries += 1;
-      if (bindPbMotion() || motTries > 40) clearInterval(motTimer);
+      if (bindPbMotion() || motTries > 80) clearInterval(motTimer);
     }, 250);
 
     var pbScrollTok = 0;
