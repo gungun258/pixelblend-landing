@@ -4,116 +4,1766 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How It Works — PixelBlend</title>
+  <script src="assets/js/dc-runtime.js"></script>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="legal.css">
-</head>
-<body>
-  <div id="pb-chrome-header"></div>
-  <article class="lp-wrap lp-about">
-    <h1>How It Works</h1>
-    <p class="lp-meta">Two images in. A studio-quality visual, out.</p>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    @keyframes v4Rail { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes v4RailB { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    @keyframes v4Dot { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+    @keyframes v4Bar { 0% { width: 12%; } 100% { width: 92%; } }
+    @keyframes v4Scan { 0% { transform: translateY(-115%); } 100% { transform: translateY(115%); } }
+    @keyframes v4Pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+    @keyframes v4Ring { 0% { box-shadow: 0 0 0 0 rgba(236,72,153,.55); } 70% { box-shadow: 0 0 0 12px rgba(236,72,153,0); } 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); } }
+    @keyframes v4Ripple { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(2.4); opacity: 0; } }
+    @keyframes v4Nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+    @keyframes v4Live { 0% { transform: scale(.6); opacity: .55; } 70% { transform: scale(2.1); opacity: 0; } 100% { transform: scale(2.1); opacity: 0; } }
+    body.hiw-page { background: #FAF4FB; }
+    /* dc-runtime sets html/body/#dc-root to height:100%, which pins the site
+       footer under the first viewport and hides the hero under the fixed nav. */
+    body.hiw-page #dc-root,
+    body.hiw-page #dc-root > .sc-host {
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible;
+    }
+    body.hiw-page #dc-root { position: relative; z-index: 1; }
+    body.hiw-page #pb-chrome-footer { position: relative; z-index: 2; }
+    /* Same as home: body already clears the 72px fixed nav. */
+    .hiw-root { padding-top: 0; }
+    .hiw-hero-inner {
+      position: relative;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 76px 32px 44px;
+    }
+    .hiw-hero-copy { max-width: 720px; margin: 0 auto; text-align: center; }
+    .hiw-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .14em;
+      color: #C42E8B;
+    }
+    .hiw-hero h1 {
+      margin: 0; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 56px; line-height: 1.12; font-weight: 800;
+      letter-spacing: -.03em; color: #1A1420;
+    }
+    .hiw-hero h1 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; padding-right: 3px;
+    }
+    .hiw-lead {
+      margin: 28px auto 0; max-width: 600px;
+      font-size: 18px; line-height: 1.7; color: #5b5060;
+    }
+    .hiw-hero-ctas { margin-top: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .hiw-hero-ctas a { text-decoration: none; box-sizing: border-box; }
+    .hiw-cta-pri {
+      font-size: 15px; font-weight: 700; color: #fff;
+      padding: 13px 24px; border-radius: 999px;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      box-shadow: 0 10px 24px rgba(236,72,153,.28);
+    }
+    .hiw-cta-sec {
+      font-size: 15px; font-weight: 700; color: #1A1420;
+      padding: 12px 22px; border-radius: 999px;
+      background: #fff; border: 1.5px solid #E6DED6;
+    }
+    .hiw-hero-meta {
+      margin-top: 28px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+      font-size: 13.5px; font-weight: 600; letter-spacing: .01em; color: #8D8296;
+    }
+    .hiw-hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+    .hiw-hero-meta i {
+      width: 5px; height: 5px; border-radius: 50%; background: #EC4899; opacity: .7;
+    }
+    .hiw-facts {
+      border-top: 1px solid #EBDCEC;
+      border-bottom: 1px solid #EBDCEC;
+      background: #fff;
+    }
+    .hiw-facts-row {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .hiw-facts-row > div {
+      padding: 36px 28px;
+      border-right: 1px solid #F0E6F2;
+    }
+    .hiw-facts-row > div:last-child { border-right: none; }
+    .hiw-facts-k {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 28px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hiw-facts-v {
+      margin-top: 10px; font-size: 14px; line-height: 1.5; color: #6B6070; max-width: 220px;
+    }
+    @media (max-width: 800px) {
+      .hiw-facts-row { grid-template-columns: 1fr 1fr; padding: 8px 16px 16px; }
+      .hiw-facts-row > div { border-right: none; border-bottom: 1px solid #F0E6F2; padding: 22px 16px; }
+      .hiw-facts-row > div:nth-child(odd) { border-right: 1px solid #F0E6F2; }
+      .hiw-facts-row > div:nth-last-child(-n+2) { border-bottom: none; }
+    }
+    #walkthrough {
+      background: linear-gradient(180deg, #FAF4FB 0%, #fff 22%, #FFF7FB 100%);
+    }
+    .hiw-walk-head {
+      max-width: 1160px; margin: 0 auto; padding: 74px 32px 8px;
+    }
+    .hiw-walk-head h2 {
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420; margin: 0;
+    }
+    .hiw-walk-head h2 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hiw-walk-head-note {
+      margin-top: 10px; font-size: 13px; font-weight: 700; letter-spacing: .12em; color: #C42E8B;
+    }
+    .hiw-rail-head {
+      max-width: 1160px; margin: 0 auto; padding: 72px 32px 28px; text-align: center;
+    }
+    .hiw-rail-head h2 {
+      margin: 0 auto; max-width: 640px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-rail-head h2 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hiw-rail-head p {
+      margin: 14px auto 0; max-width: 420px;
+      font-size: 16.5px; line-height: 1.6; color: #6B6070;
+    }
+    @media (max-width: 640px) {
+      .hiw-rail-head { padding: 48px 20px 20px; }
+      .hiw-rail-head h2 { font-size: 28px; }
+    }
+    .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 80px 32px; }
+    .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; }
+    .hiw-shoot-head {
+      display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      gap: 48px; align-items: start;
+      padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .hiw-shoot-kicker {
+      font-size: 12px; font-weight: 700; letter-spacing: .14em; color: #F9A8D4;
+    }
+    .hiw-shoot-head h2 {
+      margin: 12px 0 0;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #fff;
+    }
+    .hiw-shoot-head h2 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      color: #F9A8D4;
+    }
+    .hiw-shoot-head p {
+      margin: 8px 0 0; font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.68);
+    }
+    @media (max-width: 800px) {
+      .hiw-shoot { padding: 56px 20px; }
+      .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; }
+      .hiw-shoot-head h2 { font-size: 30px; }
+    }
+    #usecases { padding: 76px 32px 84px; border-bottom: 1px solid #EBDCEC; }
+    .hiw-uc { max-width: 1160px; margin: 0 auto; }
+    .hiw-uc-head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+    .hiw-uc-kicker { font-size: 12px; font-weight: 700; letter-spacing: .14em; color: #C42E8B; }
+    .hiw-uc-head h2 {
+      margin: 12px 0 0; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-uc-head p { margin: 14px 0 0; font-size: 16.5px; line-height: 1.6; color: #6B6070; }
+    .hiw-uc-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+      background: #fff; border: 1px solid #F0E6F2; border-radius: 24px;
+      padding: 36px 40px; margin-bottom: 18px;
+    }
+    .hiw-uc-row-rev { grid-template-columns: 1fr 1fr; }
+    .hiw-uc-row-rev .hiw-uc-copy { order: 2; }
+    .hiw-uc-row-rev .hiw-uc-visual { order: 1; }
+    .hiw-uc-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      font-size: 13px; font-weight: 800; color: #fff;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      box-shadow: 0 8px 18px -8px rgba(236,72,153,.5);
+    }
+    .hiw-uc-tag { font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B; }
+    .hiw-uc-copy h3 {
+      margin: 12px 0 0; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 26px; line-height: 1.2; font-weight: 800; letter-spacing: -.03em; color: #1A1420;
+    }
+    .hiw-uc-copy p { margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #5b5060; }
+    .hiw-uc-chips { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    span.hiw-uc-chip {
+      display: inline-flex; align-items: center;
+      font-size: 13px; font-weight: 600; color: #7A2E6A;
+      background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px;
+    }
+    .hiw-uc-more { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 900px) {
+      #usecases { padding: 56px 20px 64px; }
+      .hiw-uc-head h2 { font-size: 30px; }
+      .hiw-uc-row, .hiw-uc-row-rev { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+      .hiw-uc-row-rev .hiw-uc-copy, .hiw-uc-row-rev .hiw-uc-visual { order: 0; }
+      .hiw-uc-more { grid-template-columns: 1fr; }
+    }
+    #marketplace { padding: 72px 32px 0; }
+    .hiw-mkt-head { max-width: 1160px; margin: 0 auto 28px; text-align: center; }
+    .hiw-mkt-head .hiw-uc-kicker { margin-bottom: 0; }
+    .hiw-mkt-head h2 {
+      margin: 12px auto 0; max-width: 640px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-mkt-card {
+      max-width: 1160px; margin: 0 auto; background: #fff;
+      border: 1px solid #F0E6F2; border-radius: 24px; padding: 32px 36px 36px;
+    }
+    .hiw-mkt-head p,
+    .hiw-mkt-lead {
+      margin: 14px auto 0; max-width: 560px;
+      font-size: 16.5px; line-height: 1.65; color: #5b5060;
+    }
+    .hiw-mkt-body {
+      display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start;
+    }
+    .hiw-mkt-phone-wrap {
+      width: 300px;
+      margin: 0 auto;
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+    }
+    .hiw-mkt-card a { text-decoration: none; }
+    #devices { padding: 72px 32px 0; }
+    .hiw-dev {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center;
+    }
+    .hiw-dev h2 {
+      margin: 12px 0 0; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 36px; line-height: 1.15; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-dev h2 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hiw-dev-copy p { margin: 14px 0 0; font-size: 16.5px; line-height: 1.65; color: #5b5060; max-width: 480px; }
+    .hiw-dev-ctas { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .hiw-dev-ctas a { text-decoration: none; }
+    .hiw-dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .hiw-dev-card {
+      background: #fff; border: 1px solid #F0E6F2; border-radius: 16px; padding: 18px 16px;
+    }
+    .hiw-dev-card strong { display: block; font-size: 15.5px; font-weight: 800; letter-spacing: -.02em; color: #1A1420; }
+    .hiw-dev-card span { display: block; margin-top: 4px; font-size: 13.5px; line-height: 1.45; color: #6B6070; }
+    @media (max-width: 900px) {
+      .hiw-dev { grid-template-columns: 1fr; gap: 28px; }
+      .hiw-dev h2 { font-size: 30px; }
+    }
+    #faq { padding: 72px 32px 0; }
+    .hiw-faq { max-width: 760px; margin: 0 auto; }
+    .hiw-faq-head { text-align: center; margin-bottom: 28px; }
+    .hiw-faq-head h2 {
+      margin: 0; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-faq-head p { margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #6B6070; }
+    .hiw-faq-head a { color: #C42E8B; font-weight: 700; text-decoration: none; }
+    .hiw-faq-list {
+      background: #fff; border: 1px solid #F0E6F2; border-radius: 20px; overflow: hidden;
+    }
+    .hiw-faq-item { padding: 18px 22px; border-bottom: 1px solid #F0E6F2; cursor: pointer; }
+    .hiw-faq-item:last-child { border-bottom: none; }
+    .hiw-faq-q { flex: 1; font-size: 16.5px; font-weight: 700; letter-spacing: -.02em; color: #1A1420; }
+    .hiw-faq-a { margin: 10px 0 0; font-size: 15.5px; line-height: 1.65; color: #5b5060; }
+    .hiw-end { padding: 72px 32px 88px; text-align: center; }
+    .hiw-end h2 {
+      margin: 0 auto; max-width: 720px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 44px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420;
+    }
+    .hiw-end h2 em {
+      font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hiw-end-ctas { margin-top: 28px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
+    .hiw-end-ctas a { text-decoration: none; }
+    .hiw-end-note { margin-top: 16px; font-size: 15px; color: #8D8296; }
+    @media (max-width: 640px) {
+      .hiw-end h2 { font-size: 30px; }
+      .hiw-end-ctas a { width: 100%; text-align: center; box-sizing: border-box; }
+    }
+    .hiw-mkt-scroll {
+      overflow-y: auto !important;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    @media (max-width: 900px) {
+      .hiw-mkt-head h2 { font-size: 30px; }
+      .hiw-mkt-body { grid-template-columns: 1fr; }
+      .hiw-mkt-card { padding: 22px; }
+    }
+    .hiw-walk {
+      max-width: 1160px; margin: 0 auto; padding: 0 32px 84px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 72px;
+      align-items: stretch;
+    }
+    .hiw-walk-aside { min-width: 0; }
+    .hiw-walk-steps { padding-bottom: min(36vh, 300px); }
+    .hiw-walk-phone {
+      position: sticky;
+      top: 96px;
+    }
+    @media (max-width: 1100px) {
+      .hiw-root { min-width: 0 !important; overflow-x: clip; }
+      .hiw-walk { grid-template-columns: 1fr; gap: 36px; padding: 0 20px 56px; }
+      .hiw-walk-steps { padding-bottom: 0; }
+      .hiw-walk-phone { position: relative; top: 0; }
+      .hiw-hero h1 { font-size: 38px !important; }
+      .hiw-hero .hiw-lead { font-size: 16px !important; }
+    }
+    @media (min-width: 1100px) {
+      .hiw-hero-inner { padding-top: 92px !important; }
+    }
+    @media (max-width: 900px) {
+      .hiw-hero-inner { padding: 56px 22px 44px !important; }
+    }
+    @media (max-width: 640px) {
+      .hiw-hero h1 { font-size: 30px !important; }
+      .hiw-hero-ctas { flex-direction: column; width: 100%; }
+      .hiw-hero-ctas a { width: 100%; text-align: center; }
+      .hiw-hero-inner { padding: 44px 16px 34px !important; }
+    }
 
-    <div class="lp-how-intro">
-      <div class="lp-how-intro-copy">
-        <p class="lp-kicker">Simple workflow</p>
-        <p class="lp-lead">No prompts, no editing skills, no learning curve. Upload your product and any background — our AI handles cutout, lighting, shadows and reflections in seconds.</p>
-        <ul class="lp-checklist">
-          <li>Works with packshots, phone photos, or catalog crops</li>
-          <li>Any scene — studio, lifestyle, nature, or marketplace</li>
-          <li>Realistic light, shadows &amp; reflections in one tap</li>
-        </ul>
+    body.hiw-page { overflow-x: hidden; }
+    .hiw-shoot-body { margin-top: 36px; display: grid; grid-template-columns: 240px 1fr; gap: 44px; align-items: start; }
+    .hiw-shoot-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .hiw-refund { padding: 72px 32px 0; }
+    .hiw-refund-card {
+      max-width: 1160px; margin: 0 auto; background: linear-gradient(160deg, #2A1240, #3E1850);
+      border-radius: 30px; padding: 46px; color: #fff;
+    }
+    .hiw-refund-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+    .hiw-refund-title {
+      margin-top: 20px; font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 36px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #fff;
+    }
+    .hiw-mkt-ctas { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .hiw-uc-visual { min-width: 0; }
+
+    @media (max-width: 1024px) {
+      .hiw-walk-phone-frame { width: 100% !important; max-width: 340px; }
+      .hiw-dev-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 900px) {
+      .hiw-shoot-body, .hiw-refund-grid { grid-template-columns: 1fr; gap: 28px; }
+      .hiw-refund { padding: 48px 16px 0; }
+      .hiw-refund-card { padding: 28px 20px; border-radius: 22px; }
+      .hiw-refund-title { font-size: 28px; }
+      .hiw-uc-visual { display: flex !important; flex-direction: column !important; gap: 14px !important; }
+      .hiw-uc-arrow { display: none !important; }
+      .hiw-walk-head { padding: 48px 20px 8px; }
+      .hiw-walk-head h2 { font-size: 30px; }
+      .hiw-faq-head h2 { font-size: 30px; }
+      .hiw-mkt-ctas a, .hiw-dev-ctas a { width: 100%; text-align: center; box-sizing: border-box; }
+      #devices, #marketplace, #faq { padding-left: 16px; padding-right: 16px; }
+      .hiw-walk-phone { display: flex; flex-direction: column; align-items: center; }
+    }
+    .hiw-demo-result { min-width: 0; max-width: 100%; }
+    .hiw-demo-result-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; min-height: 34px; height: auto; flex-wrap: wrap;
+    }
+    .hiw-try-hint { min-width: 0; }
+    .hiw-try-hint > span { max-width: 100%; }
+    .hiw-try-hint-arrow { display: inline-block; flex: none; animation: v4Nudge 1.4s infinite; }
+    @media (max-width: 640px) {
+      .hiw-try-hint > span { font-size: 12px !important; }
+    }
+    .hiw-phone-shell {
+      width: 340px; max-width: 100%; box-sizing: border-box;
+      border-radius: 46px; background: #1A1420; padding: 11px;
+      box-shadow: 0 40px 80px -40px rgba(26,20,32,.7);
+    }
+    .hiw-step-grid { display: grid; grid-template-columns: 74px 1fr; gap: 18px; align-items: start; }
+    .hiw-step2-title { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .hiw-root img { max-width: 100%; }
+    .hiw-root, .hiw-root * { box-sizing: border-box; }
+
+    @media (max-width: 1100px) {
+      .hiw-demo-eq { display: none !important; }
+      .hiw-demo-plus { padding-top: 0 !important; }
+      .hiw-in-cols { padding: 18px 16px 20px !important; gap: 10px; min-width: 0; }
+      .hiw-demo-cols {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 300px) !important;
+        column-gap: 16px !important;
+        row-gap: 8px !important;
+        padding: 0 20px !important;
+      }
+      .hiw-demo-cols > * { min-width: 0; max-width: 100%; grid-column: auto !important; grid-row: auto !important; }
+      .hiw-demo-cols > div:nth-child(2) { display: none !important; }
+      .hiw-in-cols {
+        display: grid !important;
+        grid-template-columns: minmax(0, 0.9fr) 40px minmax(0, 1.15fr) !important;
+      }
+      .hiw-demo-result { padding: 18px 16px 20px !important; }
+    }
+    @media (max-width: 640px) {
+      .hiw-demo-cols {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0 12px !important;
+        gap: 16px;
+      }
+      .hiw-in-cols {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .hiw-demo-plus { height: 40px; }
+      .hiw-dev-grid { grid-template-columns: 1fr; }
+      .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
+      .hiw-demo-banner { padding: 16px 16px !important; }
+      .hiw-demo-cols { padding: 0 12px !important; }
+      .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
+      .hiw-step-grid { grid-template-columns: 52px 1fr; gap: 12px; }
+      .hiw-step-grid h3 { font-size: 22px !important; }
+      .hiw-hero-inner { padding: 44px 16px 34px !important; }
+      .hiw-end { padding: 48px 16px 64px; }
+      .hiw-thumbs-3 { grid-template-columns: 1fr 1fr !important; }
+      .hiw-shoot-shots { grid-template-columns: 1fr; max-width: 360px; }
+      .hiw-facts-row { grid-template-columns: 1fr; }
+      .hiw-facts-row > div { border-right: none !important; }
+      .hiw-facts-row > div:nth-last-child(-n+2) { border-bottom: 1px solid #F0E6F2; }
+      .hiw-facts-row > div:last-child { border-bottom: none; }
+    }
+
+  </style>
+</head>
+<body class="hiw-page">
+  <div id="pb-chrome-header"></div>
+  <x-dc>
+  <div class="hiw-root">
+<div id="top" class="hiw-hero" style="border-bottom: 1px solid #E6DED6; position: relative; overflow: hidden">
+    <div style="position: absolute; inset: 180px 0 auto 0; height: 520px; background: radial-gradient(ellipse at 50% 40%, rgba(196,46,139,.13), rgba(251,247,242,0) 68%); pointer-events: none"></div>
+    <div class="hiw-hero-inner">
+      <div class="hiw-hero-copy">
+        <h1>The product stays yours.<br>Only the <em>background</em> changes.</h1>
+        <p class="hiw-lead">Upload your product and any scene. PixelBlend returns the same product — shape, colour, label — with light and shadow matched, in about ten seconds.</p>
+        <div class="hiw-hero-ctas">
+          <a href="#walkthrough" class="hiw-cta-pri">Walk me through it</a>
+          <a href="#refund" class="hiw-cta-sec">Refund if you don't like it</a>
+        </div>
+        <div class="hiw-hero-meta">
+          <span><i></i>2 photos in</span>
+          <span><i></i>~10 seconds</span>
+          <span><i></i>Refund if unused</span>
+        </div>
       </div>
-      <div class="lp-how-eq" aria-label="Product plus background equals blended result">
-        <figure>
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=420&q=80&auto=format&fit=crop" alt="Watch product shot" loading="lazy">
-          <figcaption>Product</figcaption>
-        </figure>
-        <span class="lp-how-eq-op" aria-hidden="true">+</span>
-        <figure>
-          <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=420&q=80&auto=format&fit=crop" alt="Forest background" loading="lazy">
-          <figcaption>Background</figcaption>
-        </figure>
-        <span class="lp-how-eq-op lp-how-eq-eq" aria-hidden="true">=</span>
-        <figure class="lp-how-eq-result">
-          <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=520&q=80&auto=format&fit=crop" alt="Watch blended into scene" loading="lazy">
-          <figcaption>AI result</figcaption>
-        </figure>
+
+      <div class="hiw-demo" ref="{{ demoRef }}" style="margin-top: 52px; background: #fff; border: 1px solid #E6DED6; border-radius: 24px; padding: 0 0 34px; box-shadow: 0 40px 90px -70px rgba(74,52,40,1); overflow: hidden">
+        <div class="hiw-demo-banner" style="position: relative; overflow: hidden; padding: 22px 34px; margin-bottom: 26px; background: linear-gradient(105deg, #2A1030 0%, #6B1349 46%, #A81F6B 100%)">
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 88% 130%, rgba(244,63,94,.55), rgba(168,31,107,0) 62%); pointer-events: none"></div>
+          <div style="position: relative; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap">
+            <span style="display: flex; align-items: center; gap: 9px; padding: 8px 16px 8px 13px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.34); box-shadow: 0 0 0 4px rgba(236,72,153,.16); font-size: 12px; font-weight: 800; letter-spacing: .16em; color: #fff; white-space: nowrap"><span style="position: relative; display: flex; align-items: center; justify-content: center; width: 10px; height: 10px"><span style="position: absolute; inset: 0; border-radius: 50%; background: #FF7EC0; animation: v4Live 1.9s ease-out infinite"></span><span style="position: relative; width: 6px; height: 6px; border-radius: 50%; background: #fff"></span></span>LIVE DEMO</span>
+            <span style="font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.86)">This one actually runs — <strong style="font-weight: 800; color: #fff">tap a background below</strong> and watch the result change.</span>
+          </div>
+        </div>
+        <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 68px 336px; align-items: stretch; column-gap: 0; padding: 0 34px">
+
+          <div style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
+            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #A2968D; white-space: nowrap">WHAT GOES IN</span>
+            <span style="flex: 1; height: 1px; background: #EDE4DB"></span>
+          </div>
+          <div style="grid-column: 2"></div>
+          <div style="grid-column: 3; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
+            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #C42E8B; white-space: nowrap">WHAT COMES OUT</span>
+            <span style="flex: 1; height: 1px; background: #F4D6E8"></span>
+          </div>
+
+          <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 236px 62px minmax(0, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 22px 24px 24px">
+
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; height: 34px">
+                <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">1</span>
+                <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">YOUR PRODUCT</span>
+              </div>
+              <div style="margin-top: 13px; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ photoSrc }}" alt="The sample product" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s ease"></div>
+              <div style="margin-top: 11px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
+                <sc-for list="{{ prodOpts }}" as="p" hint-placeholder-count="4">
+                  <button sc-camel-on-click="{{ p.pick }}" title="{{ p.name }}" style="{{ p.btn }}" >
+                    <img src="{{ p.src }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                    <div style="{{ p.tick }}">✓</div>
+                  </button>
+                </sc-for>
+              </div>
+              <div style="margin-top: 9px; font-size: 12.5px; line-height: 1.45; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
+            </div>
+
+            <div class="hiw-demo-plus" style="display: flex; align-items: center; justify-content: center; align-self: stretch; padding-top: 34px"><span style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 1px solid #E6DED6; box-shadow: 0 6px 14px -10px rgba(74,52,40,.9); font-family: 'Playfair Display', serif; font-size: 25px; line-height: 1; color: #8D8296">+</span></div>
+
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; height: 34px">
+                <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">2</span>
+                <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">PICK A BACKGROUND</span>
+              </div>
+              <div class="hiw-try-hint" style="margin-top: 11px; min-width: 0"><span style="{{ tryHint }}">{{ tryHintText }}<span class="hiw-try-hint-arrow">↓</span></span></div>
+              <div style="margin-top: 10px; max-height: 404px; overflow-y: auto; padding-right: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start">
+                <sc-for list="{{ tryOutfits }}" as="o" hint-placeholder-count="4">
+                  <div sc-camel-on-click="{{ o.pick }}" style="{{ o.card }}" >
+                    <div style="position: relative; border-radius: 12px 12px 0 0; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0"><img src="{{ o.src }}" alt="{{ o.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"><div style="{{ o.tick }}">✓</div><div style="{{ o.ripple }}"></div></div>
+                    <div style="padding: 9px 11px 11px">
+                      <div style="font-size: 13px; font-weight: 700; line-height: 1.2; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.name }}</div>
+                      <button sc-camel-on-click="{{ o.pick }}" style="{{ o.btn }}">{{ o.btnLabel }}</button>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center"><span style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 27px; line-height: 1; color: #fff">=</span></div>
+
+          <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 22px 24px 24px">
+            <div class="hiw-demo-result-head">
+              <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+                <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; font-size: 14px; font-weight: 800; flex: none">3</span>
+                <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #C42E8B; white-space: nowrap">YOUR RESULT</span>
+              </div>
+              <span class="hiw-demo-status" style="{{ tryStatusStyle }}">{{ tryStatus }}</span>
+            </div>
+            <div style="margin-top: 13px; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; border: 1px solid #F0DCE9; background: repeating-linear-gradient(135deg, #F7EDF3 0 12px, #FFFBFD 12px 24px)">
+              <img src="{{ trySrc }}" alt="The background you picked" style="{{ tryImg }}">
+              <img src="{{ tryProductSrc }}" alt="Your product in the new scene" style="{{ tryProductStyle }}">
+              <div style="{{ tryIdle }}">
+                <span style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px dashed #C9A9C4"></span>
+                <span style="font-size: 13px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">THE SAME PRODUCT</span>
+                <span style="font-size: 13px; line-height: 1.5; color: #8D8296">in the scene you pick</span>
+              </div>
+              <div style="{{ tryVeil }}"></div>
+              <div style="{{ tryScan }}"></div>
+              <div style="{{ tryChip }}">{{ tryChipText }}</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 13px; line-height: 1.45; color: #8D8296">Same shape, same colour, same label. This preview drops in the product still — the app matches light and shadow.</div>
+          </div>
+
+        </div>
       </div>
     </div>
+  </div>
 
-    <section class="lp-how-detail">
-      <h2>What happens in each step</h2>
-      <div class="lp-how-cards">
-        <article>
-          <span class="lp-how-num">1</span>
-          <figure>
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=560&q=80&auto=format&fit=crop" alt="Upload product" loading="lazy">
-          </figure>
-          <h3>Upload your product</h3>
-          <p>Any clear product shot works — packshot, phone photo or catalog image. We cut it out cleanly, automatically.</p>
-        </article>
-        <article>
-          <span class="lp-how-num">2</span>
-          <figure>
-            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=560&q=80&auto=format&fit=crop" alt="Choose background" loading="lazy">
-          </figure>
-          <h3>Choose any background</h3>
-          <p>Upload a scene from your camera roll, or pick curated backdrops from the creator marketplace.</p>
-        </article>
-        <article>
-          <span class="lp-how-num">3</span>
-          <figure>
-            <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=560&q=80&auto=format&fit=crop" alt="Get blended visual" loading="lazy">
-          </figure>
-          <h3>Get your blended visual</h3>
-          <p>Our AI composites your product into the scene with matching lighting, shadows and perspective.</p>
-        </article>
-      </div>
-    </section>
+  <div class="hiw-facts">
+    <div class="hiw-facts-row">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+        <div>
+          <div class="hiw-facts-k">{{ f.k }}</div>
+          <div class="hiw-facts-v">{{ f.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
 
-    <section class="lp-values">
-      <h2>Why brands love it</h2>
-      <div class="lp-value-grid">
-        <article>
-          <div class="lp-value-icon">✍️</div>
-          <h3>No prompts to write</h3>
-          <p>Skip the prompt engineering. Just upload two images and blend.</p>
-        </article>
-        <article>
-          <div class="lp-value-icon">🎨</div>
-          <h3>No editing skills needed</h3>
-          <p>No Photoshop layers, masks, or retouching marathon.</p>
-        </article>
-        <article>
-          <div class="lp-value-icon">⚡</div>
-          <h3>AI does the rest</h3>
-          <p>Lighting, shadows, perspective and reflections — handled automatically.</p>
-        </article>
-      </div>
-    </section>
+  <div id="walkthrough" style="border-bottom: 1px solid #EBDCEC">
+    <div class="hiw-walk-head">
+      <h2>Three steps, from packshot to <em>campaign</em></h2>
+      <div class="hiw-walk-head-note">SCROLL OR TAP A STEP</div>
+    </div>
+    <div class="hiw-walk">
+      <div class="hiw-walk-steps">
 
-    <section class="lp-split">
-      <div class="lp-split-copy">
-        <h2>Two ways to get backgrounds</h2>
-        <p><strong>Bring your own</strong> — upload any scene from your camera roll, a render, or inspiration screenshot.</p>
-        <p><strong>Shop the marketplace</strong> — browse curated backdrops from photographers and studios, blend first, then license if you love the result.</p>
-        <a class="lp-inline-cta" href="index.html#marketplace">Explore marketplace →</a>
-      </div>
-      <figure class="lp-split-media">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=720&q=80&auto=format&fit=crop" alt="Marketplace background scene" loading="lazy">
-      </figure>
-    </section>
+        <div id="hiw-pin-0" class="hiw-pin hiw-pin-0" sc-camel-on-click="{{ stepOne.pick }}" style="{{ stepOne.row }}">
+          <div class="hiw-step-grid">
+            <div style="{{ stepOne.num }}">01</div>
+            <div>
+              <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepOne.t }}</h3>
+              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepOne.d }}</p>
+              <sc-if value="{{ stepOne.active }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px">
+                  <sc-for list="{{ stepOne.chips }}" as="c" hint-placeholder-count="4">
+                    <span style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
 
-    <section class="lp-cta-band">
-      <h2>Try your first blend</h2>
-      <p>Download the app and see a result in under a minute.</p>
-      <div class="lp-cta-actions">
-        <a href="index.html#download">Get the app</a>
-        <a href="pricing.html" class="lp-cta-ghost">See pricing</a>
+        <div id="hiw-pin-1" class="hiw-pin hiw-pin-1" sc-camel-on-click="{{ optA.pick }}" style="{{ branch.wrap }}">
+          <div class="hiw-step-grid">
+            <div style="{{ branch.num }}">02</div>
+            <div>
+              <div class="hiw-step2-title">
+                <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">Bring in a background</h3>
+                <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .14em; color: #C42E8B; background: #FCF0F7; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">CHOOSE ONE</span>
+              </div>
+              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">Two routes to the same place. Upload a background you found or shot anywhere, or tap a scene a creator already put in the marketplace.</p>
+
+              <div style="margin-top: 20px; position: relative; padding-left: 30px">
+                <div style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1.5px; background: #E6DED6"></div>
+                <div style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #FAF4FB; border: 1.5px solid #E6DED6; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: #8D8296">OR</div>
+
+                <div class="hiw-pin hiw-pin-1" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <span style="{{ optA.badge }}">A</span>
+                    <span style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Upload a background from anywhere</span>
+                  </div>
+                  <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Download or screenshot a scene from Unsplash, Pexels, Pinterest, an Instagram post, a studio render or your own camera roll, then pick it out of your gallery.</p>
+                  <sc-if value="{{ optA.active }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px">
+                      <sc-for list="{{ optA.chips }}" as="c" hint-placeholder-count="3">
+                        <span style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+
+                <div style="height: 14px"></div>
+
+                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <span style="{{ optB.badge }}">B</span>
+                    <span style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Pick a creator listing instead</span>
+                  </div>
+                  <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Photographers, studios, 3D artists and agencies list their collections inside PixelBlend — marble tabletops, studio gradients, lifestyle interiors, nature scenes, seasonal sets and city backdrops. One tap on a listing skips the uploading entirely.</p>
+                  <sc-if value="{{ optB.active }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px">
+                      <sc-for list="{{ optB.chips }}" as="c" hint-placeholder-count="4">
+                        <span style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="hiw-pin-3" class="hiw-pin hiw-pin-3" sc-camel-on-click="{{ stepThree.pick }}" style="{{ stepThree.row }}">
+          <div class="hiw-step-grid">
+            <div style="{{ stepThree.num }}">03</div>
+            <div>
+              <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepThree.t }}</h3>
+              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepThree.d }}</p>
+              <sc-if value="{{ stepThree.active }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px">
+                  <sc-for list="{{ stepThree.chips }}" as="c" hint-placeholder-count="4">
+                    <span style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </section>
-  </article>
+
+      <div class="hiw-walk-aside">
+        <div class="hiw-walk-phone">
+        <div class="hiw-walk-phone-frame" style="width: 420px; display: flex; justify-content: center">
+        <div class="hiw-phone-shell">
+          <div style="position: relative; border-radius: 36px; background: #FAF4FB; overflow: hidden; height: 620px; display: flex; flex-direction: column">
+            <div style="padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #8D8296">
+              <span>9:41</span>
+              <span style="width: 74px; height: 20px; background: #1A1420; border-radius: 999px; margin-top: -6px"></span>
+              <span>PixelBlend</span>
+            </div>
+            <div style="padding: 18px 20px 8px">
+              <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B">{{ screen.kicker }}</div>
+              <div style="margin-top: 6px; font-family: 'Playfair Display', serif; font-size: 24px; line-height: 1.16">{{ screen.title }}</div>
+            </div>
+            <div style="flex: 1; padding: 8px 20px 0; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+              <div style="{{ screen.visual }}">
+                <sc-if value="{{ screen.hasImage }}" hint-placeholder-val="{{ true }}">
+                  <img src="{{ screen.img }}" alt="App screen" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                </sc-if>
+                <sc-if value="{{ screen.hasPlaceholder }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; text-align: center; padding: 18px; height: 100%">
+                    <span style="width: 30px; height: 30px; border-radius: 50%; border: 1.5px dashed #C9A9C4"></span>
+                    <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">{{ screen.placeholderLabel }}</span>
+                    <span style="font-size: 12px; line-height: 1.45; color: #8D8296">{{ screen.placeholderNote }}</span>
+                  </div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ screen.hasBar }}" hint-placeholder-val="{{ false }}">
+                <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
+                  <div style="height: 6px; border-radius: 999px; background: #EFE7E0; overflow: hidden">
+                    <div style="height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg, #A855F7, #EC4899, #F43F5E)"></div>
+                  </div>
+                  <div style="margin-top: 9px; font-size: 12.5px; font-weight: 700; color: #4C4453">Blended in 9.4 seconds</div>
+                  <div style="margin-top: 2px; font-size: 12px; color: #8D8296">Shape, colour and label untouched</div>
+                </div>
+              </sc-if>
+              <sc-for list="{{ screen.rows }}" as="r" hint-placeholder-count="2">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
+                  <span style="font-size: 13.5px; font-weight: 700; color: #1A1420">{{ r.t }}</span>
+                  <span style="font-size: 12.5px; color: #8D8296">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding: 14px 20px 20px">
+              <button type="button" id="hiw-phone-cta" sc-camel-on-click="{{ screen.ctaClick }}" style="width: 100%; border: 0; cursor: pointer; text-align: center; font-size: 14.5px; font-weight: 700; color: #fff; padding: 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); font-family: inherit;">{{ screen.cta }}</button>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 7px">
+          <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+            <div sc-camel-on-click="{{ d.pick }}" style="{{ d.style }}"></div>
+          </sc-for>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-bottom: 1px solid #E6DED6">
+    <div class="hiw-rail-head">
+      <h2>Made in the app, from packshots people <em>already had</em></h2>
+      <p>A sample of blends, tagged with where the background came from.</p>
+    </div>
+    <div style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); padding-bottom: 30px">
+      <div style="display: flex; gap: 18px; width: max-content; animation: v4Rail 58s linear infinite; padding: 8px 0 0">
+        <sc-for list="{{ rail }}" as="t" hint-placeholder-count="16">
+          <div style="width: 224px">
+            <div style="aspect-ratio: 3/4; overflow: hidden; border-radius: 3px 44px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 18px; width: max-content; animation: v4RailB 66s linear infinite; padding: 18px 0 0">
+        <sc-for list="{{ railB }}" as="t" hint-placeholder-count="16">
+          <div style="width: 224px">
+            <div style="aspect-ratio: 3/4; overflow: hidden; border-radius: 44px 3px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="hiw-shoot">
+    <div class="hiw-shoot-inner">
+      <div class="hiw-shoot-head">
+        <div>
+          <div class="hiw-shoot-kicker">THE SHOOT-DAY TRICK</div>
+          <h2>One shoot, one product,<br><em>a season of visuals</em></h2>
+        </div>
+        <p>You shot forty frames of the same product against the same seamless white, because that is what a studio day is like. Upload them and change the scene in each one. The angle, the crop, the reflection and the label stay exactly as they were — only the background is new, so a shoot you already paid for keeps giving you fresh visuals to publish.</p>
+      </div>
+
+      <div class="hiw-shoot-body">
+        <div>
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: rgba(255,255,255,.5)">PICK A BACKGROUND</div>
+          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px">
+            <sc-for list="{{ looks }}" as="l" hint-placeholder-count="3">
+              <div sc-camel-on-click="{{ l.pick }}" style="{{ l.chip }}">
+                <span style="font-size: 15px; font-weight: 700">{{ l.name }}</span>
+                <span style="font-size: 13px; opacity: .7">{{ l.sub }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top: 22px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.5)">Same three product shots each time. Same angles, same lighting on the product — a different scene in all of them.</div>
+        </div>
+        <div class="hiw-shoot-shots">
+          <sc-for list="{{ trip }}" as="v" hint-placeholder-count="3">
+            <div>
+              <div style="position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: #2A2030">
+                <img src="{{ v.src }}" alt="{{ v.caption }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                <div style="position: absolute; left: 12px; top: 12px; font-size: 12px; font-weight: 700; color: #fff; background: rgba(26,20,32,.55); backdrop-filter: blur(8px); padding: 5px 11px; border-radius: 999px">{{ v.place }}</div>
+              </div>
+              <div style="margin-top: 12px; font-size: 15.5px; font-weight: 700; color: #fff">{{ v.caption }}</div>
+              <div style="margin-top: 3px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.55)">{{ v.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="usecases">
+    <div class="hiw-uc">
+      <div class="hiw-uc-head">
+        <div class="hiw-uc-kicker">USE CASES</div>
+        <h2>What people actually do with it</h2>
+        <p>Two uploads every time. What changes is where the background came from and what you do with the result.</p>
+      </div>
+
+      <div class="hiw-uc-row">
+        <div class="hiw-uc-copy">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span class="hiw-uc-num">01</span>
+            <span class="hiw-uc-tag">MARKETPLACE LISTINGS</span>
+          </div>
+          <h3>Make a listing photo that sells</h3>
+          <p>Your listing photo is a phone shot against a spare-room wall, and it reads like one. Drop the same product into a clean studio or lifestyle scene, and publish a listing image that looks shot — not improvised.</p>
+          <div class="hiw-uc-chips">
+            <sc-for list="{{ shops }}" as="c">
+              <span class="hiw-uc-chip">{{ c }}</span>
+            </sc-for>
+          </div>
+        </div>
+        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: 1fr 36px 1fr; align-items: center; gap: 8px">
+          <div style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6)">
+            <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #EFE7E0; background: #FAF4FB">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #E0D6CD"></span>
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #E0D6CD"></span>
+              <span style="flex: 1; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296; text-align: center">MARKETPLACE · LISTING PAGE</span>
+            </div>
+            <div style="aspect-ratio: 4/5; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=520&q=80&auto=format&fit=crop" alt="Your listing photo" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div style="padding: 12px 14px 14px">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
+                <span style="font-size: 13.5px; font-weight: 700">Everyday runner sneaker</span>
+                <span style="font-size: 13.5px; font-weight: 800; color: #1A1420">₹4,499</span>
+              </div>
+              <div style="margin-top: 9px; display: flex; gap: 6px">
+                <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">7</span>
+                <span style="font-size: 11.5px; font-weight: 700; color: #1A1420; border: 1.5px solid #1A1420; border-radius: 8px; padding: 4px 9px">8</span>
+                <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">9</span>
+                <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">10</span>
+              </div>
+              <div style="margin-top: 11px; text-align: center; font-size: 12.5px; font-weight: 800; letter-spacing: .06em; color: #A79CAB; background: #F4EDE6; border-radius: 999px; padding: 9px">ADD TO BAG</div>
+            </div>
+          </div>
+          <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">YOUR PACKSHOT</span>
+            <span style="font-size: 18px; color: #C9BCC6">→</span>
+          </div>
+          <div>
+            <div style="position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+              <img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=520&q=80&auto=format&fit=crop" alt="Product in scene" style="width: 100%; height: 100%; object-fit: cover; display: block">
+              <span style="position: absolute; left: 10px; bottom: 10px; font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #fff; background: rgba(196,46,139,.9); padding: 5px 10px; border-radius: 999px">IN SCENE</span>
+            </div>
+            <div style="margin-top: 12px; background: #fff; border: 1.5px solid #E6DED6; border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 700; color: #1A1420">Then swap it into your listing</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiw-uc-row hiw-uc-row-rev">
+        <div class="hiw-uc-visual">
+          <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #8D8296">WHAT YOU SHOT — ONE SETUP, THREE ANGLES</div>
+          <div class="hiw-thumbs-3" style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px">
+            <sc-for list="{{ tripShots }}" as="t" hint-placeholder-count="3">
+              <div>
+                <div style="position: relative; aspect-ratio: 4/5; border-radius: 4px; overflow: hidden; border: 1px solid #E6DED6; background: #EFE7E0">
+                  <img src="{{ t.src }}" alt="Product shot" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                  <span style="position: absolute; left: 8px; top: 8px; font-size: 10.5px; font-weight: 700; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 9px; border-radius: 999px">{{ t.place }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin: 16px 0 14px; display: flex; align-items: center; gap: 14px">
+            <span style="flex: 1; height: 1px; background: #E6DED6"></span>
+            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #C42E8B; background: #FCF0F7; border: 1px solid #F3D9EA; padding: 7px 14px; border-radius: 999px">SWAP THE BACKGROUND ↓</span>
+            <span style="flex: 1; height: 1px; background: #E6DED6"></span>
+          </div>
+          <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B">WHAT YOU CAN PUBLISH — SAME FRAMES, NEW SCENES</div>
+          <div class="hiw-thumbs-3" style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px">
+            <sc-for list="{{ tripShots }}" as="t" hint-placeholder-count="3">
+              <div style="position: relative; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+                <img src="{{ t.after }}" alt="{{ t.outfit }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                <span style="position: absolute; left: 8px; top: 8px; font-size: 10.5px; font-weight: 700; color: #6B6070; background: rgba(255,255,255,.9); padding: 4px 9px; border-radius: 999px">{{ t.place }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div class="hiw-uc-copy">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span class="hiw-uc-num">02</span>
+            <span class="hiw-uc-tag">SHOOT DAY</span>
+          </div>
+          <h3>Restage the shots you already paid for</h3>
+          <p>You came back from the shoot with forty frames on the same white sweep, because that is what a booked studio day is like. Change the scene in the frames you already have — the angle, the crop, the finish and the label stay exactly as they were, so one shoot keeps producing new visuals for weeks.</p>
+          <div class="hiw-uc-chips">
+            <span class="hiw-uc-chip">Same angles</span>
+            <span class="hiw-uc-chip">Same product</span>
+            <span class="hiw-uc-chip">Scenes you never booked</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiw-uc-row">
+        <div class="hiw-uc-copy">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span class="hiw-uc-num">03</span>
+            <span class="hiw-uc-tag">SOCIAL CONTENT</span>
+          </div>
+          <h3>Post fresh visuals without a new shoot</h3>
+          <p>One packshot you already like becomes four posts. Generate the same frame in four different scenes, space them out across the week, and never book a studio, a location or a set to shoot them.</p>
+          <div class="hiw-uc-chips">
+            <span class="hiw-uc-chip">Reels &amp; stories</span>
+            <span class="hiw-uc-chip">Feed posts</span>
+            <span class="hiw-uc-chip">~10 seconds a scene</span>
+          </div>
+        </div>
+        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: .9fr 36px 1.1fr; align-items: center; gap: 8px">
+          <div>
+            <div style="aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1px solid #E6DED6; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=520&q=80&auto=format&fit=crop" alt="Packshot you already have" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div style="margin-top: 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296">ONE PACKSHOT YOU ALREADY HAVE</div>
+          </div>
+          <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">FOUR SCENES</span>
+            <span style="font-size: 18px; color: #C9BCC6">→</span>
+          </div>
+          <div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+              <sc-for list="{{ posts }}" as="p" hint-placeholder-count="4">
+                <div style="position: relative; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+                  <img src="{{ p.src }}" alt="{{ p.label }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                  <span style="position: absolute; right: 8px; top: 8px; font-size: 10px; font-weight: 700; color: #1A1420; background: rgba(255,255,255,.92); padding: 3px 7px; border-radius: 999px">{{ p.day }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #C42E8B">FOUR POSTS, ONE AFTERNOON</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiw-uc-row hiw-uc-row-rev">
+        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: 1.25fr 36px .85fr; align-items: center; gap: 8px">
+          <div style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; padding: 14px; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6)">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 11px; border-bottom: 1px solid #EFE7E0">
+              <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .08em; color: #8D8296">YOUR MOODBOARD</span>
+              <span style="font-size: 11px; font-weight: 700; color: #8D8296">48 pins</span>
+            </div>
+            <div class="hiw-thumbs-3" style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; align-items: start">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+                <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="position: relative; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0; outline: 2.5px solid #C42E8B; outline-offset: 1px">
+                  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=360&q=80&auto=format&fit=crop" alt="Selected pin" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                  <span style="position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">THIS ONE</span>
+                </div>
+                <div style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+                <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              </div>
+            </div>
+          </div>
+          <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">TAKE SCREENSHOT FROM PINTEREST</span>
+            <span style="font-size: 18px; color: #C9BCC6">→</span>
+          </div>
+          <div>
+            <div style="position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=520&q=80&auto=format&fit=crop" alt="The pin with your product" style="width: 100%; height: 100%; object-fit: cover; display: block">
+              <span style="position: absolute; left: 8px; bottom: 8px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">YOUR PRODUCT</span>
+            </div>
+          </div>
+        </div>
+        <div class="hiw-uc-copy">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span class="hiw-uc-num">04</span>
+            <span class="hiw-uc-tag">INSPIRATION</span>
+          </div>
+          <h3>Use the scene you pinned</h3>
+          <p>Moodboards fill up with scenes that were never yours to shoot. Take any pin — Pinterest, an Instagram save, a screenshot from a magazine — feed it in as the background reference, and see your own product in it instead of the one they photographed.</p>
+          <div class="hiw-uc-chips">
+            <span class="hiw-uc-chip">Pinterest boards</span>
+            <span class="hiw-uc-chip">Instagram saves</span>
+            <span class="hiw-uc-chip">Editorial screenshots</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hiw-uc-more">
+        <sc-for list="{{ moreUses }}" as="u" hint-placeholder-count="3">
+          <div style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 22px; padding: 24px">
+            <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B">{{ u.tag }}</div>
+            <div style="margin-top: 10px; font-size: 19px; font-weight: 700; letter-spacing: -.015em; line-height: 1.25">{{ u.t }}</div>
+            <p style="margin-top: 7px; font-size: 15px; line-height: 1.55; color: #4C4453">{{ u.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div id="marketplace">
+    <div class="hiw-mkt-head">
+      <div class="hiw-uc-kicker">THE MARKETPLACE</div>
+      <h2>A shop full of scenes you can blend before you license.</h2>
+      <p class="hiw-mkt-lead">Discover creator scenes, blend your product into them, then license — so studios only hear from brands that have already seen the result.</p>
+    </div>
+    <div class="hiw-mkt-card">
+      <div class="hiw-mkt-body">
+
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <div class="hiw-mkt-phone-wrap">
+          <div class="hiw-mkt-phone" style="width: 300px; border-radius: 40px; background: #1A1420; padding: 10px; box-shadow: 0 40px 80px -44px rgba(26,20,32,.7)">
+            <div style="border-radius: 32px; background: #FAF4FB; overflow: hidden; height: 560px; display: flex; flex-direction: column">
+              <div style="padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #8D8296">
+                <span>9:41</span>
+                <span style="width: 74px; height: 20px; background: #1A1420; border-radius: 999px; margin-top: -6px"></span>
+                <span>Marketplace</span>
+              </div>
+
+              <sc-if value="{{ shop.storeView }}" hint-placeholder-val="{{ true }}">
+                <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
+                  <div style="padding: 16px 18px 14px; border-bottom: 1px solid #EFE7E0">
+                    <div style="display: flex; align-items: center; gap: 12px">
+                      <span style="width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 800; letter-spacing: -.02em">SN</span>
+                      <div style="flex: 1">
+                        <div style="display: flex; align-items: center; gap: 6px">
+                          <span style="font-size: 16.5px; font-weight: 800; letter-spacing: -.015em">Studio Noir</span>
+                          <span style="width: 15px; height: 15px; border-radius: 50%; background: #C42E8B; color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">✓</span>
+                        </div>
+                        <div style="margin-top: 2px; font-size: 12.5px; color: #8D8296">Jaipur · Studio &amp; tabletop scenes</div>
+                      </div>
+                    </div>
+                    <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px">
+                      <sc-for list="{{ shop.stats }}" as="st" hint-placeholder-count="3">
+                        <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 12px; padding: 8px 10px; text-align: center">
+                          <div style="font-size: 14.5px; font-weight: 800; letter-spacing: -.01em">{{ st.k }}</div>
+                          <div style="margin-top: 1px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296">{{ st.v }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+                      <div sc-camel-on-click="{{ shop.toggleFollow }}" style="{{ shop.followStyle }}">{{ shop.followLabel }}</div>
+                      <div style="text-align: center; font-size: 13.5px; font-weight: 700; color: #1A1420; padding: 11px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6; cursor: pointer">Contact</div>
+                    </div>
+                  </div>
+
+                  <div style="padding: 12px 18px 8px; display: flex; gap: 7px; overflow: hidden">
+                    <sc-for list="{{ shop.tabs }}" as="t" hint-placeholder-count="4">
+                      <span style="{{ t.style }}">{{ t.label }}</span>
+                    </sc-for>
+                  </div>
+
+                  <div class="hiw-mkt-scroll" style="flex: 1; padding: 6px 18px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; grid-auto-rows: max-content; align-content: start;">
+                    <sc-for list="{{ shop.listings }}" as="p" hint-placeholder-count="4">
+                      <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 16px; overflow: hidden">
+                        <div style="position: relative; aspect-ratio: 1/1; background: #EFE7E0">
+                          <img src="{{ p.src }}" alt="Listing" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                          <span style="position: absolute; left: 7px; top: 7px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 8px; border-radius: 999px">{{ p.price }}</span>
+                        </div>
+                        <div style="padding: 8px 10px 10px">
+                          <div style="font-size: 12.5px; font-weight: 700; line-height: 1.3; min-height: 33px">{{ p.name }}</div>
+                          <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: 7px; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ shop.tryView }}" hint-placeholder-val="{{ false }}">
+                <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
+                  <div style="padding: 14px 18px 10px; display: flex; align-items: center; gap: 10px">
+                    <span sc-camel-on-click="{{ shop.back }}" style="font-size: 13px; font-weight: 700; color: #C42E8B; cursor: pointer">← Store</span>
+                    <span style="font-size: 12.5px; color: #8D8296">Studio Noir</span>
+                  </div>
+                  <div style="padding: 0 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
+                    <div style="flex: 1; border-radius: 18px; border: 1.5px solid #F3D9EA; background: linear-gradient(160deg, #FDF3F9, #FAF4FB); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; padding: 20px; text-align: center">
+                      <span style="width: 32px; height: 32px; border-radius: 50%; border: 1.5px dashed #E39CC8"></span>
+                      <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">YOUR PRODUCT, IN THIS SCENE</span>
+                      <span style="font-size: 12px; line-height: 1.45; color: #8D8296">your packshot, their backdrop</span>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px">
+                      <span style="font-size: 13px; font-weight: 700; line-height: 1.3">{{ shop.picked.name }}</span>
+                      <span style="font-size: 13px; font-weight: 800; color: #C42E8B">{{ shop.picked.price }}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px">
+                      <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">Save</span>
+                      <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">Share</span>
+                      <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">License</span>
+                    </div>
+                  </div>
+                  <div style="padding: 14px 18px 18px">
+                    <div style="text-align: center; font-size: 14.5px; font-weight: 700; color: #fff; padding: 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)">Message the creator</div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          </div>
+          <div style="margin-top: 12px; font-size: 13px; color: #8D8296; text-align: center">Tap <strong style="color:#C42E8B">Blend</strong> on any listing to see your product in it.</div>
+        </div>
+
+        <div>
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: #8D8296">BLEND TO LICENCE</div>
+          <div style="margin-top: 14px; border: 1.5px solid #E6DED6; border-radius: 20px; overflow: hidden">
+            <sc-for list="{{ flow }}" as="f" hint-placeholder-count="4">
+              <div style="{{ f.cell }}">
+                <div style="font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #C9BCC6; width: 44px">{{ f.n }}</div>
+                <div>
+                  <div style="font-size: 17px; font-weight: 700; letter-spacing: -.015em">{{ f.t }}</div>
+                  <p style="margin-top: 4px; font-size: 14.5px; line-height: 1.55; color: #4C4453">{{ f.d }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div class="hiw-mkt-ctas">
+            <a href="index.html#marketplace" style="text-decoration: none; font-size: 15px; font-weight: 700; color: #fff; padding: 14px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 22px rgba(236,72,153,.28)">Browse the marketplace</a>
+            <a href="index.html#sellers" style="text-decoration: none; font-size: 15px; font-weight: 700; color: #1A1420; padding: 13px 24px; border-radius: 999px; background: #FAF4FB; border: 1.5px solid #E6DED6">List your collection</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="devices">
+    <div class="hiw-dev">
+      <div class="hiw-dev-copy">
+        <div class="hiw-uc-kicker">WORKS WHEREVER YOU ARE</div>
+        <h2>One account, every screen you <em>own</em></h2>
+        <p>Start a blend in the browser on your laptop, finish it on your phone between meetings. Products, saved visuals and marketplace chats sync across desktop, tablet and mobile — app or browser, iOS or Android.</p>
+        <div class="hiw-dev-ctas">
+          <a href="index.html#download" style="font-size: 15px; font-weight: 700; color: #fff; padding: 14px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 22px rgba(236,72,153,.28)">Get the app</a>
+          <a href="index.html" style="font-size: 15px; font-weight: 700; color: #1A1420; padding: 13px 24px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6">Open in browser</a>
+        </div>
+      </div>
+      <div class="hiw-dev-grid">
+        <sc-for list="{{ platforms }}" as="p">
+          <div class="hiw-dev-card">
+            <strong>{{ p.t }}</strong>
+            <span>{{ p.d }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div id="refund" class="hiw-refund">
+    <div class="hiw-refund-card">
+      <div class="hiw-refund-grid">
+        <div>
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); padding: 8px 15px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: #F9A8D4">REFUND SAFETY</div>
+          <h2 class="hiw-refund-title">Didn't like the result? Ask for your money back.</h2>
+          <p style="margin-top: 18px; font-size: 18px; line-height: 1.64; color: rgba(255,255,255,.74); text-wrap: pretty">If a blend comes out wrong — the cut-out reads badly, the shadow falls the wrong way, the image is not usable — request a refund from inside the app and we return the credits. You are never charged for a blend you cannot use.</p>
+          <a href="refund.html" style="text-decoration: none; display: inline-block; margin-top: 26px; font-size: 15.5px; font-weight: 700; color: #2A1240; background: #fff; padding: 14px 28px; border-radius: 999px">Read the refund policy</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{ refund }}" as="r" hint-placeholder-count="3">
+            <div style="background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 20px 22px">
+              <div style="font-size: 17px; font-weight: 700; color: #fff">{{ r.t }}</div>
+              <div style="margin-top: 5px; font-size: 15px; line-height: 1.55; color: rgba(255,255,255,.68)">{{ r.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="faq">
+    <div class="hiw-faq">
+      <div class="hiw-faq-head">
+        <h2>Before your first blend</h2>
+        <p>Still stuck? <a href="contact.html">Write to us</a> and a human answers.</p>
+      </div>
+      <div class="hiw-faq-list">
+        <sc-for list="{{ faqs }}" as="f">
+          <div class="hiw-faq-item" sc-camel-on-click="{{ f.toggle }}">
+            <div style="display: flex; align-items: center; gap: 16px">
+              <div class="hiw-faq-q">{{ f.q }}</div>
+              <div style="font-size: 20px; color: #C42E8B; line-height: 1; font-weight: 500;">{{ f.mark }}</div>
+            </div>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p class="hiw-faq-a">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="hiw-end">
+    <h2>Your next campaign, in a photo you <em>already have</em>.</h2>
+    <div class="hiw-end-ctas">
+      <a href="index.html#download" style="font-size: 16px; font-weight: 700; color: #fff; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 28px rgba(236,72,153,.3)">Try your first blend free</a>
+      <a href="index.html#sellers" style="font-size: 16px; font-weight: 700; color: #1A1420; padding: 14px 26px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6">I sell backgrounds</a>
+    </div>
+    <div class="hiw-end-note">Refund if you don't like the result. Works on every device you own.</div>
+  </div>
+  </div>
+  </x-dc>
   <div id="pb-chrome-footer"></div>
-  <script src="legal-chrome.js?v=4"></script>
+<script type="text/x-dc" data-dc-script="">
+const U = (id, w) => { const k = 'u_' + id.replace(/-/g, '_') + '_' + (w || 600); const r = (typeof window !== 'undefined' && window.__resources && window.__resources[k]); return r || ('https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop'); };
+
+class Component extends DCLogic {
+  state = { scrolled: false, step: 0, look: 0, openFaq: 0, moment: 0, shopStep: 0, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0 };
+
+  backgrounds = [
+    { name: 'Desk & notebook', id: '1517842645767-c639042777db' },
+    { name: 'Golden-hour beach', id: '1507525428034-b723cf961d3e' },
+    { name: 'Studio gradient', id: '1557683316-973673baf926' },
+    { name: 'Lush forest', id: '1441974231531-c6227db76b6e' },
+    { name: 'Linen & light', id: '1519681393784-d120267933ba' },
+    { name: 'City rooftop', id: '1495616811223-4d98c6e9c869' }
+  ];
+
+  products = [
+    { name: 'Runner sneaker', photo: '1542291026-7eec264c27ff' },
+    { name: 'Court sneaker', photo: '1600185365483-26d7a4cc7519' },
+    { name: 'Perfume bottle', photo: '1541643600914-78b084683601' },
+    { name: 'Gift-box perfume', photo: '1594035910387-fea47794261f' }
+  ];
+
+  outfitsFor(p) {
+    return this.backgrounds.map((b) => ({ name: b.name, src: U(b.id, 240), result: U(b.id, 620) }));
+  }
+
+  goWalkStep = (n) => {
+    this.setState({ step: n });
+    var el = document.getElementById('hiw-pin-' + n);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  setProduct = (p) => {
+    if (this.state.prod === p) return;
+    clearTimeout(this._tryT); clearTimeout(this._rippleT); clearTimeout(this._genderT);
+    this.setState({ prod: p, tryPick: null, tryShown: null, tryPhase: 'idle', tryRipple: null });
+    this._genderT = setTimeout(() => this.runTry(0), 320);
+  };
+
+  runTry = (i, manual) => {
+    if (manual && !this.state.tryTouched) this.setState({ tryTouched: true });
+    if (this.state.tryPick === i && this.state.tryPhase !== 'idle') return;
+    clearTimeout(this._tryT); clearTimeout(this._rippleT);
+    this.setState({ tryPick: i, tryPhase: 'working', tryRipple: i });
+    this._rippleT = setTimeout(() => this.setState({ tryRipple: null }), 620);
+    this._tryT = setTimeout(() => this.setState({ tryShown: i, tryPhase: 'done' }), 1150);
+  };
+
+  componentDidMount() {
+    this._tick = () => {
+      this._raf = 0;
+      const next = {};
+      const scrolled = window.scrollY > 16;
+      if (scrolled !== this.state.scrolled) next.scrolled = scrolled;
+
+      const vh = window.innerHeight;
+      const rows = [...document.querySelectorAll('.hiw-pin')];
+      if (rows.length) {
+        const line = vh * 0.38;
+        let best = this.state.step, bestD = Infinity;
+        rows.forEach((el) => {
+          const m = String(el.className || '').match(/hiw-pin-(\d)/);
+          if (!m) return;
+          const i = parseInt(m[1], 10);
+          const r = el.getBoundingClientRect();
+          if (r.bottom < 88 || r.top > vh) return;
+          const d = Math.abs(r.top - line);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        if (best !== this.state.step) next.step = best;
+      }
+      if (Object.keys(next).length) this.setState(next);
+    };
+    this._onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(this._tick); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this._tick();
+    this._demoRef = (el) => {
+      if (!el || this._demoObs) return;
+      this._demoObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !this.state.demoSeen) {
+            this.setState({ demoSeen: true });
+            this._tryAuto = setTimeout(() => { if (!this.state.tryTouched) this.runTry(0); }, 700);
+          }
+        });
+      }, { threshold: 0.35 });
+      this._demoObs.observe(el);
+    };
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT);
+    if (this._demoObs) this._demoObs.disconnect();
+  }
+
+  screens = [
+    { kicker: 'STEP 01', title: 'Your product', img: U('1542291026-7eec264c27ff', 520), rows: [{ t: 'Saved to library', v: 'Reused every time' }, { t: 'Visible to', v: 'Only you' }], cta: 'Use this product' },
+    { kicker: 'STEP 02 · OPTION A', title: 'Pick from your gallery', placeholder: 'BACKGROUND IMAGE', note: 'a screenshot or scene photo', rows: [{ t: 'Source', v: 'Camera roll' }, { t: 'Accepted', v: 'JPG, PNG, screenshots' }], cta: 'Continue with this background' },
+    { kicker: 'STEP 02 · OPTION B', title: 'The marketplace', img: U('1557683316-973673baf926', 520), rows: [{ t: 'Creators listed', v: 'Studios & photographers' }, { t: 'Blend', v: 'One tap' }], cta: 'Blend this scene' },
+    { kicker: 'STEP 03', title: 'Your blend', placeholder: 'YOUR PRODUCT, IN SCENE', note: 'saved to your library', bar: true, rows: [{ t: 'Saved visuals', v: '4 images' }, { t: 'Creator', v: 'Chat open' }], cta: 'Save, publish or message the creator' }
+  ];
+
+  lookData = [
+    { name: 'Marble tabletop', sub: 'From a creator listing', notes: ['The frame you already shot, in a scene you never booked.', 'Same angle, same product, no reshoot.', 'Published three days later as a fresh visual.'], shots: ['1542291026-7eec264c27ff', '1600185365483-26d7a4cc7519', '1594035910387-fea47794261f'] },
+    { name: 'Golden-hour beach', sub: 'From an Unsplash save', notes: ['Pulled off Unsplash and blended in.', 'Same crop, a different mood.', 'A second campaign image from one afternoon.'], shots: ['1507525428034-b723cf961d3e', '1541643600914-78b084683601', '1523275335684-37898b6baf30'] },
+    { name: 'Studio gradient', sub: 'From a studio collection', notes: ['Blended from a studio listing in the marketplace.', 'Product edges and label untouched.', 'A season of visuals from one shoot.'], shots: ['1557683316-973673baf926', '1595950653106-6c9ebd614d3a', '1522335789203-aabd1fc54bc9'] }
+  ];
+
+  places = [
+    { place: 'Hero angle', caption: 'Front three-quarter' },
+    { place: 'Flat lay', caption: 'Top-down' },
+    { place: 'Detail crop', caption: 'Close-up' }
+  ];
+
+  railData = [
+    { src: U('1600185365483-26d7a4cc7519', 440), label: 'From a marketplace listing' },
+    { src: U('1595950653106-6c9ebd614d3a', 440), label: 'From an Unsplash screenshot' },
+    { src: U('1522335789203-aabd1fc54bc9', 440), label: 'From a studio render' },
+    { src: U('1434056886845-dac89ffe9b56', 440), label: 'From a gallery upload' },
+    { src: U('1618366712010-f4ae9c647dcb', 440), label: 'From an Instagram save' },
+    { src: U('1509042239860-f550ce710b93', 440), label: 'From a Pinterest board' },
+    { src: U('1594035910387-fea47794261f', 440), label: 'From a creator collection' },
+    { src: U('1550226891-ef816aed4a98', 440), label: 'Restaged catalog photo' }
+  ];
+
+  railDataB = [
+    { src: U('1522335789203-aabd1fc54bc9', 440), label: 'Blended before the launch' },
+    { src: U('1600185365483-26d7a4cc7519', 440), label: 'From a studio collection' },
+    { src: U('1509042239860-f550ce710b93', 440), label: 'From a screenshot' },
+    { src: U('1434056886845-dac89ffe9b56', 440), label: 'Restaged shoot photo' },
+    { src: U('1594035910387-fea47794261f', 440), label: 'From a scene library' },
+    { src: U('1618366712010-f4ae9c647dcb', 440), label: 'Saved for a second opinion' },
+    { src: U('1595950653106-6c9ebd614d3a', 440), label: 'From a 3D artist' },
+    { src: U('1550226891-ef816aed4a98', 440), label: 'Published the same week' }
+  ];
+
+  momentData = [
+    {
+      n: '01', label: 'Listing a product', kicker: 'BEFORE YOU PUBLISH',
+      title: 'The listing question, answered in ten seconds',
+      body: 'You are one tap from publishing and the photo still looks like a phone shot on a table. Blend the same product into a clean scene and publish a visual that earns the click.',
+      stat: '1 in 3', statNote: 'shoppers skip a listing over weak photography',
+      sourceLabel: 'A SCENE FROM ANYWHERE', sourceNote: 'Unsplash, Pexels, a render, your camera',
+      photo: U('1542291026-7eec264c27ff', 400),
+      resultLabel: 'THE PRODUCT, IN SCENE', resultNote: 'before the listing goes live'
+    },
+    {
+      n: '02', label: 'Restaging a shoot', kicker: 'FRAMES YOU ALREADY SHOT',
+      title: 'A shoot in five scenes you never booked',
+      body: 'Shoot days come back on the same white sweep. Change the scene in the frames you already have — the angle, the crop and the finish stay exactly as they were, so one shoot keeps producing new visuals.',
+      stat: '40 frames', statNote: 'from one shoot, restaged as many times as you like',
+      sourceLabel: 'A SCENE YOU LIKED ONLINE', sourceNote: 'saved, pinned or screenshotted',
+      photo: U('1541643600914-78b084683601', 400),
+      resultLabel: 'SAME FRAME, NEW SCENE', resultNote: 'product and label untouched'
+    },
+    {
+      n: '03', label: 'Posting content', kicker: 'NO SHOOT REQUIRED',
+      title: 'A new scene without booking or building one',
+      body: 'Reels, stories and feed posts want a change of setting more often than a budget can supply. Generate the scene instead of sourcing it, and keep the product, the angle and the crop that already work.',
+      stat: '~10 sec', statNote: 'per scene, with unlimited variations',
+      sourceLabel: 'THE SCENE YOU WANT TO USE', sourceNote: 'any lifestyle or editorial image',
+      photo: U('1523275335684-37898b6baf30', 400),
+      resultLabel: 'POST-READY IMAGE', resultNote: 'download, share or publish'
+    },
+    {
+      n: '04', label: 'Licensing a scene', kicker: 'FROM THE MARKETPLACE',
+      title: 'Blend the studio listing, then message the creator',
+      body: 'Creators keep their collections inside the app. Open a store, put a scene behind your own product with one tap, and if it works, the chat with that creator is already there.',
+      stat: 'One tap', statNote: 'from a creator listing to your blend',
+      sourceLabel: 'A CREATOR LISTING', sourceNote: 'studio, lifestyle, nature, seasonal sets',
+      photo: U('1557683316-973673baf926', 400),
+      resultLabel: 'YOUR PRODUCT IN THEIR SCENE', resultNote: 'creator chat one tap away'
+    }
+  ];
+
+  listings = [
+    { name: 'Sunlit marble tabletop', price: '₹1,499', src: U('1517842645767-c639042777db', 300) },
+    { name: 'Golden-hour beach scene', price: '₹2,290', src: U('1507525428034-b723cf961d3e', 300) },
+    { name: 'Minimal studio gradient', price: '₹3,750', src: U('1557683316-973673baf926', 300) },
+    { name: 'Lush forest backdrop', price: '₹4,199', src: U('1441974231531-c6227db76b6e', 300) }
+  ];
+
+  faqData = [
+    { q: 'Do I upload a new product every time?', a: 'No. One clear packshot is enough — it stays in your library and every future blend uses it, so adding a background is the only step you repeat.' },
+    { q: 'Does it change my product or its colour?', a: 'Neither. You get your own product back inside a different scene. Shape, colour, logo and finish are left as they were, which is what makes the results usable as listing and ad images.' },
+    { q: 'Can I use a background I found somewhere else?', a: 'Yes, and most people do. Screenshot or download the scene from Unsplash, Pexels, Pinterest, Instagram, a render or your own camera roll, then upload it as the background image.' },
+    { q: 'What if I do not like a generated image?', a: 'Request a refund inside the app and the credits for that generation come back to you. You are not charged for a blend you cannot use.' },
+    { q: 'Will the light and shadows match?', a: 'The model matches the scene\u2019s light direction, shadow softness and reflections to your product, so it reads as a photograph rather than a flat cut-out paste. An unusual scene can still take a second attempt.' },
+    { q: 'Which devices does it run on?', a: 'Desktop, tablet and mobile, in the app or a browser, on iOS and Android. Products and saved visuals sync across all of them under one account.' }
+  ];
+
+  renderVals() {
+    const s = this.state;
+    window.__hiwSetStep = (n) => {
+      if (typeof n === 'number' && n !== this.state.step) this.setState({ step: n });
+    };
+    window.__hiwGoStep = (n) => this.goWalkStep(n);
+    const sc = this.screens[s.step] || this.screens[0];
+    const look = this.lookData[s.look];
+    const picked = this.listings[s.picked];
+
+    const tp = s.tryPhase;
+    const curSet = this.outfitsFor(s.prod);
+    const shown = s.tryShown == null ? null : curSet[s.tryShown];
+    const revealed = !!shown && tp === 'done';
+    const pulseIdx = s.tryTouched ? -1 : (s.tryPick === 0 ? 1 : 0);
+    const tryOutfits = curSet.map((o, i) => {
+      const on = s.tryPick === i;
+      const busy = on && tp === 'working';
+      const done = on && tp === 'done';
+      return {
+        name: o.name, src: o.src,
+        card: 'cursor: pointer; overflow: hidden; border-radius: 12px; transition: transform .25s, border-color .25s, box-shadow .25s, background .25s; border: 1.5px solid ' +
+          (on ? '#E9BBD9; background: #FFF8FC; box-shadow: 0 22px 44px -34px rgba(196,46,139,.9); transform: translateY(-2px);' : '#E6DED6; background: #fff;'),
+        tick: {
+          position: 'absolute', top: '8px', left: '8px', width: '24px', height: '24px', borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 800, color: '#fff',
+          background: 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)', boxShadow: '0 6px 14px -6px rgba(196,46,139,.9)',
+          opacity: done ? 1 : 0, transform: done ? 'scale(1)' : 'scale(.6)', transition: 'opacity .25s ease, transform .25s ease'
+        },
+        btn: 'margin-top: 8px; width: 100%; padding: 9px 6px; border-radius: 999px; font-family: inherit; font-size: 12.5px; font-weight: 800; letter-spacing: .01em; cursor: pointer; transition: background .25s, color .25s, border-color .25s, box-shadow .25s; ' +
+          (i === pulseIdx ? 'animation: v4Ring 2s infinite; ' : '') + 'border: 1.5px solid ' +
+          (done ? '#F0CFE4; background: #fff; color: #C42E8B;'
+            : busy ? 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; opacity: .72;'
+              : 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; box-shadow: 0 8px 18px -9px rgba(236,72,153,.95);'),
+        btnLabel: done ? 'Blended ✓' : busy ? 'Working…' : 'Blend',
+        ripple: {
+          position: 'absolute', left: '50%', top: '50%', width: '90px', height: '90px', marginLeft: '-45px', marginTop: '-45px',
+          borderRadius: '50%', border: '2px solid rgba(255,255,255,.95)', background: 'rgba(236,72,153,.28)',
+          pointerEvents: 'none', opacity: 0,
+          animation: s.tryRipple === i ? 'v4Ripple .62s ease-out' : 'none'
+        },
+        pick: () => this.runTry(i, true)
+      };
+    });
+
+    const stepRow = (i, last) => 'padding: 28px 0 32px; cursor: pointer; transition: opacity .25s, transform .25s;' +
+      (i === s.step ? '' : ' opacity: .7;');
+    const numStyle = (on) => 'font-family: \'Hanken Grotesk\', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: .06em; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; ' +
+      (on
+        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
+        : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
+    const optCard = (on) => 'padding: 20px 22px; border-radius: 18px; cursor: pointer; transition: background .25s, border-color .25s, opacity .25s, box-shadow .25s; border: 1.5px solid ' +
+      (on ? '#F0CFE4; background: #fff; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);' : '#F0E6F2; background: #fff; opacity: .78;');
+    const optBadge = (on) => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex: none; background: ' +
+      (on ? 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);' : '#D4B8CE;');
+
+    return {
+      photoSrc: U(this.products[s.prod].photo, 560),
+      prodOpts: this.products.map((p, i) => {
+        const on = s.prod === i;
+        return {
+          name: p.name, src: U(p.photo, 200),
+          btn: 'position: relative; padding: 0; overflow: hidden; aspect-ratio: 1/1; border-radius: 10px; background: #EFE7E0; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s; border: 1.5px solid ' +
+            (on ? '#C42E8B; box-shadow: 0 10px 22px -14px rgba(196,46,139,.95);' : '#E6DED6;'),
+          tick: {
+            position: 'absolute', top: '4px', right: '4px', width: '18px', height: '18px', borderRadius: '50%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 800, color: '#fff',
+            background: 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)',
+            opacity: on ? 1 : 0, transform: on ? 'scale(1)' : 'scale(.6)', transition: 'opacity .2s ease, transform .2s ease'
+          },
+          pick: () => this.setProduct(i)
+        };
+      }),
+      demoRef: this._demoRef,
+      tryHintText: tp === 'done' ? 'Your turn — click another background ' : 'Click a background to blend it ',
+      tryHint: {
+        display: 'inline-flex', alignItems: 'center', gap: '6px', maxWidth: '100%',
+        fontSize: '13px', fontWeight: 700, color: '#C42E8B', whiteSpace: 'nowrap',
+        transition: 'opacity .4s ease',
+        animation: 'v4Pulse 1.8s infinite'
+      },
+      tryOutfits,
+      trySrc: shown ? shown.result : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+      tryProductSrc: U(this.products[s.prod].photo, 420),
+      tryProductStyle: {
+        position: 'absolute', left: '50%', top: '54%', width: '62%', aspectRatio: '1 / 1',
+        transform: revealed ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
+        borderRadius: '10px', overflow: 'hidden', objectFit: 'cover',
+        boxShadow: '0 26px 40px -22px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
+        opacity: revealed ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
+      },
+      tryImg: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? 'scale(1)' : 'scale(1.05)',
+        filter: revealed ? 'blur(0px)' : 'blur(12px)',
+        transition: 'opacity .65s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .65s ease'
+      },
+      tryIdle: {
+        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: '10px', padding: '22px', textAlign: 'center',
+        opacity: shown ? 0 : 1, transition: 'opacity .4s ease', pointerEvents: 'none'
+      },
+      tryVeil: {
+        position: 'absolute', inset: 0, background: 'rgba(26,20,32,.14)',
+        opacity: tp === 'working' ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+      },
+      tryScan: {
+        position: 'absolute', left: 0, right: 0, height: '46%',
+        background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.34) 50%, rgba(236,72,153,0) 100%)',
+        boxShadow: '0 0 24px rgba(236,72,153,.5)',
+        opacity: tp === 'working' ? 1 : 0,
+        animation: tp === 'working' ? 'v4Scan 1.15s linear infinite' : 'none',
+        pointerEvents: 'none'
+      },
+      tryChip: {
+        position: 'absolute', left: '12px', right: '12px', bottom: '12px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
+        padding: '8px 12px', borderRadius: '999px', background: 'rgba(255,255,255,.93)',
+        border: '1px solid rgba(230,222,214,.9)', boxShadow: '0 8px 22px -14px rgba(74,52,40,.9)',
+        fontSize: '11px', fontWeight: 800, letterSpacing: '.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        color: tp === 'working' ? '#8D8296' : '#C42E8B',
+        opacity: tp === 'idle' ? 0 : 1, transform: tp === 'idle' ? 'translateY(6px)' : 'translateY(0)',
+        transition: 'opacity .35s ease, transform .35s ease', pointerEvents: 'none'
+      },
+      tryChipText: tp === 'working' ? 'BLENDING…' : shown ? shown.name.toUpperCase() : '',
+      tryStatus: tp === 'working' ? 'Generating…' : tp === 'done' ? 'Done — try another' : 'Tap Blend',
+      tryStatusStyle: {
+        fontSize: '12.5px', fontWeight: 700, color: tp === 'idle' ? '#8D8296' : '#C42E8B',
+        animation: tp === 'working' ? 'v4Pulse 1.1s infinite' : 'none'
+      },
+      navStyle: {
+        position: 'sticky', top: 0, zIndex: 50,
+        background: s.scrolled ? 'rgba(251,247,242,.86)' : 'rgba(251,247,242,0)',
+        backdropFilter: s.scrolled ? 'blur(14px)' : 'none',
+        borderBottom: s.scrolled ? '1px solid #E6DED6' : '1px solid transparent',
+        transition: 'background .3s, border-color .3s, backdrop-filter .3s'
+      },
+
+      facts: [
+        { k: '2 images', v: 'Everything the model needs from you' },
+        { k: '~10 sec', v: 'From upload to a finished visual' },
+        { k: 'Any scene', v: 'Screenshots, renders, creator listings' },
+        { k: 'Refundable', v: 'Credits back if a result is unusable' }
+      ],
+
+      stepOne: {
+        t: 'Add your product, once',
+        d: 'One clear packshot: the product filling the frame, even light, clean edges. It saves to your library, so every blend after this one starts at step two.',
+        chips: ['Sharp focus', 'Even light', 'Whole product in frame', 'No hard shadows'],
+        active: s.step === 0, pick: () => this.setState({ step: 0 }),
+        row: stepRow(0, false), num: numStyle(s.step === 0)
+      },
+
+      branch: {
+        wrap: 'padding: 28px 0 32px; transition: opacity .25s;' + (s.step === 1 || s.step === 2 ? '' : ' opacity: .7;'),
+        num: numStyle(s.step === 1 || s.step === 2)
+      },
+
+      optA: {
+        active: s.step === 1, pick: () => this.setState({ step: 1 }),
+        card: optCard(s.step === 1), badge: optBadge(s.step === 1),
+        chips: ['Screenshots work', 'Any source', 'Your own photos']
+      },
+      optB: {
+        active: s.step === 2, pick: () => this.setState({ step: 2 }),
+        card: optCard(s.step === 2), badge: optBadge(s.step === 2),
+        chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
+      },
+
+      stepThree: {
+        t: 'See your blend and take action',
+        d: 'Your product comes back inside the scene — shape, colour, logo and finish kept true, with light, shadow and reflection matched to the background. Save it, share it, publish it, or message the creator and license the scene.',
+        chips: ['About 10 seconds', 'Download & share', 'Publish it', 'Message the creator', 'Refund if unusable'],
+        active: s.step === 3, pick: () => this.setState({ step: 3 }),
+        row: stepRow(3, true), num: numStyle(s.step === 3)
+      },
+
+      dots: this.screens.map((x, i) => ({
+        pick: () => this.setState({ step: i }),
+        style: 'width: ' + (i === s.step ? '26px' : '8px') + '; height: 8px; border-radius: 999px; cursor: pointer; transition: width .25s, background .25s; background: ' + (i === s.step ? 'linear-gradient(90deg, #A855F7, #EC4899)' : '#DED5CD') + ';'
+      })),
+
+      screen: {
+        kicker: sc.kicker, title: sc.title, cta: sc.cta, rows: sc.rows,
+        ctaClick: () => {
+          if (s.step === 0) this.goWalkStep(1);
+          else if (s.step === 1 || s.step === 2) this.goWalkStep(3);
+          else {
+            var next = document.getElementById('usecases');
+            if (next) next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        },
+        hasImage: !!sc.img, img: sc.img || '',
+        hasPlaceholder: !!sc.placeholder, placeholderLabel: sc.placeholder || '', placeholderNote: sc.note || '',
+        hasBar: !!sc.bar,
+        visual: 'flex: 1; min-height: 0; border-radius: 18px; overflow: hidden; border: 1px solid #EFE7E0; display: flex; align-items: center; justify-content: center; background: ' +
+          (sc.img ? '#EFE7E0;' : 'repeating-linear-gradient(135deg, #F4EDE6 0 12px, #FBF7F2 12px 24px);')
+      },
+
+      rail: this.railData.concat(this.railData),
+      railB: this.railDataB.concat(this.railDataB),
+
+      looks: this.lookData.map((l, i) => ({
+        name: l.name, sub: l.sub,
+        pick: () => this.setState({ look: i }),
+        chip: 'display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 3px 22px 3px 3px; cursor: pointer; transition: background .2s, color .2s; ' +
+          (s.look === i ? 'background: #fff; color: #1A1420;' : 'background: rgba(255,255,255,.07); color: rgba(255,255,255,.72);')
+      })),
+
+      trip: this.places.map((p, i) => ({
+        place: p.place, caption: p.caption,
+        garment: look.name.toUpperCase(),
+        note: look.notes[i],
+        src: U((look.shots && look.shots[i]) || '1542291026-7eec264c27ff', 560)
+      })),
+
+      shops: ['Shopify', 'Amazon', 'Etsy', 'Flipkart', 'Instagram Shop', 'Your own store'],
+
+      tripShots: [
+        { src: U('1542291026-7eec264c27ff', 340), after: U('1519681393784-d120267933ba', 340), place: 'Hero angle', outfit: 'MARBLE TABLETOP' },
+        { src: U('1541643600914-78b084683601', 340), after: U('1507525428034-b723cf961d3e', 340), place: 'Flat lay', outfit: 'GOLDEN-HOUR BEACH' },
+        { src: U('1523275335684-37898b6baf30', 340), after: U('1557683316-973673baf926', 340), place: 'Detail crop', outfit: 'STUDIO GRADIENT' }
+      ],
+
+      posts: [
+        { label: 'MARBLE TABLETOP', day: 'MON', src: U('1519681393784-d120267933ba', 280) },
+        { label: 'GOLDEN-HOUR BEACH', day: 'WED', src: U('1507525428034-b723cf961d3e', 280) },
+        { label: 'STUDIO GRADIENT', day: 'FRI', src: U('1557683316-973673baf926', 280) },
+        { label: 'CITY ROOFTOP', day: 'SUN', src: U('1495616811223-4d98c6e9c869', 280) }
+      ],
+
+      moreUses: [
+        { tag: 'MARKETPLACE', t: 'Blend a creator scene', d: 'Drop your product into a studio\u2019s actual listing, then message them from the result.' },
+        { tag: 'SECOND OPINION', t: 'Send it to the team first', d: 'Share the blend in a chat and let someone else break the tie before the campaign goes live.' },
+        { tag: 'SEASONAL', t: 'Plan festive and sale campaigns', d: 'Compare autumn, festive and sale scenes on the same product before the calendar fills up.' }
+      ],
+
+      shop: {
+        storeView: s.shopStep === 0,
+        tryView: s.shopStep === 1,
+        back: () => this.setState({ shopStep: 0 }),
+        picked: { name: picked.name, price: picked.price },
+        toggleFollow: () => this.setState({ following: !s.following }),
+        followLabel: s.following ? 'Following' : 'Follow',
+        followStyle: 'text-align: center; font-size: 13.5px; font-weight: 700; padding: 11px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; ' +
+          (s.following
+            ? 'color: #1A1420; background: #F4EDE6; border: 1.5px solid #E6DED6;'
+            : 'color: #fff; border: 1.5px solid transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);'),
+        stats: [{ k: '1,240', v: 'FOLLOWERS' }, { k: '86', v: 'LISTINGS' }, { k: '4.9', v: 'RATING' }],
+        tabs: ['All', 'Studio', 'Lifestyle', 'Nature'].map((label, i) => ({
+          label,
+          style: 'font-size: 12.5px; font-weight: 700; padding: 7px 13px; border-radius: 999px; white-space: nowrap; ' +
+            (i === 0 ? 'color: #fff; background: #1A1420;' : 'color: #6B6070; background: #fff; border: 1px solid #EFE7E0;')
+        })),
+        listings: this.listings.map((p, i) => Object.assign({}, p, {
+          tryOn: () => this.setState({ shopStep: 1, picked: i })
+        }))
+      },
+
+      flow: [
+        { n: '01', t: 'Discover a creator', d: 'Browse studios by scene type, city or what they have just listed.' },
+        { n: '02', t: 'Open their collection', d: 'Scenes, prices and formats, the way the creator arranged them.' },
+        { n: '03', t: 'Blend their scene onto your product', d: 'One tap puts their actual scene behind your saved product, so you see the visual before you decide.' },
+        { n: '04', t: 'Connect and license', d: 'Message the creator from the result and close the licence in chat.' }
+      ].map((f, i) => Object.assign({}, f, {
+        cell: 'display: flex; gap: 16px; align-items: start; padding: 18px 20px;' + (i > 0 ? ' border-top: 1.5px solid #E6DED6;' : '') + (i === 2 ? ' background: #FCF3F7;' : '')
+      })),
+
+      platforms: [
+        { t: 'Desktop', d: 'Full browser experience' },
+        { t: 'Tablet', d: 'Touch-first layouts' },
+        { t: 'Mobile', d: 'Shoot and blend on the spot' },
+        { t: 'iOS', d: 'Native app on the App Store' },
+        { t: 'Android', d: 'Native app on Play' },
+        { t: 'Browser', d: 'No install needed' }
+      ],
+
+      refund: [
+        { t: 'Flag it in one tap', d: 'Every generated visual carries a "not happy with this" option.' },
+        { t: 'Credits come back', d: 'Approved requests return the credits used for that generation.' },
+        { t: 'You keep the images', d: 'A person reviews the request, and the images stay in your gallery either way.' }
+      ],
+
+      faqs: this.faqData.map((f, i) => ({
+        q: f.q, a: f.a, open: s.openFaq === i, mark: s.openFaq === i ? '\u2212' : '+',
+        toggle: () => this.setState({ openFaq: s.openFaq === i ? -1 : i }),
+        row: 'padding: 22px 0; border-top: 1px solid #E6DED6; cursor: pointer;' + (i === this.faqData.length - 1 ? ' border-bottom: 1px solid #E6DED6;' : '')
+      })),
+
+      socials: ['in', 'ig', 'x', 'yt'],
+      footerCols: [
+        { title: 'Product', links: ['How it works', 'Marketplace', 'Gallery', 'Pricing'] },
+        { title: 'For creators', links: ['List your collection', 'Creator pricing', 'Success stories', 'Creator support'] },
+        { title: 'Company', links: ['About', 'Careers', 'Press', 'Blog'] },
+        { title: 'Support', links: ['Help centre', 'Refund policy', 'Privacy', 'Contact us'] }
+      ]
+    };
+  }
+}
+
+</script>
+  <script src="legal-chrome.js?v=5"></script>
+  <script>
+  (function () {
+    var last = -1, ticking = false, lockUntil = 0;
+    var titles = [
+      'Add your product, once',
+      'Bring in a background',
+      'Pick a creator listing instead',
+      'See your blend and take action'
+    ];
+    function pin(n) {
+      var el = document.getElementById('hiw-pin-' + n);
+      if (el) return el;
+      var heads = document.querySelectorAll('#walkthrough h3');
+      for (var i = 0; i < heads.length; i++) {
+        if (heads[i].textContent.replace(/\s+/g, ' ').trim() === titles[n]) return heads[i].parentElement;
+      }
+      return null;
+    }
+    function sync() {
+      ticking = false;
+      if (Date.now() < lockUntil) return;
+      var vh = window.innerHeight;
+      var line = vh * 0.34;
+      var best = last, bestD = Infinity, found = false;
+      for (var n = 0; n < 4; n++) {
+        var el = pin(n);
+        if (!el) continue;
+        found = true;
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 96 || r.top > vh - 48) continue;
+        var d = Math.abs(Math.min(r.bottom, Math.max(r.top, line)) - line);
+        if (d < bestD) { bestD = d; best = n; }
+      }
+      if (!found || best < 0 || best === last) return;
+      last = best;
+      if (typeof window.__hiwSetStep === 'function') window.__hiwSetStep(best);
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(sync);
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+    window.addEventListener('resize', onScroll);
+    var tries = 0;
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('#hiw-phone-cta');
+      if (!btn) return;
+      var cur = last < 0 ? 0 : last;
+      var next = cur === 0 ? 1 : (cur === 1 || cur === 2 ? 3 : 3);
+      last = next;
+      lockUntil = Date.now() + 1400;
+      if (typeof window.__hiwGoStep === 'function') window.__hiwGoStep(next);
+      else if (typeof window.__hiwSetStep === 'function') window.__hiwSetStep(next);
+    });
+    (function wait() {
+      if (typeof window.__hiwSetStep !== 'function' && tries < 50) {
+        tries += 1;
+        setTimeout(wait, 200);
+        return;
+      }
+      sync();
+    })();
+  })();
+  </script>
 </body>
 </html>
