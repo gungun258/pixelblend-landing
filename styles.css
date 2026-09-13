@@ -345,8 +345,28 @@
     .cr-op { font-size: 16px; }
   }
   @media (max-width: 1180px) { .creations-grid { columns: 3; } }
-  @media (max-width: 760px) { .creations-grid { columns: 2; column-gap: 11px; } .creation-card { margin-bottom: 11px; } }
-  @media (max-width: 420px) { .creations-grid { columns: 2; column-gap: 9px; } .creation-card { margin-bottom: 9px; } }
+  /* Mobile: CSS columns + reveal transforms break on iOS Safari (1 card + empty gap).
+     Use a real 2-col grid instead so cards always sit side-by-side. */
+  @media (max-width: 760px) {
+    .creations-grid {
+      columns: auto !important;
+      column-count: auto !important;
+      column-gap: normal !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 11px !important;
+    }
+    .creation-card {
+      display: block !important;
+      width: auto !important;
+      margin-bottom: 0 !important;
+      break-inside: auto !important;
+      -webkit-column-break-inside: auto !important;
+    }
+  }
+  @media (max-width: 420px) {
+    .creations-grid { gap: 9px !important; }
+  }
   /* compact seller stat strip */
   @media (max-width: 920px) { .stat-strip { grid-template-columns: repeat(3, 1fr) !important; } }
   @media (max-width: 520px) { .stat-strip { grid-template-columns: repeat(2, 1fr) !important; } }
