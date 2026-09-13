@@ -1459,7 +1459,7 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 #pb-to-top {
   position: fixed !important;
   right: 22px !important;
-  bottom: 22px !important;
+  bottom: calc(22px + var(--pb-vv-bottom, 0px)) !important;
   left: auto !important;
   z-index: 9999 !important;
   width: 48px !important;
@@ -1499,7 +1499,7 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
     position: fixed;
     left: 50%;
     right: auto;
-    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + var(--pb-vv-bottom, 0px));
     width: min(420px, calc(100vw - 24px));
     max-width: calc(100vw - 24px);
     z-index: 90;
@@ -1582,7 +1582,7 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
     white-space: nowrap;
   }
   body.pb-has-dlbar #pb-to-top {
-    bottom: 88px !important;
+    bottom: calc(88px + var(--pb-vv-bottom, 0px)) !important;
   }
 }
 

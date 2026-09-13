@@ -23,6 +23,29 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflowX = '';
     document.body.style.overflowY = '';
   }
+  /* Mobile chrome hide/show: keep fixed UI on visible viewport (Flipkart-like) */
+  (function bindVisualViewport() {
+    function syncVV() {
+      var vv = window.visualViewport;
+      var root = document.documentElement;
+      if (!vv) {
+        root.style.setProperty('--pb-vv-bottom', '0px');
+        root.style.setProperty('--pb-vv-height', (window.innerHeight || 0) + 'px');
+        return;
+      }
+      var bottomGap = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+      root.style.setProperty('--pb-vv-bottom', bottomGap + 'px');
+      root.style.setProperty('--pb-vv-height', Math.round(vv.height) + 'px');
+    }
+    syncVV();
+    window.addEventListener('resize', syncVV);
+    window.addEventListener('orientationchange', syncVV);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', syncVV);
+      window.visualViewport.addEventListener('scroll', syncVV);
+    }
+  })();
+
   function pbHydrated() {
     var body = document.body;
     if (!body) return false;
@@ -499,6 +522,11 @@ function bindBaSlider() {
           function onScroll() { syncToTop(document.getElementById('pb-to-top')); }
           window.addEventListener('scroll', onScroll, { passive: true });
           document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+          window.addEventListener('resize', onScroll);
+          if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', onScroll);
+            window.visualViewport.addEventListener('scroll', onScroll);
+          }
         }
         var host = document.body || document.documentElement;
         if (host && btn.parentNode !== host) host.appendChild(btn);
@@ -530,7 +558,8 @@ function bindBaSlider() {
         var sec = document.getElementById('download');
         if (!sec) return false;
         var r = sec.getBoundingClientRect();
-        return r.top < window.innerHeight * 0.78 && r.bottom > 64;
+        var vh = (window.visualViewport && window.visualViewport.height) || window.innerHeight || 0;
+        return r.top < vh * 0.78 && r.bottom > 64;
       }
       function drawerOpen() {
         var d = document.querySelector('.pb-drawer');
@@ -595,6 +624,10 @@ function bindBaSlider() {
           });
           window.addEventListener('scroll', function () { sync(document.getElementById('pb-dl-bar')); }, { passive: true });
           window.addEventListener('resize', function () { sync(document.getElementById('pb-dl-bar')); });
+          if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', function () { sync(document.getElementById('pb-dl-bar')); });
+            window.visualViewport.addEventListener('scroll', function () { sync(document.getElementById('pb-dl-bar')); });
+          }
         }
         bindDrawerSync();
         var host = document.body || document.documentElement;
