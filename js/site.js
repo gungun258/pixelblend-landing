@@ -167,7 +167,14 @@ function bindBaSlider() {
       });
       if (heroCards.length < 1) return false;
       document.documentElement.setAttribute('data-pb-motion', '1');
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        /* Never leave content stuck invisible if classes were applied elsewhere */
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop'), function (el) {
+          el.classList.add('pb-in', 'pb-done');
+          el.classList.remove('pb-pop');
+        });
+        return true;
+      }
 
       function playIn(el) {
         if (!el) return;
@@ -285,36 +292,66 @@ function bindBaSlider() {
           revealEl(el);
         });
       }, {
-        threshold: 0.08,
-        /* trigger as soon as content enters the viewport */
-        rootMargin: '0px 0px -6% 0px'
+        threshold: 0.01,
+        /* Generous margins — iOS Safari sometimes misses tight rootMargin */
+        rootMargin: '12% 0px 12% 0px'
       });
       scrollEls.forEach(function (el) { io.observe(el); });
 
       /* Safety: IO can miss already-visible nodes on some loads — force those in. */
       function revealVisible() {
-        var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        var vv = window.visualViewport;
+        var vh = (vv && vv.height) || window.innerHeight || document.documentElement.clientHeight || 0;
         scrollEls.forEach(function (el) {
           if (!el || el.classList.contains('pb-in')) return;
           var r = el.getBoundingClientRect();
-          if (r.bottom > 40 && r.top < vh * 0.94) {
-            io.unobserve(el);
+          if (r.bottom > -80 && r.top < vh + 80) {
+            try { io.unobserve(el); } catch (e) {}
             revealEl(el);
           }
+        });
+      }
+      function forceRevealAll() {
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal:not(.pb-in), .pb-reveal-scroll:not(.pb-in), .pb-pop:not(.pb-done)'), function (el) {
+          el.classList.add('pb-in', 'pb-done');
+          if (el.__pbIsCard) el.classList.add('pb-card');
         });
       }
       requestAnimationFrame(function () {
         revealVisible();
         setTimeout(revealVisible, 120);
         setTimeout(revealVisible, 400);
+        setTimeout(revealVisible, 1000);
+        /* Hard failsafe: never leave animated parts stuck hidden */
+        setTimeout(forceRevealAll, 2800);
+        setTimeout(forceRevealAll, 6000);
       });
+      window.addEventListener('scroll', revealVisible, { passive: true });
+      window.addEventListener('resize', revealVisible);
+      window.addEventListener('pageshow', function () {
+        revealVisible();
+        setTimeout(forceRevealAll, 800);
+      });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', revealVisible);
+      }
 
       return true;
     }
     var motTries = 0;
     var motTimer = setInterval(function () {
       motTries += 1;
-      if (bindPbMotion() || motTries > 80) clearInterval(motTimer);
+      if (bindPbMotion()) {
+        clearInterval(motTimer);
+        return;
+      }
+      if (motTries > 80) {
+        clearInterval(motTimer);
+        /* Motion never bound — still clear any stuck opacity:0 classes */
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop'), function (el) {
+          el.classList.add('pb-in', 'pb-done');
+        });
+      }
     }, 250);
 
     var pbScrollTok = 0;
@@ -367,19 +404,24 @@ function bindBaSlider() {
       }
       var mobile = window.matchMedia('(max-width: 640px)').matches;
       if (mobile && panel) {
-        panel.style.setProperty('width', '100%', 'important');
-        panel.style.setProperty('max-width', '100%', 'important');
+        panel.style.setProperty('width', 'min(392px, 100%)', 'important');
+        panel.style.setProperty('max-width', 'min(392px, 100%)', 'important');
+        panel.style.setProperty('margin-left', 'auto', 'important');
+        panel.style.setProperty('margin-right', 'auto', 'important');
       } else if (panel) {
         panel.style.removeProperty('width');
         panel.style.removeProperty('max-width');
+        panel.style.removeProperty('margin-left');
+        panel.style.removeProperty('margin-right');
       }
       if (mobile && overlay) {
         overlay.style.setProperty('padding', '16px 20px', 'important');
       } else if (overlay) {
         overlay.style.setProperty('padding', '24px', 'important');
       }
+      var clones = result ? result.querySelectorAll('.lb-nav-clone') : [];
       if (mobile && result) {
-        if (!result.querySelector('.lb-nav-clone')) {
+        if (!clones.length) {
           function cloneBtn(src) {
             var b = src.cloneNode(true);
             b.classList.add('lb-nav-clone');
@@ -393,12 +435,19 @@ function bindBaSlider() {
           }
           result.appendChild(cloneBtn(prev));
           result.appendChild(cloneBtn(next));
+        } else {
+          for (var i = 0; i < clones.length; i++) {
+            clones[i].style.setProperty('display', 'flex', 'important');
+          }
         }
         prev.style.setProperty('display', 'none', 'important');
         next.style.setProperty('display', 'none', 'important');
       } else {
         prev.style.removeProperty('display');
         next.style.removeProperty('display');
+        for (var j = 0; j < clones.length; j++) {
+          clones[j].style.setProperty('display', 'none', 'important');
+        }
       }
       return true;
     }
@@ -460,13 +509,19 @@ function bindBaSlider() {
       function pastHero() {
         if (goingTop) return false;
         var grid = document.querySelector('.hero-grid');
-        if (!heroLaidOut(grid)) return false;
-        return grid.getBoundingClientRect().bottom < 56;
+        if (heroLaidOut(grid)) {
+          return grid.getBoundingClientRect().bottom < 56;
+        }
+        /* Inner pages (how-it-works, gallery, etc.): no hero-grid */
+        if (grid) return false;
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var vh = window.innerHeight || 600;
+        return y > Math.min(380, vh * 0.55);
       }
       function syncToTop(btn) {
         if (!btn) return;
         var grid = document.querySelector('.hero-grid');
-        if (!heroLaidOut(grid)) {
+        if (grid && !heroLaidOut(grid)) {
           btn.classList.remove('pb-on');
           return;
         }

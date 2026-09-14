@@ -311,7 +311,7 @@
     <div style="display: flex; align-items: center; gap: 12px;" class="nav-cta">
       <a href="#hero-cta" style="font-size: 14.5px; font-weight: 600; color: #1E1422; text-decoration: none;" class="nav-dl">Log in</a>
       <a href="#download" style="font-size: 14.5px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 9px 16px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff; display: inline-flex; align-items: center; gap: 6px;" style-hover="border-color:#C42E8B;">Download App</a>
-      <a href="#hero-cta" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 20px rgba(236,72,153,.35);" style-hover="box-shadow:0 10px 26px rgba(236,72,153,.5);">Open Studio</a>
+      <a href="#hero-cta" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 4px 12px rgba(236,72,153,.16);" style-hover="box-shadow:0 6px 14px rgba(236,72,153,.22);">Open Studio</a>
     </div>
     <button onclick="{{ toggleMenu }}" aria-label="Open menu" class="nav-burger" style="width: 46px; height: 46px; border-radius: 14px; border: 1.5px solid #F0E6F2; background: #fff; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 14px -8px rgba(196,46,139,.5); padding: 0;">
       <span style="display: flex; flex-direction: column; gap: 4px; align-items: center;">
@@ -340,7 +340,7 @@
   </div>
   <div class="pb-drawer-cta" style="display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 24px;">
     <a href="#download" onclick="{{ closeMenu }}" style="text-align: center; font-size: 16px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 14px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff;">Download App</a>
-    <a href="#hero-cta" onclick="{{ closeMenu }}" style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 26px rgba(236,72,153,.4);">Open Studio — Free</a>
+    <a href="#hero-cta" onclick="{{ closeMenu }}" style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 5px 14px rgba(236,72,153,.18);">Open Studio — Free</a>
     <a href="#hero-cta" onclick="{{ closeMenu }}" style="text-align: center; font-size: 14.5px; font-weight: 600; color: #5b5060; text-decoration: none; padding: 4px;">Log in</a>
   </div>
 </aside>
@@ -376,7 +376,7 @@
           </div>
           <div class="lb-result" style="position: relative; width: 100%;">
             <div class="lb-card" style="position: relative; width: 100%;">
-              <div style="position: relative; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; padding: 4px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 28px 60px -24px rgba(196,46,139,.6);">
+              <div style="position: relative; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; padding: 4px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 12px 32px -18px rgba(196,46,139,.28);">
                 <div style="position: relative; width: 100%; height: 100%; border-radius: 14px; overflow: hidden;">
                   <img src="{{ lbItem.result }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="AI try-on result">
                 </div>
@@ -393,7 +393,7 @@
               <div style="font-size: 13px; color: #8A7E92;">{{ lbItem.category }} · Generated in 6s</div>
             </div>
           </div>
-          <a href="#download" onclick="{{ closeLB }}" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); box-shadow: 0 12px 30px -12px rgba(236,72,153,.5);" style-hover="transform:translateY(-2px);">Blend your product →</a>
+          <a href="#download" onclick="{{ closeLB }}" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); box-shadow: 0 5px 14px -6px rgba(236,72,153,.22);" style-hover="transform:translateY(-2px);">Blend your product →</a>
         </div>
       </div>
     </sc-if>
@@ -404,7 +404,6 @@
 
 <!-- ===================== HERO ===================== -->
 <header style="position: relative; padding: 76px 32px 44px; max-width: 1160px; margin: 0 auto;">
-  <div style="position: absolute; top: -80px; left: -120px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(168,85,247,.22), transparent 65%); filter: blur(20px); pointer-events: none;"></div>
   <div style="position: absolute; top: 60px; right: -140px; width: 560px; height: 560px; background: radial-gradient(circle, rgba(244,63,94,.18), transparent 65%); filter: blur(20px); pointer-events: none;"></div>
 
   <div style="display: grid; grid-template-columns: 1.12fr .88fr; gap: 40px; align-items: center; position: relative;" class="hero-grid">
@@ -416,7 +415,7 @@
       <h1 style="font-size: 52px; line-height: 1.04; letter-spacing: -.035em; font-weight: 800; margin: 0 0 22px;"><span class="hero-h1-l1">Place any product in</span><br class="hero-h1-br"><span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">any background</span><br class="hero-h1-br"><span class="hero-h1-l3">in seconds.</span></h1>
       <p style="font-size: 17px; line-height: 1.55; color: #5b5060; margin: 0 0 36px; max-width: 480px;">Upload your product and any background image from anywhere. Our AI blends them into a stunning, studio-quality visual in seconds — no photographer, no studio, no guesswork.</p>
       <div id="hero-cta" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px;">
-        <a href="#download" style="display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 16px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px rgba(236,72,153,.4);" style-hover="transform:translateY(-2px); box-shadow:0 18px 40px rgba(236,72,153,.55);">Try Free — 50 credits</a>
+        <a href="#download" style="display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 16px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 6px 16px rgba(236,72,153,.18);" style-hover="transform:translateY(-2px); box-shadow:0 8px 20px rgba(236,72,153,.26);">Try Free — 50 credits</a>
         <a href="#video" style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 15px 24px; border-radius: 999px; background: #fff; border: 1px solid #F0E6F2;" style-hover="border-color:#C42E8B;">
           <span style="width: 30px; height: 30px; border-radius: 50%; background: #FCE7F0; display: inline-flex; align-items: center; justify-content: center; color: #C42E8B;">▶</span>
           Watch demo
@@ -452,9 +451,9 @@
     </div>
 
     <!-- Try-on demo: three real use-case equations -->
-    <div data-reveal="" class="hero-demo-col" style="position: relative; display: flex; flex-direction: column; gap: 11px; max-width: 500px; width: 100%; min-width: 0; margin-left: auto;">
+    <div data-reveal="" class="hero-demo-col" style="position: relative; display: flex; flex-direction: column; gap: 11px; max-width: 520px; width: 100%; min-width: 0; margin-left: auto;">
       <sc-for list="{{ heroCases }}" as="hc" hint-placeholder-count="2">
-        <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 18px; padding: 11px 13px 12px; box-shadow: 0 18px 42px -34px rgba(168,85,247,.7);">
+        <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 18px; padding: 11px 13px 12px; box-shadow: 0 10px 26px -18px rgba(168,85,247,.28);">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
             <span style="font-size: 12px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">{{ hc.label }}</span>
             <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #C42E8B; background: #FCE7F0; border: 1px solid #F2C4DC; padding: 3px 9px; border-radius: 999px;"><span style="width:5px;height:5px;border-radius:50%;background:#C42E8B;animation:blink 1.4s infinite;"></span>AI BLEND</span>
@@ -472,7 +471,7 @@
               <span class="hero-eq-plus" aria-hidden="true"></span>
             </div>
             <span class="hero-eq-equals" aria-hidden="true"></span>
-            <div class="hero-eq-result" style="position: relative; border-radius: 16px; overflow: hidden; padding: 3px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 16px 36px -18px rgba(196,46,139,.7);">
+            <div class="hero-eq-result" style="position: relative; border-radius: 16px; overflow: hidden; padding: 3px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 8px 22px -14px rgba(196,46,139,.30);">
               <div style="position: relative; width: 100%; height: 100%; border-radius: 13px; overflow: hidden; background: #f3f3f3;">
                 <img src="{{ hc.result }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" alt="AI try-on result">
                 <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.4) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.4s ease-in-out infinite; pointer-events: none;"></div>
@@ -520,7 +519,7 @@
 
   <div class="creations-grid">
     <sc-for list="{{ creations }}" as="cr" hint-placeholder-count="10">
-      <div class="creation-card" onclick="{{ cr.open }}" style="position: relative; border-radius: 26px; overflow: hidden; background: #1a121c; box-shadow: 0 18px 44px -32px rgba(30,20,34,.55); cursor: pointer; transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-5px); box-shadow:0 30px 60px -34px rgba(196,46,139,.5);">
+      <div class="creation-card" onclick="{{ cr.open }}" style="position: relative; border-radius: 26px; overflow: hidden; background: #1a121c; box-shadow: 0 10px 28px -20px rgba(30,20,34,.28); cursor: pointer; transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-5px); box-shadow:0 14px 32px -22px rgba(196,46,139,.28);">
         <div class="cr-media" style="position: relative; width: 100%; height: {{ cr.h }}; overflow: hidden;">
           <img class="cr-result" src="{{ cr.result }}" alt="AI blend result">
           <div class="cr-shade" aria-hidden="true"></div>
@@ -539,7 +538,7 @@
   </div>
 
   <div data-reveal="" style="text-align: center; margin-top: 30px;">
-    <a href="#download" style="display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px rgba(236,72,153,.4);" style-hover="transform:translateY(-2px); box-shadow:0 18px 40px rgba(236,72,153,.55);">Create your own blend →</a>
+    <a href="#download" style="display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 6px 16px rgba(236,72,153,.18);" style-hover="transform:translateY(-2px); box-shadow:0 8px 20px rgba(236,72,153,.26);">Create your own blend →</a>
   </div>
 </section>
 
@@ -553,7 +552,7 @@
 
   <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 16px; align-items: center; position: relative;" class="how-grid">
     <!-- STEP 1 -->
-    <div data-reveal="" style="position: relative; background: #fff; border: 1px solid #F0E6F2; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 60px -36px rgba(168,85,247,.5);">
+    <div data-reveal="" style="position: relative; background: #fff; border: 1px solid #F0E6F2; border-radius: 28px; overflow: hidden; box-shadow: 0 12px 32px -22px rgba(168,85,247,.26);">
       <div style="position: relative; height: 216px; overflow: hidden;">
         <img src="assets/images/50303dd6-2226-4d07-a590-f815070e2ec4.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;" alt="Upload your photo">
         <span style="position: absolute; left: 16px; top: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.95); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #C42E8B; font-size: 16px;">1</span>
@@ -566,10 +565,10 @@
     </div>
     <!-- OPERATOR + -->
     <div class="how-op" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;">
-      <span style="width: 62px; height: 62px; border-radius: 50%; background: #fff; border: 1px solid #F0E6F2; box-shadow: 0 16px 36px -18px rgba(168,85,247,.55); display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 800; line-height: 1;"><span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">+</span></span>
+      <span style="width: 62px; height: 62px; border-radius: 50%; background: #fff; border: 1px solid #F0E6F2; box-shadow: 0 8px 20px -12px rgba(168,85,247,.28); display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 800; line-height: 1;"><span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">+</span></span>
     </div>
     <!-- STEP 2 -->
-    <div data-reveal="" style="position: relative; background: #fff; border: 1px solid #F0E6F2; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 60px -36px rgba(236,72,153,.5);">
+    <div data-reveal="" style="position: relative; background: #fff; border: 1px solid #F0E6F2; border-radius: 28px; overflow: hidden; box-shadow: 0 12px 32px -22px rgba(236,72,153,.26);">
       <div class="how-swap" data-how="bg" style="position: relative; height: 216px; overflow: hidden;">
         <img class="how-on" src="assets/images/676d7db4-4c32-4322-9e6b-e665192a8e6c.jpg" alt="Background scene">
         <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=800&q=80&auto=format&fit=crop" alt="">
@@ -585,7 +584,7 @@
     </div>
     <!-- OPERATOR = -->
     <div class="how-op" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;">
-      <span style="width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 16px 36px -16px rgba(236,72,153,.6); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; line-height: 1; color: #fff;">=</span>
+      <span style="width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 8px 20px -12px rgba(236,72,153,.28); display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800; line-height: 1; color: #fff;">=</span>
     </div>
     <!-- STEP 3 -->
     <div data-reveal="" style="position: relative; background: #fff; border: 1px solid #F0E6F2; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 60px -36px rgba(244,63,94,.5);">
@@ -625,7 +624,7 @@
 
   <div class="twoway-grid" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 0;">
     <!-- OPTION 1 -->
-    <div data-reveal="" style="position: relative; overflow: hidden; background: linear-gradient(158deg, #F4E9FC 0%, #ECDDFA 55%, #F3E2F6 100%); border: 1px solid #ECD9F5; border-radius: 30px; padding: 40px 38px; box-shadow: 0 34px 80px -52px rgba(168,85,247,.6); display: flex; flex-direction: column;">
+    <div data-reveal="" style="position: relative; overflow: hidden; background: linear-gradient(158deg, #F4E9FC 0%, #ECDDFA 55%, #F3E2F6 100%); border: 1px solid #ECD9F5; border-radius: 30px; padding: 40px 38px; box-shadow: 0 14px 36px -26px rgba(168,85,247,.28); display: flex; flex-direction: column;">
       <img class="opt2-line" src="assets/images/option2-lineart.png" alt="" aria-hidden="true">
       <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
         <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #fff; background: linear-gradient(113.667deg,#A855F7,#7C2C9E); padding: 5px 13px; border-radius: 999px;">OPTION 1</span>
@@ -650,7 +649,7 @@
     </div>
 
     <!-- OPTION 2 -->
-    <div data-reveal="" class="opt2-card" style="position: relative; overflow: hidden; background: linear-gradient(158deg, #FCEAF1 0%, #FBDCE9 55%, #F6E0F4 100%); border: 1px solid #F6D3E4; border-radius: 30px; padding: 40px 38px; box-shadow: 0 34px 80px -52px rgba(236,72,153,.55); display: flex; flex-direction: column;">
+    <div data-reveal="" class="opt2-card" style="position: relative; overflow: hidden; background: linear-gradient(158deg, #FCEAF1 0%, #FBDCE9 55%, #F6E0F4 100%); border: 1px solid #F6D3E4; border-radius: 30px; padding: 40px 38px; box-shadow: 0 14px 36px -26px rgba(236,72,153,.26); display: flex; flex-direction: column;">
       <div style="position: absolute; top: -70px; right: -50px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(236,72,153,.18), transparent 65%); filter: blur(14px); pointer-events: none;"></div>
       <img class="opt2-line" src="assets/images/option2-lineart.png" alt="" aria-hidden="true">
       <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
@@ -667,7 +666,7 @@
           </div>
         </sc-for>
       </div>
-      <a href="#trending" style="position: relative; z-index: 1; margin-top: 26px; align-self: flex-start; font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 999px; background: linear-gradient(113.667deg,#EC4899,#F43F5E); box-shadow: 0 12px 28px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">Browse listings →</a>
+      <a href="#trending" style="position: relative; z-index: 1; margin-top: 26px; align-self: flex-start; font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 999px; background: linear-gradient(113.667deg,#EC4899,#F43F5E); box-shadow: 0 5px 14px -6px rgba(236,72,153,.22);" style-hover="transform:translateY(-2px);">Browse listings →</a>
     </div>
   </div>
 </section>
@@ -691,7 +690,7 @@
   <div class="trend-wrap">
   <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;" class="market-grid trend-grid">
     <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
-      <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 24px; overflow: hidden; box-shadow: 0 18px 44px -30px rgba(30,20,34,.5); transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-6px); box-shadow:0 30px 60px -34px rgba(196,46,139,.55);">
+      <div style="background: #fff; border: 1px solid #F0E6F2; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 28px -20px rgba(30,20,34,.26); transition: transform .35s, box-shadow .35s;" style-hover="transform:translateY(-6px); box-shadow:0 14px 32px -22px rgba(196,46,139,.28);">
         <div style="position: relative; height: 140px; overflow: hidden;">
           <img src="{{ p.img }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s;" style-hover="transform:scale(1.05);" alt="{{ p.name }}">
           
@@ -703,7 +702,7 @@
             <span style="font-size: 11px; color: #A855F7;">✔</span>
           </div>
           <div style="font-size: 15.5px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 15px;">{{ p.name }}</div>
-          <a href="#download" style="display: flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 0; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 12px 28px -14px rgba(236,72,153,.55);" style-hover="transform:translateY(-2px);">✨ Blend</a>
+          <a href="#download" style="display: flex; align-items: center; justify-content: center; gap: 7px; padding: 12px 0; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 5px 14px -6px rgba(236,72,153,.2);" style-hover="transform:translateY(-2px);">✨ Blend</a>
         </div>
       </div>
     </sc-for>
@@ -726,7 +725,7 @@
   </div>
   <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;" class="cat-grid">
     <sc-for list="{{ cats }}" as="c" hint-placeholder-count="12">
-      <div data-reveal="" style="position: relative; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 14px 34px -24px rgba(30,20,34,.6); cursor: pointer;" style-hover="box-shadow:0 22px 44px -22px rgba(196,46,139,.6);">
+      <div data-reveal="" style="position: relative; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 8px 22px -16px rgba(30,20,34,.28); cursor: pointer;" style-hover="box-shadow:0 12px 28px -18px rgba(196,46,139,.3);">
         <img src="{{ c.img }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s;" style-hover="transform:scale(1.07);" alt="{{ c.label }}">
         <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(30,20,34,.78));"></div>
         <span style="position: absolute; left: 12px; right: 12px; bottom: 12px; font-size: 13.5px; font-weight: 700; color: #fff; line-height: 1.2;">{{ c.label }}</span>
@@ -750,7 +749,7 @@
 
   <!-- before / after -->
   <div data-reveal="" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 72px;" class="ba-grid">
-    <div class="ba-slider" onmousemove="{{ scrub }}" ontouchstart="{{ scrubTouch }}" ontouchmove="{{ scrubTouch }}" style="position: relative; height: 480px; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 90px -40px rgba(168,85,247,.55); border: 6px solid #fff; cursor: ew-resize; user-select: none;">
+    <div class="ba-slider" onmousemove="{{ scrub }}" ontouchstart="{{ scrubTouch }}" ontouchmove="{{ scrubTouch }}" style="position: relative; height: 480px; border-radius: 28px; overflow: hidden; box-shadow: 0 14px 36px -24px rgba(168,85,247,.28); border: 6px solid #fff; cursor: ew-resize; user-select: none;">
       <div style="position: absolute; inset: 0;"><img id="ba-after" alt="AI blended product in scene" src="{{ baAfter }}" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
       <div style="position: absolute; inset: 0; background: linear-gradient(160deg, rgba(168,85,247,.18), rgba(244,63,94,.2)); pointer-events: none;"></div>
       <div class="ba-clip" style="position: absolute; top: 0; left: 0; bottom: 0; width: {{ baClip }}; overflow: hidden; border-right: 3px solid #fff;">
@@ -784,7 +783,7 @@
     <p style="font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #C42E8B; margin: 0 0 14px;">See it in motion</p>
     <h2 style="font-size: 36px; line-height: 1.09; letter-spacing: -.03em; font-weight: 800; margin: 0;">Watch how it works</h2>
   </div>
-  <div data-reveal="" style="position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 50px 100px -50px rgba(168,85,247,.6); border: 8px solid #fff;">
+  <div data-reveal="" style="position: relative; border-radius: 30px; overflow: hidden; box-shadow: 0 18px 40px -28px rgba(168,85,247,.28); border: 8px solid #fff;">
     <sc-if value="{{ videoOpen }}" hint-placeholder-val="{{ false }}">
       <div style="position: relative; width: 100%; padding-top: 56.25%; background: #000;">
         <iframe src="{{ videoSrc }}" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen=""></iframe>
@@ -794,7 +793,7 @@
       <div onclick="{{ openVideo }}" style="position: relative; width: 100%; padding-top: 56.25%; background: linear-gradient(130deg,#A855F7,#EC4899,#F43F5E); cursor: pointer;">
         <div style="position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(255,255,255,.25), transparent 55%);"></div>
         <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;">
-          <span style="width: 86px; height: 86px; border-radius: 50%; background: rgba(255,255,255,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,.3); transition: transform .3s;" style-hover="transform:scale(1.08);">
+          <span style="width: 86px; height: 86px; border-radius: 50%; background: rgba(255,255,255,.95); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0,0,0,.16); transition: transform .3s;" style-hover="transform:scale(1.08);">
             <span style="font-size: 30px; color: #C42E8B; margin-left: 5px;">▶</span>
           </span>
           <div style="text-align: center; color: #fff;">
@@ -818,14 +817,14 @@
 
   <!-- credit system -->
   <div data-reveal="" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; max-width: 660px; margin: 0 auto 52px;">
-    <div style="flex: 1; min-width: 250px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 20px; background: linear-gradient(145deg,#FDEBF4,#F6E4FB); border: 1px solid #F2CFE8; box-shadow: 0 18px 40px -28px rgba(196,46,139,.55);">
+    <div style="flex: 1; min-width: 250px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 20px; background: linear-gradient(145deg,#FDEBF4,#F6E4FB); border: 1px solid #F2CFE8; box-shadow: 0 10px 26px -18px rgba(196,46,139,.26);">
       <span style="position: absolute; top: -34px; right: -20px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.20), transparent 68%); pointer-events: none; opacity: 0.6"></span>
-      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: #fff; font-size: 24px; box-shadow: 0 10px 22px -12px rgba(196,46,139,.5); position: relative;">🪙</span>
+      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: #fff; font-size: 24px; box-shadow: 0 6px 14px -8px rgba(196,46,139,.24); position: relative;">🪙</span>
       <div style="position: relative;"><div style="font-size: 22px; font-weight: 800; letter-spacing: -.02em; background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">1 Credit = ₹1</div><div style="font-size: 13px; font-weight: 600; color: #9A5A82;">simple, transparent</div></div>
     </div>
-    <div style="flex: 1; min-width: 250px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 20px; background: linear-gradient(145deg,#F3E4FB,#EADCFB); border: 1px solid #E4CFF5; box-shadow: 0 18px 40px -28px rgba(168,85,247,.55);">
+    <div style="flex: 1; min-width: 250px; position: relative; overflow: hidden; display: flex; align-items: center; gap: 14px; padding: 22px 26px; border-radius: 20px; background: linear-gradient(145deg,#F3E4FB,#EADCFB); border: 1px solid #E4CFF5; box-shadow: 0 10px 26px -18px rgba(168,85,247,.26);">
       <span style="position: absolute; top: -34px; right: -20px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.20), transparent 68%); pointer-events: none; opacity: 0.6"></span>
-      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: #fff; font-size: 24px; box-shadow: 0 10px 22px -12px rgba(168,85,247,.5); position: relative;">✨</span>
+      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: #fff; font-size: 24px; box-shadow: 0 6px 14px -8px rgba(168,85,247,.24); position: relative;">✨</span>
       <div style="position: relative;"><div style="font-size: 22px; font-weight: 800; letter-spacing: -.02em; background: linear-gradient(113.667deg,#9333A8,#EC4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">1 Blend ≈ 10 Credits</div><div style="font-size: 13px; font-weight: 600; color: #7E5A9A;">one AI generation</div></div>
     </div>
   </div>
@@ -833,7 +832,7 @@
   <!-- HORIZONTAL SPLIT: recharge any amount | OR | packs -->
   <div class="pricing-split" data-reveal="" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: 0; max-width: 1080px; margin: 0 auto;">
   <!-- LEFT: recharge any amount -->
-  <div style="position: relative; overflow: hidden; border-radius: 28px; padding: 38px 36px 34px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); box-shadow: 0 40px 90px -46px rgba(196,46,139,.6); display: flex; flex-direction: column; justify-content: center;">
+  <div style="position: relative; overflow: hidden; border-radius: 28px; padding: 38px 36px 34px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); box-shadow: 0 16px 40px -28px rgba(196,46,139,.28); display: flex; flex-direction: column; justify-content: center;">
     <div style="position: absolute; top: -80px; right: -50px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(236,72,153,.42), transparent 65%); filter: blur(12px); pointer-events: none;"></div>
     <div style="position: absolute; bottom: -90px; left: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(168,85,247,.4), transparent 65%); filter: blur(14px); pointer-events: none;"></div>
     <div style="position: relative; text-align: center;">
@@ -892,18 +891,18 @@
 
   <!-- new user + refer -->
   <div data-reveal="" class="offer-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 900px; margin: 40px auto 0;">
-    <div style="position: relative; overflow: hidden; display: flex; align-items: center; gap: 20px; padding: 28px 30px; border-radius: 24px; background: linear-gradient(135deg,#FCE7F0,#F7ECF8); border: 1px solid #F2CFE8; box-shadow: 0 22px 50px -34px rgba(196,46,139,.55);">
+    <div style="position: relative; overflow: hidden; display: flex; align-items: center; gap: 20px; padding: 28px 30px; border-radius: 24px; background: linear-gradient(135deg,#FCE7F0,#F7ECF8); border: 1px solid #F2CFE8; box-shadow: 0 10px 28px -20px rgba(196,46,139,.26);">
       <span style="position: absolute; top: -40px; right: -24px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.18), transparent 68%); pointer-events: none;"></span>
-      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; background: #fff; font-size: 30px; box-shadow: 0 12px 28px -14px rgba(196,46,139,.5); position: relative;">🎁</span>
+      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; background: #fff; font-size: 30px; box-shadow: 0 6px 16px -10px rgba(196,46,139,.24); position: relative;">🎁</span>
       <div style="flex: 1; min-width: 0; position: relative;">
         <div style="font-size: 12.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #C42E8B;">New user offer</div>
         <div style="font-size: 21px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 3px;">50 free credits on signup</div>
         <div style="font-size: 14px; line-height: 1.45; color: #5b5060;">≈ 5 free AI blends — no card needed.</div>
       </div>
     </div>
-    <div style="position: relative; overflow: hidden; display: flex; align-items: center; gap: 20px; padding: 28px 30px; border-radius: 24px; background: linear-gradient(135deg,#F3E3FA,#FCE7F0); border: 1px solid #E8CFF2; box-shadow: 0 22px 50px -34px rgba(168,85,247,.55);">
+    <div style="position: relative; overflow: hidden; display: flex; align-items: center; gap: 20px; padding: 28px 30px; border-radius: 24px; background: linear-gradient(135deg,#F3E3FA,#FCE7F0); border: 1px solid #E8CFF2; box-shadow: 0 10px 28px -20px rgba(168,85,247,.26);">
       <span style="position: absolute; top: -40px; right: -24px; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.18), transparent 68%); pointer-events: none;"></span>
-      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; background: #fff; font-size: 30px; box-shadow: 0 12px 28px -14px rgba(168,85,247,.5); position: relative;">👯</span>
+      <span style="flex: none; display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 18px; background: #fff; font-size: 30px; box-shadow: 0 6px 16px -10px rgba(168,85,247,.24); position: relative;">👯</span>
       <div style="flex: 1; min-width: 0; position: relative;">
         <div style="font-size: 12.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #9333A8;">Refer &amp; earn</div>
         <div style="font-size: 21px; font-weight: 800; letter-spacing: -.02em; margin: 4px 0 3px;">Invite friends, earn credits</div>
@@ -927,7 +926,7 @@
         <div style="display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-top: 1px solid #F6EFF8;"><span style="color:#C9BECF; font-size: 17px; line-height: 1.3;">✕</span><span style="font-size: 15px; color: #6b6072;">{{ r }}</span></div>
       </sc-for>
     </div>
-    <div style="position: relative; border-radius: 26px; padding: 34px 32px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); color: #fff; box-shadow: 0 40px 90px -45px rgba(196,46,139,.55); overflow: hidden;">
+    <div style="position: relative; border-radius: 26px; padding: 34px 32px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); color: #fff; box-shadow: 0 16px 40px -28px rgba(196,46,139,.26); overflow: hidden;">
       <div style="position: absolute; top: -60px; right: -40px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(236,72,153,.5), transparent 65%); filter: blur(10px);"></div>
       <div style="display: flex; align-items: center; gap: 11px; margin-bottom: 24px; position: relative;"><span style="width:40px;height:40px;border-radius:12px;background:linear-gradient(113.667deg,#A855F7,#F43F5E);display:flex;align-items:center;justify-content:center;font-size:19px;">✨</span><span style="font-size: 18px; font-weight: 800;">AI Background Blend</span></div>
       <sc-for list="{{ vsNew }}" as="r" hint-placeholder-count="5">
@@ -947,7 +946,7 @@
 
   <!-- free pill + who sells here -->
   <div data-reveal="" style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; align-items: center; margin-bottom: 40px;">
-    <span style="display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 13.5px; font-weight: 800; letter-spacing: .01em; box-shadow: 0 12px 30px -14px rgba(236,72,153,.6);">🎉 Listing is 100% free — forever</span>
+    <span style="display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 13.5px; font-weight: 800; letter-spacing: .01em; box-shadow: 0 5px 14px -6px rgba(236,72,153,.22);">🎉 Listing is 100% free — forever</span>
     <sc-for list="{{ sellerPersonas }}" as="p" hint-placeholder-count="5">
       <span style="padding: 9px 15px; border-radius: 999px; background: #fff; border: 1px solid #F0E6F2; font-size: 13.5px; font-weight: 700; color: #5b5060;">{{ p }}</span>
     </sc-for>
@@ -963,7 +962,7 @@
   <div class="seller-way-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch;">
 
     <!-- ===== WAY 1 — GET NEW CUSTOMERS ===== -->
-    <div data-reveal="" style="position: relative; overflow: hidden; border-radius: 32px; padding: 40px 38px; background: linear-gradient(160deg,#F5E9FC,#ECDDFA 55%,#F3E2F6); border: 1px solid #ECD9F5; box-shadow: 0 34px 80px -52px rgba(168,85,247,.6); display: flex; flex-direction: column;">
+    <div data-reveal="" style="position: relative; overflow: hidden; border-radius: 32px; padding: 40px 38px; background: linear-gradient(160deg,#F5E9FC,#ECDDFA 55%,#F3E2F6); border: 1px solid #ECD9F5; box-shadow: 0 14px 36px -26px rgba(168,85,247,.28); display: flex; flex-direction: column;">
       <div style="position: absolute; top: -80px; right: -50px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(168,85,247,.2), transparent 65%); filter: blur(14px); pointer-events: none;"></div>
       <span style="position: relative; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#7C2C9E); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .05em; margin-bottom: 18px;" class="seller-way-pill">WAY 1 · GET NEW CUSTOMERS</span>
       <h3 style="position: relative; font-size: 28px; line-height: 1.1; letter-spacing: -.03em; font-weight: 800; color: #2A1339; margin: 0 0 10px;">Get discovered by <span style="font-family:'Instrument Serif',serif; font-weight:400; font-style:italic; background:linear-gradient(113.667deg,#A855F7,#7C2C9E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">new brands</span></h3>
@@ -986,7 +985,7 @@
               <span style="font-size: 10px; color: #A855F7;">✔</span>
             </div>
             <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; color: #1E1422; margin-bottom: 12px;">Sunlit Marble Studio</div>
-            <a href="#download" style="margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 0; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; box-shadow: 0 12px 26px -14px rgba(236,72,153,.55);" style-hover="transform:translateY(-2px);">✨ Blend</a>
+            <a href="#download" style="margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 0; border-radius: 999px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; box-shadow: 0 5px 14px -6px rgba(236,72,153,.2);" style-hover="transform:translateY(-2px);">✨ Blend</a>
           </div>
         </div>
         <div class="sw-beat sw-toast" style="--sw-i: 0; margin-top: 13px; display: flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 12px; background: #EAF8EF; border: 1px solid #CDEBD7;">
@@ -1012,7 +1011,7 @@
     </div>
 
     <!-- ===== WAY 2 — CONVERT HESITANT BUYERS ===== -->
-    <div data-reveal="" style="position: relative; overflow: hidden; border-radius: 32px; padding: 40px 38px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); box-shadow: 0 34px 80px -50px rgba(196,46,139,.6); display: flex; flex-direction: column;">
+    <div data-reveal="" style="position: relative; overflow: hidden; border-radius: 32px; padding: 40px 38px; background: linear-gradient(158deg, #34164A, #5A1E5A 52%, #82265F); box-shadow: 0 14px 36px -26px rgba(196,46,139,.28); display: flex; flex-direction: column;">
     <div style="position: absolute; bottom: -120px; left: -80px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(168,85,247,.4), transparent 65%); filter: blur(20px); pointer-events: none;"></div>
     <div style="position: absolute; top: -90px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(244,63,94,.32), transparent 65%); filter: blur(16px); pointer-events: none;"></div>
       <span style="position: relative; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); color: #F9A8D4; font-size: 12px; font-weight: 800; letter-spacing: .05em; margin-bottom: 18px;" class="seller-way-pill">WAY 2 · CLOSE HESITANT BRANDS</span>
@@ -1079,7 +1078,7 @@
         <div class="sw-flow sw-flow-late" style="display: flex; flex-direction: column; gap: 16px;">
           <sc-for list="{{ sellerFlowFull }}" as="f" hint-placeholder-count="3">
             <div class="sw-beat" style="position: relative; display: flex; align-items: flex-start; gap: 16px;">
-              <span style="flex: none; width: 44px; height: 44px; border-radius: 13px; background: linear-gradient(135deg,#A855F7,#F43F5E); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 10px 24px -10px rgba(236,72,153,.6); z-index: 1;">{{ f.icon }}</span>
+              <span style="flex: none; width: 44px; height: 44px; border-radius: 13px; background: linear-gradient(135deg,#A855F7,#F43F5E); display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 5px 14px -8px rgba(236,72,153,.24); z-index: 1;">{{ f.icon }}</span>
               <div style="flex: 1; padding-top: 1px;">
                 <span style="font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #F9A8D4;">STEP {{ f.n }}</span>
                 <div style="font-size: 16.5px; font-weight: 800; color: #fff; line-height: 1.2; margin: 2px 0 3px;">{{ f.title }}</div>
@@ -1094,38 +1093,38 @@
   </div><!-- /seller-way-grid -->
 
   <!-- benefits — one integrated panel, five statements -->
-  <div data-reveal="" style="margin-top: 16px; background: linear-gradient(160deg,#FDEBF4,#F3E4FB 55%,#F8E5FB); border: 1px solid #F0DAEE; border-radius: 28px; overflow: hidden; box-shadow: 0 26px 64px -46px rgba(168,85,247,.55);">
+  <div data-reveal="" style="margin-top: 10px; background: linear-gradient(160deg,#FDEBF4,#F3E4FB 55%,#F8E5FB); border: 1px solid #F0DAEE; border-radius: 28px; overflow: hidden; box-shadow: 0 12px 32px -24px rgba(168,85,247,.26);">
     <div class="seller-hl-grid" style="display: grid; grid-template-columns: repeat(5, 1fr);">
       <!-- +38% -->
-      <div style="padding: 20px 16px;">
+      <div style="padding: 14px 12px;">
         
         <div class="hl-big" style="font-size: 44px; line-height: .95; font-weight: 800; letter-spacing: -.04em; background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">+38%</div>
-        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 8px 0 4px;">more likely to license the scene</div>
+        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 6px 0 2px;">more likely to license the scene</div>
         <div style="font-size: 13px; line-height: 1.45; color: #8A7E92;">Brands who blend first.</div>
       </div>
       <!-- −52% -->
-      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 14px 12px; border-left: 1px solid #F0DAEE;">
         
         <div class="hl-big" style="font-size: 44px; line-height: .95; font-weight: 800; letter-spacing: -.04em; background: linear-gradient(113.667deg,#9333A8,#EC4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">−52%</div>
-        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 8px 0 4px;">fewer reshoots &amp; revision requests</div>
+        <div style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; line-height: 1.32; color: #1E1422; margin: 6px 0 2px;">fewer reshoots &amp; revision requests</div>
       </div>
       <!-- High-intent leads -->
-      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 14px 12px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">High-intent leads</div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">Brands message you after they've already seen their product in your scene.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 6px;">Brands message you after they've already seen their product in your scene.</div>
       </div>
       <!-- Free listing -->
-      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 14px 12px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">List your full catalogue — <span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Free</span></div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">Upload everything you sell at no cost.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 6px;">Upload everything you sell at no cost.</div>
       </div>
       <!-- Keep 100% -->
-      <div style="padding: 20px 16px; border-left: 1px solid #F0DAEE;">
+      <div style="padding: 14px 12px; border-left: 1px solid #F0DAEE;">
         
         <div style="font-size: 24px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">Keep <span style="background: linear-gradient(113.667deg,#A855F7,#F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">100%</span> of every sale</div>
-        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 8px;">No commission. No listing fees.</div>
+        <div style="font-size: 13px; line-height: 1.5; color: #8A7E92; margin-top: 6px;">No commission. No listing fees.</div>
       </div>
     </div>
   </div>
@@ -1169,16 +1168,18 @@
         <h2 style="font-size: 36px; line-height: 1.09; letter-spacing: -.03em; font-weight: 800; margin: 0 0 18px;">Love your result —<br>or get your <span style="font-family:'Instrument Serif',serif; font-style:italic; font-weight:400; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">credits back.</span></h2>
         <p style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0 0 26px; max-width: 460px;">Not happy with an AI blend? Request a refund and we’ll return your credits — up to 100%. Creating visuals is completely risk-free, the way it should be.</p>
         <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <a href="#hero-cta" style="font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px rgba(236,72,153,.38);" style-hover="transform:translateY(-2px);">Try risk-free</a>
+          <a href="#hero-cta" style="font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 6px 16px rgba(236,72,153,.16);" style-hover="transform:translateY(-2px);">Try risk-free</a>
           <a href="faq.html" style="font-size: 15px; font-weight: 600; color: #C42E8B; text-decoration: none;">Read refund policy →</a>
         </div>
       </div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <sc-for list="{{ refundBadges }}" as="b" hint-placeholder-count="4">
           <div data-reveal="" class="refund-badge" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 22px; padding: 26px 22px; box-shadow: 0 16px 40px -30px rgba(30,20,34,.55); transition: transform .3s;" style-hover="transform:translateY(-5px); border-color:#FCE7F0;">
-            <span style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(135deg,#FCE7F0,#F7ECF8); color: #C42E8B; font-size: 22px; margin-bottom: 16px;">{{ b.icon }}</span>
-            <div style="font-size: 16.5px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 5px;">{{ b.title }}</div>
-            <div style="font-size: 13.5px; line-height: 1.5; color: #8A7E92;">{{ b.body }}</div>
+            <span class="refund-badge-icon" style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 13px; background: linear-gradient(135deg,#FCE7F0,#F7ECF8); color: #C42E8B; font-size: 22px; margin-bottom: 0;">{{ b.icon }}</span>
+            <div class="refund-badge-copy">
+              <div class="refund-badge-title" style="font-size: 16.5px; font-weight: 800; letter-spacing: -.01em; margin-bottom: 5px;">{{ b.title }}</div>
+              <div class="refund-badge-body" style="font-size: 13.5px; line-height: 1.5; color: #8A7E92;">{{ b.body }}</div>
+            </div>
           </div>
         </sc-for>
       </div>
@@ -1244,8 +1245,8 @@
 
 <!-- ===================== DOWNLOAD ===================== -->
 <section id="download" style="padding: 46px 32px; max-width: 1160px; margin: 0 auto;">
-  <div data-reveal="" style="position: relative; max-width: 1080px; margin: 0 auto; background: linear-gradient(160deg, #FFFFFF, #FCE7F0); border: 1px solid #F0E6F2; border-radius: 32px; padding: 44px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 44px; align-items: center; overflow: hidden; box-shadow: 0 50px 100px -60px rgba(168,85,247,.6);" class="dl-grid respad">
-    <div style="position: relative;">
+  <div data-reveal="" class="dl-grid">
+    <div class="dl-copy" style="position: relative;">
       <p style="font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #C42E8B; margin: 0 0 16px;">Get the app</p>
       <h2 style="font-size: 38px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 18px;">Your photo studio,<br>in your pocket</h2>
       <p style="font-size: 16px; line-height: 1.55; color: #5b5060; margin: 0 0 32px; max-width: 440px;">Snap, upload and blend anywhere. Save your visuals, message creators, and earn credits — all from the PixelBlend app.</p>
@@ -1296,7 +1297,7 @@
         <div><div style="font-size: 14.5px; font-weight: 700; color: #1E1422;">Scan to download</div><div style="font-size: 13px; color: #8A7E92;">Point your camera here</div></div>
       </div>
     </div>
-    <div style="position: relative; height: 460px; display: flex; align-items: center; justify-content: center;">
+    <div class="dl-phone" style="position: relative; height: 460px; display: flex; align-items: center; justify-content: center;">
       <div style="position: absolute; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.22), transparent 70%);"></div>
       <div style="position: relative; width: 240px; height: 480px; border-radius: 42px; background: #1E1422; padding: 9px; box-shadow: 0 40px 90px -30px rgba(30,20,34,.6); transform: rotate(-4deg);">
         <div style="width: 100%; height: 100%; border-radius: 34px; overflow: hidden; background: linear-gradient(170deg,#A855F7,#EC4899,#F43F5E); position: relative;">
@@ -1319,7 +1320,7 @@
     <h2 style="font-size: 37px; line-height: 1.09; letter-spacing: -.035em; font-weight: 800; margin: 0 0 8px;">Stop paying for<br>expensive photo shoots.</h2>
     <p style="font-size: 26px; line-height: 1.2; font-family: 'Instrument Serif', serif; font-style: italic; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 36px;">Blend any product into any scene.</p>
     <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-      <a href="#download" style="font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; padding: 17px 34px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 16px 40px rgba(236,72,153,.45);" style-hover="transform:translateY(-2px); box-shadow:0 20px 46px rgba(236,72,153,.6);">Start free</a>
+      <a href="#download" style="font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; padding: 17px 34px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 6px 18px rgba(236,72,153,.2);" style-hover="transform:translateY(-2px); box-shadow:0 8px 22px rgba(236,72,153,.28);">Start free</a>
       <a href="#download" style="font-size: 17px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 16px 30px; border-radius: 999px; background: #fff; border: 1.5px solid #F0E6F2;" style-hover="border-color:#C42E8B;">Download app</a>
     </div>
     <p style="font-size: 14px; color: #8A7E92; margin: 22px 0 0;">50 free credits · No credit card · Cancel anytime</p>

@@ -37,7 +37,7 @@
       position: relative;
       max-width: 1160px;
       margin: 0 auto;
-      padding: 76px 32px 44px;
+      padding: 56px 32px 44px;
     }
     .hiw-hero-copy { max-width: 720px; margin: 0 auto; text-align: center; }
     .hiw-kicker {
@@ -115,11 +115,12 @@
       background: linear-gradient(180deg, #FAF4FB 0%, #fff 22%, #FFF7FB 100%);
     }
     .hiw-walk-head {
-      max-width: 1160px; margin: 0 auto; padding: 74px 32px 8px;
+      max-width: 1160px; margin: 0 auto; padding: 74px 32px 8px; text-align: center;
     }
     .hiw-walk-head h2 {
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420; margin: 0;
+      font-size: 40px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #1A1420; margin: 0 auto;
+      max-width: 720px;
     }
     .hiw-walk-head h2 em {
       font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;
@@ -146,9 +147,30 @@
       margin: 14px auto 0; max-width: 420px;
       font-size: 16.5px; line-height: 1.6; color: #6B6070;
     }
+    .hiw-rail-section { overflow-x: clip; border-bottom: 1px solid #E6DED6; }
+    .hiw-rail-mask { overflow: hidden; }
+    .hiw-rail-card { width: 224px; flex: none; min-width: 0; }
+    @media (max-width: 900px) {
+      .hiw-rail-card { width: 180px; }
+      .hiw-rail-track { gap: 14px !important; }
+    }
     @media (max-width: 640px) {
       .hiw-rail-head { padding: 48px 20px 20px; }
       .hiw-rail-head h2 { font-size: 28px; }
+      /* ~2.5 cards visible across the viewport */
+      .hiw-rail-card {
+        width: calc((100vw - 16px) / 2.5 - 10px);
+        max-width: 148px;
+      }
+      .hiw-rail-track { gap: 10px !important; }
+      .hiw-rail-label {
+        margin-top: 8px !important;
+        font-size: 11px !important;
+        line-height: 1.35 !important;
+      }
+      .hiw-rail-img { border-radius: 3px 24px 3px 3px !important; }
+      .hiw-rail-track:last-child .hiw-rail-img { border-radius: 24px 3px 3px 3px !important; }
+      .hiw-rail-mask { padding-bottom: 22px !important; }
     }
     .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 80px 32px; }
     .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; }
@@ -215,11 +237,25 @@
     }
     .hiw-uc-more { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     @media (max-width: 900px) {
-      #usecases { padding: 56px 20px 64px; }
-      .hiw-uc-head h2 { font-size: 30px; }
-      .hiw-uc-row, .hiw-uc-row-rev { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+      #usecases { padding: 48px 16px 52px; }
+      .hiw-uc-head { margin-bottom: 22px; }
+      .hiw-uc-head h2 { font-size: 28px; }
+      .hiw-uc-row, .hiw-uc-row-rev {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 14px;
+      }
       .hiw-uc-row-rev .hiw-uc-copy, .hiw-uc-row-rev .hiw-uc-visual { order: 0; }
       .hiw-uc-more { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 1100px) {
+      .hiw-uc-listing-shot { aspect-ratio: 1 / 1 !important; }
+      .hiw-uc-listing-sizes,
+      .hiw-uc-listing-cta { display: none !important; }
+      .hiw-uc-listing-body { padding: 10px 12px 12px !important; }
+      .hiw-uc-pair-note { margin-top: 8px !important; padding: 8px 10px !important; font-size: 12px !important; }
+      .hiw-uc-row, .hiw-uc-row-rev { padding: 24px 28px; gap: 28px; }
+      .hiw-uc-pair .hiw-uc-shot { aspect-ratio: 1 / 1 !important; }
     }
     #marketplace { padding: 72px 32px 0; }
     .hiw-mkt-head { max-width: 1160px; margin: 0 auto 28px; text-align: center; }
@@ -232,6 +268,8 @@
     .hiw-mkt-card {
       max-width: 1160px; margin: 0 auto; background: #fff;
       border: 1px solid #F0E6F2; border-radius: 24px; padding: 32px 36px 36px;
+      overflow: hidden;
+      min-width: 0;
     }
     .hiw-mkt-head p,
     .hiw-mkt-lead {
@@ -243,11 +281,118 @@
     }
     .hiw-mkt-phone-wrap {
       width: 300px;
+      max-width: 100%;
       margin: 0 auto;
-      overflow: visible;
+      overflow: hidden;
       display: flex;
       justify-content: center;
+      min-width: 0;
+      box-sizing: border-box;
     }
+    .hiw-mkt-phone {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 40px;
+      background: #1A1420;
+      padding: 10px;
+      box-shadow: 0 40px 80px -44px rgba(26,20,32,.7);
+      box-sizing: border-box;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .hiw-mkt-phone-screen {
+      border-radius: 32px;
+      background: #FAF4FB;
+      overflow: hidden;
+      height: 560px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .hiw-mkt-phone-status {
+      padding: 14px 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #8D8296;
+      gap: 8px;
+      min-width: 0;
+    }
+    .hiw-mkt-notch {
+      width: 74px;
+      height: 20px;
+      background: #1A1420;
+      border-radius: 999px;
+      margin-top: -6px;
+      flex: none;
+    }
+    .hiw-mkt-store-head {
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid #EFE7E0;
+      min-width: 0;
+    }
+    .hiw-mkt-stats {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .hiw-mkt-stat {
+      background: #fff;
+      border: 1px solid #EFE7E0;
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+      min-width: 0;
+    }
+    .hiw-mkt-tabs {
+      padding: 10px 12px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .hiw-mkt-tabs > span {
+      flex: none;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .hiw-mkt-scroll {
+      flex: 1;
+      padding: 6px 12px 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      grid-auto-rows: max-content;
+      align-content: start;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      box-sizing: border-box;
+    }
+    .hiw-mkt-listing {
+      background: #fff;
+      border: 1px solid #EFE7E0;
+      border-radius: 14px;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .hiw-uc-pins {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      align-items: start;
+      min-width: 0;
+    }
+    .hiw-uc-pins > * { min-width: 0; }
     .hiw-mkt-card a { text-decoration: none; }
     #devices { padding: 72px 32px 0; }
     .hiw-dev {
@@ -341,7 +486,7 @@
       .hiw-hero .hiw-lead { font-size: 16px !important; }
     }
     @media (min-width: 1100px) {
-      .hiw-hero-inner { padding-top: 92px !important; }
+      .hiw-hero-inner { padding-top: 64px !important; }
     }
     @media (max-width: 900px) {
       .hiw-hero-inner { padding: 56px 22px 44px !important; }
@@ -379,7 +524,68 @@
       .hiw-refund-card { padding: 28px 20px; border-radius: 22px; }
       .hiw-refund-title { font-size: 28px; }
       .hiw-uc-visual { display: flex !important; flex-direction: column !important; gap: 14px !important; }
+      .hiw-uc-visual.hiw-uc-pair {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        gap: 10px !important;
+        align-items: start !important;
+      }
+      .hiw-uc-visual.hiw-uc-inspire {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) !important;
+        gap: 10px !important;
+        align-items: start !important;
+      }
       .hiw-uc-arrow { display: none !important; }
+      .hiw-uc-listing-head,
+      .hiw-uc-listing-sizes,
+      .hiw-uc-listing-cta,
+      .hiw-uc-pair-note { display: none !important; }
+      .hiw-uc-listing {
+        border-radius: 14px !important;
+        box-shadow: none !important;
+      }
+      .hiw-uc-listing-shot {
+        aspect-ratio: 1 / 1 !important;
+      }
+      .hiw-uc-listing-body {
+        padding: 8px 10px 10px !important;
+      }
+      .hiw-uc-listing-meta {
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        align-items: center !important;
+      }
+      .hiw-uc-listing-title,
+      .hiw-uc-listing-meta .hiw-uc-listing-title {
+        font-size: 11px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+      }
+      .hiw-uc-listing-price,
+      .hiw-uc-listing-meta .hiw-uc-listing-price {
+        font-size: 11px !important;
+        white-space: nowrap !important;
+        flex: none !important;
+      }
+      .hiw-uc-listing-meta span {
+        font-size: inherit;
+      }
+      .hiw-uc-pair .hiw-uc-shot {
+        width: 100% !important;
+        margin: 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 12px !important;
+      }
+      .hiw-uc-pair-out .hiw-uc-shot {
+        aspect-ratio: 1 / 1 !important;
+      }
+      .hiw-uc-row .hiw-uc-visual { order: -1; }
+      .hiw-uc-row-rev .hiw-uc-visual { order: -1; }
+      .hiw-uc-row-rev .hiw-uc-copy { order: 0; }
       .hiw-walk-head { padding: 48px 20px 8px; }
       .hiw-walk-head h2 { font-size: 30px; }
       .hiw-faq-head h2 { font-size: 30px; }
@@ -410,52 +616,460 @@
 
     @media (max-width: 1100px) {
       .hiw-demo-eq { display: none !important; }
-      .hiw-demo-plus { padding-top: 0 !important; }
-      .hiw-in-cols { padding: 18px 16px 20px !important; gap: 10px; min-width: 0; }
+      .hiw-demo-plus {
+        height: 36px !important;
+        padding-top: 0 !important;
+        align-self: center !important;
+        width: 100%;
+        display: flex !important;
+        justify-content: center !important;
+      }
+      /* Always stack + center below desktop — no left-stuck half layout */
       .hiw-demo-cols {
-        display: grid !important;
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 300px) !important;
-        column-gap: 16px !important;
-        row-gap: 8px !important;
-        padding: 0 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 0 16px !important;
+        gap: 12px !important;
       }
-      .hiw-demo-cols > * { min-width: 0; max-width: 100%; grid-column: auto !important; grid-row: auto !important; }
+      .hiw-demo-cols > * {
+        min-width: 0;
+        max-width: 420px !important;
+        width: 100% !important;
+        grid-column: auto !important;
+        grid-row: auto !important;
+        box-sizing: border-box !important;
+      }
       .hiw-demo-cols > div:nth-child(2) { display: none !important; }
-      .hiw-in-cols {
-        display: grid !important;
-        grid-template-columns: minmax(0, 0.9fr) 40px minmax(0, 1.15fr) !important;
+      .hiw-demo-label-out { display: none !important; }
+      .hiw-demo-label-in {
+        justify-content: center !important;
+        padding-left: 0 !important;
+        max-width: 420px !important;
       }
-      .hiw-demo-result { padding: 18px 16px 20px !important; }
+      .hiw-demo-label-in > span:last-child { display: none; }
+      .hiw-in-cols {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 16px 14px 18px !important;
+        gap: 0 !important;
+        margin: 0 auto !important;
+        border-radius: 18px !important;
+        text-align: center;
+      }
+      .hiw-demo-product {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hiw-demo-product-head,
+      .hiw-demo-bgs-head {
+        justify-content: center !important;
+        width: 100%;
+      }
+      .hiw-demo-product-shot {
+        width: min(160px, 42vw) !important;
+        margin: 10px auto 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 12px !important;
+      }
+      .hiw-demo-product-shot img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+      .hiw-demo-prod-opts {
+        max-width: 200px;
+        width: 100%;
+        margin: 8px auto 0;
+      }
+      .hiw-demo-prod-note {
+        text-align: center;
+        max-width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hiw-demo-bgs-block {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+      .hiw-demo-bgs-block .hiw-try-hint {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100%;
+        text-align: center;
+      }
+      .hiw-demo-bgs {
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 10px auto 0 !important;
+        gap: 8px !important;
+        padding-right: 0 !important;
+        max-height: 340px !important;
+        grid-template-columns: 1fr 1fr !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-demo-bg-card {
+        border-radius: 10px !important;
+        box-shadow: none !important;
+        transform: none !important;
+        min-width: 0 !important;
+      }
+      .hiw-demo-bg-shot {
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 10px 10px 0 0 !important;
+      }
+      .hiw-demo-bg-meta {
+        padding: 6px 6px 8px !important;
+        text-align: center !important;
+      }
+      .hiw-demo-bg-name {
+        font-size: 11px !important;
+        text-align: center !important;
+        white-space: normal !important;
+      }
+      .hiw-demo-bg-btn {
+        margin-top: 5px !important;
+        padding: 6px 4px !important;
+        font-size: 11px !important;
+      }
+      .hiw-demo-result {
+        margin: 0 auto !important;
+        padding: 16px 14px 18px !important;
+        border-radius: 18px !important;
+        text-align: center;
+      }
+      .hiw-demo-result-head {
+        justify-content: center !important;
+      }
+      .hiw-demo-result-shot {
+        aspect-ratio: 1 / 1 !important;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hiw-demo-banner { padding: 16px 18px !important; }
+      .hiw-demo { margin-top: 32px !important; border-radius: 18px !important; }
     }
     @media (max-width: 640px) {
       .hiw-demo-cols {
-        display: flex !important;
-        flex-direction: column !important;
         padding: 0 12px !important;
-        gap: 16px;
+        gap: 14px !important;
+      }
+      .hiw-demo-cols > * {
+        max-width: 100% !important;
       }
       .hiw-in-cols {
-        display: flex !important;
-        flex-direction: column !important;
+        padding: 14px 12px 16px !important;
+        border-radius: 16px !important;
       }
-      .hiw-demo-plus { height: 40px; }
+      .hiw-demo-plus { height: 36px; padding-top: 0 !important; }
+      .hiw-demo-product-shot {
+        width: min(140px, 38vw) !important;
+      }
+      .hiw-demo-prod-opts {
+        max-width: 180px;
+      }
+      .hiw-demo-prod-note {
+        font-size: 11.5px !important;
+        margin-top: 6px !important;
+      }
+      .hiw-demo-bgs {
+        max-width: 248px !important;
+      }
+      .hiw-demo-result-shot {
+        max-width: 260px;
+        max-height: 260px;
+      }
+      .hiw-demo-result {
+        padding: 14px 12px 16px !important;
+        border-radius: 16px !important;
+      }
       .hiw-dev-grid { grid-template-columns: 1fr; }
       .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
-      .hiw-demo-banner { padding: 16px 16px !important; }
-      .hiw-demo-cols { padding: 0 12px !important; }
       .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
       .hiw-step-grid { grid-template-columns: 52px 1fr; gap: 12px; }
       .hiw-step-grid h3 { font-size: 22px !important; }
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
       .hiw-end { padding: 48px 16px 64px; }
-      .hiw-thumbs-3 { grid-template-columns: 1fr 1fr !important; }
+      .hiw-thumbs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
       .hiw-shoot-shots { grid-template-columns: 1fr; max-width: 360px; }
       .hiw-facts-row { grid-template-columns: 1fr; }
       .hiw-facts-row > div { border-right: none !important; }
       .hiw-facts-row > div:nth-last-child(-n+2) { border-bottom: 1px solid #F0E6F2; }
       .hiw-facts-row > div:last-child { border-bottom: none; }
+
+      /* Use-cases: compact on mobile */
+      #usecases { padding: 28px 14px 36px !important; }
+      .hiw-uc-head { margin-bottom: 14px !important; }
+      .hiw-uc-head h2 { font-size: 24px !important; }
+      .hiw-uc-head p { font-size: 13.5px !important; margin-top: 8px !important; }
+      .hiw-uc-row,
+      .hiw-uc-row-rev {
+        padding: 12px 12px !important;
+        gap: 10px !important;
+        margin-bottom: 10px !important;
+        border-radius: 14px !important;
+      }
+      .hiw-uc-num {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 10px !important;
+      }
+      .hiw-uc-tag { font-size: 10.5px !important; }
+      .hiw-uc-copy h3 {
+        font-size: 18px !important;
+        margin-top: 6px !important;
+        line-height: 1.2 !important;
+      }
+      .hiw-uc-copy p {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        margin-top: 6px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .hiw-uc-chips { margin-top: 8px !important; gap: 5px !important; }
+      span.hiw-uc-chip {
+        font-size: 10.5px !important;
+        padding: 4px 8px !important;
+      }
+
+      .hiw-uc-pair {
+        gap: 8px !important;
+      }
+      .hiw-uc-listing-meta {
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+      }
+      .hiw-uc-listing-title {
+        font-size: 10.5px !important;
+        white-space: nowrap !important;
+      }
+      .hiw-uc-listing-price {
+        font-size: 10.5px !important;
+        white-space: nowrap !important;
+      }
+      .hiw-uc-pair .hiw-uc-shot,
+      .hiw-uc-listing-shot,
+      .hiw-uc-pair-out .hiw-uc-shot {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        aspect-ratio: 1 / 1 !important;
+      }
+
+      /* Inspiration: keep side-by-side, shorten pins */
+      .hiw-uc-inspire {
+        gap: 8px !important;
+      }
+      .hiw-uc-moodboard {
+        padding: 8px !important;
+        border-radius: 12px !important;
+        max-height: none;
+        overflow: hidden;
+      }
+      .hiw-uc-pins {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 5px !important;
+      }
+      .hiw-uc-pins > *:nth-child(n+5) { display: none; }
+      .hiw-uc-pins > * {
+        aspect-ratio: 1 / 1 !important;
+      }
+      .hiw-uc-inspire .hiw-uc-shot {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        aspect-ratio: 1 / 1 !important;
+      }
+
+      /* Don't shrink standalone shots to 210px */
+      .hiw-uc-shot {
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
+      }
+
+      /* Shoot-day thumbs stay 3-up, shorter */
+      .hiw-thumbs-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+      }
+      .hiw-thumbs-3 [style*="aspect-ratio"] {
+        aspect-ratio: 3 / 4 !important;
+        max-height: none;
+      }
+
+      .hiw-uc-more { margin-top: 12px !important; gap: 8px !important; }
+      .hiw-uc-more > div {
+        padding: 14px !important;
+        border-radius: 14px !important;
+      }
     }
 
+    /* ——— Mobile polish: walkthrough / moodboard / marketplace ——— */
+    .hiw-mkt-aside { min-width: 0; max-width: 100%; }
+    .hiw-mkt-flow { min-width: 0; max-width: 100%; }
+    .hiw-mkt-flow-row { min-width: 0; }
+    .hiw-mkt-flow-copy { min-width: 0; flex: 1; }
+    .hiw-mkt-tabs::-webkit-scrollbar { display: none; }
+    .hiw-opt-title { min-width: 0; }
+    .hiw-chip { max-width: 100%; }
+
+    @media (max-width: 900px) {
+      .hiw-mkt-phone-wrap,
+      .hiw-mkt-phone {
+        width: 100% !important;
+        max-width: min(300px, 100%) !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-mkt-card { padding: 18px 14px 22px !important; overflow: hidden; }
+      .hiw-mkt-body { gap: 28px !important; min-width: 0; }
+      .hiw-mkt-ctas {
+        width: 100%;
+        flex-direction: column;
+      }
+      .hiw-mkt-ctas a {
+        width: 100% !important;
+        text-align: center;
+        box-sizing: border-box !important;
+        justify-content: center;
+      }
+      .hiw-thumbs-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+      }
+      .hiw-walk-steps {
+        width: 100%;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hiw-branch-rail,
+      .hiw-opt-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hiw-walk { padding: 0 14px 48px !important; gap: 28px !important; }
+      .hiw-walk-head { padding: 40px 14px 8px !important; }
+      .hiw-walk-head h2 { font-size: 26px !important; }
+      .hiw-step-grid {
+        grid-template-columns: 44px minmax(0, 1fr) !important;
+        gap: 10px !important;
+      }
+      .hiw-step-grid h3 {
+        font-size: 20px !important;
+        line-height: 1.2 !important;
+      }
+      .hiw-step-grid > div:last-child,
+      .hiw-step-grid > div:last-child > * {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .hiw-step-grid p {
+        font-size: 15px !important;
+        line-height: 1.55 !important;
+      }
+      .hiw-chip-row {
+        gap: 6px !important;
+      }
+      .hiw-chip {
+        font-size: 11.5px !important;
+        padding: 5px 10px !important;
+      }
+      .hiw-branch-rail {
+        padding-left: 0 !important;
+        margin-top: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-branch-line,
+      .hiw-branch-or {
+        display: none !important;
+      }
+      .hiw-opt-card {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 14px 14px !important;
+        box-sizing: border-box !important;
+      }
+      #hiw-pin-1 .hiw-step-grid > div:last-child {
+        width: 100%;
+        max-width: 100%;
+      }
+      .hiw-opt-head {
+        align-items: flex-start !important;
+        flex-wrap: wrap !important;
+      }
+      .hiw-opt-title {
+        font-size: 16px !important;
+        line-height: 1.25 !important;
+        flex: 1 1 auto;
+      }
+      .hiw-phone-shell {
+        width: 100% !important;
+        max-width: 300px !important;
+      }
+      .hiw-walk-phone-frame {
+        width: 100% !important;
+        max-width: 300px !important;
+      }
+
+      .hiw-mkt-flow-row {
+        gap: 12px !important;
+        padding: 14px 14px !important;
+      }
+      .hiw-mkt-flow-n {
+        width: 32px !important;
+        font-size: 20px !important;
+      }
+      .hiw-mkt-flow-copy > div {
+        font-size: 15px !important;
+      }
+      .hiw-mkt-flow-copy p {
+        font-size: 13.5px !important;
+      }
+      .hiw-mkt-scroll {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+
+      #usecases { padding-left: 14px !important; padding-right: 14px !important; }
+      .hiw-uc-visual {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hiw-step-grid { grid-template-columns: 38px minmax(0, 1fr) !important; }
+      .hiw-mkt-flow-row {
+        flex-direction: column !important;
+        gap: 6px !important;
+      }
+      .hiw-mkt-flow-n { width: auto !important; }
+    }
   </style>
 </head>
 <body class="hiw-page">
@@ -489,25 +1103,25 @@
         </div>
         <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 68px 336px; align-items: stretch; column-gap: 0; padding: 0 34px">
 
-          <div style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
+          <div class="hiw-demo-label-in" style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
             <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #A2968D; white-space: nowrap">WHAT GOES IN</span>
             <span style="flex: 1; height: 1px; background: #EDE4DB"></span>
           </div>
           <div style="grid-column: 2"></div>
-          <div style="grid-column: 3; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
+          <div class="hiw-demo-label-out" style="grid-column: 3; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
             <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #C42E8B; white-space: nowrap">WHAT COMES OUT</span>
             <span style="flex: 1; height: 1px; background: #F4D6E8"></span>
           </div>
 
           <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 236px 62px minmax(0, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 22px 24px 24px">
 
-            <div>
-              <div style="display: flex; align-items: center; gap: 10px; height: 34px">
+            <div class="hiw-demo-product">
+              <div class="hiw-demo-product-head" style="display: flex; align-items: center; gap: 10px; height: 34px">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">1</span>
                 <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">YOUR PRODUCT</span>
               </div>
-              <div style="margin-top: 13px; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ photoSrc }}" alt="The sample product" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s ease"></div>
-              <div style="margin-top: 11px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
+              <div class="hiw-demo-product-shot" style="margin-top: 13px; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ photoSrc }}" alt="The sample product" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s ease"></div>
+              <div class="hiw-demo-prod-opts" style="margin-top: 11px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
                 <sc-for list="{{ prodOpts }}" as="p" hint-placeholder-count="4">
                   <button sc-camel-on-click="{{ p.pick }}" title="{{ p.name }}" style="{{ p.btn }}" >
                     <img src="{{ p.src }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
@@ -515,24 +1129,24 @@
                   </button>
                 </sc-for>
               </div>
-              <div style="margin-top: 9px; font-size: 12.5px; line-height: 1.45; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
+              <div class="hiw-demo-prod-note" style="margin-top: 9px; font-size: 12.5px; line-height: 1.45; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
             </div>
 
             <div class="hiw-demo-plus" style="display: flex; align-items: center; justify-content: center; align-self: stretch; padding-top: 34px"><span style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 1px solid #E6DED6; box-shadow: 0 6px 14px -10px rgba(74,52,40,.9); font-family: 'Playfair Display', serif; font-size: 25px; line-height: 1; color: #8D8296">+</span></div>
 
-            <div>
-              <div style="display: flex; align-items: center; gap: 10px; height: 34px">
+            <div class="hiw-demo-bgs-block">
+              <div class="hiw-demo-bgs-head" style="display: flex; align-items: center; gap: 10px; height: 34px">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">2</span>
                 <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">PICK A BACKGROUND</span>
               </div>
               <div class="hiw-try-hint" style="margin-top: 11px; min-width: 0"><span style="{{ tryHint }}">{{ tryHintText }}<span class="hiw-try-hint-arrow">↓</span></span></div>
-              <div style="margin-top: 10px; max-height: 404px; overflow-y: auto; padding-right: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start">
+              <div class="hiw-demo-bgs" style="margin-top: 10px; max-height: 404px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start">
                 <sc-for list="{{ tryOutfits }}" as="o" hint-placeholder-count="4">
-                  <div sc-camel-on-click="{{ o.pick }}" style="{{ o.card }}" >
-                    <div style="position: relative; border-radius: 12px 12px 0 0; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0"><img src="{{ o.src }}" alt="{{ o.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"><div style="{{ o.tick }}">✓</div><div style="{{ o.ripple }}"></div></div>
-                    <div style="padding: 9px 11px 11px">
-                      <div style="font-size: 13px; font-weight: 700; line-height: 1.2; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.name }}</div>
-                      <button sc-camel-on-click="{{ o.pick }}" style="{{ o.btn }}">{{ o.btnLabel }}</button>
+                  <div class="hiw-demo-bg-card" sc-camel-on-click="{{ o.pick }}" style="{{ o.card }}" >
+                    <div class="hiw-demo-bg-shot" style="position: relative; border-radius: 12px 12px 0 0; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0"><img src="{{ o.src }}" alt="{{ o.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"><div style="{{ o.tick }}">✓</div><div style="{{ o.ripple }}"></div></div>
+                    <div class="hiw-demo-bg-meta" style="padding: 9px 11px 11px">
+                      <div class="hiw-demo-bg-name" style="font-size: 13px; font-weight: 700; line-height: 1.2; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.name }}</div>
+                      <button class="hiw-demo-bg-btn" sc-camel-on-click="{{ o.pick }}" style="{{ o.btn }}">{{ o.btnLabel }}</button>
                     </div>
                   </div>
                 </sc-for>
@@ -551,7 +1165,7 @@
               </div>
               <span class="hiw-demo-status" style="{{ tryStatusStyle }}">{{ tryStatus }}</span>
             </div>
-            <div style="margin-top: 13px; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; border: 1px solid #F0DCE9; background: repeating-linear-gradient(135deg, #F7EDF3 0 12px, #FFFBFD 12px 24px)">
+            <div style="margin-top: 13px; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; border: 1px solid #F0DCE9; background: repeating-linear-gradient(135deg, #F7EDF3 0 12px, #FFFBFD 12px 24px)" class="hiw-demo-result-shot">
               <img src="{{ trySrc }}" alt="The background you picked" style="{{ tryImg }}">
               <img src="{{ tryProductSrc }}" alt="Your product in the new scene" style="{{ tryProductStyle }}">
               <div style="{{ tryIdle }}">
@@ -585,7 +1199,6 @@
   <div id="walkthrough" style="border-bottom: 1px solid #EBDCEC">
     <div class="hiw-walk-head">
       <h2>Three steps, from packshot to <em>campaign</em></h2>
-      <div class="hiw-walk-head-note">SCROLL OR TAP A STEP</div>
     </div>
     <div class="hiw-walk">
       <div class="hiw-walk-steps">
@@ -597,9 +1210,9 @@
               <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepOne.t }}</h3>
               <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepOne.d }}</p>
               <sc-if value="{{ stepOne.active }}" hint-placeholder-val="{{ true }}">
-                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px">
+                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
                   <sc-for list="{{ stepOne.chips }}" as="c" hint-placeholder-count="4">
-                    <span style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                    <span class="hiw-chip" style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
                   </sc-for>
                 </div>
               </sc-if>
@@ -617,20 +1230,20 @@
               </div>
               <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">Two routes to the same place. Upload a background you found or shot anywhere, or tap a scene a creator already put in the marketplace.</p>
 
-              <div style="margin-top: 20px; position: relative; padding-left: 30px">
-                <div style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1.5px; background: #E6DED6"></div>
-                <div style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #FAF4FB; border: 1.5px solid #E6DED6; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: #8D8296">OR</div>
+              <div class="hiw-branch-rail" style="margin-top: 20px; position: relative; padding-left: 30px">
+                <div class="hiw-branch-line" style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1.5px; background: #E6DED6"></div>
+                <div class="hiw-branch-or" style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #FAF4FB; border: 1.5px solid #E6DED6; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: #8D8296">OR</div>
 
-                <div class="hiw-pin hiw-pin-1" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
-                  <div style="display: flex; align-items: center; gap: 10px">
+                <div class="hiw-pin hiw-pin-1 hiw-opt-card" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
+                  <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optA.badge }}">A</span>
-                    <span style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Upload a background from anywhere</span>
+                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Upload a background from anywhere</span>
                   </div>
                   <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Download or screenshot a scene from Unsplash, Pexels, Pinterest, an Instagram post, a studio render or your own camera roll, then pick it out of your gallery.</p>
                   <sc-if value="{{ optA.active }}" hint-placeholder-val="{{ true }}">
-                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px">
+                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
                       <sc-for list="{{ optA.chips }}" as="c" hint-placeholder-count="3">
-                        <span style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
+                        <span class="hiw-chip" style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
                       </sc-for>
                     </div>
                   </sc-if>
@@ -638,16 +1251,16 @@
 
                 <div style="height: 14px"></div>
 
-                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
-                  <div style="display: flex; align-items: center; gap: 10px">
+                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2 hiw-opt-card" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
+                  <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optB.badge }}">B</span>
-                    <span style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Pick a creator listing instead</span>
+                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Pick a creator listing instead</span>
                   </div>
                   <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Photographers, studios, 3D artists and agencies list their collections inside PixelBlend — marble tabletops, studio gradients, lifestyle interiors, nature scenes, seasonal sets and city backdrops. One tap on a listing skips the uploading entirely.</p>
                   <sc-if value="{{ optB.active }}" hint-placeholder-val="{{ false }}">
-                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px">
+                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
                       <sc-for list="{{ optB.chips }}" as="c" hint-placeholder-count="4">
-                        <span style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
+                        <span class="hiw-chip" style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
                       </sc-for>
                     </div>
                   </sc-if>
@@ -664,9 +1277,9 @@
               <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepThree.t }}</h3>
               <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepThree.d }}</p>
               <sc-if value="{{ stepThree.active }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px">
+                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
                   <sc-for list="{{ stepThree.chips }}" as="c" hint-placeholder-count="4">
-                    <span style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                    <span class="hiw-chip" style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
                   </sc-for>
                 </div>
               </sc-if>
@@ -735,25 +1348,25 @@
     </div>
   </div>
 
-  <div style="border-bottom: 1px solid #E6DED6">
+  <div class="hiw-rail-section">
     <div class="hiw-rail-head">
       <h2>Made in the app, from packshots people <em>already had</em></h2>
       <p>A sample of blends, tagged with where the background came from.</p>
     </div>
-    <div style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); padding-bottom: 30px">
-      <div style="display: flex; gap: 18px; width: max-content; animation: v4Rail 58s linear infinite; padding: 8px 0 0">
+    <div class="hiw-rail-mask" style="-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); padding-bottom: 30px">
+      <div class="hiw-rail-track" style="display: flex; gap: 18px; width: max-content; animation: v4Rail 58s linear infinite; padding: 8px 0 0">
         <sc-for list="{{ rail }}" as="t" hint-placeholder-count="16">
-          <div style="width: 224px">
-            <div style="aspect-ratio: 3/4; overflow: hidden; border-radius: 3px 44px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-            <div style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
+          <div class="hiw-rail-card">
+            <div class="hiw-rail-img" style="aspect-ratio: 3/4; overflow: hidden; border-radius: 3px 44px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div class="hiw-rail-label" style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
           </div>
         </sc-for>
       </div>
-      <div style="display: flex; gap: 18px; width: max-content; animation: v4RailB 66s linear infinite; padding: 18px 0 0">
+      <div class="hiw-rail-track" style="display: flex; gap: 18px; width: max-content; animation: v4RailB 66s linear infinite; padding: 18px 0 0">
         <sc-for list="{{ railB }}" as="t" hint-placeholder-count="16">
-          <div style="width: 224px">
-            <div style="aspect-ratio: 3/4; overflow: hidden; border-radius: 44px 3px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-            <div style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
+          <div class="hiw-rail-card">
+            <div class="hiw-rail-img" style="aspect-ratio: 3/4; overflow: hidden; border-radius: 44px 3px 3px 3px; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ t.src }}" alt="Sample blend" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div class="hiw-rail-label" style="margin-top: 10px; font-size: 12.5px; font-weight: 600; color: #6B6070">{{ t.label }}</div>
           </div>
         </sc-for>
       </div>
@@ -821,38 +1434,38 @@
             </sc-for>
           </div>
         </div>
-        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: 1fr 36px 1fr; align-items: center; gap: 8px">
-          <div style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6)">
-            <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #EFE7E0; background: #FAF4FB">
+        <div class="hiw-uc-visual hiw-uc-pair" style="display: grid; grid-template-columns: 1fr 36px 1fr; align-items: center; gap: 8px">
+          <div class="hiw-uc-listing" style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6)">
+            <div class="hiw-uc-listing-head" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #EFE7E0; background: #FAF4FB">
               <span style="width: 7px; height: 7px; border-radius: 50%; background: #E0D6CD"></span>
               <span style="width: 7px; height: 7px; border-radius: 50%; background: #E0D6CD"></span>
               <span style="flex: 1; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296; text-align: center">MARKETPLACE · LISTING PAGE</span>
             </div>
-            <div style="aspect-ratio: 4/5; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=520&q=80&auto=format&fit=crop" alt="Your listing photo" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-            <div style="padding: 12px 14px 14px">
-              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
-                <span style="font-size: 13.5px; font-weight: 700">Everyday runner sneaker</span>
-                <span style="font-size: 13.5px; font-weight: 800; color: #1A1420">₹4,499</span>
+            <div class="hiw-uc-shot hiw-uc-listing-shot" style="aspect-ratio: 4/5; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=520&q=80&auto=format&fit=crop" alt="Your listing photo" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+            <div class="hiw-uc-listing-body" style="padding: 12px 14px 14px">
+              <div class="hiw-uc-listing-meta" style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: nowrap; min-width: 0">
+                <span class="hiw-uc-listing-title" style="font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0">Everyday runner sneaker</span>
+                <span class="hiw-uc-listing-price" style="font-size: 13.5px; font-weight: 800; color: #1A1420; white-space: nowrap; flex: none">₹4,499</span>
               </div>
-              <div style="margin-top: 9px; display: flex; gap: 6px">
+              <div class="hiw-uc-listing-sizes" style="margin-top: 9px; display: flex; gap: 6px">
                 <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">7</span>
                 <span style="font-size: 11.5px; font-weight: 700; color: #1A1420; border: 1.5px solid #1A1420; border-radius: 8px; padding: 4px 9px">8</span>
                 <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">9</span>
                 <span style="font-size: 11.5px; font-weight: 700; color: #6B6070; border: 1px solid #E6DED6; border-radius: 8px; padding: 4px 9px">10</span>
               </div>
-              <div style="margin-top: 11px; text-align: center; font-size: 12.5px; font-weight: 800; letter-spacing: .06em; color: #A79CAB; background: #F4EDE6; border-radius: 999px; padding: 9px">ADD TO BAG</div>
+              <div class="hiw-uc-listing-cta" style="margin-top: 11px; text-align: center; font-size: 12.5px; font-weight: 800; letter-spacing: .06em; color: #A79CAB; background: #F4EDE6; border-radius: 999px; padding: 9px">ADD TO BAG</div>
             </div>
           </div>
           <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
             <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">YOUR PACKSHOT</span>
             <span style="font-size: 18px; color: #C9BCC6">→</span>
           </div>
-          <div>
-            <div style="position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+          <div class="hiw-uc-pair-out" style="min-width: 0">
+            <div class="hiw-uc-shot" style="position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
               <img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=520&q=80&auto=format&fit=crop" alt="Product in scene" style="width: 100%; height: 100%; object-fit: cover; display: block">
               <span style="position: absolute; left: 10px; bottom: 10px; font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #fff; background: rgba(196,46,139,.9); padding: 5px 10px; border-radius: 999px">IN SCENE</span>
             </div>
-            <div style="margin-top: 12px; background: #fff; border: 1.5px solid #E6DED6; border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 700; color: #1A1420">Then swap it into your listing</div>
+            <div class="hiw-uc-pair-note" style="margin-top: 12px; background: #fff; border: 1.5px solid #E6DED6; border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 700; color: #1A1420">Then swap it into your listing</div>
           </div>
         </div>
       </div>
@@ -865,7 +1478,6 @@
               <div>
                 <div style="position: relative; aspect-ratio: 4/5; border-radius: 4px; overflow: hidden; border: 1px solid #E6DED6; background: #EFE7E0">
                   <img src="{{ t.src }}" alt="Product shot" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                  <span style="position: absolute; left: 8px; top: 8px; font-size: 10.5px; font-weight: 700; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 9px; border-radius: 999px">{{ t.place }}</span>
                 </div>
               </div>
             </sc-for>
@@ -880,7 +1492,6 @@
             <sc-for list="{{ tripShots }}" as="t" hint-placeholder-count="3">
               <div style="position: relative; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
                 <img src="{{ t.after }}" alt="{{ t.outfit }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                <span style="position: absolute; left: 8px; top: 8px; font-size: 10.5px; font-weight: 700; color: #6B6070; background: rgba(255,255,255,.9); padding: 4px 9px; border-radius: 999px">{{ t.place }}</span>
               </div>
             </sc-for>
           </div>
@@ -938,36 +1549,27 @@
       </div>
 
       <div class="hiw-uc-row hiw-uc-row-rev">
-        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: 1.25fr 36px .85fr; align-items: center; gap: 8px">
-          <div style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; padding: 14px; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6)">
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 11px; border-bottom: 1px solid #EFE7E0">
-              <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .08em; color: #8D8296">YOUR MOODBOARD</span>
-              <span style="font-size: 11px; font-weight: 700; color: #8D8296">48 pins</span>
-            </div>
-            <div class="hiw-thumbs-3" style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; align-items: start">
-              <div style="display: flex; flex-direction: column; gap: 8px">
-                <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-                <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+        <div class="hiw-uc-visual hiw-uc-inspire" style="display: grid; grid-template-columns: 1.25fr 36px .85fr; align-items: center; gap: 8px">
+          <div class="hiw-uc-moodboard" style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; padding: 14px; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6); min-width: 0; overflow: hidden">
+            <div style="font-size: 11px; font-weight: 700; color: #8D8296; margin-bottom: 10px">48 pins</div>
+            <div class="hiw-uc-pins">
+              <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              <div style="position: relative; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0; outline: 2.5px solid #C42E8B; outline-offset: 1px">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=360&q=80&auto=format&fit=crop" alt="Selected pin" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                <span style="position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">THIS ONE</span>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 8px">
-                <div style="position: relative; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0; outline: 2.5px solid #C42E8B; outline-offset: 1px">
-                  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=360&q=80&auto=format&fit=crop" alt="Selected pin" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                  <span style="position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">THIS ONE</span>
-                </div>
-                <div style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 8px">
-                <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-                <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              </div>
+              <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              <div style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1517842645767-c639042777db?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=360&q=80&auto=format&fit=crop" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
             </div>
           </div>
           <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
             <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">TAKE SCREENSHOT FROM PINTEREST</span>
             <span style="font-size: 18px; color: #C9BCC6">→</span>
           </div>
-          <div>
-            <div style="position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
+          <div class="hiw-uc-inspire-out" style="min-width: 0">
+            <div class="hiw-uc-shot" style="position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
               <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=520&q=80&auto=format&fit=crop" alt="The pin with your product" style="width: 100%; height: 100%; object-fit: cover; display: block">
               <span style="position: absolute; left: 8px; bottom: 8px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">YOUR PRODUCT</span>
             </div>
@@ -1009,52 +1611,52 @@
     <div class="hiw-mkt-card">
       <div class="hiw-mkt-body">
 
-        <div style="display: flex; flex-direction: column; align-items: center">
+        <div class="hiw-mkt-phone-col" style="display: flex; flex-direction: column; align-items: center; min-width: 0; max-width: 100%; width: 100%">
           <div class="hiw-mkt-phone-wrap">
-          <div class="hiw-mkt-phone" style="width: 300px; border-radius: 40px; background: #1A1420; padding: 10px; box-shadow: 0 40px 80px -44px rgba(26,20,32,.7)">
-            <div style="border-radius: 32px; background: #FAF4FB; overflow: hidden; height: 560px; display: flex; flex-direction: column">
-              <div style="padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #8D8296">
+          <div class="hiw-mkt-phone">
+            <div class="hiw-mkt-phone-screen">
+              <div class="hiw-mkt-phone-status">
                 <span>9:41</span>
-                <span style="width: 74px; height: 20px; background: #1A1420; border-radius: 999px; margin-top: -6px"></span>
+                <span class="hiw-mkt-notch"></span>
                 <span>Marketplace</span>
               </div>
 
               <sc-if value="{{ shop.storeView }}" hint-placeholder-val="{{ true }}">
-                <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
-                  <div style="padding: 16px 18px 14px; border-bottom: 1px solid #EFE7E0">
-                    <div style="display: flex; align-items: center; gap: 12px">
-                      <span style="width: 54px; height: 54px; border-radius: 18px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; font-weight: 800; letter-spacing: -.02em">SN</span>
-                      <div style="flex: 1">
-                        <div style="display: flex; align-items: center; gap: 6px">
-                          <span style="font-size: 16.5px; font-weight: 800; letter-spacing: -.015em">Studio Noir</span>
-                          <span style="width: 15px; height: 15px; border-radius: 50%; background: #C42E8B; color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">✓</span>
+                <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0">
+                  <div class="hiw-mkt-store-head">
+                    <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+                      <span style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 800; letter-spacing: -.02em">SN</span>
+                      <div style="flex: 1; min-width: 0">
+                        <div style="display: flex; align-items: center; gap: 6px; min-width: 0">
+                          <span style="font-size: 15.5px; font-weight: 800; letter-spacing: -.015em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Studio Noir</span>
+                          <span style="width: 15px; height: 15px; flex: none; border-radius: 50%; background: #C42E8B; color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">✓</span>
                         </div>
-                        <div style="margin-top: 2px; font-size: 12.5px; color: #8D8296">Jaipur · Studio &amp; tabletop scenes</div>
+                        <div style="margin-top: 2px; font-size: 12px; color: #8D8296; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Jaipur · Studio &amp; tabletop scenes</div>
                       </div>
                     </div>
-                    <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px">
+                    <div class="hiw-mkt-stats">
                       <sc-for list="{{ shop.stats }}" as="st" hint-placeholder-count="3">
-                        <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 12px; padding: 8px 10px; text-align: center">
-                          <div style="font-size: 14.5px; font-weight: 800; letter-spacing: -.01em">{{ st.k }}</div>
-                          <div style="margin-top: 1px; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296">{{ st.v }}</div>
+                        <div class="hiw-mkt-stat">
+                          <div style="font-size: 13.5px; font-weight: 800; letter-spacing: -.01em">{{ st.k }}</div>
+                          <div style="margin-top: 1px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296">{{ st.v }}</div>
                         </div>
                       </sc-for>
                     </div>
-                    <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+                    <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
                       <div sc-camel-on-click="{{ shop.toggleFollow }}" style="{{ shop.followStyle }}">{{ shop.followLabel }}</div>
-                      <div style="text-align: center; font-size: 13.5px; font-weight: 700; color: #1A1420; padding: 11px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6; cursor: pointer">Contact</div>
+                      <div style="text-align: center; font-size: 13px; font-weight: 700; color: #1A1420; padding: 10px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6; cursor: pointer">Contact</div>
                     </div>
                   </div>
 
-                  <div style="padding: 12px 18px 8px; display: flex; gap: 7px; overflow: hidden">
+                  <div class="hiw-mkt-tabs">
                     <sc-for list="{{ shop.tabs }}" as="t" hint-placeholder-count="4">
                       <span style="{{ t.style }}">{{ t.label }}</span>
                     </sc-for>
                   </div>
 
-                  <div class="hiw-mkt-scroll" style="flex: 1; padding: 6px 18px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; grid-auto-rows: max-content; align-content: start;">
+                  <div class="hiw-mkt-scroll">
                     <sc-for list="{{ shop.listings }}" as="p" hint-placeholder-count="4">
-                      <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 16px; overflow: hidden">
+                      <div class="hiw-mkt-listing">
                         <div style="position: relative; aspect-ratio: 1/1; background: #EFE7E0">
                           <img src="{{ p.src }}" alt="Listing" style="width: 100%; height: 100%; object-fit: cover; display: block">
                           <span style="position: absolute; left: 7px; top: 7px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 8px; border-radius: 999px">{{ p.price }}</span>
@@ -1102,13 +1704,13 @@
           <div style="margin-top: 12px; font-size: 13px; color: #8D8296; text-align: center">Tap <strong style="color:#C42E8B">Blend</strong> on any listing to see your product in it.</div>
         </div>
 
-        <div>
+        <div class="hiw-mkt-aside">
           <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: #8D8296">BLEND TO LICENCE</div>
-          <div style="margin-top: 14px; border: 1.5px solid #E6DED6; border-radius: 20px; overflow: hidden">
+          <div class="hiw-mkt-flow" style="margin-top: 14px; border: 1.5px solid #E6DED6; border-radius: 20px; overflow: hidden">
             <sc-for list="{{ flow }}" as="f" hint-placeholder-count="4">
-              <div style="{{ f.cell }}">
-                <div style="font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #C9BCC6; width: 44px">{{ f.n }}</div>
-                <div>
+              <div class="hiw-mkt-flow-row" style="{{ f.cell }}">
+                <div class="hiw-mkt-flow-n" style="font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #C9BCC6; width: 44px; flex: none">{{ f.n }}</div>
+                <div class="hiw-mkt-flow-copy" style="min-width: 0">
                   <div style="font-size: 17px; font-weight: 700; letter-spacing: -.015em">{{ f.t }}</div>
                   <p style="margin-top: 4px; font-size: 14.5px; line-height: 1.55; color: #4C4453">{{ f.d }}</p>
                 </div>
@@ -1446,10 +2048,9 @@ class Component extends DCLogic {
       (on
         ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
         : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
-    const optCard = (on) => 'padding: 20px 22px; border-radius: 18px; cursor: pointer; transition: background .25s, border-color .25s, opacity .25s, box-shadow .25s; border: 1.5px solid ' +
-      (on ? '#F0CFE4; background: #fff; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);' : '#F0E6F2; background: #fff; opacity: .78;');
-    const optBadge = (on) => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex: none; background: ' +
-      (on ? 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);' : '#D4B8CE;');
+    const optCard = (on) => 'padding: 20px 22px; border-radius: 18px; cursor: pointer; transition: background .25s, opacity .25s, box-shadow .25s; border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; ' +
+      (on ? 'box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);' : 'box-shadow: none;');
+    const optBadge = () => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex: none; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);';
 
     return {
       photoSrc: U(this.products[s.prod].photo, 560),
@@ -1556,12 +2157,12 @@ class Component extends DCLogic {
 
       optA: {
         active: s.step === 1, pick: () => this.setState({ step: 1 }),
-        card: optCard(s.step === 1), badge: optBadge(s.step === 1),
+        card: optCard(s.step === 1), badge: optBadge(),
         chips: ['Screenshots work', 'Any source', 'Your own photos']
       },
       optB: {
         active: s.step === 2, pick: () => this.setState({ step: 2 }),
-        card: optCard(s.step === 2), badge: optBadge(s.step === 2),
+        card: optCard(s.step === 2), badge: optBadge(),
         chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
       },
 
@@ -1661,7 +2262,7 @@ class Component extends DCLogic {
         { n: '03', t: 'Blend their scene onto your product', d: 'One tap puts their actual scene behind your saved product, so you see the visual before you decide.' },
         { n: '04', t: 'Connect and license', d: 'Message the creator from the result and close the licence in chat.' }
       ].map((f, i) => Object.assign({}, f, {
-        cell: 'display: flex; gap: 16px; align-items: start; padding: 18px 20px;' + (i > 0 ? ' border-top: 1.5px solid #E6DED6;' : '') + (i === 2 ? ' background: #FCF3F7;' : '')
+        cell: 'display: flex; gap: 16px; align-items: start; padding: 18px 20px; min-width: 0;' + (i > 0 ? ' border-top: 1.5px solid #E6DED6;' : '') + (i === 2 ? ' background: #FCF3F7;' : '')
       })),
 
       platforms: [
@@ -1697,7 +2298,7 @@ class Component extends DCLogic {
 }
 
 </script>
-  <script src="legal-chrome.js?v=5"></script>
+  <script src="legal-chrome.js?v=15"></script>
   <script>
   (function () {
     var last = -1, ticking = false, lockUntil = 0;

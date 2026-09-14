@@ -1,12 +1,77 @@
 (function () {
-  /* FAQ accordion */
-  document.querySelectorAll('.lp-faq-item button').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  /* FAQ accordion + search + categories */
+  var faqList = document.getElementById('faq-list');
+  if (faqList) {
+    var items = Array.prototype.slice.call(faqList.querySelectorAll('.lp-faq-item'));
+    var emptyEl = document.getElementById('faq-empty');
+    var labelEl = document.getElementById('faq-cat-label');
+    var searchEl = document.getElementById('faq-search');
+    var activeCat = 'all';
+    var labels = {
+      all: 'All questions',
+      start: 'Getting started',
+      users: 'For users',
+      sellers: 'For sellers',
+      market: 'Marketplace',
+      billing: 'Billing & refunds',
+      account: 'Account & privacy',
+      tech: 'Technical'
+    };
+
+    function applyFilter() {
+      var q = ((searchEl && searchEl.value) || '').trim().toLowerCase();
+      var visible = 0;
+      items.forEach(function (item) {
+        var cats = (item.getAttribute('data-cat') || '').split(/\s+/);
+        var text = (item.getAttribute('data-q') || item.textContent || '').toLowerCase();
+        var catOk = activeCat === 'all' || cats.indexOf(activeCat) !== -1;
+        var qOk = !q || text.indexOf(q) !== -1;
+        var show = catOk && qOk;
+        item.hidden = !show;
+        if (!show) {
+          item.classList.remove('is-open');
+          var btn = item.querySelector('button');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+        if (show) visible += 1;
+      });
+      if (emptyEl) emptyEl.hidden = visible > 0;
+      if (labelEl) labelEl.textContent = labels[activeCat] || 'Questions';
+    }
+
+    faqList.addEventListener('click', function (e) {
+      var btn = e.target.closest('.lp-faq-item button');
+      if (!btn || !faqList.contains(btn)) return;
       var item = btn.closest('.lp-faq-item');
+      if (!item || item.hidden) return;
       var open = item.classList.toggle('is-open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-  });
+
+    document.querySelectorAll('.faq-cat').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.faq-cat').forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        activeCat = btn.getAttribute('data-cat') || 'all';
+        applyFilter();
+      });
+    });
+
+    document.querySelectorAll('.faq-topic').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var cat = btn.getAttribute('data-jump') || 'all';
+        var catBtn = document.querySelector('.faq-cat[data-cat="' + cat + '"]');
+        if (catBtn) catBtn.click();
+        var panel = document.querySelector('.faq-panel');
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    if (searchEl) {
+      searchEl.addEventListener('input', applyFilter);
+    }
+    applyFilter();
+  }
 
   /* Gallery page */
   var grid = document.getElementById('lp-gal-grid');

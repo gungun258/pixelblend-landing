@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ — PixelBlend</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="legal.css">
+  <link rel="stylesheet" href="legal.css?v=10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="pb-chrome-header"></div>
@@ -13,78 +16,295 @@
     <h1>FAQ</h1>
     <p class="lp-meta">Questions, answered</p>
 
-    <figure class="lp-hero-img lp-faq-hero">
-      <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=960&q=80&auto=format&fit=crop" alt="Seller using PixelBlend on a laptop" loading="lazy">
-    </figure>
+    <!-- Main explorer card: search + categories + questions -->
+    <section class="faq-panel" aria-label="FAQ explorer">
+      <div class="faq-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="faq-search" type="search" placeholder="Search questions…" autocomplete="off" aria-label="Search FAQ">
+      </div>
 
-    <div class="lp-faq-list">
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>How does the AI background blend actually work?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Upload one clear image of your product and any background scene. Our AI cuts out your product, then composites it into the scene with matching lighting, shadows and perspective — producing a photoreal, studio-quality visual.</p>
-        </div>
-      </div>
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>What counts as a background image?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Almost anything: a studio backdrop, a lifestyle or nature photo, a render, a seasonal scene, a screenshot from Unsplash or Pinterest, or a picture you took yourself. If you can see the scene, we can blend your product into it.</p>
-        </div>
-      </div>
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>How many free credits do I get?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Every new account receives 50 free credits — roughly 5 AI blends — with no credit card required. You can earn 25 more for every friend you refer, with no cap.</p>
-        </div>
-      </div>
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>Are my images private and secure?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Yes. Your uploads are encrypted, never sold, and never shown publicly without your consent. You can delete your products and generated visuals from your account at any time.</p>
-        </div>
-      </div>
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>How realistic are the results?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Very. Our model preserves your product’s exact shape, color and detail while matching the scene’s light and shadow — far beyond a flat cut-out paste.</p>
-        </div>
-      </div>
-      <div class="lp-faq-item">
-        <button type="button" aria-expanded="false">
-          <span>How do I sell my backgrounds on PixelBlend?</span>
-          <span class="lp-faq-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="lp-faq-body">
-          <p>Create a seller account, list your background collections in minutes, and brands can blend their products in instantly. You receive qualified leads, chat directly with brands, and get payouts within about 48 hours.</p>
-        </div>
-      </div>
-    </div>
+      <div class="faq-panel-body">
+        <aside class="faq-cats" aria-label="Categories">
+          <div class="faq-cats-nav">
+            <div class="faq-cats-title">Browse by</div>
+            <button type="button" class="faq-cat is-active" data-cat="all">All questions</button>
+            <button type="button" class="faq-cat" data-cat="start">Getting started</button>
+            <button type="button" class="faq-cat" data-cat="users">For users</button>
+            <button type="button" class="faq-cat" data-cat="sellers">For sellers</button>
+            <button type="button" class="faq-cat" data-cat="market">Marketplace</button>
+            <button type="button" class="faq-cat" data-cat="billing">Billing &amp; refunds</button>
+            <button type="button" class="faq-cat" data-cat="account">Account &amp; privacy</button>
+            <button type="button" class="faq-cat" data-cat="tech">Technical</button>
+          </div>
+          <div class="faq-cats-extra">
+            <div class="faq-cats-tip">
+              <strong>Tip</strong>
+              <p>Search by product type, credits, or “licence” — most answers show up in one tap.</p>
+            </div>
+            <div class="faq-cats-links">
+              <a href="how-it-works.html">How it works →</a>
+              <a href="pricing.html">See pricing →</a>
+              <a href="contact.html">Contact support →</a>
+            </div>
+          </div>
+        </aside>
 
-    <section class="lp-cta-band">
-      <h2>Still have questions?</h2>
-      <p>Reach out through the app or our contact page — we’re happy to help.</p>
+        <div class="faq-main">
+          <div class="faq-cat-label" id="faq-cat-label">All questions</div>
+          <div class="lp-faq-list" id="faq-list">
+            <div class="lp-faq-item" data-cat="start users" data-q="How does the AI background blend actually work?">
+              <button type="button" aria-expanded="false">
+                <span>How does the AI background blend actually work?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Upload one clear image of your product and any background scene. Our AI cuts out your product, then composites it into the scene with matching lighting, shadows and perspective — producing a photoreal, studio-quality visual.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="start users" data-q="What do I need to start my first blend?">
+              <button type="button" aria-expanded="false">
+                <span>What do I need to start my first blend?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Two images: a clear product packshot and a background scene (upload or marketplace). Sign in, drop both in, and run a blend — free credits cover your first tries.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="users" data-q="What counts as a background image?">
+              <button type="button" aria-expanded="false">
+                <span>What counts as a background image?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Almost anything: a studio backdrop, a lifestyle or nature photo, a render, a seasonal scene, a screenshot from Unsplash or Pinterest, or a picture you took yourself. If you can see the scene, we can blend your product into it.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="users billing start" data-q="How many free credits do I get?">
+              <button type="button" aria-expanded="false">
+                <span>How many free credits do I get?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Every new account receives 50 free credits — roughly 5 AI blends — with no credit card required. You can earn 25 more for every friend you refer, with no cap.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="users" data-q="How realistic are the results?">
+              <button type="button" aria-expanded="false">
+                <span>How realistic are the results?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Very. Our model preserves your product’s exact shape, color and detail while matching the scene’s light and shadow — far beyond a flat cut-out paste.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="users market" data-q="Can I use blends for ads and marketplace listings?">
+              <button type="button" aria-expanded="false">
+                <span>Can I use blends for ads and marketplace listings?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Yes — for your own marketing and catalog use. If you blended a creator’s marketplace scene, license that scene before you publish paid ads or store listings that use it.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="market users" data-q="What is the background marketplace?">
+              <button type="button" aria-expanded="false">
+                <span>What is the background marketplace?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>A shop of creator scenes you can blend onto your product before you license. Studios and photographers list collections; you preview the result, then message them if you want to buy the rights.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="market" data-q="Do I have to license every marketplace scene I try?">
+              <button type="button" aria-expanded="false">
+                <span>Do I have to license every marketplace scene I try?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>No. Blend to preview for free with credits. You only license when you want to publish or commercially use that creator’s scene.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="sellers" data-q="How do I sell my backgrounds on PixelBlend?">
+              <button type="button" aria-expanded="false">
+                <span>How do I sell my backgrounds on PixelBlend?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Create a seller account, list your background collections in minutes, and brands can blend their products in instantly. You receive qualified leads, chat directly with brands, and get payouts within about 48 hours.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="sellers market" data-q="Who sees my listing before they license it?">
+              <button type="button" aria-expanded="false">
+                <span>Who sees my listing before they license it?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Brands can blend your scene onto their product before they message you. That means inbound chats come from people who already saw the result — not cold enquiries.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="sellers billing" data-q="How do seller payouts work?">
+              <button type="button" aria-expanded="false">
+                <span>How do seller payouts work?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Licensed scenes are paid out to your linked account. Most payouts clear within about 48 hours after the licence is confirmed in chat.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="billing" data-q="What if I don’t like a generated visual?">
+              <button type="button" aria-expanded="false">
+                <span>What if I don’t like a generated visual?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Every generation has a “not happy with this” option. Approved requests return the credits used for that blend. A person reviews the request, and the images stay in your gallery either way.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="billing" data-q="Do unused credits expire?">
+              <button type="button" aria-expanded="false">
+                <span>Do unused credits expire?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Purchased credit packs don’t expire while your account is active. Free promotional credits may carry a date — we’ll show that clearly before you claim them.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="account" data-q="Are my images private and secure?">
+              <button type="button" aria-expanded="false">
+                <span>Are my images private and secure?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Yes. Your uploads are encrypted, never sold, and never shown publicly without your consent. You can delete your products and generated visuals from your account at any time.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="account" data-q="Can I delete my account and data?">
+              <button type="button" aria-expanded="false">
+                <span>Can I delete my account and data?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>Yes. From account settings you can delete products, blends, and the full account. We’ll remove personal data we don’t need to keep for legal or payment records.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="tech" data-q="Which devices and browsers are supported?">
+              <button type="button" aria-expanded="false">
+                <span>Which devices and browsers are supported?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>PixelBlend works in modern browsers on desktop, tablet and mobile, plus native iOS and Android apps. Your products, blends and marketplace chats sync across devices.</p>
+              </div>
+            </div>
+
+            <div class="lp-faq-item" data-cat="tech users" data-q="What image formats and sizes work best?">
+              <button type="button" aria-expanded="false">
+                <span>What image formats and sizes work best?</span>
+                <span class="lp-faq-icon" aria-hidden="true">+</span>
+              </button>
+              <div class="lp-faq-body">
+                <p>JPG and PNG work well. Use a sharp product shot with a clear edge and a background that’s at least ~1000px on the long side for cleaner results.</p>
+              </div>
+            </div>
+          </div>
+          <p class="faq-empty" id="faq-empty" hidden>No questions match that search. Try another keyword or pick a category.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Popular topics -->
+    <section class="faq-topics">
+      <div class="faq-sec-head">
+        <div class="faq-kicker">POPULAR TOPICS</div>
+        <h2>Jump straight to what people ask most</h2>
+      </div>
+      <div class="faq-topics-grid">
+        <button type="button" class="faq-topic" data-jump="users">
+          <span class="faq-topic-n">01</span>
+          <strong>Blending basics</strong>
+          <span>How uploads, scenes and results work</span>
+        </button>
+        <button type="button" class="faq-topic" data-jump="billing">
+          <span class="faq-topic-n">02</span>
+          <strong>Credits &amp; refunds</strong>
+          <span>Free credits, packs and unused blends</span>
+        </button>
+        <button type="button" class="faq-topic" data-jump="sellers">
+          <span class="faq-topic-n">03</span>
+          <strong>Selling scenes</strong>
+          <span>Listings, licences and payouts</span>
+        </button>
+        <button type="button" class="faq-topic" data-jump="account">
+          <span class="faq-topic-n">04</span>
+          <strong>Privacy</strong>
+          <span>What’s private and what you can delete</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. Quick answers strip -->
+    <section class="faq-quick">
+      <div class="faq-sec-head">
+        <div class="faq-kicker">GOOD TO KNOW</div>
+        <h2>Three things worth knowing up front</h2>
+      </div>
+      <div class="faq-quick-grid">
+        <article>
+          <strong>~10 seconds</strong>
+          <p>Most blends finish in about ten seconds once both images are uploaded.</p>
+        </article>
+        <article>
+          <strong>50 free credits</strong>
+          <p>New accounts start with enough credits to try the flow before buying a pack.</p>
+        </article>
+        <article>
+          <strong>Refund if unused</strong>
+          <p>Flag a result you don’t like — approved requests return those credits.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. Policies -->
+    <section class="faq-policies">
+      <div class="faq-sec-head">
+        <div class="faq-kicker">POLICIES</div>
+        <h2>The fine print, without the maze</h2>
+      </div>
+      <div class="faq-policies-row">
+        <a href="refund.html">Refund policy <span>→</span></a>
+        <a href="privacy.html">Privacy policy <span>→</span></a>
+        <a href="terms.html">Terms of use <span>→</span></a>
+        <a href="pricing.html">Pricing <span>→</span></a>
+      </div>
+    </section>
+
+    <!-- 4. Still need help -->
+    <section class="lp-cta-band faq-help">
+      <h2>Still stuck?</h2>
+      <p>Tell us what you’re trying to blend — product type, scene, and where you’re stuck. We’ll help you unblock it.</p>
       <div class="lp-cta-actions">
         <a href="contact.html">Contact us</a>
-        <a href="index.html#download" class="lp-cta-ghost">Get the app</a>
+        <a href="how-it-works.html" class="lp-cta-ghost">See how it works</a>
       </div>
     </section>
   </article>
   <div id="pb-chrome-footer"></div>
-  <script src="legal-chrome.js?v=4"></script>
-  <script src="legal-pages.js"></script>
+  <script src="legal-chrome.js?v=15"></script>
+  <script src="legal-pages.js?v=3"></script>
 </body>
 </html>

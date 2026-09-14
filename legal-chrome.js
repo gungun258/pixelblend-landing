@@ -60,11 +60,6 @@
           '</span>' +
           '<span class="pb-logo-word">PixelBlend</span>' +
         '</a>' +
-        '<div style="display: flex; align-items: center; gap: 30px;" class="nav-links">' +
-          drawerLinks.map(function (l) {
-            return '<a href="' + ix(l.href) + '" style="font-size: 14.5px; font-weight: 500; color: #5b5060; text-decoration: none;">' + l.label + '</a>';
-          }).join('') +
-        '</div>' +
         '<div style="display: flex; align-items: center; gap: 12px;" class="nav-cta">' +
           '<a href="' + ix('#hero-cta') + '" style="font-size: 14.5px; font-weight: 600; color: #1E1422; text-decoration: none;" class="nav-dl">Log in</a>' +
           '<a href="' + ix('#download') + '" style="font-size: 14.5px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 9px 16px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff; display: inline-flex; align-items: center; gap: 6px;">Download App</a>' +
@@ -159,18 +154,65 @@
     titleRow.remove();
   }
 
-  var wrap = document.querySelector('.lp-wrap');
-  var h1 = wrap && wrap.querySelector('h1');
-  if (wrap && h1 && !wrap.querySelector('.lp-crumbs')) {
-    var crumbs = document.createElement('nav');
-    crumbs.className = 'lp-crumbs';
-    crumbs.setAttribute('aria-label', 'Breadcrumb');
-    crumbs.innerHTML =
-      '<a href="index.html">Home</a>' +
-      '<svg class="lp-crumbs-sep" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M6 3.5L11 8l-5 4.5"/></svg>' +
-      '<span aria-current="page">' + h1.textContent + '</span>';
-    wrap.insertBefore(crumbs, wrap.firstChild);
-  }
+  /* Breadcrumbs — below header only (Clerk-style: Home / Page) */
+  (function mountBreadcrumbs() {
+    var labels = {
+      'how-it-works.html': 'How it works',
+      'gallery.html': 'Gallery',
+      'about.html': 'About',
+      'faq.html': 'FAQ',
+      'pricing.html': 'Pricing',
+      'contact.html': 'Contact',
+      'privacy.html': 'Privacy Policy',
+      'terms.html': 'Terms of use',
+      'refund.html': 'Refund Policy'
+    };
+    var file = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (!file || file === 'index.html' || file === '') return;
+    var label = labels[file];
+    if (!label) {
+      var t = document.title || '';
+      label = t.replace(/\s*[\u2014\u2013|].*$/, '').trim() || 'Page';
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('.lp-crumbs, .lp-crumb-bar'), function (el) {
+      el.remove();
+    });
+
+    if (!document.getElementById('pb-crumbs-css')) {
+      var css = document.createElement('style');
+      css.id = 'pb-crumbs-css';
+      css.textContent =
+        '.lp-crumb-bar{position:relative;z-index:5;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(240,230,242,.9)}' +
+        '.lp-crumb-bar-inner{max-width:1160px;margin:0 auto;padding:11px 32px}' +
+        /* Reset global fixed `nav` styles so crumbs stay in-flow under header */
+        'nav.lp-crumbs{position:static!important;top:auto!important;left:auto!important;right:auto!important;width:auto!important;z-index:auto!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:none!important;border-radius:0!important;box-shadow:none!important;display:flex;flex-wrap:wrap;align-items:center;gap:0;margin:0;padding:0;font-size:13px;font-weight:500;line-height:1.35;letter-spacing:.01em;color:#6B6170;font-family:inherit}' +
+        '.lp-crumbs a{color:#6B6170;text-decoration:none;font-weight:500;transition:color .15s ease}' +
+        '.lp-crumbs a:hover{color:#1E1422}' +
+        '.lp-crumbs-sep{display:inline-block;flex:none;margin:0 9px;color:#C4B8C8;font-weight:400;font-size:13px;line-height:1;user-select:none}' +
+        '.lp-crumbs [aria-current="page"]{color:#1E1422;font-weight:600}' +
+        '@media (max-width:720px){.lp-crumb-bar-inner{padding:10px 20px}nav.lp-crumbs{font-size:12.5px}.lp-crumbs-sep{margin:0 7px}}';
+      document.head.appendChild(css);
+    }
+
+    var header = document.getElementById('pb-chrome-header');
+    if (!header || !header.parentNode) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'lp-crumb-bar';
+    bar.innerHTML =
+      '<div class="lp-crumb-bar-inner">' +
+        '<nav class="lp-crumbs" aria-label="Breadcrumb">' +
+          '<a href="index.html">Home</a>' +
+          '<span class="lp-crumbs-sep" aria-hidden="true">/</span>' +
+          '<span aria-current="page">' + label + '</span>' +
+        '</nav>' +
+      '</div>';
+
+    /* Always insert after header — never above it */
+    if (header.nextSibling) header.parentNode.insertBefore(bar, header.nextSibling);
+    else header.parentNode.appendChild(bar);
+  })();
 
   function setMenu(open) {
     document.body.classList.toggle('pb-menu-open', open);
@@ -194,4 +236,87 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') setMenu(false);
   });
+
+  /* Same back-to-top button as homepage — all chrome pages */
+  (function mountBackToTop() {
+    function scrollY() {
+      return Math.max(window.pageYOffset || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
+    }
+    function setY(y) {
+      window.scrollTo(0, y);
+      document.documentElement.scrollTop = y;
+      document.body.scrollTop = y;
+    }
+    function ensureCss() {
+      if (document.getElementById('pb-to-top-page-css')) return;
+      var css = document.createElement('style');
+      css.id = 'pb-to-top-page-css';
+      css.textContent =
+        '#pb-to-top{position:fixed!important;right:22px!important;bottom:calc(22px + env(safe-area-inset-bottom,0px) + var(--pb-vv-bottom,0px))!important;left:auto!important;z-index:99999!important;width:48px!important;height:48px!important;border:none!important;border-radius:50%!important;cursor:pointer;display:flex!important;align-items:center;justify-content:center;color:#fff!important;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E)!important;box-shadow:0 12px 28px -10px rgba(196,46,139,.55);opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(18px) scale(.88);transition:opacity .32s cubic-bezier(.22,1,.36,1),transform .32s cubic-bezier(.22,1,.36,1),visibility .32s ease}' +
+        '#pb-to-top.pb-layout.pb-on,#pb-to-top.pb-on{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none}' +
+        '#pb-to-top:hover{filter:brightness(1.05)}';
+      document.head.appendChild(css);
+    }
+    function boot() {
+      ensureCss();
+      if (document.getElementById('pb-to-top')) return;
+
+      var going = false;
+      function shouldShow() {
+        if (going) return false;
+        var y = scrollY();
+        var vh = window.innerHeight || 600;
+        return y > Math.min(220, vh * 0.35);
+      }
+      function sync(btn) {
+        if (!btn) return;
+        btn.classList.add('pb-layout');
+        if (shouldShow()) btn.classList.add('pb-on');
+        else btn.classList.remove('pb-on');
+      }
+
+      var btn = document.createElement('button');
+      btn.id = 'pb-to-top';
+      btn.type = 'button';
+      btn.className = 'pb-layout';
+      btn.setAttribute('aria-label', 'Back to top');
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>';
+      btn.addEventListener('click', function () {
+        if (going) return;
+        var start = scrollY();
+        if (start < 1) {
+          sync(btn);
+          return;
+        }
+        going = true;
+        btn.classList.remove('pb-on');
+        var t0 = performance.now();
+        var dur = 700;
+        function tick(now) {
+          var p = (now - t0) / dur;
+          if (p > 1) p = 1;
+          var ease = 1 - Math.pow(1 - p, 3);
+          setY(start * (1 - ease));
+          if (p < 1) requestAnimationFrame(tick);
+          else {
+            setY(0);
+            going = false;
+            sync(btn);
+          }
+        }
+        requestAnimationFrame(tick);
+      });
+
+      function onScroll() { sync(btn); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+      window.addEventListener('resize', onScroll);
+
+      (document.body || document.documentElement).appendChild(btn);
+      sync(btn);
+    }
+
+    if (document.body) boot();
+    else document.addEventListener('DOMContentLoaded', boot);
+  })();
 })();

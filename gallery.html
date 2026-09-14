@@ -5,17 +5,1299 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gallery — PixelBlend</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="legal.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    @keyframes galFadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes galRail {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    body.gal-page {
+      background: #FAF4FB;
+      overflow-x: hidden;
+      color: #1E1422;
+    }
+    body.gal-page #pb-chrome-footer { position: relative; z-index: 2; }
+
+    /* Kill link underlines across gallery sections + CTAs */
+    .gal-root a,
+    .gal-end a,
+    .gal-cta-pri,
+    .gal-cta-sec,
+    .gal-mood,
+    .gal-mood strong,
+    .gal-mood em,
+    .gal-end-ctas a,
+    .gal-hero-ctas a,
+    .gal-peek-row a {
+      text-decoration: none !important;
+    }
+
+    .gal-root { padding-top: 0; }
+
+    /* ——— Hero: match home page hero format ——— */
+    .gal-hero {
+      position: relative;
+      border-bottom: none;
+      background: #FAF4FB;
+      overflow: hidden;
+    }
+    .gal-hero-glow {
+      position: absolute;
+      top: 60px; right: -140px;
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(244,63,94,.18), transparent 65%);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+    .gal-hero-inner {
+      position: relative;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 76px 32px 44px;
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 40px;
+      align-items: center;
+      min-height: 0;
+    }
+    .gal-hero-copy {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      min-height: 0;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .gal-hero-badge {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px 7px 9px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #F0E6F2;
+      box-shadow: 0 2px 14px rgba(196,46,139,.07);
+      margin-bottom: 26px;
+      max-width: 100%;
+      width: max-content;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .gal-hero-badge strong {
+      flex: none;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: #fff;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+    .gal-hero-badge span {
+      font-size: 13px;
+      font-weight: 600;
+      color: #5b5060;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .gal-hero-badge .gal-badge-short { display: none; }
+    .gal-hero h1 {
+      margin: 0 0 22px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 52px;
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      font-weight: 800;
+      color: #1E1422;
+      overflow: visible;
+    }
+    .gal-hero h1 .gal-h1-em {
+      display: inline-block;
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 2px 8px 4px 2px;
+      line-height: 1.08;
+      letter-spacing: 0.01em;
+      word-spacing: 0.18em;
+      overflow: visible;
+      white-space: nowrap;
+    }
+    .gal-lead {
+      margin: 0 0 36px;
+      max-width: 480px;
+      font-size: 17px;
+      line-height: 1.55;
+      color: #5b5060;
+    }
+    .gal-hero-ctas {
+      margin: 0 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+    }
+    .gal-hero-ctas a { text-decoration: none; box-sizing: border-box; }
+    .gal-cta-pri {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      padding: 16px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      box-shadow: 0 6px 16px rgba(236,72,153,.18);
+    }
+    .gal-cta-sec {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1E1422;
+      padding: 15px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid #F0E6F2;
+    }
+    .gal-cta-sec i {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FCE7F0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #C42E8B;
+      font-style: normal;
+      font-size: 11px;
+    }
+    .gal-hero-note {
+      margin: 0;
+      font-size: 13px;
+      color: #8A7E92;
+    }
+
+    .gal-hero-stack {
+      --gal-hero-h: 520px;
+      position: relative;
+      min-height: var(--gal-hero-h);
+      height: var(--gal-hero-h);
+      max-height: var(--gal-hero-h);
+      width: 100%;
+      max-width: 520px;
+      margin-left: auto;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+      padding-bottom: 0;
+      align-items: stretch;
+    }
+    .gal-hero-stack figure {
+      margin: 0; position: relative; overflow: hidden;
+      background: #DDD5CB;
+      animation: galFadeUp .7s ease both;
+    }
+    .gal-hero-stack figure:nth-child(1) {
+      grid-row: 1 / 3;
+      border-radius: 4px 4px 0 0;
+      animation-delay: .05s;
+      align-self: stretch;
+      max-height: none;
+      min-height: 0;
+    }
+    .gal-hero-stack figure:nth-child(2) {
+      border-radius: 4px 48px 4px 4px; animation-delay: .15s;
+      margin-top: 0;
+      max-height: none;
+    }
+    .gal-hero-stack figure:nth-child(3) {
+      border-radius: 48px 4px 4px 4px; animation-delay: .25s;
+      max-height: none;
+    }
+    .gal-hero-stack img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      min-height: 0;
+    }
+    .gal-hero-stack figure:nth-child(1) img {
+      min-height: 0;
+      max-height: none;
+      height: 100%;
+    }
+    .gal-hero-stack figure:nth-child(2) img,
+    .gal-hero-stack figure:nth-child(3) img {
+      min-height: 0;
+      height: 100%;
+    }
+    .gal-hero-stack figcaption {
+      position: absolute; left: 12px; bottom: 12px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: .06em;
+      color: #fff; background: rgba(26,20,32,.55); backdrop-filter: blur(8px);
+      padding: 5px 10px; border-radius: 2px;
+    }
+
+    /* ——— Peeking rail (replaces facts) ——— */
+    .gal-peek {
+      padding: 28px 0 8px;
+      border-bottom: 1px solid #F0E6F2;
+      background: #FAF4FB;
+    }
+    .gal-peek-label {
+      max-width: 1180px; margin: 0 auto 14px; padding: 0 32px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    }
+    .gal-peek-label strong {
+      font-size: 13px; font-weight: 800; letter-spacing: .12em; color: #1A1420;
+    }
+    .gal-peek-label span { font-size: 13.5px; color: #8A8076; }
+    .gal-peek-track {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .gal-peek-row {
+      display: flex; gap: 12px; width: max-content;
+      animation: galRail 55s linear infinite;
+      padding: 0 32px 20px;
+    }
+    .gal-peek-row:hover { animation-play-state: paused; }
+    .gal-peek-row a {
+      flex: none; width: 168px; text-decoration: none; color: inherit;
+    }
+    .gal-peek-row img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+      border-radius: 3px; background: #DDD5CB;
+    }
+    .gal-peek-row span {
+      display: block; margin-top: 8px;
+      font-size: 12px; font-weight: 600; color: #6B635A;
+    }
+
+    /* ——— Section chrome ——— */
+    .gal-band { padding: 72px 32px 0; }
+    .gal-band-inner { max-width: 1180px; margin: 0 auto; }
+    .gal-head-row {
+      display: grid; grid-template-columns: 1fr auto; gap: 24px;
+      align-items: end; margin-bottom: 28px;
+    }
+    .gal-head-row h2,
+    .gal-compare h2,
+    .gal-end h2 {
+      margin: 0;
+      max-width: 560px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(30px, 3.5vw, 38px);
+      line-height: 1.09;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #1E1422;
+    }
+    .gal-em {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400;
+      font-style: italic;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding-right: 3px;
+    }
+    .gal-head-row p {
+      margin: 0; max-width: 300px; text-align: right;
+      font-size: 16px; line-height: 1.55; color: #5b5060;
+    }
+
+    /* ——— Before / after: dark full band ——— */
+    .gal-compare {
+      margin-top: 72px;
+      background: #17121A;
+      color: #F4EFEA;
+      padding: 64px 32px;
+    }
+    .gal-compare-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 48px; align-items: center;
+    }
+    .gal-compare .gal-brand-mark {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-style: normal;
+      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gal-compare h2 {
+      margin: 14px 0 0;
+      max-width: 520px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(30px, 3.5vw, 38px);
+      line-height: 1.09;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #fff;
+    }
+    .gal-compare .gal-em {
+      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gal-compare p {
+      margin: 16px 0 0; font-size: 16px; line-height: 1.55;
+      color: rgba(244,239,234,.72); max-width: 420px;
+    }
+    .gal-compare-meta {
+      margin-top: 28px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .gal-compare-meta div {
+      display: flex; gap: 12px; align-items: baseline;
+      font-size: 14.5px; color: rgba(244,239,234,.78);
+    }
+    .gal-compare-meta b {
+      font-size: 12px; font-weight: 800; letter-spacing: .1em;
+      color: #E8A0C4; min-width: 64px;
+    }
+    .gal-ba {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      margin-left: auto;
+      aspect-ratio: 4/5;
+      max-height: 420px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #2A2230;
+      cursor: ew-resize;
+      touch-action: none;
+      user-select: none;
+      box-shadow: 0 24px 50px -28px rgba(0,0,0,.55);
+    }
+    .gal-ba img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block; pointer-events: none;
+    }
+    .gal-ba-clip {
+      position: absolute; inset: 0 auto 0 0; width: 52%; overflow: hidden;
+    }
+    .gal-ba-clip-inner { height: 100%; width: 192.3%; }
+    .gal-ba-clip-inner img { position: relative; width: 100%; height: 100%; }
+    .gal-ba-handle {
+      position: absolute; top: 0; bottom: 0; left: 52%; width: 1px;
+      transform: translateX(-50%); background: #fff;
+    }
+    .gal-ba-handle::after {
+      content: '↔';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #fff; color: #1A1420;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      box-shadow: 0 10px 28px -10px rgba(0,0,0,.55);
+    }
+    .gal-ba-tag {
+      position: absolute; top: 16px; z-index: 2;
+      font-size: 11px; font-weight: 800; letter-spacing: .1em;
+      color: #fff; background: rgba(23,18,26,.6);
+      padding: 6px 12px;
+    }
+    .gal-ba-tag-l { left: 16px; }
+    .gal-ba-tag-r { right: 16px; }
+
+    /* ——— Recipe strip ——— */
+    .gal-recipe {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; border: 1px solid #E4DDD4; background: #fff;
+    }
+    .gal-recipe-step {
+      padding: 28px 26px 30px;
+      border-right: 1px solid #E4DDD4;
+    }
+    .gal-recipe-step:last-child { border-right: none; }
+    .gal-recipe-step img {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
+      background: #E8E1D8;
+    }
+    .gal-recipe-n {
+      margin-top: 16px;
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px; font-style: italic; color: #8A4A6E;
+    }
+    .gal-recipe-step strong {
+      display: block; margin-top: 4px;
+      font-size: 17px; font-weight: 800; letter-spacing: -.02em;
+    }
+    .gal-recipe-step p {
+      margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #6B635A;
+    }
+
+    /* ——— Browse ——— */
+    .gal-filters {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 22px; padding-bottom: 18px;
+      border-bottom: 1px solid #E4DDD4;
+    }
+    .gal-filters button {
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      color: #6B635A; background: transparent; border: 0;
+      padding: 8px 12px; cursor: pointer; border-radius: 2px;
+      transition: color .2s, background .2s;
+    }
+    .gal-filters button.is-active,
+    .gal-filters button:hover {
+      color: #1A1420; background: #E8E1D8;
+    }
+
+    .gal-masonry {
+      column-count: 4;
+      column-gap: 14px;
+      width: 100%;
+    }
+    .gal-card {
+      margin: 0 0 14px;
+      display: inline-block;
+      width: 100%;
+      vertical-align: top;
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      text-align: left;
+      background: #fff; border: 0; padding: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px -22px rgba(30,20,34,.4);
+      font-family: inherit; color: inherit; cursor: pointer;
+      transition: transform .25s ease;
+    }
+    .gal-card:hover { transform: translateY(-2px); }
+    .gal-card-media {
+      position: relative;
+      overflow: hidden;
+      background: #F0E6F2;
+      aspect-ratio: 4 / 5;
+    }
+    .gal-card-media.tall { aspect-ratio: 3 / 4; }
+    .gal-card-media.portrait { aspect-ratio: 2 / 3; }
+    .gal-card-media.square { aspect-ratio: 1 / 1; }
+    .gal-card-media.wide { aspect-ratio: 5 / 4; }
+    .gal-card-media.landscape { aspect-ratio: 16 / 10; }
+    .gal-card-media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+    .gal-card-cat {
+      position: absolute; left: 8px; top: 8px;
+      font-size: 10px; font-weight: 800; letter-spacing: .06em;
+      color: #1E1422; background: rgba(255,255,255,.94);
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .gal-card-recipe {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 10px 0;
+      background: #fff;
+    }
+    .gal-card-thumb {
+      position: relative;
+      min-width: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #F7ECF8;
+      box-shadow: 0 6px 14px -10px rgba(30,20,34,.35);
+    }
+    .gal-card-thumb img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      max-height: 120px;
+    }
+    .gal-card-thumb span {
+      position: absolute; left: 6px; top: 6px;
+      padding: 3px 7px; border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      font-size: 8.5px; font-weight: 800; letter-spacing: .06em;
+      color: #1E1422;
+    }
+    .gal-card-plus {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #fff; color: #C42E8B;
+      border: 1px solid #F0E6F2;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; line-height: 1;
+      box-shadow: 0 4px 10px -6px rgba(196,46,139,.35);
+    }
+    .gal-card-body { padding: 10px 12px 12px; }
+    .gal-card-title {
+      font-size: 13.5px; font-weight: 700; letter-spacing: -.015em;
+      color: #1E1422;
+      line-height: 1.3;
+    }
+    .gal-card-sub {
+      margin-top: 4px;
+      font-size: 11.5px; color: #8A7E92;
+    }
+    .gal-empty {
+      text-align: center; padding: 48px 20px; color: #8A8076; font-size: 15px;
+    }
+
+    /* ——— Mood board ——— */
+    .gal-moods {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-rows: 220px 220px;
+      gap: 12px;
+    }
+    .gal-mood {
+      position: relative; overflow: hidden; background: #1A1420;
+      text-decoration: none; color: #fff; display: block;
+    }
+    .gal-mood:nth-child(1) { grid-row: 1 / 3; }
+    .gal-mood img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: .78; transition: transform .5s ease, opacity .3s;
+    }
+    .gal-mood:hover img { transform: scale(1.05); opacity: .9; }
+    .gal-mood > span {
+      position: relative; z-index: 1; height: 100%;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px;
+      background: linear-gradient(180deg, transparent 35%, rgba(23,18,26,.85));
+    }
+    .gal-mood strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 400;
+    }
+    .gal-mood em {
+      margin-top: 4px; font-style: normal;
+      font-size: 13.5px; color: rgba(255,255,255,.7);
+    }
+
+    /* ——— What stays yours (no photo repeat) ——— */
+    .gal-keep {
+      margin-top: 72px;
+      padding: 64px 32px;
+      background: #17121A;
+      color: #F4EFEA;
+    }
+    .gal-keep-inner { max-width: 1180px; margin: 0 auto; }
+    .gal-keep-head {
+      max-width: 620px;
+      margin-bottom: 40px;
+    }
+    .gal-keep-kicker {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gal-keep-head h2 {
+      margin: 0;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(30px, 3.5vw, 38px);
+      line-height: 1.09;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #fff;
+    }
+    .gal-keep-head h2 .gal-em {
+      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gal-keep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .gal-keep-item {
+      padding: 28px 26px 32px;
+      border-right: 1px solid rgba(255,255,255,.12);
+      animation: galFadeUp .65s ease both;
+    }
+    .gal-keep-item:last-child { border-right: none; }
+    .gal-keep-item:nth-child(1) { animation-delay: .04s; }
+    .gal-keep-item:nth-child(2) { animation-delay: .1s; }
+    .gal-keep-item:nth-child(3) { animation-delay: .16s; }
+    .gal-keep-n {
+      font-family: 'Instrument Serif', serif;
+      font-size: 34px;
+      font-style: italic;
+      color: #E8A0C4;
+      line-height: 1;
+    }
+    .gal-keep-item strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: #fff;
+    }
+    .gal-keep-item p {
+      margin: 10px 0 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(244,239,234,.72);
+      max-width: 280px;
+    }
+    .gal-keep-cta {
+      margin-top: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .gal-keep-cta a.gal-cta-pri,
+    .gal-keep-cta a.gal-cta-sec {
+      text-decoration: none !important;
+    }
+    .gal-keep-cta .gal-cta-sec {
+      background: transparent;
+      border-color: rgba(255,255,255,.22);
+      color: #fff;
+    }
+
+    /* ——— Creator voices ——— */
+    .gal-voices {
+      margin-top: 8px;
+      padding: 72px 32px 24px;
+    }
+    .gal-voices-inner { max-width: 1180px; margin: 0 auto; }
+    .gal-voices-head {
+      max-width: 560px;
+      margin-bottom: 32px;
+    }
+    .gal-voices-head h2 {
+      margin: 0;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(30px, 3.5vw, 38px);
+      line-height: 1.09;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #1E1422;
+    }
+    .gal-voice-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1fr;
+      gap: 14px;
+    }
+    .gal-voice {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      min-height: 320px;
+      color: #fff;
+      background: #1A1420;
+    }
+    .gal-voice:first-child { min-height: 360px; }
+    .gal-voice img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: .55;
+      transition: transform .5s ease, opacity .35s ease;
+    }
+    .gal-voice:hover img { transform: scale(1.04); opacity: .68; }
+    .gal-voice > div {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 24px;
+      background: linear-gradient(180deg, transparent 20%, rgba(23,18,26,.88));
+    }
+    .gal-voice blockquote {
+      margin: 0;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(22px, 2.2vw, 28px);
+      line-height: 1.25;
+      font-weight: 400;
+    }
+    .gal-voice cite {
+      margin-top: 14px;
+      font-style: normal;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,.72);
+    }
+
+    /* ——— End ——— */
+    .gal-end {
+      margin-top: 72px;
+      border-top: none;
+      padding: 56px 32px 80px;
+    }
+    .gal-end-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.2fr auto;
+      gap: 32px; align-items: center;
+    }
+    .gal-end h2 {
+      margin: 0;
+      max-width: 560px;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: clamp(28px, 3.4vw, 37px);
+      line-height: 1.09;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #1E1422;
+    }
+    .gal-end p {
+      margin: 12px 0 0; font-size: 16px; line-height: 1.55; color: #5b5060;
+      max-width: 460px;
+    }
+    .gal-end-ctas { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+
+    /* ——— Lightbox ——— */
+    .gal-lb[hidden] { display: none !important; }
+    .gal-lb {
+      position: fixed; inset: 0; z-index: 12000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .gal-lb-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(23,18,26,.78); backdrop-filter: blur(10px);
+    }
+    .gal-lb-panel {
+      position: relative; width: min(960px, 100%);
+      background: #F3F0EC; padding: 24px;
+      box-shadow: 0 40px 90px -36px rgba(0,0,0,.65);
+    }
+    .gal-lb-x {
+      position: absolute; top: 12px; right: 12px; width: 40px; height: 40px;
+      border: 0; background: #fff; color: #1A1420; font-size: 22px; cursor: pointer;
+    }
+    .gal-lb-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; border: 0; background: #fff;
+      color: #1A1420; font-size: 22px; cursor: pointer;
+      box-shadow: 0 10px 24px -12px rgba(0,0,0,.4);
+    }
+    .gal-lb-prev { left: -16px; }
+    .gal-lb-next { right: -16px; }
+    .gal-lb-stage {
+      display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 12px;
+      margin-top: 8px;
+    }
+    .gal-lb-col { min-width: 0; }
+    .gal-lb-col img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+      background: #DDD5CB;
+    }
+    .gal-lb-col span {
+      display: block; margin-top: 10px;
+      font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #8A8076;
+    }
+    .gal-lb-meta {
+      margin-top: 18px; padding-top: 16px; border-top: 1px solid #E4DDD4;
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      align-items: center;
+    }
+    .gal-lb-meta strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 400;
+    }
+    .gal-lb-meta span {
+      font-size: 12px; font-weight: 800; letter-spacing: .08em;
+      color: #8A4A6E; background: #EDE4EA; padding: 6px 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .gal-voice-grid { grid-template-columns: 1fr 1fr; }
+      .gal-voice:first-child { grid-column: 1 / -1; min-height: 300px; }
+      .gal-masonry { column-count: 3; }
+    }
+
+    @media (max-width: 980px) {
+      .gal-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 48px 22px 36px;
+        min-height: 0;
+        justify-items: center;
+      }
+      .gal-hero-copy {
+        padding-bottom: 0;
+        min-height: 0;
+        width: 100%;
+        max-width: 640px;
+        align-items: center;
+        text-align: center;
+      }
+      .gal-hero-badge {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        width: max-content;
+        max-width: 100%;
+      }
+      .gal-hero h1 {
+        font-size: clamp(36px, 5.5vw, 46px);
+        text-align: center;
+        width: 100%;
+      }
+      .gal-lead {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        max-width: 520px;
+      }
+      .gal-hero-ctas {
+        width: 100%;
+        justify-content: center;
+      }
+      .gal-hero-note {
+        text-align: center;
+        width: 100%;
+      }
+      .gal-hero-glow {
+        top: -40px; right: -80px;
+        width: 360px; height: 360px;
+        opacity: .85;
+      }
+      .gal-hero-stack {
+        --gal-hero-h: 380px;
+        min-height: var(--gal-hero-h);
+        height: var(--gal-hero-h);
+        max-height: var(--gal-hero-h);
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .gal-band { padding: 56px 22px 0; }
+      .gal-compare { padding: 52px 22px; margin-top: 56px; }
+      .gal-compare-inner { grid-template-columns: 1fr; gap: 28px; }
+      .gal-ba {
+        max-width: 420px;
+        max-height: 380px;
+        margin: 0 auto;
+      }
+      .gal-recipe { grid-template-columns: 1fr; }
+      .gal-recipe-step {
+        border-right: none;
+        border-bottom: 1px solid #E4DDD4;
+        padding: 22px 20px 24px;
+      }
+      .gal-recipe-step:last-child { border-bottom: none; }
+      .gal-recipe-step img { max-height: 280px; }
+      .gal-masonry { column-count: 3; }
+      .gal-moods {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 180px 180px;
+      }
+      .gal-mood:nth-child(1) { grid-row: 1; grid-column: 1 / -1; }
+      .gal-head-row { grid-template-columns: 1fr; margin-bottom: 22px; }
+      .gal-head-row h2,
+      .gal-compare h2,
+      .gal-keep-head h2,
+      .gal-voices-head h2,
+      .gal-end h2 {
+        max-width: none;
+      }
+      .gal-head-row p { text-align: left; max-width: none; }
+      .gal-keep { padding: 52px 22px; margin-top: 56px; }
+      .gal-keep-grid { grid-template-columns: 1fr; }
+      .gal-keep-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+        padding: 22px 4px 24px;
+      }
+      .gal-keep-item:last-child { border-bottom: none; }
+      .gal-voices { padding: 56px 22px 16px; }
+      .gal-end {
+        margin-top: 48px;
+        padding: 44px 22px 64px;
+      }
+      .gal-end-inner {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        justify-items: center;
+        text-align: center;
+      }
+      .gal-end h2,
+      .gal-end p {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .gal-end-ctas {
+        justify-content: center;
+        width: 100%;
+      }
+      .gal-lb {
+        padding: 12px;
+        align-items: flex-end;
+      }
+      .gal-lb-panel {
+        width: 100%;
+        max-height: min(92vh, 900px);
+        overflow: auto;
+        padding: 18px 16px 20px;
+        border-radius: 16px 16px 0 0;
+      }
+      .gal-lb-stage { grid-template-columns: 1fr 1fr; }
+      .gal-lb-col:last-child { grid-column: 1 / -1; }
+      .gal-lb-nav { display: none; }
+      .gal-lb-x { top: 8px; right: 8px; }
+    }
+
+    @media (max-width: 760px) {
+      .gal-masonry { column-count: 2; column-gap: 12px; }
+      .gal-voice-grid { grid-template-columns: 1fr; }
+      .gal-voice:first-child { grid-column: auto; min-height: 280px; }
+      .gal-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-left: -4px;
+        margin-right: -4px;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+      .gal-filters::-webkit-scrollbar { display: none; }
+      .gal-filters button { flex: none; white-space: nowrap; }
+      .gal-peek-label {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 0 22px;
+      }
+      .gal-peek-row { padding-left: 22px; padding-right: 22px; }
+      .gal-peek-row a { width: 140px; }
+      .gal-hero-badge .gal-badge-long { display: none; }
+      .gal-hero-badge .gal-badge-short {
+        display: block;
+        font-size: 12.5px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .gal-end-ctas a,
+      .gal-keep-cta a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+      .gal-keep-cta { width: 100%; }
+      .gal-card-thumb img { max-height: 96px; }
+      .gal-card-plus { width: 20px; height: 20px; font-size: 13px; }
+    }
+
+    /* Match home hero: center copy on mobile (≤799) */
+    @media (max-width: 799px) {
+      .gal-hero-inner {
+        justify-items: center;
+      }
+      .gal-hero-copy {
+        width: 100%;
+        max-width: 640px;
+        align-items: center;
+        text-align: center;
+      }
+      .gal-hero-badge {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        width: max-content;
+        max-width: 100%;
+      }
+      .gal-hero h1 {
+        text-align: center;
+        width: 100%;
+        font-size: 46px !important;
+        line-height: 1.08 !important;
+      }
+      .gal-hero h1 .gal-h1-em {
+        word-spacing: 0.08em;
+      }
+      .gal-lead {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        max-width: 520px;
+      }
+      .gal-hero-ctas {
+        width: 100%;
+        justify-content: center;
+      }
+      .gal-hero-ctas a {
+        width: auto;
+      }
+      .gal-hero-note {
+        text-align: center;
+        width: 100%;
+      }
+      .gal-hero-stack {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gal-band,
+      .gal-compare,
+      .gal-end,
+      .gal-keep,
+      .gal-voices {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .gal-band { padding-top: 44px; }
+      .gal-compare { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
+      .gal-keep { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
+      .gal-voices { padding-top: 44px; }
+      .gal-end { padding-top: 36px; padding-bottom: 56px; margin-top: 36px; }
+      .gal-hero-inner { padding: 28px 16px 24px; gap: 22px; }
+      .gal-hero-badge {
+        display: inline-flex;
+        width: max-content;
+        max-width: 100%;
+        margin-bottom: 18px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .gal-hero-badge .gal-badge-long { display: none; }
+      .gal-hero-badge .gal-badge-short {
+        display: block;
+        font-size: 12px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .gal-hero h1 {
+        font-size: 42px !important;
+        margin-bottom: 16px;
+        text-align: center;
+        line-height: 1.08 !important;
+      }
+      .gal-hero h1 .gal-h1-em {
+        word-spacing: 0.06em;
+        letter-spacing: 0;
+        padding-right: 4px;
+        max-width: 100%;
+      }
+      .gal-lead {
+        font-size: 16px;
+        margin-bottom: 22px;
+        text-align: center;
+      }
+      .gal-hero-ctas {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 12px;
+      }
+      .gal-hero-ctas a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .gal-cta-pri,
+      .gal-cta-sec {
+        font-size: 15px;
+        padding: 14px 20px;
+      }
+      .gal-hero-note {
+        font-size: 12.5px;
+        text-align: center;
+      }
+      .gal-hero-stack {
+        --gal-hero-h: 280px;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        min-height: var(--gal-hero-h);
+        height: var(--gal-hero-h);
+        max-height: var(--gal-hero-h);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .gal-hero-stack figure:nth-child(2),
+      .gal-hero-stack figure:nth-child(3) {
+        border-radius: 12px;
+      }
+      .gal-hero-stack figcaption {
+        left: 8px; bottom: 8px;
+        font-size: 10px;
+        padding: 4px 7px;
+      }
+      .gal-peek { padding-top: 20px; }
+      .gal-peek-label { padding: 0 16px; }
+      .gal-peek-row { padding: 0 16px 16px; gap: 10px; }
+      .gal-peek-row a { width: 120px; }
+      .gal-masonry { column-count: 2; column-gap: 10px; }
+      .gal-card { margin-bottom: 10px; border-radius: 12px; }
+      .gal-card-title { font-size: 12.5px; }
+      .gal-card-sub { font-size: 11px; }
+      .gal-card-recipe { gap: 6px; padding: 8px 8px 0; }
+      .gal-card-thumb { border-radius: 8px; }
+      .gal-card-thumb img { max-height: 78px; }
+      .gal-card-thumb span {
+        left: 4px; top: 4px;
+        font-size: 7.5px;
+        padding: 2px 5px;
+      }
+      .gal-ba {
+        max-width: 100%;
+        max-height: 360px;
+        margin-left: 0;
+        border-radius: 14px;
+      }
+      .gal-ba-tag { top: 12px; font-size: 10px; padding: 5px 9px; }
+      .gal-ba-tag-l { left: 12px; }
+      .gal-ba-tag-r { right: 12px; }
+      .gal-moods {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        gap: 10px;
+      }
+      .gal-mood { min-height: 180px; }
+      .gal-mood:nth-child(1) {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 220px;
+      }
+      .gal-mood strong { font-size: 22px; }
+      .gal-mood > span { padding: 16px; }
+      .gal-voice,
+      .gal-voice:first-child { min-height: 240px; border-radius: 14px; }
+      .gal-voice > div { padding: 18px; }
+      .gal-voice blockquote { font-size: 20px; }
+      .gal-lb-stage { grid-template-columns: 1fr; gap: 10px; }
+      .gal-lb-col:last-child { grid-column: auto; }
+      .gal-lb-meta strong { font-size: 18px; }
+      .gal-lb-panel { padding: 16px 14px 18px; }
+    }
+
+    @media (max-width: 400px) {
+      .gal-masonry { column-count: 1; }
+      .gal-hero h1 { font-size: 34px !important; line-height: 1.1 !important; }
+      .gal-hero h1 .gal-h1-em {
+        word-spacing: 0;
+        font-size: 0.98em;
+      }
+      .gal-hero-stack { --gal-hero-h: 240px; }
+      .gal-card-recipe { grid-template-columns: 1fr auto 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gal-peek-row { animation: none; }
+      .gal-card,
+      .gal-mood img,
+      .gal-voice img,
+      .gal-keep-item,
+      .gal-hero-stack figure {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="gal-page">
   <div id="pb-chrome-header"></div>
-  <article class="lp-wrap lp-about lp-gallery-page">
-    <h1>Gallery</h1>
-    <p class="lp-meta">Real products, real scenes, real AI blends</p>
 
-    <p class="lp-lead lp-gallery-lead">Scan the gallery — tap any look to see the full <strong>product + background = result</strong> transformation up close.</p>
+  <div class="gal-root">
+    <section class="gal-hero">
+      <div class="gal-hero-glow" aria-hidden="true"></div>
+      <div class="gal-hero-inner">
+        <div class="gal-hero-copy">
+          <div class="gal-hero-badge">
+            <strong>LIVE</strong>
+            <span class="gal-badge-long">Real blends from the PixelBlend gallery</span>
+            <span class="gal-badge-short">From the PixelBlend gallery</span>
+          </div>
+          <h1>
+            <span class="gal-h1-l1">Scenes worth</span><br>
+            <span class="gal-h1-em">stealing the idea</span><br>
+            <span class="gal-h1-l3">from.</span>
+          </h1>
+          <p class="gal-lead">A living shelf of blends — open any look to see the product you started with, the background you chose, and the visual that came back.</p>
+          <div class="gal-hero-ctas">
+            <a href="#browse" class="gal-cta-pri">Browse looks</a>
+            <a href="#compare" class="gal-cta-sec"><i>▶</i> Try the before / after</a>
+          </div>
+          <p class="gal-hero-note">Tap a card for the full product + background + result recipe.</p>
+        </div>
+        <div class="gal-hero-stack" aria-hidden="true">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=900&q=80&auto=format&fit=crop" alt="">
+            <figcaption>Lifestyle · beach</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=700&q=80&auto=format&fit=crop" alt="">
+            <figcaption>Fragrance</figcaption>
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=700&q=80&auto=format&fit=crop" alt="">
+            <figcaption>Studio</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-    <div class="lp-gal-filters" role="tablist" aria-label="Gallery categories">
+    <div class="gal-peek">
+      <div class="gal-peek-label">
+        <strong>RECENT BLENDS</strong>
+        <span>Hover to pause · open any look below</span>
+      </div>
+      <div class="gal-peek-track">
+        <div class="gal-peek-row" id="gal-peek-row"></div>
+      </div>
+    </div>
+
+    <section class="gal-band" id="browse">
+      <div class="gal-band-inner">
+        <div class="gal-head-row">
+          <h2>Browse by <span class="gal-em">mood</span>, then open the recipe.</h2>
+        </div>
+
+        <div class="gal-filters" role="tablist" aria-label="Gallery categories">
       <button type="button" class="is-active" data-filter="all">All</button>
       <button type="button" data-filter="Lifestyle">Lifestyle</button>
       <button type="button" data-filter="Studio">Studio</button>
@@ -23,69 +1305,209 @@
       <button type="button" data-filter="Cosmetics">Cosmetics</button>
       <button type="button" data-filter="Fragrance">Fragrance</button>
       <button type="button" data-filter="Furniture">Furniture</button>
-      <button type="button" data-filter="Skincare">Skincare</button>
-      <button type="button" data-filter="Festive">Festive</button>
       <button type="button" data-filter="Modern">Modern</button>
     </div>
 
-    <section class="lp-gal-featured">
-      <div class="lp-gal-featured-copy">
-        <p class="lp-kicker">Featured blend</p>
-        <h2>Drag to see the transformation</h2>
-        <p>From plain product shot to finished visual — lighting, shadows and reflections matched to the scene.</p>
+        <div class="gal-masonry" id="lp-gal-grid"></div>
+        <p class="gal-empty" id="lp-gal-empty" hidden>No looks in this category yet — try All.</p>
       </div>
-      <div class="lp-ba" id="lp-ba" aria-label="Before and after comparison">
-        <img class="lp-ba-after" src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1000&q=80&auto=format&fit=crop" alt="AI blended product in scene">
-        <div class="lp-ba-clip" style="width: 52%">
-          <div class="lp-ba-clip-inner" style="width: 192.3%">
-            <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1000&q=80&auto=format&fit=crop" alt="Original product shot">
+    </section>
+
+    <section class="gal-compare" id="compare">
+      <div class="gal-compare-inner">
+        <div>
+          <div class="gal-brand-mark">Drag the seam</div>
+          <h2>Same bottle. New room. Still your <span class="gal-em">brand</span>.</h2>
+          <p>Slide to compare a plain packshot with the finished blend — lighting and shadows follow the scene, the label doesn’t move.</p>
+          <div class="gal-compare-meta">
+            <div><b>BEFORE</b> Packshot on a clean sweep</div>
+            <div><b>AFTER</b> Product seated in a floral still life</div>
+            <div><b>KEPT</b> Colour · logo · bottle shape</div>
           </div>
         </div>
-        <div class="lp-ba-handle" style="left: 52%" aria-hidden="true"></div>
-        <span class="lp-ba-tag lp-ba-tag-l">Before</span>
-        <span class="lp-ba-tag lp-ba-tag-r">After</span>
+        <div class="gal-ba" id="lp-ba" aria-label="Before and after comparison">
+          <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80&auto=format&fit=crop" alt="AI blended product in scene">
+          <div class="gal-ba-clip" style="width: 52%">
+            <div class="gal-ba-clip-inner" style="width: 192.3%">
+              <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&q=80&auto=format&fit=crop" alt="Original product shot">
+            </div>
+          </div>
+          <div class="gal-ba-handle" style="left: 52%" aria-hidden="true"></div>
+          <span class="gal-ba-tag gal-ba-tag-l">BEFORE</span>
+          <span class="gal-ba-tag gal-ba-tag-r">AFTER</span>
+        </div>
       </div>
     </section>
 
-    <div class="lp-gal-grid" id="lp-gal-grid">
-      <!-- cards injected by legal-pages.js -->
+    <section class="gal-band">
+      <div class="gal-band-inner">
+        <div class="gal-head-row">
+          <h2>How to read any look in the <span class="gal-em">gallery</span>.</h2>
     </div>
-
-    <p class="lp-gal-empty" id="lp-gal-empty" hidden>No looks in this category yet — try All.</p>
-
-    <section class="lp-cta-band">
-      <h2>Try this look in the app</h2>
-      <p>Upload your product, pick any scene, and get a studio-quality blend in seconds.</p>
-      <div class="lp-cta-actions">
-        <a href="index.html#download">Get the app</a>
-        <a href="how-it-works.html" class="lp-cta-ghost">How it works</a>
+        <div class="gal-recipe">
+          <div class="gal-recipe-step">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=640&q=80&auto=format&fit=crop" alt="Product">
+            <div class="gal-recipe-n">01</div>
+            <strong>The product</strong>
+            <p>Packshot or phone photo — sharp focus, even light, whole object in frame.</p>
+          </div>
+          <div class="gal-recipe-step">
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=640&q=80&auto=format&fit=crop" alt="Background">
+            <div class="gal-recipe-n">02</div>
+            <strong>The background</strong>
+            <p>Creator listing, Unsplash save, screenshot, or anything on your camera roll.</p>
+          </div>
+          <div class="gal-recipe-step">
+            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=640&q=80&auto=format&fit=crop" alt="Result">
+            <div class="gal-recipe-n">03</div>
+            <strong>The blend</strong>
+            <p>Same product in the new scene — ready for listings, ads, and social.</p>
+          </div>
+        </div>
       </div>
     </section>
-  </article>
 
-  <div class="lp-lb" id="lp-lb" hidden aria-hidden="true">
-    <div class="lp-lb-backdrop" data-lb-close></div>
-    <div class="lp-lb-panel" role="dialog" aria-modal="true" aria-label="Blend detail">
-      <button type="button" class="lp-lb-x" data-lb-close aria-label="Close">×</button>
-      <button type="button" class="lp-lb-nav lp-lb-prev" data-lb-prev aria-label="Previous">‹</button>
-      <button type="button" class="lp-lb-nav lp-lb-next" data-lb-next aria-label="Next">›</button>
-      <div class="lp-lb-stage">
-        <div class="lp-lb-col">
-          <img id="lp-lb-user" alt="Product">
-          <span>Product</span>
+    <section class="gal-keep" aria-label="What stays yours">
+      <div class="gal-keep-inner">
+        <div class="gal-keep-head">
+          <p class="gal-keep-kicker">Brand lock</p>
+          <h2>The scene changes. Your product <span class="gal-em">doesn’t</span>.</h2>
         </div>
-        <div class="lp-lb-op" aria-hidden="true">+</div>
-        <div class="lp-lb-col">
-          <img id="lp-lb-cloth" alt="Background">
-          <span>Background</span>
+        <div class="gal-keep-grid">
+          <div class="gal-keep-item">
+            <div class="gal-keep-n">01</div>
+            <strong>Colour stays true</strong>
+            <p>Hue, gloss, and label print match the packshot — the backdrop only rewrites the light around it.</p>
+          </div>
+          <div class="gal-keep-item">
+            <div class="gal-keep-n">02</div>
+            <strong>Logo stays sharp</strong>
+            <p>Type and marks don’t smear into the scene. What you uploaded is what shoppers still read.</p>
+          </div>
+          <div class="gal-keep-item">
+            <div class="gal-keep-n">03</div>
+            <strong>Shape stays yours</strong>
+            <p>Bottle, box, or sneaker silhouette holds — no flat cut-out look when the room changes.</p>
+          </div>
         </div>
-        <div class="lp-lb-op lp-lb-eq" aria-hidden="true">=</div>
-        <div class="lp-lb-col lp-lb-result">
-          <img id="lp-lb-result" alt="AI result">
-          <span>AI result</span>
+        <div class="gal-keep-cta">
+          <a href="#browse" class="gal-cta-pri">Browse looks to remake</a>
+          <a href="#compare" class="gal-cta-sec">See before / after</a>
         </div>
       </div>
-      <div class="lp-lb-meta">
+    </section>
+
+    <section class="gal-band">
+      <div class="gal-band-inner">
+        <div class="gal-head-row">
+          <h2>Jump into a <span class="gal-em">mood board</span>.</h2>
+        </div>
+        <div class="gal-moods">
+          <a class="gal-mood" href="#browse" data-jump="Lifestyle">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&q=80&auto=format&fit=crop" alt="">
+            <span>
+              <strong>Lifestyle</strong>
+              <em>Rooms, beaches, linen light</em>
+            </span>
+          </a>
+          <a class="gal-mood" href="#browse" data-jump="Studio">
+            <img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=800&q=80&auto=format&fit=crop" alt="">
+            <span>
+              <strong>Studio</strong>
+              <em>Catalog-ready sets</em>
+            </span>
+          </a>
+          <a class="gal-mood" href="#browse" data-jump="Fragrance">
+            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&q=80&auto=format&fit=crop" alt="">
+            <span>
+              <strong>Beauty</strong>
+              <em>Detail &amp; fragrance</em>
+            </span>
+          </a>
+          <a class="gal-mood" href="#browse" data-jump="Nature">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80&auto=format&fit=crop" alt="">
+            <span>
+              <strong>Nature</strong>
+              <em>Forest &amp; outdoor</em>
+            </span>
+          </a>
+          <a class="gal-mood" href="#browse" data-jump="Modern">
+            <img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=800&q=80&auto=format&fit=crop" alt="">
+            <span>
+              <strong>Modern</strong>
+              <em>City &amp; editorial</em>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="gal-voices" aria-label="Creator voices">
+      <div class="gal-voices-inner">
+        <div class="gal-voices-head">
+          <h2>Creators who keep <span class="gal-em">coming back</span>.</h2>
+        </div>
+        <div class="gal-voice-grid">
+          <article class="gal-voice">
+            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=1000&q=80&auto=format&fit=crop" alt="">
+            <div>
+              <blockquote>“I shoot the product once — the gallery is where I steal the next five scenes.”</blockquote>
+              <cite>@studio.noir · Lifestyle</cite>
+            </div>
+  </article>
+          <article class="gal-voice">
+            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&q=80&auto=format&fit=crop" alt="">
+            <div>
+              <blockquote>“Same bottle. New campaign. No reshoot.”</blockquote>
+              <cite>@maison.rose · Fragrance</cite>
+            </div>
+          </article>
+          <article class="gal-voice">
+            <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80&auto=format&fit=crop" alt="">
+            <div>
+              <blockquote>“Catalog looks without clearing a studio every week.”</blockquote>
+              <cite>@coastal.frames · Studio</cite>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="gal-end">
+      <div class="gal-end-inner">
+        <div>
+          <h2>Build your own shelf of <span class="gal-em">scenes</span>.</h2>
+          <p>Upload one product once. Keep changing the background — the gallery is just proof of what that looks like.</p>
+        </div>
+        <div class="gal-end-ctas">
+          <a href="index.html#download" class="gal-cta-pri">Try a blend free</a>
+          <a href="how-it-works.html" class="gal-cta-sec">How it works</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gal-lb" id="lp-lb" hidden aria-hidden="true">
+    <div class="gal-lb-backdrop" data-lb-close></div>
+    <div class="gal-lb-panel" role="dialog" aria-modal="true" aria-label="Blend detail">
+      <button type="button" class="gal-lb-x" data-lb-close aria-label="Close">×</button>
+      <button type="button" class="gal-lb-nav gal-lb-prev" data-lb-prev aria-label="Previous">‹</button>
+      <button type="button" class="gal-lb-nav gal-lb-next" data-lb-next aria-label="Next">›</button>
+      <div class="gal-lb-stage">
+        <div class="gal-lb-col">
+          <img id="lp-lb-user" alt="Product">
+          <span>PRODUCT</span>
+        </div>
+        <div class="gal-lb-col">
+          <img id="lp-lb-cloth" alt="Background">
+          <span>BACKGROUND</span>
+        </div>
+        <div class="gal-lb-col">
+          <img id="lp-lb-result" alt="AI result">
+          <span>RESULT</span>
+        </div>
+      </div>
+      <div class="gal-lb-meta">
         <strong id="lp-lb-handle"></strong>
         <span id="lp-lb-cat"></span>
       </div>
@@ -93,7 +1515,175 @@
   </div>
 
   <div id="pb-chrome-footer"></div>
-  <script src="legal-chrome.js?v=4"></script>
-  <script src="legal-pages.js"></script>
+  <script src="legal-chrome.js?v=15"></script>
+  <script>
+  (function () {
+    function U(id, w) {
+      return 'https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop';
+    }
+
+    var shapes = ['tall', 'square', 'landscape', 'portrait', 'wide', 'tall', 'square', 'portrait'];
+    var items = [
+      { category: 'Lifestyle', handle: '@studio.noir', title: 'Runner on golden-hour beach', user: U('1511499767150-a48a237f0083', 360), cloth: U('1507525428034-b723cf961d3e', 360), result: U('1600185365483-26d7a4cc7519', 720) },
+      { category: 'Studio', handle: '@coastal.frames', title: 'Sneaker on marble tabletop', user: U('1542291026-7eec264c27ff', 360), cloth: U('1517842645767-c639042777db', 360), result: U('1595950653106-6c9ebd614d3a', 720) },
+      { category: 'Nature', handle: '@wildframe', title: 'Watch in forest light', user: U('1523275335684-37898b6baf30', 360), cloth: U('1441974231531-c6227db76b6e', 360), result: U('1434056886845-dac89ffe9b56', 720) },
+      { category: 'Cosmetics', handle: '@glow.labs', title: 'Lipstick on studio gradient', user: U('1586495777744-4413f21062fa', 360), cloth: U('1557683316-973673baf926', 360), result: U('1522335789203-aabd1fc54bc9', 720) },
+      { category: 'Lifestyle', handle: '@north.loom', title: 'Headphones on linen & light', user: U('1505740420928-5e560c06d30e', 360), cloth: U('1519681393784-d120267933ba', 360), result: U('1509042239860-f550ce710b93', 720) },
+      { category: 'Fragrance', handle: '@maison.rose', title: 'Perfume in floral still life', user: U('1541643600914-78b084683601', 360), cloth: U('1517842645767-c639042777db', 360), result: U('1594035910387-fea47794261f', 720) },
+      { category: 'Furniture', handle: '@dwell.co', title: 'Chair in warm interior', user: U('1584917865442-de89df76afd3', 360), cloth: U('1513694203232-719a280e022f', 360), result: U('1550226891-ef816aed4a98', 720) },
+      { category: 'Modern', handle: '@ria.creative', title: 'Camera on city rooftop', user: U('1516035069371-29a1b244cc32', 360), cloth: U('1495616811223-4d98c6e9c869', 360), result: U('1507525428034-b723cf961d3e', 720) }
+    ];
+
+    var filter = 'all';
+    var lbIndex = -1;
+    var grid = document.getElementById('lp-gal-grid');
+    var emptyEl = document.getElementById('lp-gal-empty');
+    var lb = document.getElementById('lp-lb');
+    var peek = document.getElementById('gal-peek-row');
+
+    if (peek) {
+      var peekHtml = items.concat(items).map(function (it) {
+        return '<a href="#browse"><img src="' + it.result + '" alt="' + it.title + '" loading="lazy"><span>' + it.category + '</span></a>';
+      }).join('');
+      peek.innerHTML = peekHtml;
+    }
+
+    function setFilter(next) {
+      filter = next || 'all';
+      document.querySelectorAll('.gal-filters button').forEach(function (b) {
+        b.classList.toggle('is-active', (b.getAttribute('data-filter') || 'all') === filter);
+      });
+      render();
+      var browse = document.getElementById('browse');
+      if (browse && next && next !== 'all') {
+        browse.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function render() {
+      if (!grid) return;
+      var list = items.filter(function (it) {
+        return filter === 'all' || it.category === filter;
+      });
+      grid.innerHTML = list.map(function (it) {
+        var realIdx = items.indexOf(it);
+        var shape = shapes[realIdx % shapes.length];
+        return (
+          '<button type="button" class="gal-card" data-idx="' + realIdx + '">' +
+            '<div class="gal-card-media ' + shape + '">' +
+              '<img src="' + it.result + '" alt="' + it.title + '" loading="lazy">' +
+              '<span class="gal-card-cat">' + it.category + '</span>' +
+            '</div>' +
+            '<div class="gal-card-recipe">' +
+              '<div class="gal-card-thumb">' +
+                '<img src="' + it.user + '" alt="" loading="lazy">' +
+                '<span>PRODUCT</span>' +
+              '</div>' +
+              '<span class="gal-card-plus" aria-hidden="true">+</span>' +
+              '<div class="gal-card-thumb">' +
+                '<img src="' + it.cloth + '" alt="" loading="lazy">' +
+                '<span>BACKDROP</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="gal-card-body">' +
+              '<div class="gal-card-title">' + it.title + '</div>' +
+              '<div class="gal-card-sub">' + it.handle + '</div>' +
+            '</div>' +
+          '</button>'
+        );
+      }).join('');
+      if (emptyEl) emptyEl.hidden = list.length > 0;
+    }
+
+    function openLB(idx) {
+      lbIndex = idx;
+      var it = items[idx];
+      if (!it || !lb) return;
+      document.getElementById('lp-lb-user').src = it.user;
+      document.getElementById('lp-lb-cloth').src = it.cloth;
+      document.getElementById('lp-lb-result').src = it.result;
+      document.getElementById('lp-lb-handle').textContent = it.title;
+      document.getElementById('lp-lb-cat').textContent = it.category + ' · ' + it.handle;
+      lb.hidden = false;
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLB() {
+      if (!lb) return;
+      lb.hidden = true;
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lbIndex = -1;
+    }
+
+    document.querySelectorAll('.gal-filters button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setFilter(btn.getAttribute('data-filter') || 'all');
+      });
+    });
+
+    document.querySelectorAll('[data-jump]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        setFilter(el.getAttribute('data-jump'));
+      });
+    });
+
+    if (grid) {
+      grid.addEventListener('click', function (e) {
+        var card = e.target.closest('.gal-card');
+        if (!card) return;
+        openLB(parseInt(card.getAttribute('data-idx'), 10));
+      });
+    }
+
+    if (lb) {
+      lb.addEventListener('click', function (e) {
+        if (e.target.closest('[data-lb-close]')) closeLB();
+        if (e.target.closest('[data-lb-prev]')) openLB((lbIndex - 1 + items.length) % items.length);
+        if (e.target.closest('[data-lb-next]')) openLB((lbIndex + 1) % items.length);
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (lbIndex < 0) return;
+      if (e.key === 'Escape') closeLB();
+      if (e.key === 'ArrowLeft') openLB((lbIndex - 1 + items.length) % items.length);
+      if (e.key === 'ArrowRight') openLB((lbIndex + 1) % items.length);
+    });
+
+    var ba = document.getElementById('lp-ba');
+    if (ba) {
+      var clip = ba.querySelector('.gal-ba-clip');
+      var inner = ba.querySelector('.gal-ba-clip-inner');
+      var handle = ba.querySelector('.gal-ba-handle');
+      function setPct(clientX) {
+        var r = ba.getBoundingClientRect();
+        var pct = ((clientX - r.left) / r.width) * 100;
+        if (pct < 8) pct = 8;
+        if (pct > 92) pct = 92;
+        if (clip) clip.style.width = pct + '%';
+        if (handle) handle.style.left = pct + '%';
+        if (inner) inner.style.width = (10000 / pct) + '%';
+      }
+      var dragging = false;
+      ba.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        try { ba.setPointerCapture(e.pointerId); } catch (err) {}
+        setPct(e.clientX);
+        e.preventDefault();
+      });
+      ba.addEventListener('pointermove', function (e) {
+        if (dragging) setPct(e.clientX);
+      });
+      function endDrag() { dragging = false; }
+      ba.addEventListener('pointerup', endDrag);
+      ba.addEventListener('pointercancel', endDrag);
+    }
+
+    render();
+  })();
+  </script>
 </body>
 </html>
