@@ -124,16 +124,15 @@
           '<div>' +
             '<div style="font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 16px;">Stay Connected</div>' +
             '<div style="display: flex; flex-wrap: wrap; gap: 10px;">' +
-              socials.map(function (s) {
-                return '<span style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;">' + s + '</span>';
-              }).join('') +
+              '<a href="mailto:hello@pixelblend.app" aria-label="Email us" style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; text-decoration: none;">@</a>' +
+              '<a href="contact.html" aria-label="Contact" style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; text-decoration: none;">in</a>' +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="pb-footer-guarantees">' +
-          '<div class="pb-fg"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg><div><strong>Money-Back Guarantee</strong><p>Don\'t like your result? Get a refund.</p></div></div>' +
-          '<div class="pb-fg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg><div><strong>Privacy First</strong><p>Your photos are private and secure.</p></div></div>' +
-          '<div class="pb-fg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01M12 10h.01M16 10h.01"></path></svg><div><strong>Customer Support</strong><p>Friendly customer support</p></div></div>' +
+          '<a class="pb-fg" href="refund.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg><div><strong>Money-Back Guarantee</strong><p>Don\'t like your result? Get a refund.</p></div></a>' +
+          '<a class="pb-fg" href="privacy.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg><div><strong>Privacy First</strong><p>Your photos are private and secure.</p></div></a>' +
+          '<a class="pb-fg" href="contact.html" style="text-decoration:none;color:inherit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01M12 10h.01M16 10h.01"></path></svg><div><strong>Customer Support</strong><p>Friendly customer support</p></div></a>' +
         '</div>' +
         '<div class="pb-footer-copy"><span>\u00A9 2026 PixelBlend Technologies. All rights reserved.</span></div>' +
       '</div>' +
@@ -154,7 +153,7 @@
     titleRow.remove();
   }
 
-  /* Breadcrumbs — below header only (Clerk-style: Home / Page) */
+  /* Breadcrumbs — inside page content (above title), not header chrome */
   (function mountBreadcrumbs() {
     var labels = {
       'how-it-works.html': 'How it works',
@@ -183,20 +182,23 @@
       var css = document.createElement('style');
       css.id = 'pb-crumbs-css';
       css.textContent =
-        '.lp-crumb-bar{position:relative;z-index:5;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(240,230,242,.9)}' +
-        '.lp-crumb-bar-inner{max-width:1160px;margin:0 auto;padding:11px 32px}' +
-        /* Reset global fixed `nav` styles so crumbs stay in-flow under header */
+        '.lp-crumb-bar{position:relative;z-index:1;background:transparent;border:none;margin:0 0 14px;padding:0}' +
+        '.lp-crumb-bar-inner{max-width:none;margin:0;padding:0}' +
         'nav.lp-crumbs{position:static!important;top:auto!important;left:auto!important;right:auto!important;width:auto!important;z-index:auto!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:none!important;border-radius:0!important;box-shadow:none!important;display:flex;flex-wrap:wrap;align-items:center;gap:0;margin:0;padding:0;font-size:13px;font-weight:500;line-height:1.35;letter-spacing:.01em;color:#6B6170;font-family:inherit}' +
         '.lp-crumbs a{color:#6B6170;text-decoration:none;font-weight:500;transition:color .15s ease}' +
         '.lp-crumbs a:hover{color:#1E1422}' +
         '.lp-crumbs-sep{display:inline-block;flex:none;margin:0 9px;color:#C4B8C8;font-weight:400;font-size:13px;line-height:1;user-select:none}' +
         '.lp-crumbs [aria-current="page"]{color:#1E1422;font-weight:600}' +
-        '@media (max-width:720px){.lp-crumb-bar-inner{padding:10px 20px}nav.lp-crumbs{font-size:12.5px}.lp-crumbs-sep{margin:0 7px}}';
+        '.hiw-hero-copy > .lp-crumb-bar,' +
+        '.gal-hero-copy > .lp-crumb-bar,' +
+        '.ab-hero-copy > .lp-crumb-bar{margin:0 0 16px}' +
+        '.hiw-hero-copy > .lp-crumb-bar,' +
+        '.ab-hero-copy > .lp-crumb-bar{display:flex;justify-content:center}' +
+        '.lp-wrap > .lp-crumb-bar{margin:0 0 12px}' +
+        '@media (max-width:720px){nav.lp-crumbs{font-size:12.5px}.lp-crumbs-sep{margin:0 7px}' +
+        '.hiw-hero-copy > .lp-crumb-bar,.gal-hero-copy > .lp-crumb-bar,.ab-hero-copy > .lp-crumb-bar{margin:0 0 12px}}';
       document.head.appendChild(css);
     }
-
-    var header = document.getElementById('pb-chrome-header');
-    if (!header || !header.parentNode) return;
 
     var bar = document.createElement('div');
     bar.className = 'lp-crumb-bar';
@@ -209,7 +211,24 @@
         '</nav>' +
       '</div>';
 
-    /* Always insert after header — never above it */
+    var slot =
+      document.querySelector('[data-pb-crumbs]') ||
+      document.querySelector('.lp-wrap') ||
+      document.querySelector('.hiw-hero-copy') ||
+      document.querySelector('.gal-hero-copy') ||
+      document.querySelector('.ab-hero-copy');
+
+    if (slot) {
+      if (slot.hasAttribute('data-pb-crumbs')) {
+        slot.appendChild(bar);
+      } else {
+        slot.insertBefore(bar, slot.firstChild);
+      }
+      return;
+    }
+
+    var header = document.getElementById('pb-chrome-header');
+    if (!header || !header.parentNode) return;
     if (header.nextSibling) header.parentNode.insertBefore(bar, header.nextSibling);
     else header.parentNode.appendChild(bar);
   })();
@@ -243,9 +262,19 @@
       return Math.max(window.pageYOffset || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
     }
     function setY(y) {
-      window.scrollTo(0, y);
-      document.documentElement.scrollTop = y;
+      /* Must be instant — legal.css has scroll-behavior:smooth which
+         otherwise slows every RAF step and feels much slower than home. */
+      var root = document.documentElement;
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      try {
+        window.scrollTo({ top: y, left: 0, behavior: 'auto' });
+      } catch (e) {
+        window.scrollTo(0, y);
+      }
+      root.scrollTop = y;
       document.body.scrollTop = y;
+      root.style.scrollBehavior = prev;
     }
     function ensureCss() {
       if (document.getElementById('pb-to-top-page-css')) return;

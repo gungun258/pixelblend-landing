@@ -311,23 +311,39 @@
       max-width: 100%;
     }
     .hiw-mkt-phone-status {
-      padding: 14px 16px 0;
-      display: flex;
+      position: relative;
+      padding: 12px 16px 0;
+      display: grid;
+      grid-template-columns: 1fr 74px 1fr;
       align-items: center;
-      justify-content: space-between;
+      column-gap: 6px;
       font-size: 11.5px;
       font-weight: 700;
       color: #8D8296;
-      gap: 8px;
       min-width: 0;
+    }
+    .hiw-mkt-phone-status > span:first-child {
+      justify-self: start;
+      min-width: 0;
+    }
+    .hiw-mkt-phone-status > span:last-child {
+      justify-self: end;
+      text-align: right;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .hiw-mkt-notch {
       width: 74px;
       height: 20px;
       background: #1A1420;
       border-radius: 999px;
-      margin-top: -6px;
+      justify-self: center;
+      align-self: center;
+      margin: 0;
       flex: none;
+      pointer-events: none;
     }
     .hiw-mkt-store-head {
       padding: 14px 14px 12px;
@@ -384,6 +400,31 @@
       border-radius: 14px;
       overflow: hidden;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .hiw-mkt-listing-media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: #EFE7E0;
+      flex: none;
+    }
+    .hiw-mkt-listing-body {
+      padding: 7px 8px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .hiw-mkt-listing-body > div:first-child {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+      min-height: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .hiw-uc-pins {
       display: grid;
@@ -499,8 +540,44 @@
     }
 
     body.hiw-page { overflow-x: hidden; }
-    .hiw-shoot-body { margin-top: 36px; display: grid; grid-template-columns: 240px 1fr; gap: 44px; align-items: start; }
+    .hiw-shoot-body {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
+      gap: 44px;
+      align-items: start;
+    }
+    .hiw-shoot-rail-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 14px;
+    }
+    .hiw-look-pin {
+      scroll-margin-top: 120px;
+    }
+    .hiw-shoot-stage { min-width: 0; }
     .hiw-shoot-shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .hiw-shoot-note {
+      margin-top: 22px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.5);
+    }
+    @media (min-width: 901px) {
+      .hiw-look-pin {
+        min-height: 46vh;
+        padding-bottom: 28px;
+        box-sizing: border-box;
+      }
+      .hiw-look-pin:last-child { min-height: 34vh; }
+      .hiw-shoot-stage {
+        position: sticky;
+        top: 96px;
+        align-self: start;
+      }
+    }
     .hiw-refund { padding: 72px 32px 0; }
     .hiw-refund-card {
       max-width: 1160px; margin: 0 auto; background: linear-gradient(160deg, #2A1240, #3E1850);
@@ -520,6 +597,9 @@
     }
     @media (max-width: 900px) {
       .hiw-shoot-body, .hiw-refund-grid { grid-template-columns: 1fr; gap: 28px; }
+      .hiw-shoot-stage { position: relative; top: auto; }
+      .hiw-look-pin { min-height: 0 !important; padding-bottom: 10px !important; }
+      .hiw-shoot-rail-label { margin-bottom: 10px; }
       .hiw-refund { padding: 48px 16px 0; }
       .hiw-refund-card { padding: 28px 20px; border-radius: 22px; }
       .hiw-refund-title { font-size: 28px; }
@@ -609,7 +689,43 @@
       border-radius: 46px; background: #1A1420; padding: 11px;
       box-shadow: 0 40px 80px -40px rgba(26,20,32,.7);
     }
-    .hiw-step-grid { display: grid; grid-template-columns: 74px 1fr; gap: 18px; align-items: start; }
+    .hiw-step-grid { display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: stretch; }
+    .hiw-step-marker {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1;
+    }
+    .hiw-step-num {
+      position: relative;
+      z-index: 1;
+      flex: none;
+    }
+    .hiw-step-lab {
+      margin-top: 7px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #9A8FA2;
+      white-space: nowrap;
+      line-height: 1;
+      z-index: 1;
+    }
+    /* Vertical connector between Step 1 → 2 → 3 circles */
+    .hiw-step-marker::after {
+      content: '';
+      flex: 1 1 auto;
+      width: 2px;
+      min-height: 28px;
+      margin-top: 10px;
+      margin-bottom: -40px;
+      border-radius: 2px;
+      background: #F0D6E6;
+      z-index: 0;
+    }
+    .hiw-pin-3 .hiw-step-marker::after { display: none; }
     .hiw-step2-title { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .hiw-root img { max-width: 100%; }
     .hiw-root, .hiw-root * { box-sizing: border-box; }
@@ -792,8 +908,9 @@
       .hiw-dev-grid { grid-template-columns: 1fr; }
       .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
       .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
-      .hiw-step-grid { grid-template-columns: 52px 1fr; gap: 12px; }
+      .hiw-step-grid { grid-template-columns: 48px 1fr; gap: 12px; }
       .hiw-step-grid h3 { font-size: 22px !important; }
+      .hiw-step-lab { font-size: 9px; letter-spacing: .08em; }
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
       .hiw-end { padding: 48px 16px 64px; }
       .hiw-thumbs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
@@ -970,6 +1087,14 @@
         grid-template-columns: 44px minmax(0, 1fr) !important;
         gap: 10px !important;
       }
+      .hiw-step-lab {
+        font-size: 8.5px !important;
+        letter-spacing: .06em !important;
+        margin-top: 5px !important;
+      }
+      .hiw-step-marker::after {
+        margin-bottom: -28px !important;
+      }
       .hiw-step-grid h3 {
         font-size: 20px !important;
         line-height: 1.2 !important;
@@ -1063,7 +1188,8 @@
     }
 
     @media (max-width: 400px) {
-      .hiw-step-grid { grid-template-columns: 38px minmax(0, 1fr) !important; }
+      .hiw-step-grid { grid-template-columns: 42px minmax(0, 1fr) !important; }
+      .hiw-step-lab { font-size: 8px !important; }
       .hiw-mkt-flow-row {
         flex-direction: column !important;
         gap: 6px !important;
@@ -1205,7 +1331,10 @@
 
         <div id="hiw-pin-0" class="hiw-pin hiw-pin-0" sc-camel-on-click="{{ stepOne.pick }}" style="{{ stepOne.row }}">
           <div class="hiw-step-grid">
-            <div style="{{ stepOne.num }}">01</div>
+            <div class="hiw-step-marker">
+              <div class="hiw-step-num" style="{{ stepOne.num }}">01</div>
+              <span class="hiw-step-lab">Step 1</span>
+            </div>
             <div>
               <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepOne.t }}</h3>
               <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepOne.d }}</p>
@@ -1220,9 +1349,12 @@
           </div>
         </div>
 
-        <div id="hiw-pin-1" class="hiw-pin hiw-pin-1" sc-camel-on-click="{{ optA.pick }}" style="{{ branch.wrap }}">
+        <div id="hiw-pin-1" class="hiw-pin hiw-pin-1" style="{{ branch.wrap }}">
           <div class="hiw-step-grid">
-            <div style="{{ branch.num }}">02</div>
+            <div class="hiw-step-marker">
+              <div class="hiw-step-num" style="{{ branch.num }}">02</div>
+              <span class="hiw-step-lab">Step 2</span>
+            </div>
             <div>
               <div class="hiw-step2-title">
                 <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">Bring in a background</h3>
@@ -1234,36 +1366,36 @@
                 <div class="hiw-branch-line" style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1.5px; background: #E6DED6"></div>
                 <div class="hiw-branch-or" style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #FAF4FB; border: 1.5px solid #E6DED6; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: #8D8296">OR</div>
 
-                <div class="hiw-pin hiw-pin-1 hiw-opt-card" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
+                <div class="hiw-pin hiw-pin-1 hiw-opt-card" role="button" tabindex="0" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
                   <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optA.badge }}">A</span>
-                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Upload a background from anywhere</span>
+                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em; flex: 1; min-width: 0">Upload a background from anywhere</span>
+                    <span style="{{ optA.chevron }}" aria-hidden="true">▾</span>
                   </div>
                   <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Download or screenshot a scene from Unsplash, Pexels, Pinterest, an Instagram post, a studio render or your own camera roll, then pick it out of your gallery.</p>
-                  <sc-if value="{{ optA.active }}" hint-placeholder-val="{{ true }}">
-                    <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
-                      <sc-for list="{{ optA.chips }}" as="c" hint-placeholder-count="3">
-                        <span class="hiw-chip" style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
-                      </sc-for>
-                    </div>
-                  </sc-if>
+                  <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
+                    <sc-for list="{{ optA.chips }}" as="c" hint-placeholder-count="3">
+                      <span class="hiw-chip" style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
+                    </sc-for>
+                  </div>
                 </div>
 
                 <div style="height: 14px"></div>
 
-                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2 hiw-opt-card" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
+                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2 hiw-opt-card" role="button" tabindex="0" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
                   <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optB.badge }}">B</span>
-                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em">Pick a creator listing instead</span>
+                    <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em; flex: 1; min-width: 0">Pick a creator listing instead</span>
+                    <span style="{{ optB.chevron }}" aria-hidden="true">▾</span>
                   </div>
-                  <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Photographers, studios, 3D artists and agencies list their collections inside PixelBlend — marble tabletops, studio gradients, lifestyle interiors, nature scenes, seasonal sets and city backdrops. One tap on a listing skips the uploading entirely.</p>
-                  <sc-if value="{{ optB.active }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ optB.body }}">
+                    <p style="margin-top: 8px; font-size: 15.5px; line-height: 1.55; color: #4C4453; max-width: 520px">Photographers, studios, 3D artists and agencies list their collections inside PixelBlend — marble tabletops, studio gradients, lifestyle interiors, nature scenes, seasonal sets and city backdrops. One tap on a listing skips the uploading entirely.</p>
                     <div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
                       <sc-for list="{{ optB.chips }}" as="c" hint-placeholder-count="4">
                         <span class="hiw-chip" style="font-size: 12.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">{{ c }}</span>
                       </sc-for>
                     </div>
-                  </sc-if>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1272,7 +1404,10 @@
 
         <div id="hiw-pin-3" class="hiw-pin hiw-pin-3" sc-camel-on-click="{{ stepThree.pick }}" style="{{ stepThree.row }}">
           <div class="hiw-step-grid">
-            <div style="{{ stepThree.num }}">03</div>
+            <div class="hiw-step-marker">
+              <div class="hiw-step-num" style="{{ stepThree.num }}">03</div>
+              <span class="hiw-step-lab">Step 3</span>
+            </div>
             <div>
               <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepThree.t }}</h3>
               <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepThree.d }}</p>
@@ -1294,10 +1429,10 @@
         <div class="hiw-walk-phone-frame" style="width: 420px; display: flex; justify-content: center">
         <div class="hiw-phone-shell">
           <div style="position: relative; border-radius: 36px; background: #FAF4FB; overflow: hidden; height: 620px; display: flex; flex-direction: column">
-            <div style="padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #8D8296">
-              <span>9:41</span>
-              <span style="width: 74px; height: 20px; background: #1A1420; border-radius: 999px; margin-top: -6px"></span>
-              <span>PixelBlend</span>
+            <div class="hiw-phone-status" style="position: relative; padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 700; color: #8D8296">
+              <span style="flex: 1; min-width: 0; z-index: 1">9:41</span>
+              <span aria-hidden="true" style="position: absolute; left: 50%; top: 10px; transform: translateX(-50%); width: 74px; height: 20px; background: #1A1420; border-radius: 999px; z-index: 0"></span>
+              <span style="flex: 1; min-width: 0; text-align: right; z-index: 1">PixelBlend</span>
             </div>
             <div style="padding: 18px 20px 8px">
               <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B">{{ screen.kicker }}</div>
@@ -1384,29 +1519,34 @@
       </div>
 
       <div class="hiw-shoot-body">
-        <div>
-          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: .12em; color: rgba(255,255,255,.5)">PICK A BACKGROUND</div>
-          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px">
-            <sc-for list="{{ looks }}" as="l" hint-placeholder-count="3">
-              <div sc-camel-on-click="{{ l.pick }}" style="{{ l.chip }}">
+        <div class="hiw-shoot-rail">
+          <div class="hiw-shoot-rail-label">SCROLL OR TAP A BACKGROUND</div>
+          <sc-for list="{{ looks }}" as="l" hint-placeholder-count="3">
+            <div id="{{ l.pinId }}" class="{{ l.pinClass }}" sc-camel-on-click="{{ l.pick }}">
+              <div style="{{ l.chip }}">
                 <span style="font-size: 15px; font-weight: 700">{{ l.name }}</span>
                 <span style="font-size: 13px; opacity: .7">{{ l.sub }}</span>
               </div>
-            </sc-for>
-          </div>
-          <div style="margin-top: 22px; font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.5)">Same three product shots each time. Same angles, same lighting on the product — a different scene in all of them.</div>
-        </div>
-        <div class="hiw-shoot-shots">
-          <sc-for list="{{ trip }}" as="v" hint-placeholder-count="3">
-            <div>
-              <div style="position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: #2A2030">
-                <img src="{{ v.src }}" alt="{{ v.caption }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                <div style="position: absolute; left: 12px; top: 12px; font-size: 12px; font-weight: 700; color: #fff; background: rgba(26,20,32,.55); backdrop-filter: blur(8px); padding: 5px 11px; border-radius: 999px">{{ v.place }}</div>
-              </div>
-              <div style="margin-top: 12px; font-size: 15.5px; font-weight: 700; color: #fff">{{ v.caption }}</div>
-              <div style="margin-top: 3px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.55)">{{ v.note }}</div>
+              <sc-if value="{{ l.active }}" hint-placeholder-val="{{ true }}">
+                <div class="hiw-shoot-note">{{ l.blurb }}</div>
+              </sc-if>
             </div>
           </sc-for>
+        </div>
+        <div class="hiw-shoot-stage">
+          <div class="hiw-shoot-shots">
+            <sc-for list="{{ trip }}" as="v" hint-placeholder-count="3">
+              <div>
+                <div style="position: relative; aspect-ratio: 4/5; border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); background: #2A2030">
+                  <img src="{{ v.src }}" alt="{{ v.caption }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                  <div style="position: absolute; left: 12px; top: 12px; font-size: 12px; font-weight: 700; color: #fff; background: rgba(26,20,32,.55); backdrop-filter: blur(8px); padding: 5px 11px; border-radius: 999px">{{ v.place }}</div>
+                </div>
+                <div style="margin-top: 12px; font-size: 15.5px; font-weight: 700; color: #fff">{{ v.caption }}</div>
+                <div style="margin-top: 3px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.55)">{{ v.note }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div class="hiw-shoot-note" style="margin-top: 18px">Same three product shots each time. Same angles, same lighting on the product — a different scene in all of them.</div>
         </div>
       </div>
     </div>
@@ -1657,13 +1797,13 @@
                   <div class="hiw-mkt-scroll">
                     <sc-for list="{{ shop.listings }}" as="p" hint-placeholder-count="4">
                       <div class="hiw-mkt-listing">
-                        <div style="position: relative; aspect-ratio: 1/1; background: #EFE7E0">
+                        <div class="hiw-mkt-listing-media">
                           <img src="{{ p.src }}" alt="Listing" style="width: 100%; height: 100%; object-fit: cover; display: block">
                           <span style="position: absolute; left: 7px; top: 7px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 8px; border-radius: 999px">{{ p.price }}</span>
                         </div>
-                        <div style="padding: 8px 10px 10px">
-                          <div style="font-size: 12.5px; font-weight: 700; line-height: 1.3; min-height: 33px">{{ p.name }}</div>
-                          <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: 7px; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
+                        <div class="hiw-mkt-listing-body">
+                          <div>{{ p.name }}</div>
+                          <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
                         </div>
                       </div>
                     </sc-for>
@@ -1807,7 +1947,7 @@
 const U = (id, w) => { const k = 'u_' + id.replace(/-/g, '_') + '_' + (w || 600); const r = (typeof window !== 'undefined' && window.__resources && window.__resources[k]); return r || ('https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop'); };
 
 class Component extends DCLogic {
-  state = { scrolled: false, step: 0, look: 0, openFaq: 0, moment: 0, shopStep: 0, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0 };
+  state = { scrolled: false, step: 0, look: 0, openFaq: 0, moment: 0, shopStep: 0, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0, branchB: false };
 
   backgrounds = [
     { name: 'Desk & notebook', id: '1517842645767-c639042777db' },
@@ -1832,6 +1972,13 @@ class Component extends DCLogic {
   goWalkStep = (n) => {
     this.setState({ step: n });
     var el = document.getElementById('hiw-pin-' + n);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  pickLook = (i) => {
+    this._lookLockUntil = Date.now() + 700;
+    this.setState({ look: i });
+    var el = document.getElementById('hiw-look-' + i);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
@@ -1874,12 +2021,55 @@ class Component extends DCLogic {
         });
         if (best !== this.state.step) next.step = best;
       }
+
+      /* Shoot section: scroll sync backgrounds like walkthrough steps */
+      if (!(this._lookLockUntil && Date.now() < this._lookLockUntil)) {
+        const lookPins = [...document.querySelectorAll('.hiw-look-pin')];
+        const shoot = document.querySelector('.hiw-shoot');
+        const shootInView = shoot && (() => {
+          const r = shoot.getBoundingClientRect();
+          return r.bottom > 120 && r.top < vh - 80;
+        })();
+        if (shootInView && lookPins.length) {
+          const line = vh * 0.42;
+          let best = this.state.look, bestD = Infinity;
+          lookPins.forEach((el) => {
+            const m = String(el.className || '').match(/hiw-look-pin-(\d)/);
+            if (!m) return;
+            const i = parseInt(m[1], 10);
+            const r = el.getBoundingClientRect();
+            if (r.bottom < 100 || r.top > vh) return;
+            const d = Math.abs(r.top - line);
+            if (d < bestD) { bestD = d; best = i; }
+          });
+          if (best !== this.state.look) next.look = best;
+        }
+      }
       if (Object.keys(next).length) this.setState(next);
     };
     this._onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(this._tick); };
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onScroll);
     this._tick();
+    /* Reliable open for option B — parent used to steal the click */
+    this._onBranchClick = (e) => {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      var b = t.closest('#hiw-pin-2');
+      if (b) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({ step: 2, branchB: true });
+        return;
+      }
+      var a = t.closest('.hiw-opt-card.hiw-pin-1');
+      if (a) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({ step: 1, branchB: false });
+      }
+    };
+    document.addEventListener('click', this._onBranchClick, true);
     this._demoRef = (el) => {
       if (!el || this._demoObs) return;
       this._demoObs = new IntersectionObserver((entries) => {
@@ -1896,6 +2086,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onScroll);
+    if (this._onBranchClick) document.removeEventListener('click', this._onBranchClick, true);
     if (this._raf) cancelAnimationFrame(this._raf);
     clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT);
     if (this._demoObs) this._demoObs.disconnect();
@@ -1982,10 +2173,10 @@ class Component extends DCLogic {
   ];
 
   listings = [
-    { name: 'Sunlit marble tabletop', price: '₹1,499', src: U('1517842645767-c639042777db', 300) },
-    { name: 'Golden-hour beach scene', price: '₹2,290', src: U('1507525428034-b723cf961d3e', 300) },
-    { name: 'Minimal studio gradient', price: '₹3,750', src: U('1557683316-973673baf926', 300) },
-    { name: 'Lush forest backdrop', price: '₹4,199', src: U('1441974231531-c6227db76b6e', 300) }
+    { name: 'Sunlit marble tabletop', price: '₹1,499', src: U('1517842645767-c639042777db', 400) },
+    { name: 'Golden-hour beach scene', price: '₹2,290', src: U('1507525428034-b723cf961d3e', 400) },
+    { name: 'Minimal studio gradient', price: '₹3,750', src: U('1557683316-973673baf926', 400) },
+    { name: 'Lush forest backdrop', price: '₹4,199', src: U('1441974231531-c6227db76b6e', 400) }
   ];
 
   faqData = [
@@ -2048,9 +2239,15 @@ class Component extends DCLogic {
       (on
         ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
         : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
-    const optCard = (on) => 'padding: 20px 22px; border-radius: 18px; cursor: pointer; transition: background .25s, opacity .25s, box-shadow .25s; border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; ' +
-      (on ? 'box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);' : 'box-shadow: none;');
-    const optBadge = () => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #fff; flex: none; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);';
+    const optCard = (on) => 'border-radius: 18px; cursor: pointer; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s, padding .25s; ' +
+      (on
+        ? 'padding: 20px 22px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
+        : 'padding: 14px 18px; border: 1.5px solid #E6DED6; background: #fff; box-shadow: none;');
+    const optBadge = (on) => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex: none; ' +
+      (on
+        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);'
+        : 'color: #8D8296; background: #F4EEF2; border: 1px solid #E6DED6;');
+    const optChevron = (on) => 'margin-left: auto; flex: none; font-size: 18px; line-height: 1; color: ' + (on ? '#C42E8B' : '#B5A8BA') + '; transform: rotate(' + (on ? '180' : '0') + 'deg); transition: transform .25s ease, color .25s;';
 
     return {
       photoSrc: U(this.products[s.prod].photo, 560),
@@ -2156,13 +2353,18 @@ class Component extends DCLogic {
       },
 
       optA: {
-        active: s.step === 1, pick: () => this.setState({ step: 1 }),
-        card: optCard(s.step === 1), badge: optBadge(),
+        /* A always expanded; highlight when B panel is closed */
+        active: true,
+        pick: () => this.setState({ step: 1, branchB: false }),
+        card: optCard(!s.branchB), badge: optBadge(!s.branchB), chevron: optChevron(true),
         chips: ['Screenshots work', 'Any source', 'Your own photos']
       },
       optB: {
-        active: s.step === 2, pick: () => this.setState({ step: 2 }),
-        card: optCard(s.step === 2), badge: optBadge(),
+        /* B expands only when user clicks it */
+        active: !!s.branchB,
+        pick: () => this.setState({ step: 2, branchB: true }),
+        card: optCard(!!s.branchB), badge: optBadge(!!s.branchB), chevron: optChevron(!!s.branchB),
+        body: s.branchB ? '' : 'display: none;',
         chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
       },
 
@@ -2201,9 +2403,15 @@ class Component extends DCLogic {
 
       looks: this.lookData.map((l, i) => ({
         name: l.name, sub: l.sub,
-        pick: () => this.setState({ look: i }),
-        chip: 'display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 3px 22px 3px 3px; cursor: pointer; transition: background .2s, color .2s; ' +
-          (s.look === i ? 'background: #fff; color: #1A1420;' : 'background: rgba(255,255,255,.07); color: rgba(255,255,255,.72);')
+        active: s.look === i,
+        blurb: 'Same three product shots each time — ' + (l.notes && l.notes[0] ? l.notes[0] : l.sub),
+        pinId: 'hiw-look-' + i,
+        pinClass: 'hiw-look-pin hiw-look-pin-' + i + (s.look === i ? ' is-on' : ''),
+        pick: () => this.pickLook(i),
+        chip: 'display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 3px 22px 3px 3px; cursor: pointer; transition: background .2s, color .2s, opacity .2s, box-shadow .2s; ' +
+          (s.look === i
+            ? 'background: #fff; color: #1A1420; box-shadow: 0 16px 36px -22px rgba(0,0,0,.55);'
+            : 'background: rgba(255,255,255,.07); color: rgba(255,255,255,.72); opacity: .78;')
       })),
 
       trip: this.places.map((p, i) => ({
@@ -2298,7 +2506,7 @@ class Component extends DCLogic {
 }
 
 </script>
-  <script src="legal-chrome.js?v=15"></script>
+  <script src="legal-chrome.js?v=18"></script>
   <script>
   (function () {
     var last = -1, ticking = false, lockUntil = 0;

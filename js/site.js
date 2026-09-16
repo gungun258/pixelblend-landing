@@ -169,9 +169,14 @@ function bindBaSlider() {
       document.documentElement.setAttribute('data-pb-motion', '1');
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         /* Never leave content stuck invisible if classes were applied elsewhere */
-        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop'), function (el) {
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop, [data-reveal]'), function (el) {
           el.classList.add('pb-in', 'pb-done');
           el.classList.remove('pb-pop');
+          if (el.style) {
+            el.style.removeProperty('opacity');
+            el.style.removeProperty('transform');
+            el.style.removeProperty('transition');
+          }
         });
         return true;
       }
@@ -278,10 +283,23 @@ function bindBaSlider() {
         addScroll(el, 0, false);
       });
 
+      function clearRevealInline(el) {
+        if (!el || !el.style) return;
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transform');
+        el.style.removeProperty('transition');
+      }
       function revealEl(el) {
         if (!el || el.classList.contains('pb-in')) return;
         el.classList.add('pb-in');
+        clearRevealInline(el);
         if (el.__pbIsCard) el.classList.add('pb-card');
+        /* Parent [data-reveal] wrappers must not stay at inline opacity:0 */
+        var wrap = el.closest && el.closest('[data-reveal]');
+        if (wrap && wrap !== el) {
+          wrap.classList.add('pb-in');
+          clearRevealInline(wrap);
+        }
       }
 
       var io = new IntersectionObserver(function (entries) {
@@ -312,8 +330,9 @@ function bindBaSlider() {
         });
       }
       function forceRevealAll() {
-        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal:not(.pb-in), .pb-reveal-scroll:not(.pb-in), .pb-pop:not(.pb-done)'), function (el) {
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal:not(.pb-in), .pb-reveal-scroll:not(.pb-in), .pb-pop:not(.pb-done), [data-reveal]:not(.pb-in)'), function (el) {
           el.classList.add('pb-in', 'pb-done');
+          clearRevealInline(el);
           if (el.__pbIsCard) el.classList.add('pb-card');
         });
       }
@@ -348,8 +367,13 @@ function bindBaSlider() {
       if (motTries > 80) {
         clearInterval(motTimer);
         /* Motion never bound — still clear any stuck opacity:0 classes */
-        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop'), function (el) {
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal, .pb-reveal-scroll, .pb-pop, [data-reveal]'), function (el) {
           el.classList.add('pb-in', 'pb-done');
+          if (el.style) {
+            el.style.removeProperty('opacity');
+            el.style.removeProperty('transform');
+            el.style.removeProperty('transition');
+          }
         });
       }
     }, 250);
@@ -454,9 +478,17 @@ function bindBaSlider() {
     setInterval(bindLbNav, 400);
     window.addEventListener('resize', bindLbNav);
     function pbSetY(pos) {
-      window.scrollTo(0, pos);
-      document.documentElement.scrollTop = pos;
+      var root = document.documentElement;
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      try {
+        window.scrollTo({ top: pos, left: 0, behavior: 'auto' });
+      } catch (e) {
+        window.scrollTo(0, pos);
+      }
+      root.scrollTop = pos;
       document.body.scrollTop = pos;
+      root.style.scrollBehavior = prev;
     }
     document.addEventListener('click', function (e) {
       var t = e.target;
