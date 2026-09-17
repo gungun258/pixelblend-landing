@@ -253,9 +253,9 @@
     }
     .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 80px 32px 72px; }
     .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; }
-    @media (min-width: 901px) {
+    @media (min-width: 1101px) {
       .hiw-shoot {
-        /* Hold room for 3rd look, but keep content visually centered */
+        /* Hold room for scroll-driven looks on desktop only */
         min-height: min(100vh, 860px);
         padding: 72px 32px;
         display: flex;
@@ -753,6 +753,19 @@
       letter-spacing: .12em;
       color: rgba(255,255,255,.5);
       margin-bottom: 14px;
+    }
+    @media (max-width: 1100px) {
+      .hiw-shoot-rail-label {
+        font-size: 0;
+        letter-spacing: 0;
+      }
+      .hiw-shoot-rail-label::after {
+        content: 'TAP A BACKGROUND';
+        font-size: 12.5px;
+        font-weight: 700;
+        letter-spacing: .12em;
+        color: rgba(255,255,255,.5);
+      }
     }
     .hiw-shoot-chips {
       display: flex;
@@ -2278,9 +2291,10 @@ class Component extends DCLogic {
         if (best !== this.state.step) next.step = best;
       }
 
-      /* Shoot: look advances while section is in view; 3rd look gets a longer hold */
+      /* Shoot: desktop scrolls through looks; mobile/tablet only change on tap */
       if (!(this._lookLockUntil && Date.now() < this._lookLockUntil)) {
-        const shoot = document.querySelector('.hiw-shoot');
+        const shootScrollOk = window.matchMedia('(min-width: 1101px) and (hover: hover) and (pointer: fine)').matches;
+        const shoot = shootScrollOk ? document.querySelector('.hiw-shoot') : null;
         if (shoot) {
           const r = shoot.getBoundingClientRect();
           const inView = r.bottom > 80 && r.top < vh - 60;

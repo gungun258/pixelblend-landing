@@ -371,8 +371,9 @@
   body.sellers-page #pb-chrome-footer { position: relative; z-index: 2; }
   body.sellers-page:not(.sellers-ready) #pb-chrome-footer { display: none !important; }
   body.sellers-page header.pad { padding-top: 72px !important; }
-  body.sellers-page .lp-crumb-bar {
-    max-width: 1220px; margin: 0 auto; padding: 14px 40px 0;
+  body.sellers-page .lp-crumb-bar,
+  body.sellers-page .lp-crumbs {
+    display: none !important;
   }
   #start { align-self: start; height: auto; flex: none; }
   .hero-pay {
@@ -415,9 +416,6 @@
   .cat-card img {
     object-fit: cover !important;
     object-position: center !important;
-  }
-  @media (max-width: 1040px) {
-    body.sellers-page .lp-crumb-bar { padding-left: 22px; padding-right: 22px; }
   }
 
   /* Where the sale is lost — polish */
@@ -841,6 +839,7 @@
     letter-spacing: -.035em;
     line-height: 1.05;
     color: #1E1422;
+    white-space: nowrap;
   }
   #cost .cost-italic {
     font-size: 19px;
@@ -1508,7 +1507,7 @@
         <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 16px;">
           <span class="cost-zero free-num">₹0</span>
           <span class="zero-rule" style="width: 1px; height: 56px; background: #E4CFE8;"></span>
-          <span class="cost-forever">Free<br>Forever</span>
+          <span class="cost-forever">Free Forever</span>
         </div>
         <p class="cost-italic">Brands can blend their products into your scenes as many times as they want. You pay ₹0.</p>
         <p class="cost-note">Per listing. Per blend. Per month. Per licence. The whole price list is above.</p>
@@ -2293,7 +2292,7 @@ class Component extends DCLogic {
 
 
 </script>
-  <script src="legal-chrome.js?v=19"></script>
+  <script src="legal-chrome.js?v=20"></script>
   <script>
     (function () {
       function ready() { document.body.classList.add('sellers-ready'); }

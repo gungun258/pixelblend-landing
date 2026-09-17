@@ -175,8 +175,15 @@
       'refund.html': 'Refund Policy'
     };
     var file = (location.pathname.split('/').pop() || '').toLowerCase();
-    if (!file || file === 'index.html' || file === '' || file === 'sellers.html') return;
-    var label = labels[file];
+    var noCrumbs = {
+      '': 1,
+      'index.html': 1,
+      'index': 1,
+      'sellers.html': 1,
+      'sellers': 1
+    };
+    if (noCrumbs[file]) return;
+    var label = labels[file] || labels[file + '.html'];
     if (!label) {
       var t = document.title || '';
       label = t.replace(/\s*[\u2014\u2013|].*$/, '').trim() || 'Page';
