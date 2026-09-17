@@ -52,28 +52,66 @@
       border: 1px solid #F0E6F2;
     }
 
-    /* ——— 1. About hero: light brand plane + full-bleed image ——— */
+    /* ——— 1. About hero: muted full-bleed image behind copy ——— */
     .ab-hero {
       position: relative;
-      background: #FAF4FB;
+      min-height: calc(100vh - 72px);
+      min-height: calc(100dvh - 72px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      background: #1A1420;
+      box-sizing: border-box;
     }
-    .ab-hero-glow {
+    .ab-hero-bg {
       position: absolute;
-      top: -80px; left: 50%;
-      transform: translateX(-50%);
-      width: 720px; height: 420px;
-      background: radial-gradient(ellipse, rgba(236,72,153,.22), transparent 68%);
+      inset: 0;
+      z-index: 0;
+    }
+    .ab-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      filter: saturate(.88) brightness(1.05);
+      transform: scale(1.03);
+    }
+    .ab-hero-veil {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
       pointer-events: none;
+      background:
+        linear-gradient(180deg,
+          rgba(250,244,251,.42) 0%,
+          rgba(250,244,251,.28) 42%,
+          rgba(250,244,251,.4) 100%);
     }
     .ab-hero-copy {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       max-width: 840px;
       margin: 0 auto;
-      padding: 72px 32px 40px;
+      padding: 88px 32px;
       text-align: center;
       animation: abIn .7s ease both;
+    }
+    .ab-hero-copy::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(720px, 100%);
+      height: min(420px, 90%);
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center,
+        rgba(250,244,251,.88) 0%,
+        rgba(250,244,251,.55) 45%,
+        rgba(250,244,251,0) 72%);
     }
     .ab-hero-badge {
       display: inline-flex;
@@ -82,9 +120,8 @@
       gap: 9px;
       padding: 7px 14px 7px 9px;
       border-radius: 999px;
-      background: #fff;
+      background: rgba(255,255,255,.92);
       border: 1px solid #F0E6F2;
-      box-shadow: 0 2px 14px rgba(196,46,139,.07);
       margin-bottom: 22px;
       max-width: 100%;
       box-sizing: border-box;
@@ -110,33 +147,37 @@
     }
     .ab-hero-badge .ab-badge-short { display: none; }
     .ab-hero-brand {
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       font-size: clamp(48px, 9vw, 84px);
       font-weight: 800;
       letter-spacing: -.045em;
-      line-height: .92;
+      line-height: 1.05;
       color: #1E1422;
+      overflow: visible;
     }
     .ab-hero-brand em {
       display: block;
-      margin-top: 4px;
+      margin-top: 8px;
       font-family: 'Instrument Serif', serif;
       font-style: italic;
       font-weight: 400;
       font-size: 0.72em;
       letter-spacing: -.02em;
+      line-height: 1.2;
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      padding: 2px 6px 4px;
+      padding: 0.12em 0.08em 0.18em;
+      overflow: visible;
     }
     .ab-hero-line {
       margin: 0 auto 28px;
       max-width: 440px;
       font-size: 17px;
+      font-weight: 600;
       line-height: 1.55;
-      color: #5b5060;
+      color: #1E1422;
     }
     .ab-hero-ctas {
       display: flex;
@@ -144,38 +185,22 @@
       gap: 12px;
       justify-content: center;
     }
-    .ab-hero-visual {
-      position: relative;
-      width: 100%;
-      height: clamp(280px, 42vw, 460px);
-      overflow: hidden;
-      background: #1A1420;
+    .ab-hero-copy .lp-crumbs,
+    .ab-hero-copy .lp-crumbs a,
+    .ab-hero-copy .lp-crumbs-sep {
+      color: #1E1422 !important;
     }
-    .ab-hero-visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-      display: block;
-      transform: scale(1.02);
-      animation: abIn .9s ease .1s both;
+    .ab-hero-copy .lp-crumbs a {
+      font-weight: 600;
+      opacity: .72;
     }
-    .ab-hero-visual::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(250,244,251,.55) 0%, transparent 28%, transparent 70%, rgba(23,18,26,.35) 100%);
-      pointer-events: none;
+    .ab-hero-copy .lp-crumbs a:hover {
+      opacity: 1;
+      color: #1E1422 !important;
     }
-    .ab-hero-caption {
-      position: absolute;
-      left: 32px; bottom: 24px;
-      z-index: 1;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      font-size: 12px;
+    .ab-hero-copy .lp-crumbs [aria-current="page"] {
+      opacity: 1;
       font-weight: 700;
-      color: #1E1422;
     }
 
     /* ——— Shared ——— */
@@ -446,8 +471,7 @@
     }
 
     @media (max-width: 1100px) {
-      .ab-hero-copy { padding: 64px 28px 36px; }
-      .ab-hero-visual { height: clamp(260px, 40vw, 400px); }
+      .ab-hero-copy { padding: 72px 28px; }
       .ab-wrap { padding: 0 28px; }
       .ab-road { gap: 22px; }
     }
@@ -488,12 +512,18 @@
     }
 
     @media (max-width: 640px) {
-      .ab-hero-glow {
-        width: 420px;
-        height: 280px;
-        top: -40px;
+      .ab-hero {
+        min-height: calc(100vh - 72px);
+        min-height: calc(100dvh - 72px);
       }
-      .ab-hero-copy { padding: 36px 16px 24px; }
+      .ab-hero-veil {
+        background:
+          linear-gradient(180deg,
+            rgba(250,244,251,.5) 0%,
+            rgba(250,244,251,.35) 50%,
+            rgba(250,244,251,.48) 100%);
+      }
+      .ab-hero-copy { padding: 56px 16px; }
       .ab-hero-brand {
         font-size: clamp(38px, 11vw, 52px);
         margin-bottom: 12px;
@@ -510,13 +540,6 @@
       .ab-hero-ctas a {
         width: 100%;
         flex: none;
-      }
-      .ab-hero-visual { height: 220px; }
-      .ab-hero-caption {
-        left: 14px;
-        bottom: 14px;
-        font-size: 11px;
-        padding: 6px 10px;
       }
       .ab-wrap { padding: 0 16px; }
       .ab-chapter { padding-top: 56px; }
@@ -563,14 +586,12 @@
     @media (max-width: 400px) {
       .ab-hero-brand { font-size: 34px; }
       .ab-hero-brand em { font-size: 0.7em; }
-      .ab-hero-visual { height: 200px; }
       .ab-timeline { padding-left: 18px; }
       .ab-timeline div::before { left: -23px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .ab-hero-copy,
-      .ab-hero-visual img,
       .ab-essay img { animation: none !important; transition: none !important; }
     }
   </style>
@@ -581,7 +602,10 @@
   <div class="ab-root">
     <!-- 1. About hero -->
     <section class="ab-hero">
-      <div class="ab-hero-glow" aria-hidden="true"></div>
+      <div class="ab-hero-bg" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80&auto=format&fit=crop" alt="">
+      </div>
+      <div class="ab-hero-veil" aria-hidden="true"></div>
       <div class="ab-hero-copy">
         <h1 class="ab-hero-brand">
           PixelBlend
@@ -591,11 +615,7 @@
         <div class="ab-hero-ctas">
           <a href="index.html#download" class="ab-cta">Try a blend free</a>
           <a href="contact.html" class="ab-cta-ghost">Contact us</a>
-        </div>
     </div>
-      <div class="ab-hero-visual">
-        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&q=80&auto=format&fit=crop" alt="Brand craft and retail detail">
-        <span class="ab-hero-caption">Craft · product honesty first</span>
       </div>
     </section>
 

@@ -8,7 +8,7 @@
   var drawerLinks = [
     { label: 'How it works', href: 'how-it-works.html' },
     { label: 'Marketplace', href: '#marketplace' },
-    { label: 'Sellers', href: '#sellers' },
+    { label: 'Sellers', href: 'sellers.html' },
     { label: 'Pricing', href: 'pricing.html' },
     { label: 'Gallery', href: 'gallery.html' },
     { label: 'FAQ', href: 'faq.html' }
@@ -30,6 +30,7 @@
         { label: 'Pricing', href: 'pricing.html' },
         { label: 'FAQs', href: 'faq.html' },
         { label: 'How It Works', href: 'how-it-works.html' },
+        { label: 'Sellers', href: 'sellers.html' },
         { label: 'Terms of use', href: 'terms.html' },
         { label: 'Privacy Policy', href: 'privacy.html' },
         { label: 'Refund Policy', href: 'refund.html' }
@@ -37,7 +38,12 @@
     }
   ];
 
-  var socials = ['\uD835\uDD4F', '\u25CE', '\u25B6', 'in'];
+  var socials = [
+    { label: 'X', icon: '\uD835\uDD4F', href: 'https://x.com' },
+    { label: 'Instagram', icon: '\u25CE', href: 'https://instagram.com' },
+    { label: 'YouTube', icon: '\u25B6', href: 'https://youtube.com' },
+    { label: 'LinkedIn', icon: 'in', href: 'https://linkedin.com' }
+  ];
 
   function linkRow(links) {
     return links.map(function (l) {
@@ -124,8 +130,9 @@
           '<div>' +
             '<div style="font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 16px;">Stay Connected</div>' +
             '<div style="display: flex; flex-wrap: wrap; gap: 10px;">' +
-              '<a href="mailto:hello@pixelblend.app" aria-label="Email us" style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; text-decoration: none;">@</a>' +
-              '<a href="contact.html" aria-label="Contact" style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; text-decoration: none;">in</a>' +
+              socials.map(function (s) {
+                return '<a href="' + s.href + '" target="_blank" rel="noopener noreferrer" aria-label="' + s.label + '" style="width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; font-size: ' + (s.icon === 'in' ? '13px' : '14px') + '; font-weight: ' + (s.icon === 'in' ? '700' : '400') + '; color: #fff; text-decoration: none;">' + s.icon + '</a>';
+              }).join('') +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -157,6 +164,7 @@
   (function mountBreadcrumbs() {
     var labels = {
       'how-it-works.html': 'How it works',
+      'sellers.html': 'Sellers',
       'gallery.html': 'Gallery',
       'about.html': 'About',
       'faq.html': 'FAQ',
@@ -167,7 +175,7 @@
       'refund.html': 'Refund Policy'
     };
     var file = (location.pathname.split('/').pop() || '').toLowerCase();
-    if (!file || file === 'index.html' || file === '') return;
+    if (!file || file === 'index.html' || file === '' || file === 'sellers.html') return;
     var label = labels[file];
     if (!label) {
       var t = document.title || '';
@@ -195,6 +203,7 @@
         '.hiw-hero-copy > .lp-crumb-bar,' +
         '.ab-hero-copy > .lp-crumb-bar{display:flex;justify-content:center}' +
         '.lp-wrap > .lp-crumb-bar{margin:0 0 12px}' +
+        '.lp-policy .lp-wrap > .lp-crumb-bar{margin:0 0 18px}' +
         '@media (max-width:720px){nav.lp-crumbs{font-size:12.5px}.lp-crumbs-sep{margin:0 7px}' +
         '.hiw-hero-copy > .lp-crumb-bar,.gal-hero-copy > .lp-crumb-bar,.ab-hero-copy > .lp-crumb-bar{margin:0 0 12px}}';
       document.head.appendChild(css);

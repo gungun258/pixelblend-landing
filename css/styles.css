@@ -1910,33 +1910,39 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 }
 
 @keyframes pbFadeUp {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(22px); }
   to { opacity: 1; transform: none; }
 }
 .pb-reveal-scroll {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(28px);
   transition:
-    opacity .38s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms),
-    transform .38s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms);
+    opacity .7s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms),
+    transform .7s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms);
   will-change: opacity, transform;
 }
 .pb-reveal-scroll.pb-reveal-text {
-  transform: translateY(14px);
+  transform: translateY(20px);
   transition:
-    opacity .36s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms),
-    transform .36s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms);
+    opacity .65s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms),
+    transform .65s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms);
 }
 .pb-reveal-scroll.pb-in {
   opacity: 1;
   transform: none;
 }
-/* Beat inline opacity from legacy reveal hooks */
+/* Beat inline opacity — but never kill directional hero keyframes */
 html[data-pb-motion="1"] [data-reveal].pb-in,
 html[data-pb-motion="1"] .pb-reveal-scroll.pb-in,
-html[data-pb-motion="1"] .pb-reveal.pb-in {
+html[data-pb-motion="1"] .pb-reveal.pb-in:not(.pb-from-left):not(.pb-from-right) {
   opacity: 1 !important;
   transform: none !important;
+}
+html[data-pb-motion="1"] .pb-reveal.pb-from-left.pb-done,
+html[data-pb-motion="1"] .pb-reveal.pb-from-right.pb-done {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 /* If motion JS never boots, don't leave content invisible */
 html:not([data-pb-motion="1"]) .pb-reveal,
@@ -1959,32 +1965,28 @@ html:not([data-pb-motion="1"]) .pb-pop {
 }
 .pb-reveal {
   opacity: 0;
-  transform: translateY(20px) scale(0.97);
-  transition: opacity .38s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms),
-              transform .38s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms);
+  transform: translateY(24px) scale(0.97);
+  transition: opacity .7s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms),
+              transform .7s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms);
 }
 .pb-reveal.pb-from-left,
 .pb-reveal.pb-from-right {
   opacity: 1;
+  transition: none;
 }
 .pb-reveal.pb-from-left {
-  animation: pbInLeft .4s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms) both;
+  animation: pbInLeft .75s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms) both;
 }
 .pb-reveal.pb-from-right {
-  transform: translateX(28px);
-  animation: pbInRight .42s cubic-bezier(.22, 1, .36, 1) var(--pb-d, 0ms) both;
-}
-.pb-reveal.pb-from-left.pb-in,
-.pb-reveal.pb-from-right.pb-in {
-  opacity: 1;
-  transform: none;
+  transform: translateX(36px);
+  animation: pbInRight .8s cubic-bezier(.16, 1, .3, 1) var(--pb-d, 0ms) both;
 }
 @keyframes pbInLeft {
-  from { opacity: 0; transform: translateX(-24px); }
+  from { opacity: 0; transform: translateX(-32px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes pbInRight {
-  from { opacity: 0; transform: translateX(28px); }
+  from { opacity: 0; transform: translateX(36px); }
   to { opacity: 1; transform: none; }
 }
 .pb-card { will-change: transform; }
@@ -2454,9 +2456,108 @@ body.pb-menu-open .pb-drawer {
     animation: swMockIn .4s cubic-bezier(.22, 1, .36, 1) 0.04s forwards;
   }
 
-  /* Way 1 toast after mock */
+  /* Way 1 toast after mock — only if toast still present */
   .seller-way-grid .pb-in .sw-mock .sw-toast {
     animation: swToastIn .35s cubic-bezier(.22, 1, .36, 1) 0.28s forwards;
+  }
+
+  /* Marketplace store card in Way 1 (content only — no phone frame) */
+  .sw-mkt-card {
+    background: #fff;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid #F0E6F2;
+    box-shadow: 0 30px 60px -38px rgba(124,44,158,.55);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sw-mkt-head {
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid #EFE7E0;
+  }
+  .sw-mkt-profile { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .sw-mkt-avatar {
+    width: 48px; height: 48px; flex: none; border-radius: 16px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 16px; font-weight: 800;
+  }
+  .sw-mkt-profile-copy { flex: 1; min-width: 0; }
+  .sw-mkt-name {
+    font-size: 15.5px; font-weight: 800; letter-spacing: -.015em; color: #1A1420;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sw-mkt-check {
+    width: 15px; height: 15px; border-radius: 50%; background: #C42E8B; color: #fff;
+    font-size: 9px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sw-mkt-loc { margin-top: 2px; font-size: 12px; color: #8D8296; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sw-mkt-stats {
+    margin-top: 10px;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;
+  }
+  .sw-mkt-stat {
+    background: #FAF4FB; border: 1px solid #EFE7E0; border-radius: 12px;
+    padding: 8px 6px; text-align: center;
+  }
+  .sw-mkt-stat strong { display: block; font-size: 13.5px; font-weight: 800; color: #1A1420; }
+  .sw-mkt-stat span { display: block; margin-top: 1px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296; }
+  .sw-mkt-actions {
+    margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .sw-mkt-follow {
+    text-align: center; font-size: 13px; font-weight: 700; color: #fff;
+    padding: 10px; border-radius: 999px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  .sw-mkt-contact {
+    text-align: center; font-size: 13px; font-weight: 700; color: #1A1420;
+    padding: 10px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6;
+  }
+  .sw-mkt-tabs {
+    padding: 12px 14px 8px; display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .sw-mkt-tabs > span {
+    font-size: 12px; font-weight: 700; color: #6B6070;
+    padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid #E6DED6;
+  }
+  .sw-mkt-tabs > span.is-on {
+    color: #fff; background: #1A1420; border-color: #1A1420;
+  }
+  .sw-mkt-grid {
+    padding: 4px 14px 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    align-content: start; min-width: 0;
+  }
+  .sw-mkt-listing {
+    background: #FAF4FB; border: 1px solid #EFE7E0; border-radius: 14px;
+    overflow: hidden; min-width: 0; display: flex; flex-direction: column;
+  }
+  .sw-mkt-media {
+    position: relative; aspect-ratio: 5 / 4; background: #EFE7E0;
+  }
+  .sw-mkt-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sw-mkt-media span {
+    position: absolute; left: 7px; top: 7px;
+    font-size: 10px; font-weight: 800; letter-spacing: .04em; color: #1A1420;
+    background: rgba(255,255,255,.92); padding: 4px 8px; border-radius: 999px;
+  }
+  .sw-mkt-listing-body {
+    padding: 8px 9px 10px; display: flex; flex-direction: column; gap: 6px; flex: 1;
+    background: #fff;
+  }
+  .sw-mkt-listing-body > div:first-child {
+    font-size: 12px; font-weight: 700; line-height: 1.25; color: #1A1420;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sw-mkt-blend {
+    margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em;
+    color: #fff; padding: 8px; border-radius: 999px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  @media (max-width: 640px) {
+    .sw-mkt { max-width: 100% !important; }
   }
 
   /* Flow steps — Way 1 after toast; Way 2 after chat */

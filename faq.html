@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ — PixelBlend</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="legal.css?v=10">
+  <link rel="stylesheet" href="legal.css?v=14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="faq-page">
   <div id="pb-chrome-header"></div>
   <article class="lp-wrap lp-about lp-faq-page">
     <h1>FAQ</h1>
@@ -18,9 +18,24 @@
 
     <!-- Main explorer card: search + categories + questions -->
     <section class="faq-panel" aria-label="FAQ explorer">
-      <div class="faq-search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="faq-search" type="search" placeholder="Search questions…" autocomplete="off" aria-label="Search FAQ">
+      <div class="faq-panel-top">
+        <div class="faq-mobile-filter">
+          <div class="faq-cats-title">Filter</div>
+          <div class="faq-mobile-pills" role="tablist" aria-label="Filter questions by category">
+            <button type="button" class="faq-cat is-active" data-cat="all">All questions</button>
+            <button type="button" class="faq-cat" data-cat="start">Getting started</button>
+            <button type="button" class="faq-cat" data-cat="users">For users</button>
+            <button type="button" class="faq-cat" data-cat="sellers">For sellers</button>
+            <button type="button" class="faq-cat" data-cat="market">Marketplace</button>
+            <button type="button" class="faq-cat" data-cat="billing">Billing &amp; refunds</button>
+            <button type="button" class="faq-cat" data-cat="account">Account &amp; privacy</button>
+            <button type="button" class="faq-cat" data-cat="tech">Technical</button>
+          </div>
+        </div>
+        <div class="faq-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="faq-search" type="search" placeholder="Search questions and answers…" autocomplete="off" aria-label="Search FAQ">
+        </div>
       </div>
 
       <div class="faq-panel-body">
@@ -42,9 +57,9 @@
               <p>Search by product type, credits, or “licence” — most answers show up in one tap.</p>
             </div>
             <div class="faq-cats-links">
-              <a href="how-it-works.html">How it works →</a>
-              <a href="pricing.html">See pricing →</a>
-              <a href="contact.html">Contact support →</a>
+              <a href="how-it-works.html">How it works <svg class="faq-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg></a>
+              <a href="pricing.html">See pricing <svg class="faq-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg></a>
+              <a href="contact.html">Contact support <svg class="faq-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg></a>
             </div>
           </div>
         </aside>
@@ -227,59 +242,7 @@
       </div>
     </section>
 
-    <!-- 1. Popular topics -->
-    <section class="faq-topics">
-      <div class="faq-sec-head">
-        <div class="faq-kicker">POPULAR TOPICS</div>
-        <h2>Jump straight to what people ask most</h2>
-      </div>
-      <div class="faq-topics-grid">
-        <button type="button" class="faq-topic" data-jump="users">
-          <span class="faq-topic-n">01</span>
-          <strong>Blending basics</strong>
-          <span>How uploads, scenes and results work</span>
-        </button>
-        <button type="button" class="faq-topic" data-jump="billing">
-          <span class="faq-topic-n">02</span>
-          <strong>Credits &amp; refunds</strong>
-          <span>Free credits, packs and unused blends</span>
-        </button>
-        <button type="button" class="faq-topic" data-jump="sellers">
-          <span class="faq-topic-n">03</span>
-          <strong>Selling scenes</strong>
-          <span>Listings, licences and payouts</span>
-        </button>
-        <button type="button" class="faq-topic" data-jump="account">
-          <span class="faq-topic-n">04</span>
-          <strong>Privacy</strong>
-          <span>What’s private and what you can delete</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- 2. Quick answers strip -->
-    <section class="faq-quick">
-      <div class="faq-sec-head">
-        <div class="faq-kicker">GOOD TO KNOW</div>
-        <h2>Three things worth knowing up front</h2>
-      </div>
-      <div class="faq-quick-grid">
-        <article>
-          <strong>~10 seconds</strong>
-          <p>Most blends finish in about ten seconds once both images are uploaded.</p>
-        </article>
-        <article>
-          <strong>50 free credits</strong>
-          <p>New accounts start with enough credits to try the flow before buying a pack.</p>
-        </article>
-        <article>
-          <strong>Refund if unused</strong>
-          <p>Flag a result you don’t like — approved requests return those credits.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 3. Policies -->
+    <!-- Policies -->
     <section class="faq-policies">
       <div class="faq-sec-head">
         <div class="faq-kicker">POLICIES</div>
@@ -293,7 +256,7 @@
       </div>
     </section>
 
-    <!-- 4. Still need help -->
+    <!-- Still need help -->
     <section class="lp-cta-band faq-help">
       <h2>Still stuck?</h2>
       <p>Tell us what you’re trying to blend — product type, scene, and where you’re stuck. We’ll help you unblock it.</p>
@@ -305,6 +268,6 @@
   </article>
   <div id="pb-chrome-footer"></div>
   <script src="legal-chrome.js?v=18"></script>
-  <script src="legal-pages.js?v=3"></script>
+  <script src="legal-pages.js?v=5"></script>
 </body>
 </html>

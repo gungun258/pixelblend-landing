@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sellers — PixelBlend</title>
+  <script>
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body && (document.body.scrollTop = 0);
+    }
+  </script>
+  <script>window.__resources = {"u_1517842645767-c639042777db":"assets/images/f7a82f2e-0124-4bd3-b9f8-837472ef9b7f.jpg","u_1542291026-7eec264c27ff":"assets/images/dca77fff-acd9-4dc4-9a90-5c1f4162d170.jpg","u_1600185365483-26d7a4cc7519":"assets/images/c76c5d00-7acc-4c9d-ab79-32ca8d3fab84.jpg","u_1495616811223-4d98c6e9c869":"assets/images/d8af21e1-d95b-4016-a705-ec49ae7de3b8.jpg","u_1519681393784-d120267933ba":"assets/images/17c99c23-d1cf-48e8-a604-0ddac6b6279f.jpg","u_1513694203232-719a280e022f":"assets/images/7efa025e-9ee0-476a-9aab-839f0a8c654f.jpg","u_1550226891-ef816aed4a98":"assets/images/ad6c186e-64c7-44c9-bc7e-55ac5f50bf1a.jpg","u_1441974231531-c6227db76b6e":"assets/images/75c54c95-db9c-4e83-a339-9eeb5044aa53.jpg","u_1507525428034-b723cf961d3e":"assets/images/d82ec365-4d7a-4740-93ae-51e14c2d8f08.jpg","u_1460353581641-37baddab0fa2":"assets/images/7391a5a9-a541-4ed7-88a5-b4338cf63a22.jpg","u_1434056886845-dac89ffe9b56":"assets/images/a14077bb-c396-411e-a99b-d07c0a9fdd50.jpg","u_1557683316-973673baf926":"assets/images/52bf1ea1-7b1e-44f8-afbb-5c6976702fe4.jpg","u_1618366712010-f4ae9c647dcb":"assets/images/c71bedae-842b-4b0c-b536-3398e0c25bf1.jpg","u_1505740420928-5e560c06d30e":"assets/images/073eb3f9-a854-4e96-901b-d081c02d2584.jpg","u_1594035910387-fea47794261f":"assets/images/844de4b8-3bd6-4b55-8a73-a8830610ddf4.jpg","u_1522335789203-aabd1fc54bc9":"assets/images/eeba96c5-8f07-4234-8f66-9aec6f826296.jpg","u_1523275335684-37898b6baf30":"assets/images/3b547e49-62bd-4b26-825e-4350d3d08c85.jpg","u_1516035069371-29a1b244cc32":"assets/images/e8e2a74b-1d5b-4418-b481-419094305b35.jpg","u_1595950653106-6c9ebd614d3a":"assets/images/ac80296f-afa5-4ec0-8ec5-f1f8439ccd00.jpg","u_1584917865442-de89df76afd3":"assets/images/2c1a6193-dedd-426d-aeb5-d7ff0bbfb3e8.jpg","u_1509042239860-f550ce710b93":"assets/images/e4edff68-11bf-45b9-b67c-b7c9430a5078.jpg","u_1556228578-8c89e6adf883":"assets/images/ee9598b9-6ba5-4c99-9a35-42457c2f815e.jpg","u_1586495777744-4413f21062fa":"assets/images/b3080294-e5f1-4e32-b44d-053a66d4aa5a.jpg","u_1493934558415-9d19f0b2b4d2":"assets/images/cc1c8b41-5a3e-4696-a307-0b8555a4ac8c.jpg","https://unpkg.com/react@18.3.1/umd/react.production.min.js":"assets/js/dc-runtime.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"assets/js/dc-runtime.js"};</script>
+  <script src="assets/js/dc-runtime.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { overflow-x: clip; max-width: 100%; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: #FAF4FB; color: #1E1422; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  ::selection { background: #FCE7F0; color: #C42E8B; }
+  #dc-root a { color: #C42E8B; }
+  #dc-root a:hover { color: #EC4899; }
+  #dc-root a.pb-grad-btn,
+  #dc-root a.pb-grad-btn:hover,
+  #dc-root .sellers-cta-panel a.pb-grad-btn,
+  #dc-root .sellers-cta-panel a.pb-grad-btn:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) !important;
+    text-decoration: none !important;
+  }
+  img { max-width: 100%; }
+  button { font-family: inherit; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  @keyframes dots { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+  @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pop { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes softFloat {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 12px); }
+  }
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal][data-delay="1"].is-in { transition-delay: .08s; }
+  [data-reveal][data-delay="2"].is-in { transition-delay: .16s; }
+  [data-reveal][data-delay="3"].is-in { transition-delay: .24s; }
+  [data-reveal][data-delay="4"].is-in { transition-delay: .32s; }
+
+  .hero-anim-copy {
+    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero-anim-card {
+    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .12s both;
+  }
+  .hero-anim-proofs {
+    animation: fadeUp .85s cubic-bezier(.16,1,.3,1) .22s both;
+  }
+  .hero-anim-tri > div {
+    animation: fadeUp .8s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero-anim-tri > div:nth-child(1) { animation-delay: .28s; }
+  .hero-anim-tri > div:nth-child(3) { animation-delay: .36s; }
+  .hero-anim-tri > div:nth-child(5) { animation-delay: .44s; }
+  .hero-anim-tri > .tri-op {
+    animation: fadeIn .55s ease both;
+  }
+  .hero-anim-tri > .tri-op:nth-child(2) { animation-delay: .32s; }
+  .hero-anim-tri > .tri-op:nth-child(4) { animation-delay: .40s; }
+  .hero-glow {
+    animation: softFloat 7s ease-in-out infinite;
+  }
+  .pb-grad-btn {
+    background-size: 180% 180% !important;
+    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease !important;
+  }
+  .pb-grad-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 18px 40px -14px rgba(236,72,153,.7) !important;
+  }
+  #lost-sale .lost-row.is-on {
+    transform: translateX(2px);
+  }
+  .cat-card {
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .cat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 44px -28px rgba(30,20,34,.75) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  /* —— Sellers responsive system —— */
+  @media (max-width: 1040px) {
+    .pad { padding-left: 22px !important; padding-right: 22px !important; }
+    .split { grid-template-columns: 1fr !important; gap: 34px !important; }
+    .free-grid { grid-template-columns: 1fr !important; gap: 34px !important; }
+    .respad { padding: 34px 26px !important; }
+    .free-num { font-size: 82px !important; }
+    .hero-h1 { font-size: 42px !important; }
+    .proof-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+    .story-grid { display: flex !important; flex-direction: column !important; gap: 0 !important; }
+    .story-phone { display: none !important; }
+    .story-steps { padding-top: 0 !important; order: 0 !important; }
+    .cat-grid {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      padding-bottom: 4px;
+    }
+    .cat-grid::-webkit-scrollbar { display: none; }
+    .cat-card {
+      flex: 0 0 42% !important;
+      width: 42% !important;
+      max-width: 180px;
+      min-width: 140px;
+      position: relative !important;
+      transform: none !important;
+      animation: none !important;
+      margin: 0 !important;
+    }
+    .stepper-tabs { flex-wrap: wrap !important; }
+    .stepper-tabs button { min-width: 0 !important; flex: 1 1 45% !important; padding: 16px 14px !important; }
+    .stepper-body { grid-template-columns: 1fr !important; padding: 28px 22px !important; }
+    .disco { grid-template-columns: 1fr !important; gap: 34px !important; }
+    .disco-stats { grid-template-columns: 1fr 1fr !important; }
+    .zero-rule { display: none !important; }
+    .benefit-grid { grid-template-columns: 1fr 1fr !important; }
+    .compare-grid { grid-template-columns: 1fr !important; }
+    .pay-grid { grid-template-columns: 1fr 1fr !important; }
+    .tri {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 10px !important;
+      align-items: stretch !important;
+    }
+    .tri > div {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      width: auto !important;
+    }
+    .tri-op {
+      display: flex !important;
+      font-size: 18px !important;
+      padding-top: 22px !important;
+      align-self: center !important;
+    }
+    .tri-frame {
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 12px !important;
+    }
+    .tri-label { font-size: 8.5px !important; letter-spacing: .1em !important; }
+    .tri > div > p { font-size: 11.5px !important; line-height: 1.4 !important; margin-top: 8px !important; }
+    body.sellers-page header.pad { padding-top: 88px !important; }
+    body.sellers-page header.pad .split { padding-bottom: 28px !important; }
+    .hero-proofs { padding-top: 16px !important; }
+    #discover .disco-phone { max-width: 280px !important; margin: 0 auto; }
+    #discover .disco-phone-body { height: 540px !important; }
+    .benefit-panel { padding: 32px 26px !important; }
+    .sellers-cta-panel { padding: 40px 28px !important; }
+  }
+
+  @media (max-width: 768px) {
+    .benefit-panel { padding: 28px 20px !important; }
+    .hero-h1 { font-size: 36px !important; }
+    .tri {
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      gap: 8px !important;
+      align-items: start !important;
+    }
+    .tri > div {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      width: auto !important;
+    }
+    .tri-op { display: none !important; }
+    .tri > div > p { display: none !important; }
+    .tri-frame {
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 12px !important;
+      max-width: none;
+      margin: 0;
+    }
+    .tri-label { font-size: 7.5px !important; letter-spacing: .08em !important; }
+    .tri > div > div:first-child { margin-bottom: 8px !important; }
+    .pay-grid { grid-template-columns: 1fr !important; }
+    .disco-stats { grid-template-columns: 1fr !important; }
+    #drag-compare .cmp-visual { margin-top: 12px !important; }
+    #story .story-phone-shell { max-width: 260px !important; }
+    #story .phone-body { height: 440px !important; }
+    #discover .disco-phone-body { height: 500px !important; }
+    #cost .cost-zero { font-size: 72px !important; }
+    #cost .cost-forever { font-size: 24px !important; }
+    #cost .cost-foot { align-items: flex-start !important; }
+    .stepper-tabs button { flex: 1 1 100% !important; }
+    .stepper-nav {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+    }
+    .stepper-next {
+      width: 100%;
+      text-align: center;
+      white-space: nowrap !important;
+      padding: 14px 18px !important;
+    }
+    .stepper-count {
+      white-space: nowrap !important;
+      font-size: 13px !important;
+    }
+    .sellers-cta-panel { padding: 36px 22px !important; }
+    .sellers-cta-panel .sellers-cta-h2 { font-size: 30px !important; }
+    .sellers-cta-panel .sellers-cta-sub { font-size: 22px !important; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-h1 { font-size: 32px !important; }
+    .proof-row { grid-template-columns: 1fr !important; }
+    .hero-zero { font-size: 44px !important; }
+    .h2 { font-size: 28px !important; }
+    .sec { padding-top: 52px !important; padding-bottom: 52px !important; }
+    .benefit-grid { grid-template-columns: 1fr !important; }
+    .cat-card {
+      flex: 0 0 58% !important;
+      width: 58% !important;
+      max-width: 220px;
+      min-width: 160px;
+    }
+    .tri {
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      gap: 6px !important;
+      align-items: start !important;
+    }
+    .tri > div {
+      flex: 1 1 0 !important;
+      width: auto !important;
+      min-width: 0 !important;
+    }
+    .tri-op { display: none !important; }
+    .tri > div > p { display: none !important; }
+    .tri-label {
+      font-size: 7px !important;
+      letter-spacing: .06em !important;
+    }
+    .tri > div > div:first-child {
+      margin-bottom: 6px !important;
+    }
+    .tri-frame {
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 10px !important;
+      max-width: none;
+      margin: 0;
+    }
+    .story-phone-shell { max-width: 100% !important; }
+    #story .phone-body { height: 420px !important; }
+    #discover .disco-phone { max-width: 280px !important; margin: 0 auto !important; }
+    #discover .disco-phone-body { height: 520px !important; }
+    #cost .cost-zero { font-size: 64px !important; }
+    #cost .cost-cta { width: 100%; justify-content: center; }
+    #lost-sale .lost-tag { white-space: nowrap; justify-self: center; }
+    .sellers-cta-panel a { width: 100%; justify-content: center; text-align: center; white-space: normal !important; box-sizing: border-box; }
+    body.sellers-page header.pad .split { padding-bottom: 20px !important; }
+    .hero-proofs { padding-top: 14px !important; }
+    .hero-proofs .proof-row { padding-bottom: 16px !important; gap: 10px !important; }
+  }
+
+  @media (max-width: 499px) {
+    .tri {
+      flex-direction: column !important;
+      flex-wrap: wrap !important;
+      gap: 16px !important;
+      align-items: stretch !important;
+    }
+    .tri > div {
+      flex: 1 1 auto !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .tri-op { display: none !important; }
+    .tri > div > p {
+      display: block !important;
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      margin-top: 10px !important;
+      text-align: center;
+    }
+    .tri-label {
+      font-size: 9.5px !important;
+      letter-spacing: .12em !important;
+    }
+    .tri > div > div:first-child {
+      margin-bottom: 10px !important;
+      justify-content: center !important;
+    }
+    .tri-frame {
+      aspect-ratio: 4 / 5 !important;
+      border-radius: 16px !important;
+      max-width: 280px !important;
+      width: 100%;
+      margin: 0 auto !important;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .hero-h1 { font-size: 28px !important; }
+    .hero-zero { font-size: 38px !important; }
+    .pad { padding-left: 16px !important; padding-right: 16px !important; }
+    #cost .cost-zero { font-size: 56px !important; }
+    #story .phone-body { height: 380px !important; }
+    .sellers-cta-panel .sellers-cta-h2 { font-size: 26px !important; }
+    .sellers-cta-panel .sellers-cta-sub { font-size: 18px !important; }
+  }
+
+  body.sellers-page { background: #FAF4FB; }
+  html { height: auto !important; }
+  body.sellers-page {
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: clip;
+  }
+  body.sellers-page #dc-root,
+  body.sellers-page #dc-root > .sc-host {
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  body.sellers-page #dc-root { position: relative; z-index: 1; background: #FAF4FB; }
+  body.sellers-page #pb-chrome-footer { position: relative; z-index: 2; }
+  body.sellers-page:not(.sellers-ready) #pb-chrome-footer { display: none !important; }
+  body.sellers-page header.pad { padding-top: 72px !important; }
+  body.sellers-page .lp-crumb-bar {
+    max-width: 1220px; margin: 0 auto; padding: 14px 40px 0;
+  }
+  #start { align-self: start; height: auto; flex: none; }
+  .hero-pay {
+    height: fit-content !important;
+    min-height: 0 !important;
+    flex: none !important;
+    align-self: start;
+  }
+  .hero-pay-pills { align-content: flex-start; }
+  .cat-filters {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 9px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .cat-filters::-webkit-scrollbar { display: none; }
+  .cat-filter {
+    flex: none !important;
+    white-space: nowrap !important;
+  }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    align-items: stretch;
+    isolation: isolate;
+  }
+  .cat-card {
+    position: relative !important;
+    z-index: 0;
+    min-width: 0;
+    transform: none !important;
+    animation: none !important;
+    margin: 0 !important;
+  }
+  .cat-card img {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+  @media (max-width: 1040px) {
+    body.sellers-page .lp-crumb-bar { padding-left: 22px; padding-right: 22px; }
+  }
+
+  /* Where the sale is lost — polish */
+  #lost-sale {
+    padding: 72px 40px 8px !important;
+  }
+  #lost-sale .lost-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 18px;
+  }
+  #lost-sale .lost-h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    color: #1E1422;
+    margin: 0 0 16px;
+    max-width: 16ch;
+  }
+  #lost-sale .lost-h2 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  #lost-sale .lost-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #5b5060;
+    margin: 0;
+    max-width: 440px;
+  }
+  #lost-sale .lost-list {
+    border-top: 1px solid #EFE2F0;
+  }
+  #lost-sale .lost-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px 28px;
+    align-items: start;
+    padding: 22px 18px 22px 20px;
+    border-bottom: 1px solid #EFE2F0;
+    border-left: 3px solid transparent;
+    margin: 0 -18px;
+    transition: background .35s ease, border-color .35s ease, transform .35s ease;
+  }
+  #lost-sale .lost-row.is-on {
+    background: #FCE7F0;
+    border-left-color: #EC4899;
+    transform: translateX(2px);
+  }
+  #lost-sale .lost-row.is-on .lost-tag {
+    background: #F3C4D8;
+    border-color: #ECA0C0;
+    color: #fff;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    #lost-sale .lost-row:hover {
+      background: #FCE7F0;
+      border-left-color: #EC4899;
+    }
+    #lost-sale .lost-row:hover .lost-tag {
+      background: #F3C4D8;
+      border-color: #ECA0C0;
+      color: #fff;
+    }
+  }
+  #lost-sale .lost-quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    color: #1E1422;
+    margin: 0 0 8px;
+  }
+  #lost-sale .lost-cost {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: #6b6072;
+    margin: 0;
+  }
+  #lost-sale .lost-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    width: fit-content;
+    max-width: max-content;
+    margin-top: 4px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #8A7E92;
+    background: #F3E7F4;
+    border: 1px solid #EADDEC;
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .25s ease, border-color .25s ease, color .25s ease;
+  }
+  @media (max-width: 1040px) {
+    #lost-sale { padding-left: 22px !important; padding-right: 22px !important; }
+    #lost-sale .lost-h2 { font-size: 32px !important; max-width: none; }
+    #discover .disco-h2 { font-size: 32px !important; }
+  }
+  @media (max-width: 640px) {
+    #lost-sale .lost-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    #lost-sale .lost-tag {
+      justify-self: center;
+      white-space: nowrap;
+    }
+    #lost-sale .lost-quote { font-size: 22px; }
+  }
+
+  /* Story: compact phone + clean step rail (keeps sticky inside section) */
+  #story {
+    overflow: clip !important;
+    isolation: isolate;
+    margin-top: 0 !important;
+  }
+  #story > .pad {
+    padding-top: 40px !important;
+  }
+  @media (max-width: 1040px) {
+    #lost-sale {
+      padding-bottom: 4px !important;
+    }
+    #story > .pad {
+      padding-top: 32px !important;
+    }
+  }
+  @media (max-width: 640px) {
+    #lost-sale.sec {
+      padding-top: 40px !important;
+      padding-bottom: 0 !important;
+    }
+    #story {
+      margin-top: 0 !important;
+    }
+    #story > .pad {
+      padding-top: 24px !important;
+    }
+  }
+  #story .story-grid {
+    gap: 36px !important;
+    padding-bottom: 48px;
+  }
+  #story .story-steps { padding-top: 24px !important; }
+  #story .story-block {
+    min-height: 0 !important;
+    padding: 18px 0 !important;
+  }
+  #story .story-phone {
+    top: 96px !important;
+    padding-top: 12px !important;
+    padding-bottom: 24px;
+    align-self: start;
+  }
+  #story .story-phone-shell {
+    max-width: 320px !important;
+    border-radius: 32px !important;
+    padding: 8px !important;
+  }
+  #story .phone-body {
+    height: 548px !important;
+    border-radius: 26px !important;
+  }
+  #story .story-rail {
+    width: 2px;
+    flex: 1 1 auto;
+    min-height: 28px;
+    border-radius: 999px;
+    background: #EADDEC;
+  }
+  #story .story-rail.is-on {
+    background: linear-gradient(180deg, #A855F7, #EC4899);
+  }
+  #story .story-rail.is-hidden {
+    display: none;
+  }
+  #story .story-cost {
+    margin-top: 12px;
+    width: 100%;
+    max-width: 440px !important;
+    padding: 16px 18px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box;
+  }
+  #story .story-cost-kicker {
+    font-size: 9.5px !important;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 10px !important;
+  }
+  #story .story-cost-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #story .story-cost-zero {
+    flex: none;
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -.02em;
+    color: #F9A8D4;
+    padding: 0 4px 0 0;
+  }
+  #story .story-cost-copy {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: rgba(255,255,255,.68);
+  }
+  #story .story-cost-wrap {
+    padding: 20px 0 32px 62px;
+  }
+  @media (max-width: 1040px) {
+    #story .story-cost-wrap { padding-left: 0 !important; }
+    #story .story-cost-zero { font-size: 32px !important; }
+    #story .story-cost-copy { font-size: 12px !important; }
+    #story .story-cost-kicker { font-size: 9px !important; letter-spacing: .14em !important; }
+  }
+  #discover {
+    padding-top: 72px !important;
+    padding-bottom: 88px !important;
+    position: relative;
+    z-index: 2;
+    background: #FAF4FB;
+  }
+  #discover .disco-head {
+    margin-bottom: 48px;
+    max-width: 860px;
+  }
+  #discover .disco-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 16px;
+  }
+  #discover .disco-h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    color: #1E1422;
+    margin: 0 0 14px;
+  }
+  #discover .disco-h2 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  #discover .disco-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #5b5060;
+    margin: 0;
+    max-width: 620px;
+  }
+  #discover .disco-side-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -.032em;
+    line-height: 1.2;
+    color: #1E1422;
+    max-width: 520px;
+    margin: 0 0 8px;
+  }
+  #discover .disco-facts {
+    display: grid;
+    gap: 0;
+    margin-top: 22px;
+  }
+  #discover .disco-fact {
+    padding: 20px 16px 20px 18px;
+    margin: 0 -16px;
+    border-left: 3px solid transparent;
+    border-radius: 0 12px 12px 0;
+    transition: background .25s ease, border-color .25s ease;
+  }
+  #discover .disco-fact + .disco-fact {
+    border-top: 1px solid #EFE2F0;
+  }
+  #discover .disco-fact:hover {
+    background: rgba(252, 231, 240, .4);
+    border-left-color: #EC4899;
+  }
+  #discover .disco-fact-title {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.022em;
+    line-height: 1.3;
+    color: #1E1422;
+    margin: 0 0 6px;
+  }
+  #discover .disco-fact-body {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #6b6072;
+    margin: 0;
+    max-width: 470px;
+  }
+  #discover .disco-cta-card {
+    margin-top: 28px;
+    background: linear-gradient(150deg,#2A1240,#45184F);
+    color: #fff;
+    border-radius: 22px;
+    padding: 28px 30px 30px;
+  }
+  #discover .disco-listings {
+    grid-template-rows: 1fr 1fr !important;
+    overflow: hidden !important;
+  }
+  #discover .disco-listing {
+    aspect-ratio: auto !important;
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  #discover .disco-listing img {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  /* Pricing polish */
+  #cost {
+    padding: 24px 40px 88px;
+  }
+  #cost .cost-head {
+    margin-bottom: 32px;
+  }
+  #cost .cost-kicker-top {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 16px;
+  }
+  #cost .cost-h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    color: #1E1422;
+    margin: 0 0 14px;
+  }
+  #cost .cost-h2 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  #cost .cost-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #5b5060;
+    margin: 0;
+    max-width: 540px;
+  }
+  #cost .cost-panel {
+    background:
+      radial-gradient(ellipse 60% 50% at 12% 20%, rgba(236,72,153,.12), transparent 55%),
+      linear-gradient(180deg, #F7EEF8, #FBF4FA);
+    border: 1px solid #EFE2F0;
+    border-radius: 28px;
+    padding: 44px 46px;
+  }
+  #cost .cost-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 16px;
+  }
+  #cost .cost-zero {
+    font-family: 'Instrument Serif', serif;
+    font-size: 96px;
+    line-height: .9;
+    letter-spacing: -.04em;
+    font-weight: 400;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 4px 8px 4px 2px;
+    display: inline-block;
+  }
+  #cost .cost-forever {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -.035em;
+    line-height: 1.05;
+    color: #1E1422;
+  }
+  #cost .cost-italic {
+    font-size: 19px;
+    line-height: 1.35;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: #1E1422;
+    margin: 0 0 14px;
+    max-width: 34ch;
+  }
+  #cost .cost-note {
+    font-size: 15px;
+    line-height: 1.55;
+    color: #6b6072;
+    margin: 0;
+  }
+  #cost .cost-promise {
+    background: #fff;
+    border: 1px solid #EFE2F0;
+    border-radius: 16px;
+    padding: 18px 18px 16px;
+    transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  #cost .cost-promise:hover {
+    border-color: #F9A8D4;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -22px rgba(196,46,139,.45);
+  }
+  #cost .cost-promise-amt {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1;
+    color: #C42E8B;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 2px;
+  }
+  #cost .cost-foot {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid #EADDEC;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  #cost .cost-cta {
+    display: inline-flex;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none;
+    padding: 15px 26px;
+    border-radius: 999px;
+    white-space: nowrap;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    box-shadow: 0 14px 34px -12px rgba(236,72,153,.55);
+    transition: transform .2s ease;
+  }
+  #cost .cost-cta:hover { color: #fff !important; -webkit-text-fill-color: #fff !important; transform: translateY(-2px); }
+  @media (max-width: 1040px) {
+    #cost { padding-left: 22px !important; padding-right: 22px !important; }
+    #cost .cost-h2 { font-size: 32px !important; }
+    #cost .cost-panel { padding: 32px 26px !important; }
+    #cost .cost-zero { font-size: 80px !important; }
+  }
+
+  /* Journey heading polish */
+  #journey .journey-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 16px;
+  }
+  #journey .journey-h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    color: #1E1422;
+    margin: 0 0 14px;
+  }
+  #journey .journey-h2 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  #journey .journey-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #5b5060;
+    margin: 0;
+    max-width: 540px;
+  }
+  #faq {
+    width: 100%;
+    max-width: 760px;
+    box-sizing: border-box;
+  }
+  #faq .faq-list { width: 100%; }
+  #faq .faq-q:hover .faq-icon {
+    background: #FCE7F0;
+    color: #C42E8B;
+  }
+  @media (max-width: 768px) {
+    #faq {
+      padding-left: 22px !important;
+      padding-right: 22px !important;
+      padding-bottom: 64px !important;
+    }
+    #faq .faq-h2 {
+      font-size: 28px !important;
+      text-align: left !important;
+      margin-bottom: 18px !important;
+    }
+    #faq .faq-q {
+      padding: 16px 0 !important;
+      gap: 12px !important;
+    }
+    #faq .faq-q-text {
+      font-size: 15.5px !important;
+      line-height: 1.4 !important;
+    }
+    #faq .faq-icon {
+      width: 26px !important;
+      height: 26px !important;
+      font-size: 16px !important;
+    }
+    #faq .faq-a p {
+      font-size: 14.5px !important;
+      padding: 0 0 18px 0 !important;
+    }
+  }
+  @media (max-width: 640px) {
+    #faq {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+    #faq .faq-h2 { font-size: 26px !important; }
+  }
+  @media (max-width: 1040px) {
+    #journey .journey-h2 { font-size: 32px !important; }
+  }
+
+  /* Compare rows — clear before/after differentiation */
+  #drag-compare .cmp-head {
+    margin-bottom: 22px;
+  }
+  #drag-compare .cmp-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #C42E8B;
+    margin: 0 0 16px;
+  }
+  #drag-compare .cmp-h2 {
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -.035em;
+    font-weight: 800;
+    color: #1E1422;
+    margin: 0 0 14px;
+  }
+  #drag-compare .cmp-h2 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.01em;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-right: 4px;
+  }
+  #drag-compare .cmp-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #5b5060;
+    margin: 0 0 24px;
+  }
+  #drag-compare .cmp-cols {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr;
+    gap: 0;
+    margin-bottom: 10px;
+    padding: 0 2px;
+  }
+  #drag-compare .cmp-col-label {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  #drag-compare .cmp-col-label.is-before { color: #8A7E92; }
+  #drag-compare .cmp-col-label.is-after { color: #C42E8B; }
+  #drag-compare .cmp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  #drag-compare .cmp-row {
+    display: grid;
+    grid-template-columns: 1fr 28px 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+  #drag-compare .cmp-cell {
+    padding: 14px 14px;
+    font-size: 14.5px;
+    line-height: 1.45;
+    border-radius: 12px;
+  }
+  #drag-compare .cmp-cell.is-before {
+    background: #F1EDF2;
+    color: #6b6072;
+  }
+  #drag-compare .cmp-cell.is-after {
+    background: #FCE7F0;
+    color: #1E1422;
+    font-weight: 700;
+  }
+  #drag-compare .cmp-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C42E8B;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  #drag-compare .cmp-visual {
+    margin-top: 72px;
+  }
+  @media (max-width: 1040px) {
+    #drag-compare .cmp-h2 { font-size: 32px !important; }
+    #drag-compare .cmp-visual { margin-top: 8px !important; }
+  }
+  @media (max-width: 768px) {
+    #drag-compare .cmp-cols { display: none !important; }
+    #drag-compare .cmp-list { gap: 12px; }
+    #drag-compare .cmp-row {
+      grid-template-columns: 1fr !important;
+      gap: 6px !important;
+      padding: 10px;
+      border: 1px solid #EFE2F0;
+      border-radius: 16px;
+      background: #fff;
+    }
+    #drag-compare .cmp-arrow {
+      display: flex !important;
+      height: 18px;
+      font-size: 14px;
+      transform: rotate(90deg);
+    }
+    #drag-compare .cmp-cell.is-before::before,
+    #drag-compare .cmp-cell.is-after::before {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    #drag-compare .cmp-cell.is-before::before {
+      content: 'Without PixelBlend';
+      color: #8A7E92;
+    }
+    #drag-compare .cmp-cell.is-after::before {
+      content: 'With PixelBlend';
+      color: #C42E8B;
+    }
+    #drag-compare .cmp-cell {
+      font-size: 13.5px !important;
+      padding: 12px 12px !important;
+    }
+  }
+  @media (max-width: 640px) {
+    #drag-compare .cmp-visual { margin-top: 8px !important; }
+  }
+
+  </style>
+</head>
+<body class="sellers-page">
+  <div id="pb-chrome-header"></div>
+  <x-dc>
+<a id="top"></a>
+
+<!-- HERO -->
+<header class="pad" style="position: relative; background: {{ heroBg }}; color: #fff; padding: 128px 40px 0; overflow: hidden;">
+  <div class="hero-glow" style="position: absolute; top: -220px; left: 50%; transform: translateX(-50%); width: 1100px; height: 700px; background: radial-gradient(ellipse at center, rgba(236,72,153,.28), transparent 62%); pointer-events: none;"></div>
+  <div style="position: relative; max-width: 1220px; margin: 0 auto;">
+    <div class="split" style="display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: start; padding-bottom: 52px;">
+      <div class="hero-anim-copy">
+        <h1 class="hero-h1" style="font-size: 52px; line-height: 1.08; letter-spacing: -.035em; font-weight: 800; margin: 0 0 22px;">Show your scene with <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 6px;">their</span> product in it.</h1>
+        <p style="font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.72); margin: 0; max-width: 480px;">List your backgrounds on PixelBlend and share your link. The brand uploads one product photo and sees it blended into your scene — so they stop asking “will this match my product?” and start asking for your invoice.</p>
+      </div>
+      <div id="start" class="hero-anim-card" style="display: flex; flex-direction: column; gap: 16px; align-items: stretch; align-self: start; height: auto;">
+        <div class="hero-pay" style="position: relative; width: 100%; height: fit-content; overflow: hidden; border-radius: 22px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07); padding: 18px 20px 16px;">
+          <div style="position: absolute; right: -60px; top: -70px; width: 230px; height: 230px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.38), transparent 68%); pointer-events: none;"></div>
+          <div style="position: relative;">
+            <div style="font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 2px;">What you pay to sell</div>
+            <div class="hero-pay-row" style="display: flex; align-items: center; gap: 10px; min-width: 0;">
+              <span class="hero-zero" style="font-family: 'Instrument Serif', serif; font-size: 64px; line-height: .9; letter-spacing: -.02em; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; flex: none; padding: 0 6px 0 0; overflow: visible;">₹0</span>
+              <span style="font-size: 14px; font-weight: 700; line-height: 1.3; color: #fff;">Forever. Every blend. Every licence.</span>
+            </div>
+            <div class="hero-pay-pills" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
+              <span style="font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 6px 10px; border-radius: 999px;">No listing fee</span>
+              <span style="font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 6px 10px; border-radius: 999px;">No subscription</span>
+              <span style="font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 6px 10px; border-radius: 999px;">0% commission</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <a class="pb-grad-btn" href="#journey" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 24px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
+          <a href="#story" style="font-size: 15.5px; font-weight: 600; color: #fff; text-decoration: none; padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22);" style-hover="border-color:rgba(255,255,255,.5);">See how it works</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-proofs hero-anim-proofs" style="border-top: 1px solid rgba(255,255,255,.14); padding: 24px 0 0;">
+      <div class="proof-row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding-bottom: 26px;">
+        <sc-for list="{{ heroProofs }}" as="p" hint-placeholder-count="4">
+          <span style="display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; line-height: 1.35; color: rgba(255,255,255,.66);">
+            <span style="width: 16px; height: 16px; flex: none; border-radius: 50%; background: rgba(236,72,153,.24); color: #F9A8D4; font-size: 9px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">✓</span>{{ p }}
+          </span>
+        </sc-for>
+      </div>
+      <div style="border-top: 1px solid rgba(255,255,255,.14); padding: 34px 0 0;">
+      <div class="tri hero-anim-tri" style="display: flex; align-items: stretch; gap: 18px;">
+        <sc-for list="{{ triptych }}" as="t" hint-placeholder-count="3">
+          <div style="flex: {{ t.flex }}; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span class="tri-label" style="font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ t.labelFg }};">{{ t.label }}</span>
+            </div>
+            <div class="tri-frame" style="position: relative; aspect-ratio: 4/5; border-radius: {{ t.radius }}; overflow: hidden; background: {{ t.frame }}; padding: {{ t.pad }};">
+              <div style="position: relative; width: 100%; height: 100%; border-radius: 14px; overflow: hidden;">
+                <img src="{{ t.img }}" alt="{{ t.label }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; inset: 0; background: {{ t.sheen }}; background-size: 200% 100%; animation: {{ t.anim }}; pointer-events: none;"></div>
+              </div>
+            </div>
+            <p style="font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.55); margin: 12px 0 0;">{{ t.note }}</p>
+          </div>
+          <span class="tri-op" style="flex: none; align-self: center; font-size: 30px; font-weight: 300; color: {{ t.opFg }}; padding-top: 14px;">{{ t.op }}</span>
+        </sc-for>
+      </div>
+    </div>
+    </div>
+    <div style="height: 52px;"></div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="hero-anim-proofs" style="background: #1E1422; color: #fff; padding: 15px 0; overflow: hidden;">
+  <div style="display: flex; gap: 40px; width: max-content; animation: tick 36s linear infinite;">
+    <sc-for list="{{ tickerLoop }}" as="t" hint-placeholder-count="14">
+      <span style="display: inline-flex; align-items: center; gap: 40px; white-space: nowrap; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.7);">{{ t }}<span style="color:#EC4899;">✦</span></span>
+    </sc-for>
+  </div>
+</div>
+
+<!-- WHERE THE SALE IS LOST -->
+<section id="lost-sale" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+  <div class="split" style="display: grid; grid-template-columns: .95fr 1.05fr; gap: 60px; align-items: start;">
+    <div data-reveal="">
+      <p class="lost-kicker">Where the sale is lost</p>
+      <h2 class="h2 lost-h2">You didn’t lose them on price. You lost them on <em>imagination.</em></h2>
+      <p class="lost-lead">Every frame you send shows the scene with somebody else’s product in it. The brand has to imagine the rest — and when they can’t, they go quiet or they ask for a re-shoot.</p>
+    </div>
+    <div data-reveal="" data-delay="1" class="lost-list">
+      <sc-for list="{{ hesitations }}" as="h" hint-placeholder-count="3">
+        <div class="lost-row">
+          <div>
+            <div class="lost-quote">“{{ h.quote }}”</div>
+            <p class="lost-cost">{{ h.cost }}</p>
+          </div>
+          <span class="lost-tag">{{ h.tag }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="story" style="position: relative; background: #fff; margin-top: 0; overflow: hidden;">
+  <div style="position: absolute; right: -180px; top: -160px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.13), transparent 66%); pointer-events: none;"></div>
+  <div style="position: absolute; left: -200px; top: 240px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.10), transparent 68%); pointer-events: none;"></div>
+  <div class="pad" style="position: relative; max-width: 1220px; margin: 0 auto; padding: 40px 40px 0;">
+  <div data-reveal="" style="padding-bottom: 30px;">
+    <span style="display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
+    <h2 class="h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
+    <p style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
+  </div>
+
+  <div id="story-track" class="story-grid" data-reveal="" data-delay="1" style="display: grid; grid-template-columns: 1.05fr .78fr; gap: 40px; align-items: start;">
+    <div class="story-steps" style="padding-top: 28px;">
+      <sc-for list="{{ storySteps }}" as="s" hint-placeholder-count="5">
+        <div class="story-block" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; justify-content: center; cursor: pointer; padding: 22px 0;">
+          <div style="display: grid; grid-template-columns: 44px 1fr; gap: 18px; align-items: stretch; opacity: {{ s.opacity }}; transition: opacity .35s ease;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ s.dotBg }}; color: {{ s.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ s.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ s.n }}</span>
+              <span class="story-rail {{ s.railOn }}" style="margin-top: 10px;"></span>
+            </div>
+            <div style="padding-bottom: 6px;">
+              <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ s.tagFg }}; background: {{ s.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 12px;">{{ s.who }}</span>
+              <div style="font-size: 26px; font-weight: 800; letter-spacing: -.03em; line-height: 1.18; margin-bottom: 8px;">{{ s.title }}</div>
+              <p style="font-size: 15.5px; line-height: 1.55; color: #5b5060; margin: 0; max-width: 440px;">{{ s.body }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+      <div class="story-cost-wrap">
+        <div class="story-cost" style="background: #1E1422; color: #fff;">
+          <div class="story-cost-kicker">Cost to the seller for this entire chat</div>
+          <div class="story-cost-row">
+            <span class="story-cost-zero">₹0</span>
+            <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-phone" style="position: sticky; top: 96px; display: flex; justify-content: center; padding-top: 12px;">
+      <div class="story-phone-shell" style="width: 100%; max-width: 320px; background: #1E1422; border-radius: 32px; padding: 8px; box-shadow: 0 24px 56px -32px rgba(30,20,34,.52);">
+        <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 548px;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; border-bottom: 1px solid #EFE2F0; flex: none;">
+            <span style="font-size: 17px; color: #8A7E92; line-height: 1;">‹</span>
+            <span style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 14px; font-weight: 800; letter-spacing: -.01em;">glow.labs</div>
+              <div style="font-size: 11px; color: #8A7E92;">Direct message · Active now</div>
+            </div>
+            <span class="story-step-badge" style="font-size: 10px; font-weight: 800; letter-spacing: .1em; color: #C42E8B;">{{ stepBadge }}</span>
+          </div>
+
+          <div id="chat-view" style="flex: 1; overflow: hidden; position: relative;">
+            <div id="chat-feed" style="position: absolute; left: 0; right: 0; top: 0; min-height: 100%; padding: 18px 16px 20px; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; transition: transform .55s cubic-bezier(.16,1,.3,1);">
+            <!-- 1 they hesitate -->
+            <div data-g="0" style="{{ b1 }}">
+              <div style="display: flex; align-items: flex-end; gap: 8px;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Saw the sunlit marble tabletop scene on your page. It’s gorgeous but I’m not sure it’ll match our bottle 😅</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 you send your link -->
+            <div data-g="1" style="{{ b2 }}">
+              <div style="display: flex; justify-content: flex-end;">
+                <div style="max-width: 82%; background: linear-gradient(113.667deg, #A855F7, #EC4899); border-radius: 20px 20px 6px 20px; padding: 12px 14px; box-shadow: 0 12px 26px -14px rgba(236,72,153,.7);">
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #fff; margin-bottom: 10px;">Even better — drop your product into it 💗 Tap here and upload any product shot:</div>
+                  <div style="background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); border-radius: 12px; padding: 10px 12px;">
+                    <div style="font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 3px;">PixelBlend blend</div>
+                    <div style="font-size: 13.5px; font-weight: 700; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">pixelblend.app/{{ handle }}/sunlit-marble-tabletop</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 they blend their product in + AI result -->
+            <div data-g="2" style="{{ b3 }}">
+              <div style="display: flex; align-items: flex-end; gap: 8px;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 82%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 10px 10px 12px;">
+                  <div style="display: flex; align-items: center; gap: 7px; margin-bottom: 8px;">
+                    <div style="width: 78px; aspect-ratio: 3/4; border-radius: 11px; overflow: hidden; position: relative;">
+                      <img src="assets/images/59f3c472-7bba-4cdd-a4f6-908dc36c56ca.jpg" alt="Your background scene" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                      <span style="position: absolute; left: 4px; bottom: 4px; font-size: 7.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 3px 6px; border-radius: 999px;">Your scene</span>
+                    </div>
+                    <span style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #FCE7F0; color: #C42E8B; font-size: 15px; font-weight: 800; line-height: 1; display: flex; align-items: center; justify-content: center;">+</span>
+                    <div style="width: 78px; aspect-ratio: 3/4; border-radius: 11px; overflow: hidden; position: relative;">
+                      <img src="assets/images/ebb2b6e8-5f2a-4dd6-8729-f3cbb6dc44c8.jpg" alt="The brand's product photo" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                      <span style="position: absolute; left: 4px; bottom: 4px; font-size: 7.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 3px 6px; border-radius: 999px;">Their product</span>
+                    </div>
+                  </div>
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Uploaded our bottle into your marble scene, it’s generating…</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 10px;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); flex: none; display: flex; align-items: center; justify-content: center;">
+                  <span style="width: 9px; height: 9px; border: 2px solid #fff; border-radius: 50%;"></span>
+                </span>
+                <div style="max-width: 82%; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); border-radius: 20px 20px 20px 6px; padding: 4px;">
+                  <div style="background: #fff; border-radius: 17px 17px 17px 4px; padding: 10px 10px 12px;">
+                    <div style="position: relative; width: 132px; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; margin-bottom: 9px;">
+                      <img src="assets/images/2f9dca33-485a-4c55-a5ce-71f7a2fea47a.jpg" alt="AI blend result" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                      <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.6s ease-in-out infinite; pointer-events: none;"></div>
+                      <span style="position: absolute; left: 8px; bottom: 8px; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.6); padding: 4px 8px; border-radius: 999px; white-space: nowrap;">Your blend</span>
+                    </div>
+                    <div style="font-size: 13px; font-weight: 700; color: #C42E8B;">Result 1 of 4 · free for the seller</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 10px;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Okayyy it actually matches 😍 I ran it in three lighting variants, the warm one is perfect</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 they license it -->
+            <div data-g="3" style="{{ b4 }}">
+              <div style="display: flex; align-items: flex-end; gap: 8px;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Send your invoice, I’ll pay now. Full licence 🙏</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+                <div style="max-width: 82%; background: linear-gradient(113.667deg, #A855F7, #EC4899); border-radius: 20px 20px 6px 20px; padding: 12px 14px;">
+                  <div style="font-size: 14.5px; line-height: 1.45; color: #fff;">Sending now — thank you Nikita! Files going out today 🌸</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px;">
+                <span style="flex: 1; height: 1px; background: #EADDEC;"></span>
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #C42E8B;">Paid · ₹1,499</span>
+                <span style="flex: 1; height: 1px; background: #EADDEC;"></span>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="story-pips" style="flex: none; display: flex; gap: 6px; padding: 0 16px 16px;">
+            <sc-for list="{{ pips }}" as="p" hint-placeholder-count="4">
+              <span style="flex: 1; height: 3px; border-radius: 999px; background: {{ p.bg }}; transition: background .4s ease;"></span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- NEW CUSTOMERS -->
+<section id="discover" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+  <div class="disco-head" data-reveal="">
+    <p class="disco-kicker">New customers from our marketplace</p>
+    <h2 class="h2 disco-h2">We don’t just help you convert the customers you have. We bring you <em>new ones.</em></h2>
+    <p class="disco-lead">Every scene you list also gets a storefront inside the PixelBlend app, where brands who have never heard of you browse, blend their product in, and message you to license it.</p>
+  </div>
+
+  <div data-reveal="" data-delay="1" class="disco" style="display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: start;">
+
+    <!-- seller storefront in the app -->
+    <div>
+      <div class="disco-phone" style="width: 100%; max-width: 300px; background: #1E1422; border-radius: 36px; padding: 9px; box-shadow: 0 40px 80px -44px rgba(30,20,34,.6); margin: 0 auto;">
+        <div class="disco-phone-body" style="background: #fff; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; height: 620px;">
+          <div style="flex: none; display: flex; align-items: center; gap: 9px; padding: 13px 15px 11px; border-bottom: 1px solid #F1E7F2;">
+            <span style="font-size: 16px; color: #8A7E92; line-height: 1;">‹</span>
+            <span style="width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); flex: none; display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border: 1.5px solid #fff; border-radius: 50%;"></span></span>
+            <span style="flex: 1; font-size: 12px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">PixelBlend</span>
+            <span style="font-size: 8px; font-weight: 800; letter-spacing: .1em; color: #C42E8B;">NEW BRAND</span>
+          </div>
+
+          <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;">
+            <div style="flex: none; padding: 16px 15px 14px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="width: 54px; height: 54px; flex: none; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); border: 2px solid #fff; box-shadow: 0 0 0 2px #EC4899;"></span>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 15px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">Studio Noir</span>
+                    <span style="width: 13px; height: 13px; flex: none; border-radius: 50%; background: #EC4899; color: #fff; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center;">✓</span>
+                  </div>
+                  <div style="font-size: 10.5px; color: #8A7E92; margin-top: 1px;">Studio &amp; marble scenes · Jaipur</div>
+                  <div style="display: flex; gap: 12px; margin-top: 6px;">
+                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">42 <span style="color: #8A7E92; font-weight: 600;">listings</span></span>
+                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">4.8 <span style="color: #8A7E92; font-weight: 600;">rating</span></span>
+                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">1.2k <span style="color: #8A7E92; font-weight: 600;">blends</span></span>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 7px; margin-top: 14px;">
+                <span style="flex: 1; text-align: center; font-size: 11.5px; font-weight: 800; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 11px 10px; border-radius: 12px; box-shadow: 0 10px 22px -14px rgba(236,72,153,.9);">Connect with seller</span>
+                <span style="flex: none; font-size: 11.5px; font-weight: 800; color: #1E1422; border: 1.5px solid #E7D9E9; padding: 11px 15px; border-radius: 12px;">Follow</span>
+              </div>
+            </div>
+
+            <div style="flex: none; display: flex; gap: 16px; padding: 0 15px; border-bottom: 1px solid #F1E7F2;">
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1E1422; padding-bottom: 9px; border-bottom: 2px solid #1E1422;">Listings</span>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B7A9BC; padding-bottom: 9px;">Blends</span>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B7A9BC; padding-bottom: 9px;">About</span>
+            </div>
+
+            <div class="disco-listings" style="flex: 1; min-height: 0; padding: 10px 12px 8px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; overflow: hidden;">
+              <sc-for list="{{ storeItems }}" as="t" hint-placeholder-count="4">
+                <div class="disco-listing" style="position: relative; min-height: 0; height: 100%; border-radius: 12px; overflow: hidden; background: #F6EEF7;">
+                  <img src="{{ t.img }}" alt="{{ t.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                  <div style="position: absolute; left: 0; right: 0; top: 0; padding: 8px 8px 0; background: linear-gradient(180deg, rgba(30,20,34,.72), transparent 85%);">
+                    <div style="font-size: 9px; font-weight: 800; color: #fff; letter-spacing: -.01em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ t.name }}</div>
+                    <div style="font-size: 8.5px; color: rgba(255,255,255,.8); margin-top: 1px;">{{ t.price }}</div>
+                  </div>
+                  <div style="position: absolute; left: 7px; right: 7px; bottom: 7px; display: flex; align-items: center; justify-content: center; gap: 4px; background: #fff; border-radius: 8px; padding: 6px 6px;">
+                    <span style="width: 5px; height: 5px; border-radius: 50%; background: #EC4899; flex: none;"></span>
+                    <span style="font-size: 8px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1E1422;">Blend</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div class="disco-store-note" style="flex: none; margin: 0 12px 12px; display: flex; align-items: center; gap: 8px; background: #FDF1F8; border: 1px solid #FBD7E8; border-radius: 12px; padding: 9px 11px;">
+              <span style="width: 18px; height: 18px; flex: none; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center;">✓</span>
+              <span style="font-size: 9px; font-weight: 700; line-height: 1.35; color: #1E1422;">They found this store in the app. They can blend their product in, then message you to license it.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- acquisition chain -->
+    <div>
+      <div class="disco-side-title">Today your reach ends at your follower count. In the marketplace it doesn’t.</div>
+
+      <div class="disco-facts">
+        <sc-for list="{{ discoveryFacts }}" as="f" hint-placeholder-count="3">
+          <div class="disco-fact">
+            <div class="disco-fact-title">{{ f.title }}</div>
+            <p class="disco-fact-body">{{ f.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="disco-cta-card">
+        <div style="font-size: 25px; font-weight: 800; letter-spacing: -.03em; line-height: 1.22; max-width: 520px;">Reach beyond your own followers — without spending a rupee on ads.</div>
+        <div class="disco-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.18);">
+          <sc-for list="{{ discoStats }}" as="d" hint-placeholder-count="3">
+            <div>
+              <div style="font-size: 15px; font-weight: 800; letter-spacing: -.02em; color: #F9A8D4; margin-bottom: 4px;">{{ d.title }}</div>
+              <p style="font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.68); margin: 0;">{{ d.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px;">
+          <a href="#start" style="font-size: 15px; font-weight: 700; color: #1E1422 !important; text-decoration: none; padding: 14px 24px; border-radius: 999px; background: #fff;" style-hover="transform:translateY(-2px);">Create your store — free</a>
+          <span style="font-size: 14px; color: rgba(255,255,255,.66);">Listing and discovery cost you ₹0.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="cost" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+  <div class="cost-head" data-reveal="">
+    <p class="cost-kicker-top">Zero cost</p>
+    <h2 class="h2 cost-h2">What all of this costs you — <em>nothing.</em></h2>
+    <p class="cost-lead">Nothing to list, nothing per blend, nothing per licence. Here is the entire price list.</p>
+  </div>
+  <div data-reveal="" class="cost-panel respad">
+    <div class="free-grid" style="display: grid; grid-template-columns: .9fr 1.1fr; gap: 46px; align-items: center;">
+      <div>
+        <p class="cost-kicker">Pricing for sellers</p>
+        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-bottom: 16px;">
+          <span class="cost-zero free-num">₹0</span>
+          <span class="zero-rule" style="width: 1px; height: 56px; background: #E4CFE8;"></span>
+          <span class="cost-forever">Free<br>Forever</span>
+        </div>
+        <p class="cost-italic">Brands can blend their products into your scenes as many times as they want. You pay ₹0.</p>
+        <p class="cost-note">Per listing. Per blend. Per month. Per licence. The whole price list is above.</p>
+      </div>
+      <div class="pay-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <sc-for list="{{ promises }}" as="p" hint-placeholder-count="6">
+          <div class="cost-promise">
+            <div style="display: flex; align-items: center; gap: 9px; margin-bottom: 7px;">
+              <span class="cost-promise-amt">{{ p.cost }}</span>
+              <span style="font-size: 15px; font-weight: 800; letter-spacing: -.015em; line-height: 1.25; color: #1E1422;">{{ p.title }}</span>
+            </div>
+            <p style="font-size: 13.5px; line-height: 1.5; color: #6b6072; margin: 0;">{{ p.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div class="cost-foot">
+      <div style="max-width: 620px;">
+        <div style="font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; margin-bottom: 8px; color: #1E1422;">Brands license directly from you, exactly as they do today.</div>
+        <p style="font-size: 15.5px; line-height: 1.6; color: #5b5060; margin: 0;">They keep paying you through the channel you already use. We take zero commission, and there is nothing to cancel because there is nothing to pay.</p>
+      </div>
+      <a class="cost-cta" href="#start">Create my free listing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FIVE STEPS — STEPPER -->
+<section id="journey" class="sec pad" sc-camel-on-mouse-enter="{{ pauseSteps }}" sc-camel-on-mouse-leave="{{ resumeSteps }}" style="padding: 86px 40px 86px; max-width: 1220px; margin: 0 auto;">
+  <div data-reveal="" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 28px;">
+    <div>
+      <p class="journey-kicker">Your listing path</p>
+      <h2 class="h2 journey-h2">Four steps, and only two of them are <em>yours.</em></h2>
+      <p class="journey-lead">They play through on their own — hover to pause, or click any step. You list and you share; they do the other two, at no cost to you.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: #1E1422;"><span style="width: 10px; height: 10px; border-radius: 50%; background: #1E1422;"></span>You · 2</span>
+      <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: #C42E8B;"><span style="width: 10px; height: 10px; border-radius: 50%; background: #EC4899;"></span>Them · 2</span>
+    </div>
+  </div>
+  <div data-reveal="" style="background: #fff; border: 1px solid #EFE2F0; border-radius: 26px; overflow: hidden;">
+    <div class="stepper-tabs" style="display: flex; border-bottom: 1px solid #EFE2F0;">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <button sc-camel-on-click="{{ s.pick }}" style="{{ s.tabStyle }}">
+          <span style="position: absolute; left: 0; bottom: -3px; height: 3px; width: {{ s.progW }}; background: {{ s.fillBg }}; transition: width .12s linear;"></span>
+          <span style="display: flex; align-items: center; gap: 9px; margin-bottom: 9px;">
+            <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1; color: {{ s.numFg }};">{{ s.n }}</span>
+            <span style="font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: {{ s.whoFg }}; background: {{ s.whoBg }}; padding: 4px 8px; border-radius: 999px;">{{ s.who }}</span>
+          </span>
+          <span style="display: block; font-size: 14px; font-weight: 700; letter-spacing: -.01em; color: {{ s.titleFg }};">{{ s.short }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div class="stepper-body" style="display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; padding: 40px 44px; align-items: center;">
+      <div>
+        <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ activeStep.badgeFg }}; background: {{ activeStep.badgeBg }}; padding: 5px 11px; border-radius: 999px; margin-bottom: 14px;">{{ activeStep.badge }}</span>
+        <div style="font-size: 27px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15; margin-bottom: 12px;">{{ activeStep.title }}</div>
+        <p style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0 0 20px;">{{ activeStep.body }}</p>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+          <sc-for list="{{ activeStep.points }}" as="p" hint-placeholder-count="3">
+            <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.5; color: #3b303f;">
+              <span style="width: 19px; height: 19px; border-radius: 50%; background: #FCE7F0; color: #C42E8B; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex: none; margin-top: 2px;">✓</span>{{ p }}
+            </div>
+          </sc-for>
+        </div>
+        <div class="stepper-nav" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <button class="stepper-next" sc-camel-on-click="{{ nextStep }}" style="font-size: 14.5px; font-weight: 700; color: #fff; background: #1E1422; border: 0; padding: 13px 22px; border-radius: 999px; cursor: pointer; white-space: nowrap;" style-hover="background:#C42E8B;">{{ nextLabel }}</button>
+          <span class="stepper-count" style="font-size: 13.5px; color: #8A7E92; white-space: nowrap;">{{ stepCounter }}</span>
+        </div>
+      </div>
+      <div style="position: relative; min-height: 320px; border-radius: 20px; overflow: hidden; background: #F3E7F4;">
+        <img src="{{ activeStep.img }}" alt="{{ activeStep.title }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        <span style="position: absolute; left: 14px; bottom: 14px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #1E1422; background: rgba(255,255,255,.93); padding: 7px 13px; border-radius: 999px; white-space: nowrap;">{{ activeStep.caption }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU CAN LIST (auto-shifting) -->
+<section id="list" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+  <div data-reveal="" style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 22px;">
+    <div>
+      <p style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #C42E8B; margin: 0 0 16px;">What you can list</p>
+      <h2 class="h2" style="font-size: 36px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0;">Every category, as a blend-ready listing.</h2>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 14px;">
+      <span style="font-size: 14.5px; color: #6b6072;">{{ activeCat.count }}</span>
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .14em; color: #C42E8B;">{{ catIndexLabel }}</span>
+    </div>
+  </div>
+  <div data-reveal="" class="cat-filters" style="display: flex; flex-wrap: nowrap; gap: 9px; margin-bottom: 24px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 2px;">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
+      <button class="cat-filter" sc-camel-on-click="{{ c.pick }}" style="{{ c.style }}"><span style="position: relative; z-index: 1;">{{ c.name }}</span><span style="{{ c.barStyle }}"></span></button>
+    </sc-for>
+  </div>
+  <div data-reveal="" class="cat-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+    <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="4">
+      <div class="cat-card" style="position: relative; aspect-ratio: 3 / 4; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 40px -36px rgba(30,20,34,.65); background: #EDE4F0;">
+        <img src="{{ c.img }}" alt="{{ c.label }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(30,20,34,.72)); pointer-events: none;"></div>
+        <span style="position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 800; letter-spacing: .1em; color: #fff; background: linear-gradient(113.667deg,#A855F7,#F43F5E); padding: 5px 9px; border-radius: 999px;"><span style="width:4px;height:4px;border-radius:50%;background:#fff;animation:blink 1.6s infinite;"></span>BLEND READY</span>
+        <div style="position: absolute; left: 12px; right: 12px; bottom: 12px;">
+          <div style="font-size: 13.5px; font-weight: 800; color: #fff; line-height: 1.2;">{{ c.label }}</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,.72); margin-top: 2px;">{{ c.price }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- SAME CATALOGUE -->
+<section class="sec pad" style="padding: 86px 40px; max-width: 1220px; margin: 0 auto;">
+  <div data-reveal="" style="max-width: 660px; margin: 0 0 34px;">
+    <h2 class="h2" style="font-size: 38px; line-height: 1.1; letter-spacing: -.032em; font-weight: 800; margin: 0 0 12px;">Same catalogue. Different conversation.</h2>
+    <p style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0;">Nothing about your studio changes except what the brand can see.</p>
+  </div>
+  <div class="compare-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div data-reveal="" data-delay="1" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 26px; padding: 32px 30px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 22px;">
+        <span style="width: 30px; height: 30px; border-radius: 50%; background: #F1EDF2; color: #8A7E92; font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">–</span>
+        <span style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; color: #8A7E92;">Selling with sample frames only</span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <sc-for list="{{ without }}" as="w" hint-placeholder-count="4">
+          <div style="font-size: 15.5px; line-height: 1.5; color: #6b6072; padding: 14px 0; border-bottom: 1px solid #F5EDF6;">{{ w }}</div>
+        </sc-for>
+      </div>
+    </div>
+    <div data-reveal="" data-delay="2" style="position: relative; border-radius: 26px; padding: 2px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 34px 70px -50px rgba(196,46,139,.9);">
+      <div style="background: #fff; border-radius: 24px; padding: 30px 28px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 22px;">
+          <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">✓</span>
+          <span style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">Selling with a PixelBlend blend link</span>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ withUs }}" as="w" hint-placeholder-count="4">
+            <div style="font-size: 15.5px; line-height: 1.5; color: #2b2131; font-weight: 600; padding: 14px 0; border-bottom: 1px solid #F5EDF6;">{{ w }}</div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px;">
+    <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
+    <a href="#cost" style="font-size: 15.5px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 14px 24px; border-radius: 999px; border: 1px solid #EADDEC; background: #fff;" style-hover="border-color:#C42E8B;">What it costs you</a>
+  </div>
+</section>
+
+<!-- DRAG COMPARE -->
+<section id="drag-compare" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+  <div class="split" style="display: grid; grid-template-columns: .85fr 1.15fr; gap: 56px; align-items: start;">
+    <div data-reveal="">
+      <div class="cmp-head">
+        <p class="cmp-kicker">Drag to compare</p>
+        <h2 class="h2 cmp-h2">What they see today, and what they could see <em>instead.</em></h2>
+        <p class="cmp-lead">On the left, your scene with a sample product. On the right, the same scene with theirs. Only one of them answers their question.</p>
+      </div>
+      <div class="cmp-cols">
+        <span class="cmp-col-label is-before">Without PixelBlend</span>
+        <span></span>
+        <span class="cmp-col-label is-after">With PixelBlend</span>
+      </div>
+      <div class="cmp-list">
+        <sc-for list="{{ compareRows }}" as="r" hint-placeholder-count="4">
+          <div class="cmp-row">
+            <span class="cmp-cell is-before">{{ r.a }}</span>
+            <span class="cmp-arrow" aria-hidden="true">→</span>
+            <span class="cmp-cell is-after">{{ r.b }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div data-reveal="" class="cmp-visual">
+      <div sc-camel-on-pointer-down="{{ dragStart }}" sc-camel-on-pointer-move="{{ dragMove }}" sc-camel-on-pointer-up="{{ dragEnd }}" sc-camel-on-pointer-leave="{{ dragEnd }}" style="position: relative; aspect-ratio: 4/3; border-radius: 24px; overflow: hidden; cursor: ew-resize; touch-action: none; user-select: none; box-shadow: 0 40px 80px -50px rgba(30,20,34,.7);">
+        <img src="{{ compareLeft }}" alt="Scene with a sample product" draggable="false" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        <div style="position: absolute; inset: 0; clip-path: inset(0 0 0 {{ splitPct }});">
+          <img src="{{ compareRight }}" alt="Their product blended into your scene" draggable="false" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="position: absolute; top: 0; bottom: 0; left: {{ splitPct }}; width: 2px; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,.4);">
+          <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 44px; height: 44px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #1E1422; box-shadow: 0 8px 24px rgba(0,0,0,.3);">⇔</span>
+        </div>
+        <span style="position: absolute; left: 25%; top: 14px; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .12em; color: #1E1422; background: rgba(255,255,255,.92); padding: 7px 12px; border-radius: 999px; line-height: 1;">SAMPLE PRODUCT</span>
+        <span style="position: absolute; left: 75%; top: 14px; transform: translateX(-50%); display: inline-flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .12em; color: #fff; background: linear-gradient(113.667deg,#A855F7,#F43F5E); padding: 7px 12px; border-radius: 999px; line-height: 1;">THEIR PRODUCT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS BEYOND SALES -->
+<section id="benefits" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+  <div data-reveal="" class="benefit-panel" style="background: #1E1422; color: #fff; border-radius: 30px; padding: 44px 44px 34px; overflow: hidden; position: relative;">
+    <div style="position: absolute; right: -120px; top: -140px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.22), transparent 66%); pointer-events: none;"></div>
+    <div style="position: relative;">
+      <div style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 34px;">
+        <div>
+          <p style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #F9A8D4; margin: 0 0 16px;">Beyond the licence count</p>
+          <h2 class="h2" style="font-size: 38px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0; max-width: 660px;">Selling gets calmer, not just <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;">bigger.</span></h2>
+        </div>
+      </div>
+      <div class="benefit-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
+        <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="8">
+          <div style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 9px;">
+            <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); display: flex; align-items: center; justify-content: center; font-size: 12px;">{{ b.icon }}</span>
+            <div style="font-size: 16.5px; font-weight: 800; letter-spacing: -.02em; line-height: 1.25;">{{ b.title }}</div>
+            <p style="font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.62); margin: 0;">{{ b.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 30px;">
+        <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
+        <span style="font-size: 14.5px; color: rgba(255,255,255,.55);">No listing fee · No subscription · No commission</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="sec pad" style="padding: 0 40px 82px; max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+  <h2 data-reveal="" class="h2 faq-h2" style="font-size: 36px; line-height: 1.08; letter-spacing: -.035em; font-weight: 800; margin: 0 0 28px; text-align: center;">The questions sellers ask first</h2>
+  <div class="faq-list" data-reveal="">
+  <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
+    <div class="faq-item" style="border-top: 1px solid #EADDEC;">
+      <button type="button" class="faq-q" sc-camel-on-click="{{ f.toggle }}" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; width: 100%; padding: 20px 0; cursor: pointer; background: none; border: 0; text-align: left; font: inherit; color: inherit;">
+        <span class="faq-q-text" style="flex: 1; min-width: 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; line-height: 1.35; color: #1E1422;">{{ f.q }}</span>
+        <span class="faq-icon" style="flex: none; width: 28px; height: 28px; margin-top: 1px; border-radius: 50%; background: #F6EEF7; color: {{ f.iconFg }}; font-size: 18px; font-weight: 400; line-height: 1; display: inline-flex; align-items: center; justify-content: center; transform: {{ f.iconRot }}; transition: transform .3s, color .25s, background .25s;">+</span>
+      </button>
+      <div class="faq-a" style="max-height: {{ f.maxH }}; overflow: hidden; transition: max-height .35s cubic-bezier(.16,1,.3,1);">
+        <p style="font-size: 15.5px; line-height: 1.6; color: #5b5060; margin: 0; padding: 0 36px 22px 0;">{{ f.a }}</p>
+      </div>
+    </div>
+  </sc-for>
+  <div style="border-top: 1px solid #EADDEC;"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="sec pad" style="padding: 0 40px 90px; max-width: 1000px; margin: 0 auto;">
+  <div data-reveal="" class="sellers-cta-panel" style="background: #1E1422; color: #fff; border-radius: 8px; padding: 60px 56px;">
+    <h2 class="h2 sellers-cta-h2" style="font-size: 44px; line-height: 1.04; letter-spacing: -.04em; font-weight: 800; margin: 0 0 12px;">Let them see their product in it.</h2>
+    <p class="sellers-cta-sub" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 30px; line-height: 1.2; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 30px;">It costs you nothing to find out.</p>
+    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+      <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; padding: 18px 34px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 16px 40px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
+      <a href="#faq" style="display: inline-flex; font-size: 17px; font-weight: 700; color: #fff !important; text-decoration: none; padding: 17px 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,.24);" style-hover="border-color:rgba(255,255,255,.55);">Talk to our seller team</a>
+    </div>
+    <p style="font-size: 14px; color: rgba(255,255,255,.5); margin: 24px 0 0;">No listing fee · No subscription · No charge for brand blends</p>
+  </div>
+</section>
+  </x-dc>
+  <div id="pb-chrome-footer"></div>
+<script type="text/x-dc" data-dc-script="">
+
+class Component extends DCLogic {
+  state = { scrolled: false, menuOpen: false, openFaq: 0, storyStep: 0, split: 50, dragging: false, cat: 0, catProg: 0, catPaused: false, step: 0, stepProg: 0, stepPaused: false };
+  componentDidMount() {
+    this._onScroll = () => {
+      const s = window.scrollY > 60;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+      this._syncStory();
+      this._syncLostRows();
+      if (this._revealCheck) this._revealCheck();
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    requestAnimationFrame(() => { this._setupReveal(); this._syncStory(); this._syncLostRows(); });
+    this._catIv = setInterval(() => {
+      if (this.props.categoryAutoplay === false) return;
+      this.setState((s) => {
+        const next = s.catProg + 0.0375;
+        return next >= 1 ? { cat: (s.cat + 1) % 8, catProg: 0 } : { catProg: next };
+      });
+    }, 120);
+    this._stepIv = setInterval(() => {
+      if (this.state.stepPaused || this.props.stepperAutoplay === false) return;
+      this.setState((s) => {
+        const next = s.stepProg + 0.028;
+        return next >= 1 ? { step: (s.step + 1) % 4, stepProg: 0 } : { stepProg: next };
+      });
+    }, 120);
+  }
+  componentDidUpdate() {
+    const want = this.state.menuOpen ? 'hidden' : '';
+    if (document.body.style.overflow !== want) document.body.style.overflow = want;
+    this._positionFeed();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+
+    if (this._catIv) clearInterval(this._catIv);
+    if (this._stepIv) clearInterval(this._stepIv);
+    if (this._revealIO) this._revealIO.disconnect();
+  }
+  _syncLostRows() {
+    const rows = document.querySelectorAll('#lost-sale .lost-row');
+    if (!rows.length) return;
+    const target = window.innerHeight * 0.38;
+    let best = null;
+    let bestDist = Infinity;
+    rows.forEach((row) => {
+      const r = row.getBoundingClientRect();
+      if (r.bottom < 80 || r.top > window.innerHeight - 40) return;
+      const mid = (r.top + r.bottom) / 2;
+      const dist = Math.abs(mid - target);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = row;
+      }
+    });
+    rows.forEach((row) => {
+      const on = row === best;
+      if (on) row.classList.add('is-on');
+      else row.classList.remove('is-on');
+    });
+  }
+  _syncStory() {
+    const track = document.getElementById('story-track');
+    if (!track) return;
+    const phone = track.querySelector('.story-phone');
+    const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
+    if (phoneHidden) {
+      const blocks = track.querySelectorAll('.story-block');
+      let best = 0;
+      const mid = window.innerHeight * 0.35;
+      blocks.forEach((b, i) => {
+        const r = b.getBoundingClientRect();
+        if (r.top <= mid) best = i;
+      });
+      best = Math.max(0, Math.min(3, best));
+      if (best !== this.state.storyStep) this.setState({ storyStep: best });
+      return;
+    }
+    const travel = track.offsetHeight - phone.offsetHeight;
+    const stickyTop = parseFloat(getComputedStyle(phone).top) || 92;
+    const r = track.getBoundingClientRect();
+    const scrolled = Math.max(0, Math.min(travel, stickyTop - r.top));
+    const p = travel > 0 ? scrolled / travel : 0;
+    const best = Math.max(0, Math.min(3, Math.floor(p / 0.24)));
+    if (best !== this.state.storyStep) this.setState({ storyStep: best });
+    else this._positionFeed();
+  }
+  _gotoStory(i) {
+    const track = document.getElementById('story-track');
+    if (!track) return;
+    const phone = track.querySelector('.story-phone');
+    const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
+    this.setState({ storyStep: i });
+    if (phoneHidden) {
+      const blocks = track.querySelectorAll('.story-block');
+      const el = blocks[i];
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 88;
+        window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'smooth' });
+      }
+      return;
+    }
+    const travel = track.offsetHeight - phone.offsetHeight;
+    const stickyTop = parseFloat(getComputedStyle(phone).top) || 92;
+    const trackTop = track.getBoundingClientRect().top + window.scrollY;
+    const target = trackTop - stickyTop + (i * 0.24 + 0.09) * Math.max(0, travel);
+    window.scrollTo({ top: Math.max(0, Math.round(target)), behavior: 'smooth' });
+  }
+  _positionFeed() {
+    const view = document.getElementById('chat-view');
+    const feed = document.getElementById('chat-feed');
+    if (!view || !feed) return;
+    // skip the layout read entirely when the story block is nowhere near the viewport
+    const vr = view.getBoundingClientRect();
+    const vh = window.innerHeight || 800;
+    if (vr.bottom < -vh || vr.top > vh * 2) return;
+    const g = feed.querySelector('[data-g="' + this.state.storyStep + '"]');
+    if (!g) return;
+    const y = Math.min(0, view.clientHeight - (g.offsetTop + g.offsetHeight) - 20);
+    const t = 'translateY(' + Math.round(y) + 'px)';
+    if (feed.style.transform !== t) feed.style.transform = t;
+  }
+  _setupReveal() {
+    if (this.props.revealOnScroll === false) return;
+    if (this._revealDone) return;
+    this._revealDone = true;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const els = [...document.querySelectorAll('[data-reveal]')];
+    const reveal = (el) => {
+      if (el._shown) return;
+      el._shown = true;
+      el.classList.add('is-in');
+      el.style.opacity = '';
+      el.style.transform = '';
+    };
+    if (reduce) {
+      els.forEach(reveal);
+      return;
+    }
+    const vh0 = window.innerHeight || document.documentElement.clientHeight;
+    els.forEach((el) => {
+      if (el.getBoundingClientRect().top < vh0 * 0.92) reveal(el);
+    });
+    const check = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      els.forEach((el) => {
+        if (el._shown) return;
+        if (el.getBoundingClientRect().top < vh - 48) reveal(el);
+      });
+    };
+    this._revealCheck = check;
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      els.forEach((el) => { if (!el._shown) io.observe(el); });
+      this._revealIO = io;
+    }
+    check();
+  }
+  _setSplitFromEvent(e) {
+    const el = e.currentTarget;
+    if (!el || !el.getBoundingClientRect) return;
+    const r = el.getBoundingClientRect();
+    const pct = Math.max(2, Math.min(98, ((e.clientX - r.left) / r.width) * 100));
+    this.setState({ split: pct });
+  }
+  renderVals() {
+    const U = (id, w) => (window.__resources && window.__resources['u_' + id]) || ('https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop');
+    const S = this.state;
+    const sc = S.scrolled;
+    const heroBg = (this.props.heroTone ?? 'plum') === 'ink'
+      ? 'linear-gradient(165deg, #17101C, #2C1030 70%, #3A1436)'
+      : 'linear-gradient(165deg, #250F38, #2A1240 55%, #45184F)';
+    const navStyle = {
+      position: 'sticky', top: 0, zIndex: 50, marginBottom: -74,
+      background: sc ? 'rgba(250,244,251,.86)' : 'transparent',
+      backdropFilter: sc ? 'blur(14px)' : 'none',
+      WebkitBackdropFilter: sc ? 'blur(14px)' : 'none',
+      borderBottom: sc ? '1px solid #EFE2F0' : '1px solid transparent',
+      transition: 'background .3s, border-color .3s, backdrop-filter .3s',
+    };
+    const handle = this.props.sellerHandle ?? 'studionoir';
+
+    const triptych = [
+      { label: 'Your background scene', labelFg: 'rgba(255,255,255,.55)', img: U('1517842645767-c639042777db', 520), note: 'The same scene you already shot. No new brief, no client call, no re-shoot.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', op: '+', opFg: 'rgba(255,255,255,.35)' },
+      { label: 'Their product', labelFg: 'rgba(255,255,255,.55)', img: U('1542291026-7eec264c27ff', 520), note: 'They upload one clear packshot, straight from their own catalogue.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', op: '=', opFg: '#EC4899' },
+      { label: 'Their product, in your scene', labelFg: '#F9A8D4', img: U('1600185365483-26d7a4cc7519', 720), note: 'Blended in seconds, at no cost to you. This is the image that closes the licence.', flex: '1.32', radius: '20px', frame: 'linear-gradient(150deg,#A855F7,#EC4899,#F43F5E)', pad: '5px', sheen: 'linear-gradient(115deg, transparent 35%, rgba(255,255,255,.38) 50%, transparent 65%)', anim: 'shimmer 3.6s ease-in-out infinite', op: '', opFg: 'transparent' },
+    ];
+    const ticker = ['Free to list', '₹0 for brand blends', 'They generate 20 visuals — still ₹0', 'No subscription', 'No re-shoots', 'New brands find you', 'You keep the client'];
+    const tickerLoop = ticker.concat(ticker);
+
+    // ---- scroll story
+    const st = S.storyStep;
+    const stepData = [
+      { who: 'Them', title: 'They hesitate', body: 'The scene is beautiful, but the product sitting in it isn’t theirs. This is where most chats go quiet.' },
+      { who: 'You', title: 'You send your link', body: 'One blend link from your PixelBlend store instead of five more sample frames and a mood board.' },
+      { who: 'Them', title: 'They blend their product in — and love the result', body: 'They upload one packshot, your exact scene lands back around it, and “will it match?” is answered on their own screen. Every blend is free for you.' },
+      { who: 'Them', title: 'They license it', body: 'They pay you directly in the same thread, and the doubt never turns into a re-shoot.' },
+    ];
+    const storySteps = stepData.map((s, i) => {
+      const on = st === i, past = st > i;
+      const last = i === stepData.length - 1;
+      return {
+        n: String(i + 1), who: s.who, title: s.title, body: s.body, goto: () => this._gotoStory(i),
+        opacity: on ? 1 : (past ? 0.78 : 0.58),
+        dotBg: on ? (s.who === 'You' ? '#1E1422' : 'linear-gradient(113.667deg,#A855F7,#F43F5E)') : (past ? '#E9D5F0' : '#F3E7F4'),
+        dotFg: on ? '#fff' : (past ? '#7A3D8A' : '#8A7E92'),
+        dotShadow: on ? '0 8px 18px -10px rgba(196,46,139,.55)' : 'none',
+        railOn: last ? 'is-hidden' : ((past || on) ? 'is-on' : ''),
+        tagFg: s.who === 'You' ? '#fff' : '#C42E8B',
+        tagBg: s.who === 'You' ? '#1E1422' : '#FCE7F0',
+      };
+    });
+    const bubble = (n) => ({
+      opacity: st >= n ? 1 : 0,
+      transform: st >= n ? 'none' : 'translateY(14px)',
+      transition: 'opacity .45s ease, transform .45s ease',
+      pointerEvents: st >= n ? 'auto' : 'none',
+    });
+    const pips = [0, 1, 2, 3].map((i) => ({ bg: st >= i ? 'linear-gradient(90deg,#A855F7,#F43F5E)' : '#EADDEC' }));
+    const stepBadge = 'STEP ' + (st + 1) + '/4';
+
+    // ---- compare slider
+    const compareRows = [
+      { a: 'They judge the match from a sample product that isn’t theirs', b: 'They see the scene with their own product in it' },
+      { a: '“Will it match my product?” stalls the chat', b: 'The doubt is answered before they ask' },
+      { a: 'You send more frames and still lose them', b: 'One link convinces every brand, on repeat' },
+      { a: 'Re-shoots and revision rounds eat your margin', b: 'They were sure before paying' },
+    ];
+    const dragStart = (e) => { this.setState({ dragging: true }); this._setSplitFromEvent(e); };
+    const dragMove = (e) => { if (this.state.dragging) this._setSplitFromEvent(e); };
+    const dragEnd = () => { if (this.state.dragging) this.setState({ dragging: false }); };
+
+    // ---- five steps, compact
+    const fiveData = [
+      { who: 'You', title: 'List the scene', body: 'Backdrops from your library plus a price. Free, unlimited.' },
+      { who: 'You', title: 'Paste the link', body: 'Reply to “will it match?” with your blend link.' },
+      { who: 'Them', title: 'They upload a product', body: 'One packshot from their catalogue. Nothing to install.' },
+      { who: 'Them', title: 'They see it in your scene', body: 'As many blends as they want — all free for you.' },
+      { who: 'Them', title: 'They license from you', body: 'Pay you directly, sure of the match.' },
+    ];
+    const five = fiveData.map((f, i) => {
+      const mine = f.who === 'You';
+      return {
+        n: '0' + (i + 1), who: mine ? 'You' : 'Her', title: f.title, body: f.body,
+        bg: mine ? '#1E1422' : '#fff',
+        bd: mine ? '#1E1422' : '#EFE2F0',
+        numFg: mine ? 'rgba(255,255,255,.4)' : '#E4CFE8',
+        titleFg: mine ? '#fff' : '#1E1422',
+        bodyFg: mine ? 'rgba(255,255,255,.66)' : '#6b6072',
+        tagFg: mine ? '#1E1422' : '#C42E8B',
+        tagBg: mine ? '#F9A8D4' : '#FCE7F0',
+      };
+    });
+
+    // ---- categories, auto-shifting
+    const catData = [
+      { name: 'Studio backdrops', count: 'Studio backdrops · seamless to gradient', cards: [
+        { label: 'Seamless white sweep', price: '₹1,190', img: U('1557683316-973673baf926', 520) },
+        { label: 'Soft gradient set', price: '₹1,499', img: U('1517842645767-c639042777db', 520) },
+        { label: 'Colour-block studio', price: '₹1,890', img: U('1495616811223-4d98c6e9c869', 520) },
+        { label: 'Shadow-play backdrop', price: '₹1,350', img: U('1600185365483-26d7a4cc7519', 520) }] },
+      { name: 'Marble & stone', count: 'Marble & stone · tabletop surfaces', cards: [
+        { label: 'Sunlit marble tabletop', price: '₹1,499', img: U('1519681393784-d120267933ba', 520) },
+        { label: 'Travertine ledge', price: '₹2,290', img: U('1594035910387-fea47794261f', 520) },
+        { label: 'Dark granite slab', price: '₹1,950', img: U('1513694203232-719a280e022f', 520) },
+        { label: 'Terrazzo surface', price: '₹1,690', img: U('1550226891-ef816aed4a98', 520) }] },
+      { name: 'Nature & outdoor', count: 'Nature & outdoor · forest to coast', cards: [
+        { label: 'Lush forest backdrop', price: '₹3,750', img: U('1441974231531-c6227db76b6e', 520) },
+        { label: 'Golden-hour beach', price: '₹2,290', img: U('1507525428034-b723cf961d3e', 520) },
+        { label: 'Desert dune light', price: '₹2,650', img: U('1434056886845-dac89ffe9b56', 520) },
+        { label: 'Mountain haze', price: '₹2,150', img: U('1460353581641-37baddab0fa2', 520) }] },
+      { name: 'Lifestyle interiors', count: 'Lifestyle interiors · homes and cafés', cards: [
+        { label: 'Sunlit kitchen counter', price: '₹2,450', img: U('1513694203232-719a280e022f', 520) },
+        { label: 'Café tabletop', price: '₹1,890', img: U('1509042239860-f550ce710b93', 520) },
+        { label: 'Linen bedside', price: '₹2,100', img: U('1556228578-8c89e6adf883', 520) },
+        { label: 'Living-room shelf', price: '₹2,890', img: U('1550226891-ef816aed4a98', 520) }] },
+      { name: 'Seasonal & festive', count: 'Seasonal & festive · campaign-ready sets', cards: [
+        { label: 'Diwali warm-light set', price: '₹3,150', img: U('1594035910387-fea47794261f', 520) },
+        { label: 'Holiday pine table', price: '₹2,790', img: U('1441974231531-c6227db76b6e', 520) },
+        { label: 'Summer poolside', price: '₹2,490', img: U('1507525428034-b723cf961d3e', 520) },
+        { label: 'Monsoon window', price: '₹1,990', img: U('1495616811223-4d98c6e9c869', 520) }] },
+      { name: 'Luxury & editorial', count: 'Luxury & editorial · dark and moody', cards: [
+        { label: 'Black glass plinth', price: '₹6,900', img: U('1522335789203-aabd1fc54bc9', 520) },
+        { label: 'Velvet drape set', price: '₹5,400', img: U('1618366712010-f4ae9c647dcb', 520) },
+        { label: 'Smoke & spotlight', price: '₹4,800', img: U('1595950653106-6c9ebd614d3a', 520) },
+        { label: 'Mirror pedestal', price: '₹7,200', img: U('1523275335684-37898b6baf30', 520) }] },
+      { name: 'Urban & street', count: 'Urban & street · concrete and neon', cards: [
+        { label: 'Concrete wall', price: '₹1,690', img: U('1516035069371-29a1b244cc32', 520) },
+        { label: 'Neon alley', price: '₹2,890', img: U('1595950653106-6c9ebd614d3a', 520) },
+        { label: 'Rooftop skyline', price: '₹3,200', img: U('1505740420928-5e560c06d30e', 520) },
+        { label: 'Rain-slick pavement', price: '₹2,450', img: U('1618366712010-f4ae9c647dcb', 520) }] },
+      { name: '3D & abstract', count: '3D & abstract · rendered sets', cards: [
+        { label: 'Floating plinth render', price: '₹4,200', img: U('1557683316-973673baf926', 520) },
+        { label: 'Liquid chrome set', price: '₹5,100', img: U('1584917865442-de89df76afd3', 520) },
+        { label: 'Pastel geometry', price: '₹3,400', img: U('1586495777744-4413f21062fa', 520) },
+        { label: 'Soft-cloud abstract', price: '₹2,950', img: U('1493934558415-9d19f0b2b4d2', 520) }] },
+    ];
+    const cats = catData.map((c, i) => {
+      const on = S.cat === i;
+      return {
+        name: c.name,
+        pick: () => this.setState({ cat: i, catProg: 0 }),
+        style: {
+          position: 'relative', overflow: 'hidden',
+          border: on ? '1px solid transparent' : '1px solid #EADDEC',
+          background: on ? 'linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E)' : '#fff',
+          color: on ? '#fff' : '#3b303f',
+          fontSize: '14px', fontWeight: 700, padding: '11px 17px', borderRadius: '999px',
+          cursor: 'pointer', transition: 'background .25s, color .25s',
+          whiteSpace: 'nowrap', flex: 'none',
+        },
+        barStyle: {
+          position: 'absolute', left: 0, bottom: 0, height: '3px',
+          width: on ? (S.catProg * 100).toFixed(1) + '%' : '0%',
+          background: on ? 'rgba(255,255,255,.92)' : 'transparent',
+        },
+      };
+    });
+    const catIndexLabel = (S.cat + 1) + ' / ' + catData.length;
+
+    const heroProofs = ['Listing is free, forever', 'Brand blends cost you ₹0', 'Zero commission on your licences', 'No new brief, no client call, no re-shoot'];
+    const benefits = [
+      { icon: '↩', title: 'Fewer re-shoots', body: 'They saw their own product in the scene before paying, so far less comes back for a redo.' },
+      { icon: '☆', title: 'Less negative feedback', body: 'The “it looked different with our packaging” complaint mostly disappears.' },
+      { icon: '◇', title: 'Higher client trust', body: 'An honest blend, not just a sample frame, reads as confidence in your work.' },
+      { icon: '→', title: 'Easier conversions', body: 'One link replaces a long back-and-forth of crops, mock-ups and mood boards.' },
+      { icon: '●', title: 'More confident buyers', body: 'They decide for themselves instead of asking you to promise the match.' },
+      { icon: '◷', title: 'Less time in DMs', body: 'Hours spent reassuring brands go back into shooting and editing.' },
+      { icon: '≡', title: 'Fewer revision rounds', body: 'Expectations are set before the files ship, so re-edits drop.' },
+      { icon: '△', title: 'A more premium shopfront', body: 'A blend link makes a small studio look as considered as a big agency.' },
+    ];
+
+    const hesitations = [
+      { quote: 'Will it match my product?', cost: 'You send three more angles of the same scene, and the thread goes quiet.', tag: 'SEEN · NO REPLY' },
+      { quote: 'Do you have it with a bottle this size?', cost: 'You don’t have that frame, so they decide not to take the risk.', tag: 'LOST LICENCE' },
+      { quote: 'It looked different with our packaging.', cost: 'They licensed it, then asked for a redo — and you shot it twice.', tag: 'RE-SHOOT' },
+    ];
+
+    // ---- five steps stepper
+    const flowData = [
+      { who: 'You', short: 'List the scene', title: 'List the scene you already shot', body: 'Upload the backdrops sitting in your library, add a price, and each one becomes a blend-ready listing.',
+        points: ['No new brief and no client call', 'One scene or your whole collection', 'Free to list, forever'],
+        img: U('1517842645767-c639042777db', 800), caption: 'Your background scene' },
+      { who: 'You', short: 'Paste the link', title: 'Reply to “will it match?” with your link', body: 'Every listing has its own blend link. Drop it in the DM, your bio, a status or a reel caption.',
+        points: ['Works anywhere you already sell', 'One link, unlimited brands', 'This is the last step that needs you'],
+        img: U('1519681393784-d120267933ba', 800), caption: 'Your blend link' },
+      { who: 'Them', short: 'They see it in your scene', title: 'They upload one packshot — and see it in your scene', body: 'A clear product shot from their catalogue is all it takes. Your scene lands back around it in seconds, and they can run it again in other lighting until they are sure.',
+        points: ['No app download for them', 'Unlimited blends per brand', '₹0 to you — first result to hundredth'],
+        img: U('1600185365483-26d7a4cc7519', 800), caption: 'Their AI blend' },
+      { who: 'Them', short: 'They license from you', title: 'They license it, sure of the match', body: 'They message you and pay you through your usual channel. We take no commission and never sit between you.',
+        points: ['You keep the client', 'You keep 100% of the sale', 'Far fewer “it looked different” re-shoots'],
+        img: U('1594035910387-fea47794261f', 800), caption: 'Paid · ₹1,499' },
+    ];
+    const steps = flowData.map((s, i) => {
+      const on = S.step === i, mine = s.who === 'You';
+      return {
+        n: '0' + (i + 1), short: s.short, who: s.who,
+        pick: () => this.setState({ step: i, stepProg: 0 }),
+        tabStyle: {
+          flex: 1, minWidth: 0, textAlign: 'left', padding: '20px 22px', border: 0,
+          borderBottom: '3px solid ' + (on ? (mine ? '#1E1422' : '#EC4899') : 'transparent'),
+          background: on ? '#FDF7FD' : '#fff', cursor: 'pointer', transition: 'background .2s', position: 'relative',
+        },
+        progW: on ? (Math.min(1, S.stepProg) * 100).toFixed(1) + '%' : '0%',
+        fillBg: mine ? '#1E1422' : '#EC4899',
+        numFg: on ? '#C42E8B' : '#DCCFDE',
+        titleFg: on ? '#1E1422' : '#8A7E92',
+        whoFg: mine ? (on ? '#fff' : '#8A7E92') : '#C42E8B',
+        whoBg: mine ? (on ? '#1E1422' : '#F1EDF2') : '#FCE7F0',
+      };
+    });
+    const cur = flowData[S.step] || flowData[0];
+    const activeStep = {
+      title: cur.title, body: cur.body, points: cur.points, img: cur.img, caption: cur.caption,
+      badge: cur.who === 'You' ? 'Your step' : 'They do this',
+      badgeFg: cur.who === 'You' ? '#fff' : '#C42E8B',
+      badgeBg: cur.who === 'You' ? '#1E1422' : '#FCE7F0',
+    };
+    const nextStep = () => this.setState((s) => ({ step: (s.step + 1) % flowData.length, stepProg: 0 }));
+    const nextLabel = S.step === flowData.length - 1 ? 'Back to start' : 'Next step';
+    const stepCounter = 'Step ' + (S.step + 1) + ' of ' + flowData.length + (cur.who === 'You' ? ' · yours' : ' · theirs');
+
+    // ---- cost
+    const promises = [
+      { cost: '₹0', title: 'Listing is always free', body: 'One scene or your whole library, for as long as you sell.' },
+      { cost: '₹0', title: 'No subscription', body: 'No monthly plan, no tier to upgrade to, no card on file.' },
+      { cost: '₹0', title: 'No upfront cost', body: 'Nothing to pay before you start.' },
+      { cost: '₹0', title: 'Blends never billed to you', body: 'Every visual a brand generates from your scene is free for you.' },
+      { cost: '₹0', title: 'Unlimited results per brand', body: 'Five products across twenty scenes — still zero.' },
+      { cost: '0%', title: 'No commission on licences', body: 'They pay you directly. We take no cut.' },
+    ];
+
+
+    const without = [
+      'They judge the match from a sample product that isn’t theirs',
+      '“Will it match my product?” ends the chat mid-conversation',
+      'You send more angles, crops, mock-ups — and still lose them',
+      'Re-shoots and revision rounds eat your margin',
+    ];
+    const withUs = [
+      'They see their own product inside your scene in seconds',
+      'The doubt is answered before they ask you',
+      'One link does the convincing, on repeat, for every brand',
+      'They were sure before paying — so far fewer come back for a redo',
+    ];
+
+    // ---- new customers
+    const storeItems = [
+      { img: U('1522335789203-aabd1fc54bc9', 320), name: 'Sunlit marble tabletop', price: '₹1,499' },
+      { img: U('1557683316-973673baf926', 320), name: 'Minimal studio gradient', price: '₹4,199' },
+      { img: U('1441974231531-c6227db76b6e', 320), name: 'Lush forest backdrop', price: '₹3,750' },
+      { img: U('1507525428034-b723cf961d3e', 320), name: 'Golden-hour beach', price: '₹2,290' },
+    ];
+    const discoveryFacts = [
+      { title: 'They find you while browsing, not because they know you', body: 'Your scenes sit in the categories brands already search — studio backdrops, marble surfaces, festive sets — next to everyone else’s.' },
+      { title: 'They see their product in your scene before they learn your name', body: 'Blend comes first in the app, so the decision is made on their own packshot. Every result is free for you.' },
+      { title: 'Then they message you, and the client is yours', body: 'They connect from your storefront and pay you through your usual channel. No commission, and we never sit between you.' },
+    ];
+    const discoStats = [
+      { title: 'Category browsing', body: 'Studio backdrops, marble, nature scenes — your listings sit where brands are already looking.' },
+      { title: 'Blend first', body: 'They see their own product in your scene before they know your studio’s name.' },
+      { title: 'Straight to your chat', body: 'They message and pay you directly. We never sit between you and your client.' },
+    ];
+    const discoFeed = [
+      { img: U('1519681393784-d120267933ba', 240), badge: 'Yours', badgeBg: 'linear-gradient(113.667deg,#A855F7,#F43F5E)', badgeFg: '#fff', ring: '1.5px solid #EC4899', veil: 'transparent' },
+      { img: U('1441974231531-c6227db76b6e', 240), badge: 'Listed', badgeBg: 'rgba(30,20,34,.6)', badgeFg: '#fff', ring: '1.5px solid transparent', veil: 'rgba(42,18,64,.35)' },
+      { img: U('1557683316-973673baf926', 240), badge: 'Yours', badgeBg: 'linear-gradient(113.667deg,#A855F7,#F43F5E)', badgeFg: '#fff', ring: '1.5px solid #EC4899', veil: 'transparent' },
+      { img: U('1507525428034-b723cf961d3e', 240), badge: 'Listed', badgeBg: 'rgba(30,20,34,.6)', badgeFg: '#fff', ring: '1.5px solid transparent', veil: 'rgba(42,18,64,.35)' },
+    ];
+    const discoveryPoints = [
+      { title: 'Category browsing', body: 'Your scenes sit in the categories brands open — studio backdrops, marble, nature and festive sets.' },
+      { title: 'Blend first', body: 'A stranger can drop their product into your scene before they know your studio’s name.' },
+      { title: 'Straight to your chat', body: 'They message you and pay you. We don’t sit between you and your client.' },
+    ];
+
+    const faqData = [
+      { q: 'Am I charged when a brand blends into my scene?', a: 'No. Blends run by brands are never billed to you — not the first result, not the twentieth. If a single brand makes twenty visuals from your scenes, your cost is still zero.' },
+      { q: 'What does it cost to list my backgrounds?', a: 'Nothing. Listing is free, forever — no listing fee, no subscription, no upfront cost. Upload one scene or your entire library.' },
+      { q: 'So who pays for the AI, then?', a: 'Not the seller. Your side of PixelBlend — listing your scenes, sharing your links and every blend brands run — stays free.' },
+      { q: 'Do I need to shoot anything new?', a: 'No. The backdrops and scenes already in your library are enough. The brand brings its own product shot, and the AI blends it into your scene.' },
+      { q: 'How do new brands find me?', a: 'Every listing also lives inside PixelBlend, where brands browse by category and mood. They can blend their product into your scene and then message you to license it — you keep the client.' },
+      { q: 'Do brands pay me or PixelBlend?', a: 'You. Brands that like their blend connect with you directly and pay you exactly as they do today. The only difference is that they arrive already sure about the match.' },
+    ];
+    const faqs = faqData.map((f, i) => {
+      const open = S.openFaq === i;
+      return {
+        q: f.q, a: f.a,
+        toggle: () => this.setState((s) => ({ openFaq: s.openFaq === i ? -1 : i })),
+        maxH: open ? '320px' : '0px',
+        iconRot: open ? 'rotate(45deg)' : 'rotate(0deg)',
+        iconFg: open ? '#C42E8B' : '#8A7E92',
+      };
+    });
+
+    const footerCols = [
+      { title: 'Product', links: ['Features', 'Marketplace', 'Gallery', 'Pricing', 'Download app'] },
+      { title: 'Company', links: ['About', 'Careers', 'Blog', 'Press'] },
+      { title: 'Sellers', links: ['Become a seller', 'Seller guide', 'Payouts', 'Success stories'] },
+      { title: 'Support', links: ['Help center', 'Privacy', 'Terms', 'Contact'] },
+    ];
+
+    const menuOpen = S.menuOpen;
+    const drawerLinks = [
+      { label: 'How it works', href: '#story' },
+      { label: 'Five steps', href: '#journey' },
+      { label: 'What you can list', href: '#list' },
+      { label: 'You pay ₹0', href: '#cost' },
+      { label: 'New customers', href: '#discover' },
+      { label: 'FAQ', href: '#faq' },
+    ];
+    const backdropStyle = {
+      position: 'fixed', inset: 0, zIndex: 60,
+      background: 'rgba(30,20,34,.5)',
+      backdropFilter: 'blur(3px)', WebkitBackdropFilter: 'blur(3px)',
+      opacity: menuOpen ? 1 : 0,
+      pointerEvents: menuOpen ? 'auto' : 'none',
+      transition: 'opacity .3s ease',
+    };
+    const drawerStyle = {
+      position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 70,
+      width: 'min(86vw, 360px)',
+      background: '#FAF4FB',
+      boxShadow: '-24px 0 60px -30px rgba(30,20,34,.5)',
+      padding: '22px 24px 28px',
+      display: 'flex', flexDirection: 'column',
+      transform: menuOpen ? 'translateX(0)' : 'translateX(105%)',
+      visibility: menuOpen ? 'visible' : 'hidden',
+      transition: 'transform .38s cubic-bezier(.16,1,.3,1), visibility .38s',
+      overflowY: 'auto',
+    };
+
+    return {
+      navStyle,
+      navFg: sc ? '#1E1422' : '#fff',
+      navLinkFg: sc ? '#5b5060' : 'rgba(255,255,255,.72)',
+      navTagFg: sc ? '#C42E8B' : '#fff',
+      navTagBg: sc ? '#FCE7F0' : 'rgba(255,255,255,.14)',
+      burgerBg: sc ? '#fff' : 'rgba(255,255,255,.10)',
+      burgerBd: sc ? '#EFE2F0' : 'rgba(255,255,255,.22)',
+      heroBg, handle, triptych, tickerLoop, heroProofs, benefits,
+      storySteps, pips, stepBadge,
+      b1: bubble(0), b2: bubble(1), b3: bubble(2), b4: bubble(3),
+      compareRows, dragStart, dragMove, dragEnd,
+      splitPct: S.split.toFixed(1) + '%',
+      compareLeft: U('1557683316-973673baf926', 900),
+      compareRight: U('1600185365483-26d7a4cc7519', 900),
+      five,
+      hesitations, steps, activeStep, nextStep, nextLabel, stepCounter, storeItems, discoveryFacts, discoStats,
+      pauseSteps: () => { if (!this.state.stepPaused) this.setState({ stepPaused: true }); },
+      resumeSteps: () => { if (this.state.stepPaused) this.setState({ stepPaused: false }); },
+      cats, activeCat: { count: catData[S.cat].count }, catCards: catData[S.cat].cards, catIndexLabel,
+      promises, without, withUs,
+      discoFeed, discoveryPoints,
+      faqs, footerCols,
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      drawerLinks, backdropStyle, drawerStyle,
+    };
+  }
+}
+
+
+</script>
+  <script src="legal-chrome.js?v=19"></script>
+  <script>
+    (function () {
+      function ready() { document.body.classList.add('sellers-ready'); }
+      var tries = 0;
+      var t = setInterval(function () {
+        tries += 1;
+        var root = document.getElementById('dc-root');
+        if ((root && root.children.length) || tries > 40) { clearInterval(t); ready(); }
+      }, 100);
+    })();
+  </script>
+</body>
+</html>

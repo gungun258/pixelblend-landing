@@ -186,24 +186,41 @@ function bindBaSlider() {
         /* Force layout so opacity:0 is applied before pb-in (needed for transition). */
         void el.offsetWidth;
         requestAnimationFrame(function () {
-          requestAnimationFrame(function () { el.classList.add('pb-in'); });
+          requestAnimationFrame(function () {
+            el.classList.add('pb-in');
+            /* Directional hero uses keyframes — mark done after anim so !important can lock final state */
+            if (el.classList.contains('pb-from-left') || el.classList.contains('pb-from-right')) {
+              var finish = function () {
+                if (el.classList.contains('pb-done')) return;
+                el.classList.add('pb-done');
+                el.removeEventListener('animationend', finish);
+              };
+              el.addEventListener('animationend', finish);
+              setTimeout(finish, 1200);
+            }
+          });
         });
       }
 
       /* ---- Hero: keep strong immediate entrance ---- */
       var heroLeft = document.querySelector('header .hero-grid > div:first-child');
       if (heroLeft) {
-        Array.prototype.forEach.call(heroLeft.children, function (ch, i) {
-          if (!ch || ch.classList.contains('store-btn') || ch.classList.contains('hero-stores')) return;
-          if (ch.classList && ch.classList.contains('store-btns')) return;
+        var heroLeftKids = [];
+        Array.prototype.forEach.call(heroLeft.children, function (ch) {
+          if (!ch || ch.nodeType !== 1) return;
+          if (ch.classList.contains('store-btn') || ch.classList.contains('hero-stores')) return;
+          if (ch.classList.contains('store-btns')) return;
+          heroLeftKids.push(ch);
+        });
+        heroLeftKids.forEach(function (ch, i) {
           ch.classList.add('pb-reveal', 'pb-from-left');
-          ch.style.setProperty('--pb-d', (80 + i * 110) + 'ms');
+          ch.style.setProperty('--pb-d', (60 + i * 100) + 'ms');
           playIn(ch);
         });
       }
       Array.prototype.forEach.call(heroCards, function (card, i) {
         card.classList.add('pb-reveal', 'pb-from-right', 'pb-card');
-        card.style.setProperty('--pb-d', (220 + i * 160) + 'ms');
+        card.style.setProperty('--pb-d', (180 + i * 140) + 'ms');
         playIn(card);
       });
 
@@ -341,15 +358,15 @@ function bindBaSlider() {
         setTimeout(revealVisible, 120);
         setTimeout(revealVisible, 400);
         setTimeout(revealVisible, 1000);
-        /* Hard failsafe: never leave animated parts stuck hidden */
-        setTimeout(forceRevealAll, 2800);
-        setTimeout(forceRevealAll, 6000);
+        /* Failsafe only for still-visible stuck nodes — keep offscreen for scroll anims */
+        setTimeout(revealVisible, 2800);
+        setTimeout(forceRevealAll, 14000);
       });
       window.addEventListener('scroll', revealVisible, { passive: true });
       window.addEventListener('resize', revealVisible);
       window.addEventListener('pageshow', function () {
         revealVisible();
-        setTimeout(forceRevealAll, 800);
+        setTimeout(revealVisible, 800);
       });
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', revealVisible);

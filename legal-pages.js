@@ -18,12 +18,28 @@
       tech: 'Technical'
     };
 
+    function setActiveCat(cat) {
+      activeCat = cat || 'all';
+      document.querySelectorAll('.faq-cat').forEach(function (b) {
+        b.classList.toggle('is-active', (b.getAttribute('data-cat') || 'all') === activeCat);
+      });
+      applyFilter();
+      var activePill = document.querySelector('.faq-mobile-pills .faq-cat.is-active');
+      if (activePill && activePill.scrollIntoView) {
+        activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
     function applyFilter() {
       var q = ((searchEl && searchEl.value) || '').trim().toLowerCase();
       var visible = 0;
       items.forEach(function (item) {
         var cats = (item.getAttribute('data-cat') || '').split(/\s+/);
-        var text = (item.getAttribute('data-q') || item.textContent || '').toLowerCase();
+        var question = (item.getAttribute('data-q') || '').toLowerCase();
+        var answer = '';
+        var body = item.querySelector('.lp-faq-body');
+        if (body) answer = (body.textContent || '').toLowerCase();
+        var text = question + ' ' + answer;
         var catOk = activeCat === 'all' || cats.indexOf(activeCat) !== -1;
         var qOk = !q || text.indexOf(q) !== -1;
         var show = catOk && qOk;
@@ -50,20 +66,7 @@
 
     document.querySelectorAll('.faq-cat').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('.faq-cat').forEach(function (b) { b.classList.remove('is-active'); });
-        btn.classList.add('is-active');
-        activeCat = btn.getAttribute('data-cat') || 'all';
-        applyFilter();
-      });
-    });
-
-    document.querySelectorAll('.faq-topic').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var cat = btn.getAttribute('data-jump') || 'all';
-        var catBtn = document.querySelector('.faq-cat[data-cat="' + cat + '"]');
-        if (catBtn) catBtn.click();
-        var panel = document.querySelector('.faq-panel');
-        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActiveCat(btn.getAttribute('data-cat') || 'all');
       });
     });
 
