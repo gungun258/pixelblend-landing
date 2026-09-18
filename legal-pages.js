@@ -81,6 +81,8 @@
   if (!grid) return;
 
   function U(id, w) {
+    var local = (window.__resources && window.__resources['u_' + id]);
+    if (local) return local;
     return 'https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop';
   }
 

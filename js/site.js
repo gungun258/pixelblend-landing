@@ -360,7 +360,7 @@ function bindBaSlider() {
         setTimeout(revealVisible, 1000);
         /* Failsafe only for still-visible stuck nodes — keep offscreen for scroll anims */
         setTimeout(revealVisible, 2800);
-        setTimeout(forceRevealAll, 14000);
+        setTimeout(forceRevealAll, 5000);
       });
       window.addEventListener('scroll', revealVisible, { passive: true });
       window.addEventListener('resize', revealVisible);
@@ -749,7 +749,7 @@ function bindBaSlider() {
   var waitMs = 0;
   var hid = setInterval(function () {
     waitMs += 50;
-    if ((cssReady && pbHydrated()) || waitMs > 20000) {
+    if ((cssReady && pbHydrated()) || waitMs > 4000) {
       clearInterval(hid);
       if (cssReady && pbHydrated()) {
         requestAnimationFrame(function () {
