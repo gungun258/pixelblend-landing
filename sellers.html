@@ -542,9 +542,9 @@
     #lost-sale .lost-quote { font-size: 22px; }
   }
 
-  /* Story: compact phone + clean step rail (keeps sticky inside section) */
+  /* Story: compact phone + clean step rail — phone sticky through all 4 steps */
   #story {
-    overflow: clip !important;
+    overflow: visible !important;
     isolation: isolate;
     margin-top: 0 !important;
   }
@@ -573,40 +573,159 @@
   }
   #story .story-grid {
     gap: 36px !important;
-    padding-bottom: 48px;
+    padding-bottom: 0 !important;
+    align-items: start !important;
   }
-  #story .story-steps { padding-top: 24px !important; }
-  #story .story-block {
+  /* Tall pin wrap: phone + steps stay fixed through 4 points, then release */
+  #story .story-pin-wrap {
+    position: relative;
+    height: 240vh;
+    margin: 0;
+  }
+  #story .story-pin-sticky {
+    position: sticky;
+    top: 88px;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.05fr .78fr;
+    gap: 40px;
+    align-items: start;
+    padding-bottom: 28px;
+    box-sizing: border-box;
+  }
+  #story .story-steps {
+    padding-top: 8px !important;
     min-height: 0 !important;
-    padding: 18px 0 !important;
-  }
-  #story .story-phone {
-    top: 96px !important;
-    padding-top: 12px !important;
-    padding-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     align-self: start;
   }
-  #story .story-phone-shell {
-    max-width: 320px !important;
-    border-radius: 32px !important;
-    padding: 8px !important;
+  #story .story-phone {
+    position: relative !important;
+    top: auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    align-self: center !important; /* vertically center vs steps column */
+    justify-self: center;
+    height: fit-content;
+    z-index: 2;
   }
   #story .phone-body {
-    height: 548px !important;
+    height: 540px !important;
     border-radius: 26px !important;
   }
-  #story .story-rail {
-    width: 2px;
+  #story .story-block {
+    min-height: 0 !important;
+    padding: 0 0 18px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start;
+    transition: none;
+  }
+  #story .story-block.is-on {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #story .story-block-row {
+    display: grid !important;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: stretch;
     flex: 1 1 auto;
-    min-height: 28px;
+    min-height: 100%;
+    transition: opacity .35s ease;
+  }
+  #story .story-block:last-of-type {
+    padding-bottom: 8px !important;
+  }
+  #story .story-block-inner {
+    display: block !important;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0 !important;
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid #EFE2F0;
+    box-shadow: 0 10px 28px -20px rgba(30, 20, 34, .38);
+    transition: opacity .35s ease, border-color .3s ease, box-shadow .3s ease;
+    align-self: start;
+  }
+  #story .story-block.is-on .story-block-inner {
+    border-color: #E9D5F0;
+    box-shadow:
+      0 18px 44px -22px rgba(196, 46, 139, .42),
+      0 0 0 1px rgba(236, 72, 153, .1);
+  }
+  #story .story-dot-col {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    height: auto;
+    min-height: 100%;
+    padding-top: 16px;
+  }
+  #story .story-rail {
+    display: block;
+    width: 3px !important;
+    flex: 1 1 auto !important;
+    align-self: center !important;
+    min-height: 48px !important;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
     border-radius: 999px;
     background: #EADDEC;
   }
+  #story .story-block.is-on .story-rail,
   #story .story-rail.is-on {
-    background: linear-gradient(180deg, #A855F7, #EC4899);
+    width: 3px !important;
+    background: linear-gradient(180deg, #A855F7, #EC4899, #F43F5E) !important;
   }
   #story .story-rail.is-hidden {
-    display: none;
+    visibility: hidden;
+    background: transparent !important;
+  }
+  #story .story-phone-shell {
+    width: auto !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    border-radius: 32px !important;
+    padding: 8px !important;
+    box-sizing: border-box;
+  }
+  @media (max-width: 1040px) {
+    #story .story-pin-wrap {
+      height: auto !important;
+    }
+    #story .story-pin-sticky {
+      position: relative !important;
+      top: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      max-height: none !important;
+      gap: 0 !important;
+      align-items: stretch !important;
+    }
+    #story .story-phone {
+      margin: 12px auto 24px !important;
+      align-self: center !important;
+    }
   }
   #story .story-cost {
     margin-top: 12px;
@@ -646,7 +765,7 @@
     color: rgba(255,255,255,.68);
   }
   #story .story-cost-wrap {
-    padding: 20px 0 32px 62px;
+    padding: 8px 0 24px 58px;
   }
   @media (max-width: 1040px) {
     #story .story-cost-wrap { padding-left: 0 !important; }
@@ -743,7 +862,7 @@
     max-width: 470px;
   }
   #discover .disco-cta-card {
-    margin-top: 28px;
+    margin-top: 18px;
     background: linear-gradient(150deg,#2A1240,#45184F);
     color: #fff;
     border-radius: 22px;
@@ -1146,7 +1265,7 @@
       <div class="hero-anim-copy">
         <h1 class="hero-h1" style="font-size: 52px; line-height: 1.08; letter-spacing: -.035em; font-weight: 800; margin: 0 0 22px;">Show your scene with <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 6px;">their</span> product in it.</h1>
         <p style="font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.72); margin: 0; max-width: 480px;">List your backgrounds on PixelBlend and share your link. The brand uploads one product photo and sees it blended into your scene — so they stop asking “will this match my product?” and start asking for your invoice.</p>
-      </div>
+        </div>
       <div id="start" class="hero-anim-card" style="display: flex; flex-direction: column; gap: 16px; align-items: stretch; align-self: start; height: auto;">
         <div class="hero-pay" style="position: relative; width: 100%; height: fit-content; overflow: hidden; border-radius: 22px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07); padding: 18px 20px 16px;">
           <div style="position: absolute; right: -60px; top: -70px; width: 230px; height: 230px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.38), transparent 68%); pointer-events: none;"></div>
@@ -1234,7 +1353,7 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="story" style="position: relative; background: #fff; margin-top: 0; overflow: hidden;">
+<section id="story" style="position: relative; background: #fff; margin-top: 0; overflow: visible;">
   <div style="position: absolute; right: -180px; top: -160px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.13), transparent 66%); pointer-events: none;"></div>
   <div style="position: absolute; left: -200px; top: 240px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.10), transparent 68%); pointer-events: none;"></div>
   <div class="pad" style="position: relative; max-width: 1220px; margin: 0 auto; padding: 40px 40px 0;">
@@ -1244,19 +1363,20 @@
     <p style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
   </div>
 
-  <div id="story-track" class="story-grid" data-reveal="" data-delay="1" style="display: grid; grid-template-columns: 1.05fr .78fr; gap: 40px; align-items: start;">
-    <div class="story-steps" style="padding-top: 28px;">
+  <div id="story-track" class="story-pin-wrap" data-reveal="" data-delay="1">
+    <div class="story-pin-sticky story-grid">
+    <div class="story-steps" style="padding-top: 8px;">
       <sc-for list="{{ storySteps }}" as="s" hint-placeholder-count="5">
-        <div class="story-block" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; justify-content: center; cursor: pointer; padding: 22px 0;">
-          <div style="display: grid; grid-template-columns: 44px 1fr; gap: 18px; align-items: stretch; opacity: {{ s.opacity }}; transition: opacity .35s ease;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
+        <div class="story-block" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
+          <div class="story-block-row" style="opacity: {{ s.opacity }};">
+            <div class="story-dot-col">
               <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ s.dotBg }}; color: {{ s.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ s.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ s.n }}</span>
-              <span class="story-rail {{ s.railOn }}" style="margin-top: 10px;"></span>
+              <span class="story-rail"></span>
             </div>
-            <div style="padding-bottom: 6px;">
-              <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ s.tagFg }}; background: {{ s.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 12px;">{{ s.who }}</span>
-              <div style="font-size: 26px; font-weight: 800; letter-spacing: -.03em; line-height: 1.18; margin-bottom: 8px;">{{ s.title }}</div>
-              <p style="font-size: 15.5px; line-height: 1.55; color: #5b5060; margin: 0; max-width: 440px;">{{ s.body }}</p>
+            <div class="story-block-inner">
+              <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ s.tagFg }}; background: {{ s.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 10px;">{{ s.who }}</span>
+              <div style="font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.2; margin-bottom: 6px;">{{ s.title }}</div>
+              <p style="font-size: 14.5px; line-height: 1.5; color: #5b5060; margin: 0; max-width: 440px;">{{ s.body }}</p>
             </div>
           </div>
         </div>
@@ -1272,8 +1392,8 @@
       </div>
     </div>
 
-    <div class="story-phone" style="position: sticky; top: 96px; display: flex; justify-content: center; padding-top: 12px;">
-      <div class="story-phone-shell" style="width: 100%; max-width: 320px; background: #1E1422; border-radius: 32px; padding: 8px; box-shadow: 0 24px 56px -32px rgba(30,20,34,.52);">
+    <div class="story-phone">
+      <div class="story-phone-shell" style="background: #1E1422; border-radius: 32px; padding: 8px; box-shadow: 0 24px 56px -32px rgba(30,20,34,.52);">
         <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 548px;">
           <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; border-bottom: 1px solid #EFE2F0; flex: none;">
             <span style="font-size: 17px; color: #8A7E92; line-height: 1;">‹</span>
@@ -1382,6 +1502,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
   </div>
 </section>
@@ -1443,7 +1564,7 @@
                   <div style="position: absolute; left: 0; right: 0; top: 0; padding: 8px 8px 0; background: linear-gradient(180deg, rgba(30,20,34,.72), transparent 85%);">
                     <div style="font-size: 9px; font-weight: 800; color: #fff; letter-spacing: -.01em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ t.name }}</div>
                     <div style="font-size: 8.5px; color: rgba(255,255,255,.8); margin-top: 1px;">{{ t.price }}</div>
-                  </div>
+                    </div>
                   <div style="position: absolute; left: 7px; right: 7px; bottom: 7px; display: flex; align-items: center; justify-content: center; gap: 4px; background: #fff; border-radius: 8px; padding: 6px 6px;">
                     <span style="width: 5px; height: 5px; border-radius: 50%; background: #EC4899; flex: none;"></span>
                     <span style="font-size: 8px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1E1422;">Blend</span>
@@ -1464,15 +1585,6 @@
     <!-- acquisition chain -->
     <div>
       <div class="disco-side-title">Today your reach ends at your follower count. In the marketplace it doesn’t.</div>
-
-      <div class="disco-facts">
-        <sc-for list="{{ discoveryFacts }}" as="f" hint-placeholder-count="3">
-          <div class="disco-fact">
-            <div class="disco-fact-title">{{ f.title }}</div>
-            <p class="disco-fact-body">{{ f.body }}</p>
-          </div>
-        </sc-for>
-      </div>
 
       <div class="disco-cta-card">
         <div style="font-size: 25px; font-weight: 800; letter-spacing: -.03em; line-height: 1.22; max-width: 520px;">Reach beyond your own followers — without spending a rupee on ads.</div>
@@ -1772,7 +1884,14 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onScroll, { passive: true });
-    requestAnimationFrame(() => { this._setupReveal(); this._syncStory(); this._syncLostRows(); });
+    this._storyEngaged = false;
+    this._storyVisualStep = -1;
+    requestAnimationFrame(() => {
+      this._setupReveal();
+      this._syncStory();
+      this._syncLostRows();
+      this._syncStoryBlocks(this._storyVisualStep);
+    });
     this._catIv = setInterval(() => {
       if (this.props.categoryAutoplay === false) return;
       this.setState((s) => {
@@ -1791,6 +1910,10 @@ class Component extends DCLogic {
   componentDidUpdate() {
     const want = this.state.menuOpen ? 'hidden' : '';
     if (document.body.style.overflow !== want) document.body.style.overflow = want;
+    const vs = (typeof this._storyVisualStep === 'number')
+      ? this._storyVisualStep
+      : this.state.storyStep;
+    this._syncStoryBlocks(vs);
     this._positionFeed();
   }
   componentWillUnmount() {
@@ -1823,51 +1946,103 @@ class Component extends DCLogic {
       else row.classList.remove('is-on');
     });
   }
+  _syncStoryBlocks(step) {
+    const blocks = document.querySelectorAll('#story-track .story-block');
+    blocks.forEach((b, i) => {
+      const on = step >= 0 && i === step;
+      const past = step >= 0 && i < step;
+      b.classList.toggle('is-on', on);
+      b.classList.toggle('is-past', past);
+      const rail = b.querySelector('.story-rail');
+      if (!rail) return;
+      const last = i === blocks.length - 1;
+      rail.classList.toggle('is-hidden', last);
+      /* Step 0 rail stays lit once engaged — no flicker off/on */
+      rail.classList.toggle('is-on', !last && step >= 0 && i <= step);
+    });
+  }
   _syncStory() {
     const track = document.getElementById('story-track');
     if (!track) return;
     const phone = track.querySelector('.story-phone');
     const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
+    const sticky = track.querySelector('.story-pin-sticky');
+
+    /* Mobile: no pin wrap — advance by which block is in view */
     if (phoneHidden) {
       const blocks = track.querySelectorAll('.story-block');
       let best = 0;
-      const mid = window.innerHeight * 0.35;
+      const mid = window.innerHeight * 0.38;
       blocks.forEach((b, i) => {
-        const r = b.getBoundingClientRect();
-        if (r.top <= mid) best = i;
+        if (b.getBoundingClientRect().top <= mid) best = i;
       });
       best = Math.max(0, Math.min(3, best));
+      this._storyEngaged = true;
+      this._storyVisualStep = best;
       if (best !== this.state.storyStep) this.setState({ storyStep: best });
+      else {
+        this._syncStoryBlocks(best);
+        this._positionFeed();
+      }
       return;
     }
-    const travel = track.offsetHeight - phone.offsetHeight;
-    const stickyTop = parseFloat(getComputedStyle(phone).top) || 92;
+
+    const stickyTop = sticky
+      ? (parseFloat(getComputedStyle(sticky).top) || 88)
+      : 88;
     const r = track.getBoundingClientRect();
-    const scrolled = Math.max(0, Math.min(travel, stickyTop - r.top));
-    const p = travel > 0 ? scrolled / travel : 0;
-    const best = Math.max(0, Math.min(3, Math.floor(p / 0.24)));
+    const travel = Math.max(1, track.offsetHeight - (sticky ? sticky.offsetHeight : (phone ? phone.offsetHeight : 600)));
+    const raw = stickyTop - r.top;
+    /* Not started until pin wrap reaches sticky top */
+    if (raw < 0) {
+      this._storyEngaged = false;
+      this._storyVisualStep = -1;
+      this._syncStoryBlocks(-1);
+      this._positionFeed();
+      return;
+    }
+    this._storyEngaged = true;
+    const scrolled = Math.max(0, Math.min(travel, raw));
+    const p = scrolled / travel;
+    /* 4 equal segments; hold step 4 through the last stretch before release */
+    let best;
+    if (p < 0.22) best = 0;
+    else if (p < 0.44) best = 1;
+    else if (p < 0.66) best = 2;
+    else best = 3;
+    this._storyVisualStep = best;
     if (best !== this.state.storyStep) this.setState({ storyStep: best });
-    else this._positionFeed();
+    else {
+      this._syncStoryBlocks(best);
+      this._positionFeed();
+    }
   }
   _gotoStory(i) {
     const track = document.getElementById('story-track');
     if (!track) return;
     const phone = track.querySelector('.story-phone');
     const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
+    this._storyEngaged = true;
+    this._storyVisualStep = i;
     this.setState({ storyStep: i });
+
     if (phoneHidden) {
       const blocks = track.querySelectorAll('.story-block');
       const el = blocks[i];
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 88;
-        window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'smooth' });
-      }
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 88;
+      window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'smooth' });
       return;
     }
-    const travel = track.offsetHeight - phone.offsetHeight;
-    const stickyTop = parseFloat(getComputedStyle(phone).top) || 92;
+
+    const sticky = track.querySelector('.story-pin-sticky');
+    const stickyTop = sticky
+      ? (parseFloat(getComputedStyle(sticky).top) || 88)
+      : 88;
+    const travel = Math.max(1, track.offsetHeight - (sticky ? sticky.offsetHeight : 600));
+    const centers = [0.11, 0.33, 0.55, 0.78];
     const trackTop = track.getBoundingClientRect().top + window.scrollY;
-    const target = trackTop - stickyTop + (i * 0.24 + 0.09) * Math.max(0, travel);
+    const target = trackTop - stickyTop + centers[Math.max(0, Math.min(3, i))] * travel;
     window.scrollTo({ top: Math.max(0, Math.round(target)), behavior: 'smooth' });
   }
   _positionFeed() {
@@ -1880,7 +2055,17 @@ class Component extends DCLogic {
     if (vr.bottom < -vh || vr.top > vh * 2) return;
     const g = feed.querySelector('[data-g="' + this.state.storyStep + '"]');
     if (!g) return;
-    const y = Math.min(0, view.clientHeight - (g.offsetTop + g.offsetHeight) - 20);
+    const topPad = 12;
+    const bottomPad = 16;
+    const viewH = view.clientHeight;
+    const groupTop = g.offsetTop;
+    const groupBottom = groupTop + g.offsetHeight;
+    // Prefer seating the active step near the bottom (chat feel).
+    // If that would clip the top of a tall step (esp. step 3), pin the top instead.
+    let y = Math.min(0, viewH - groupBottom - bottomPad);
+    if (groupTop + y < topPad) {
+      y = Math.min(0, topPad - groupTop);
+    }
     const t = 'translateY(' + Math.round(y) + 'px)';
     if (feed.style.transform !== t) feed.style.transform = t;
   }
@@ -1972,6 +2157,7 @@ class Component extends DCLogic {
       const last = i === stepData.length - 1;
       return {
         n: String(i + 1), who: s.who, title: s.title, body: s.body, goto: () => this._gotoStory(i),
+        blockClass: on ? 'is-on' : (past ? 'is-past' : ''),
         opacity: on ? 1 : (past ? 0.78 : 0.58),
         dotBg: on ? (s.who === 'You' ? '#1E1422' : 'linear-gradient(113.667deg,#A855F7,#F43F5E)') : (past ? '#E9D5F0' : '#F3E7F4'),
         dotFg: on ? '#fff' : (past ? '#7A3D8A' : '#8A7E92'),
@@ -2292,7 +2478,7 @@ class Component extends DCLogic {
 
 
 </script>
-  <script src="legal-chrome.js?v=20"></script>
+  <script src="legal-chrome.js?v=26"></script>
   <script>
     (function () {
       function ready() { document.body.classList.add('sellers-ready'); }

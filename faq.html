@@ -5,16 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FAQ — PixelBlend</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="legal.css?v=14">
+  <link rel="stylesheet" href="legal.css?v=17">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body class="faq-page">
   <div id="pb-chrome-header"></div>
-  <article class="lp-wrap lp-about lp-faq-page">
-    <h1>FAQ</h1>
-    <p class="lp-meta">Questions, answered</p>
+  <main class="lp-policy">
+    <header class="lp-banner">
+      <div class="lp-banner-glow" aria-hidden="true"></div>
+      <div class="lp-banner-art" aria-hidden="true">
+        <span class="lp-shard-1"></span>
+        <span class="lp-shard-2"></span>
+        <span class="lp-shard-3"></span>
+      </div>
+      <div class="lp-banner-inner">
+        <h1>FAQ</h1>
+      </div>
+    </header>
+    <div class="lp-sheet">
+      <div class="lp-sheet-inner">
+        <div class="lp-sheet-rule" aria-hidden="true"></div>
+        <article class="lp-wrap lp-about lp-faq-page">
+          <p class="lp-meta">Questions, answered</p>
 
     <!-- Main explorer card: search + categories + questions -->
     <section class="faq-panel" aria-label="FAQ explorer">
@@ -52,10 +66,6 @@
             <button type="button" class="faq-cat" data-cat="tech">Technical</button>
           </div>
           <div class="faq-cats-extra">
-            <div class="faq-cats-tip">
-              <strong>Tip</strong>
-              <p>Search by product type, credits, or “licence” — most answers show up in one tap.</p>
-            </div>
             <div class="faq-cats-links">
               <a href="how-it-works.html">How it works <svg class="faq-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg></a>
               <a href="pricing.html">See pricing <svg class="faq-ext" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg></a>
@@ -265,9 +275,12 @@
         <a href="how-it-works.html" class="lp-cta-ghost">See how it works</a>
       </div>
     </section>
-  </article>
+        </article>
+      </div>
+    </div>
+  </main>
   <div id="pb-chrome-footer"></div>
-  <script src="legal-chrome.js?v=18"></script>
+  <script src="legal-chrome.js?v=26"></script>
   <script src="legal-pages.js?v=5"></script>
 </body>
 </html>

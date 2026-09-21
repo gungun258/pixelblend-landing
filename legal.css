@@ -654,15 +654,10 @@ body {
 }
 
 /* FAQ page */
-body.faq-page { background: #fff; }
-.lp-faq-page { max-width: 980px; }
-.lp-faq-page > h1 {
-  text-align: center;
-  margin-bottom: 6px;
-}
-.lp-faq-page > .lp-meta {
-  text-align: center;
-  margin-bottom: 28px;
+body.faq-page { background: #FAF4FB; }
+.lp-faq-page { max-width: none; }
+.lp-policy .lp-faq-page > .lp-meta {
+  text-align: left;
 }
 
 .faq-panel {
@@ -780,24 +775,6 @@ body.faq-page { background: #fff; }
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-.faq-cats-tip {
-  background: #fff;
-  border: 1px solid #E8E4E9;
-  border-radius: 14px;
-  padding: 14px 12px;
-}
-.faq-cats-tip strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-  color: #C42E8B;
-}
-.faq-cats-tip p {
-  margin: 6px 0 0;
-  font-size: 12.5px;
-  line-height: 1.45;
-  color: #6B6070;
 }
 .faq-cats-links {
   display: flex;
@@ -1001,9 +978,6 @@ body.faq-page { background: #fff; }
     margin-top: 0;
     padding-top: 0;
   }
-  .faq-cats-tip {
-    padding: 12px 12px;
-  }
   .faq-cats-links {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -1177,6 +1151,18 @@ body.faq-page { background: #fff; }
 .lp-contact-card p {
   margin: 0 0 12px;
   font-size: 15px;
+}
+
+/* Tally feedback embed */
+.lp-tally-embed {
+  margin: 8px 0 24px;
+  min-height: 480px;
+}
+.lp-tally-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
 }
 
 /* Legal-page drawer (matches main app) */

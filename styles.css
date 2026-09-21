@@ -577,9 +577,9 @@
       min-height: 0 !important;
     }
     .hero-eq-plus { width: 28px; height: 28px; }
-    .hero-eq-equals { width: 32px; height: 32px; }
+    .hero-eq-equals { width: 28px; height: 28px; }
     .hero-eq-plus::before { width: 10px; height: 10px; }
-    .hero-eq-equals::before { width: 11px; height: 8px; }
+    .hero-eq-equals::before { width: 10px; height: 7px; }
 
     .hero-eq-label {
       font-size: 7.5px !important;
@@ -761,9 +761,9 @@
     }
     .hero-eq-thumb { border-radius: 10px !important; }
     .hero-eq-plus { width: 22px; height: 22px; }
-    .hero-eq-equals { width: 24px; height: 24px; }
+    .hero-eq-equals { width: 22px; height: 22px; }
     .hero-eq-plus::before { width: 8px; height: 8px; }
-    .hero-eq-equals::before { width: 9px; height: 6px; }
+    .hero-eq-equals::before { width: 8px; height: 5px; }
     .hero-eq-label {
       font-size: 6.5px !important;
       letter-spacing: 0 !important;
@@ -1496,19 +1496,19 @@ body:has(.lb-stage) #pb-to-top {
     linear-gradient(#EC4899, #EC4899) center / 2.2px 100% no-repeat;
 }
 .hero-eq-equals {
-  width: 42px;
-  height: 42px;
+  width: 30px;
+  height: 30px;
   background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
-  box-shadow: 0 10px 22px -8px rgba(236, 72, 153, .6);
+  box-shadow: 0 8px 18px -6px rgba(236, 72, 153, .55);
 }
 .hero-eq-equals::before {
   content: '';
   display: block;
-  width: 14px;
-  height: 10px;
+  width: 12px;
+  height: 8px;
   background:
-    linear-gradient(#fff, #fff) 50% 0 / 100% 2.4px no-repeat,
-    linear-gradient(#fff, #fff) 50% 100% / 100% 2.4px no-repeat;
+    linear-gradient(#fff, #fff) 50% 0 / 100% 2.2px no-repeat,
+    linear-gradient(#fff, #fff) 50% 100% / 100% 2.2px no-repeat;
 }
 .hero-eq-result {
   flex: 1 1 0 !important;
@@ -1680,7 +1680,7 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
   .hero-eq-plus { width: 26px; height: 26px; }
   .hero-eq-equals { width: 26px; height: 26px; }
   .hero-eq-plus::before { width: 9px; height: 9px; }
-  .hero-eq-equals::before { width: 10px; height: 7px; }
+  .hero-eq-equals::before { width: 9px; height: 6px; }
   .hero-eq-label {
     font-size: 7px !important;
     letter-spacing: 0 !important;
@@ -1930,6 +1930,13 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 .pb-reveal-scroll.pb-in {
   opacity: 1;
   transform: none;
+}
+/* Never leave scroll-reveal blocks blank if IntersectionObserver misses a frame */
+@keyframes pbRevealFailsafe {
+  to { opacity: 1 !important; transform: none !important; }
+}
+html[data-pb-motion="1"] .pb-reveal-scroll:not(.pb-in) {
+  animation: pbRevealFailsafe 0.01s linear 2.2s forwards;
 }
 /* Beat inline opacity — but never kill directional hero keyframes */
 html[data-pb-motion="1"] [data-reveal].pb-in,

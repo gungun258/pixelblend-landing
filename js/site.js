@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
     cssLink.addEventListener('load', markCssReady);
     cssLink.addEventListener('error', markCssReady);
     try { if (cssLink.sheet) cssReady = true; } catch (e) {}
+    /* Cached stylesheets sometimes skip `load` — poll briefly */
+    var cssPoll = 0;
+    var cssPollT = setInterval(function () {
+      cssPoll += 1;
+      try { if (cssLink.sheet) { cssReady = true; clearInterval(cssPollT); } } catch (e) {}
+      if (cssPoll > 40) { cssReady = true; clearInterval(cssPollT); }
+    }, 100);
   }
 
   function pbReveal() {
@@ -159,13 +166,14 @@ function bindBaSlider() {
       if (document.documentElement.classList.contains('pb-booting')) return false;
       if (!document.querySelector('section')) return false;
       var heroRight = document.querySelector('.hero-demo-col');
-      if (!heroRight) return false;
+      /* Hero cards optional — still bind page scroll reveals if missing briefly */
       var heroCards = [];
-      Array.prototype.forEach.call(heroRight.querySelectorAll('.hero-eq'), function (eq) {
-        var wrap = eq.parentNode;
-        heroCards.push(wrap && wrap !== heroRight ? wrap : eq);
-      });
-      if (heroCards.length < 1) return false;
+      if (heroRight) {
+        Array.prototype.forEach.call(heroRight.querySelectorAll('.hero-eq'), function (eq) {
+          var wrap = eq.parentNode;
+          heroCards.push(wrap && wrap !== heroRight ? wrap : eq);
+        });
+      }
       document.documentElement.setAttribute('data-pb-motion', '1');
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         /* Never leave content stuck invisible if classes were applied elsewhere */
@@ -196,7 +204,7 @@ function bindBaSlider() {
                 el.removeEventListener('animationend', finish);
               };
               el.addEventListener('animationend', finish);
-              setTimeout(finish, 1200);
+              setTimeout(finish, 900);
             }
           });
         });
@@ -217,15 +225,25 @@ function bindBaSlider() {
           ch.style.setProperty('--pb-d', (60 + i * 100) + 'ms');
           playIn(ch);
         });
+        /* Parent data-reveal must not stay blank */
+        heroLeft.classList.add('pb-in', 'pb-done');
       }
       Array.prototype.forEach.call(heroCards, function (card, i) {
         card.classList.add('pb-reveal', 'pb-from-right', 'pb-card');
         card.style.setProperty('--pb-d', (180 + i * 140) + 'ms');
         playIn(card);
       });
+      if (heroRight) {
+        heroRight.classList.add('pb-in', 'pb-done');
+        if (heroRight.style) {
+          heroRight.style.removeProperty('opacity');
+          heroRight.style.removeProperty('transform');
+        }
+      }
 
       /* ---- Rest of page: scroll-triggered fade-up (later + clearer) ---- */
       var scrollEls = [];
+      var io = null;
       function addScroll(el, delay, asCard) {
         if (!el || el.__pbScroll) return;
         if (el.closest && (el.closest('.hero-grid') || el.closest('.lb-stage') || el.closest('nav') || el.id === 'pb-to-top' || el.id === 'pb-dl-bar')) return;
@@ -236,6 +254,7 @@ function bindBaSlider() {
         el.classList.add('pb-reveal-scroll');
         if (typeof delay === 'number') el.style.setProperty('--pb-d', delay + 'ms');
         scrollEls.push(el);
+        if (io) io.observe(el);
       }
 
       /* cards first so data-reveal wrappers don't steal the hover-lift flag */
@@ -280,6 +299,7 @@ function bindBaSlider() {
             markText(ch);
           });
           wrap.__pbScroll = 1;
+          wrap.classList.add('pb-in', 'pb-done');
           return;
         }
 
@@ -314,12 +334,12 @@ function bindBaSlider() {
         /* Parent [data-reveal] wrappers must not stay at inline opacity:0 */
         var wrap = el.closest && el.closest('[data-reveal]');
         if (wrap && wrap !== el) {
-          wrap.classList.add('pb-in');
+          wrap.classList.add('pb-in', 'pb-done');
           clearRevealInline(wrap);
         }
       }
 
-      var io = new IntersectionObserver(function (entries) {
+      io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           if (!en.isIntersecting) return;
           var el = en.target;
@@ -329,7 +349,7 @@ function bindBaSlider() {
       }, {
         threshold: 0.01,
         /* Generous margins — iOS Safari sometimes misses tight rootMargin */
-        rootMargin: '12% 0px 12% 0px'
+        rootMargin: '20% 0px 20% 0px'
       });
       scrollEls.forEach(function (el) { io.observe(el); });
 
@@ -340,7 +360,7 @@ function bindBaSlider() {
         scrollEls.forEach(function (el) {
           if (!el || el.classList.contains('pb-in')) return;
           var r = el.getBoundingClientRect();
-          if (r.bottom > -80 && r.top < vh + 80) {
+          if (r.bottom > -120 && r.top < vh + 120) {
             try { io.unobserve(el); } catch (e) {}
             revealEl(el);
           }
@@ -353,23 +373,49 @@ function bindBaSlider() {
           if (el.__pbIsCard) el.classList.add('pb-card');
         });
       }
+      function rescanNewNodes() {
+        Array.prototype.forEach.call(document.querySelectorAll(cardSel + ', [data-reveal]'), function (el) {
+          if (el.__pbScroll || el.classList.contains('pb-in')) return;
+          if (el.closest && el.closest('.hero-grid')) {
+            el.classList.add('pb-in', 'pb-done');
+            clearRevealInline(el);
+            return;
+          }
+          addScroll(el, 0, !!el.matches && el.matches(cardSel));
+        });
+        revealVisible();
+      }
       requestAnimationFrame(function () {
         revealVisible();
-        setTimeout(revealVisible, 120);
-        setTimeout(revealVisible, 400);
-        setTimeout(revealVisible, 1000);
-        /* Failsafe only for still-visible stuck nodes — keep offscreen for scroll anims */
-        setTimeout(revealVisible, 2800);
-        setTimeout(forceRevealAll, 5000);
+        setTimeout(revealVisible, 80);
+        setTimeout(revealVisible, 250);
+        setTimeout(revealVisible, 700);
+        setTimeout(revealVisible, 1500);
+        setTimeout(forceRevealAll, 2500);
+        setTimeout(rescanNewNodes, 600);
+        setTimeout(rescanNewNodes, 1800);
       });
       window.addEventListener('scroll', revealVisible, { passive: true });
       window.addEventListener('resize', revealVisible);
       window.addEventListener('pageshow', function () {
         revealVisible();
-        setTimeout(revealVisible, 800);
+        setTimeout(revealVisible, 400);
+        setTimeout(forceRevealAll, 1200);
       });
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', revealVisible);
+      }
+      /* DCLogic / late DOM swaps can remount nodes after first bind */
+      if (typeof MutationObserver !== 'undefined') {
+        var moT = null;
+        var mo = new MutationObserver(function () {
+          if (moT) return;
+          moT = setTimeout(function () {
+            moT = null;
+            rescanNewNodes();
+          }, 120);
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
       }
 
       return true;

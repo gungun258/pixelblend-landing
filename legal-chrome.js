@@ -20,7 +20,7 @@
       links: [
         { label: 'About Us', href: 'about.html' },
         { label: 'Contact Us', href: 'contact.html' },
-        { label: 'Leave us Feedback', href: 'contact.html' },
+        { label: 'Leave us Feedback', href: 'feedback.html' },
         { label: 'Gallery', href: 'gallery.html' }
       ]
     },
@@ -170,6 +170,7 @@
       'faq.html': 'FAQ',
       'pricing.html': 'Pricing',
       'contact.html': 'Contact',
+      'feedback.html': 'Feedback',
       'privacy.html': 'Privacy Policy',
       'terms.html': 'Terms of use',
       'refund.html': 'Refund Policy'

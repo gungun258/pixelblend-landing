@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     @keyframes galFadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -23,8 +23,23 @@
       background: #FAF4FB;
       overflow-x: hidden;
       color: #1E1422;
+      font-family: 'Hanken Grotesk', sans-serif;
     }
     body.gal-page #pb-chrome-footer { position: relative; z-index: 2; }
+
+    /* App theme tokens (match landing / about / sellers) */
+    .gal-root {
+      --gal-bg: #FAF4FB;
+      --gal-ink: #1E1422;
+      --gal-ink-2: #1A1420;
+      --gal-muted: #5b5060;
+      --gal-soft: #8A7E92;
+      --gal-line: #F0E6F2;
+      --gal-tint: #F7ECF8;
+      --gal-tint-2: #F4E8F6;
+      --gal-pink: #C42E8B;
+      --gal-grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    }
 
     /* Kill link underlines across gallery sections + CTAs */
     .gal-root a,
@@ -46,14 +61,14 @@
     .gal-hero {
       position: relative;
       border-bottom: none;
-      background: #FAF4FB;
+      background: radial-gradient(120% 80% at 50% 0%, #F7ECF8, #FAF4FB 70%);
       overflow: hidden;
     }
     .gal-hero-glow {
       position: absolute;
       top: 60px; right: -140px;
       width: 560px; height: 560px;
-      background: radial-gradient(circle, rgba(244,63,94,.18), transparent 65%);
+      background: radial-gradient(circle, rgba(236,72,153,.16), transparent 65%);
       filter: blur(20px);
       pointer-events: none;
     }
@@ -218,7 +233,7 @@
     }
     .gal-hero-stack figure {
       margin: 0; position: relative; overflow: hidden;
-      background: #DDD5CB;
+      background: #F0E6F2;
       animation: galFadeUp .7s ease both;
     }
     .gal-hero-stack figure:nth-child(1) {
@@ -272,7 +287,7 @@
     .gal-peek-label strong {
       font-size: 13px; font-weight: 800; letter-spacing: .12em; color: #1A1420;
     }
-    .gal-peek-label span { font-size: 13.5px; color: #8A8076; }
+    .gal-peek-label span { font-size: 13.5px; color: #8A7E92; }
     .gal-peek-track {
       overflow: hidden;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
@@ -289,11 +304,11 @@
     }
     .gal-peek-row img {
       width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
-      border-radius: 3px; background: #DDD5CB;
+      border-radius: 12px; background: #F0E6F2;
     }
     .gal-peek-row span {
       display: block; margin-top: 8px;
-      font-size: 12px; font-weight: 600; color: #6B635A;
+      font-size: 12px; font-weight: 600; color: #5b5060;
     }
 
     /* ——— Section chrome ——— */
@@ -349,7 +364,7 @@
       text-transform: uppercase;
       font-family: 'Hanken Grotesk', sans-serif;
       font-style: normal;
-      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -365,7 +380,7 @@
       color: #fff;
     }
     .gal-compare .gal-em {
-      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -383,7 +398,7 @@
     }
     .gal-compare-meta b {
       font-size: 12px; font-weight: 800; letter-spacing: .1em;
-      color: #E8A0C4; min-width: 64px;
+      color: #F9A8D4; min-width: 64px;
     }
     .gal-ba {
       position: relative;
@@ -435,45 +450,45 @@
     /* ——— Recipe strip ——— */
     .gal-recipe {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; border: 1px solid #E4DDD4; background: #fff;
+      gap: 0; border: 1px solid #F0E6F2; background: #fff;
     }
     .gal-recipe-step {
       padding: 28px 26px 30px;
-      border-right: 1px solid #E4DDD4;
+      border-right: 1px solid #F0E6F2;
     }
     .gal-recipe-step:last-child { border-right: none; }
     .gal-recipe-step img {
       width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
-      background: #E8E1D8;
+      background: #F0E6F2;
     }
     .gal-recipe-n {
       margin-top: 16px;
       font-family: 'Instrument Serif', serif;
-      font-size: 28px; font-style: italic; color: #8A4A6E;
+      font-size: 28px; font-style: italic; color: #C42E8B;
     }
     .gal-recipe-step strong {
       display: block; margin-top: 4px;
       font-size: 17px; font-weight: 800; letter-spacing: -.02em;
     }
     .gal-recipe-step p {
-      margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #6B635A;
+      margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #5b5060;
     }
 
     /* ——— Browse ——— */
     .gal-filters {
       display: flex; flex-wrap: wrap; gap: 6px;
       margin-bottom: 22px; padding-bottom: 18px;
-      border-bottom: 1px solid #E4DDD4;
+      border-bottom: 1px solid #F0E6F2;
     }
     .gal-filters button {
       font-family: inherit; font-size: 13px; font-weight: 700;
-      color: #6B635A; background: transparent; border: 0;
-      padding: 8px 12px; cursor: pointer; border-radius: 2px;
+      color: #8A7E92; background: transparent; border: 0;
+      padding: 8px 12px; cursor: pointer; border-radius: 999px;
       transition: color .2s, background .2s;
     }
     .gal-filters button.is-active,
     .gal-filters button:hover {
-      color: #1A1420; background: #E8E1D8;
+      color: #C42E8B; background: #F7ECF8;
     }
 
     .gal-masonry {
@@ -569,7 +584,7 @@
       font-size: 11px; color: #8A7E92;
     }
     .gal-empty {
-      text-align: center; padding: 48px 20px; color: #8A8076; font-size: 15px;
+      text-align: center; padding: 48px 20px; color: #8A7E92; font-size: 15px;
     }
 
     /* ——— Mood board ——— */
@@ -603,12 +618,13 @@
       font-size: 13.5px; color: rgba(255,255,255,.7);
     }
 
-    /* ——— What stays yours (no photo repeat) ——— */
+    /* ——— What stays yours — white band (app band-white) ——— */
     .gal-keep {
-      margin-top: 72px;
-      padding: 64px 32px;
-      background: #17121A;
-      color: #F4EFEA;
+      margin-top: 0;
+      padding: 72px 32px;
+      background: #fff;
+      color: #1E1422;
+      box-shadow: inset 0 1px 0 rgba(30,20,34,.05), inset 0 -1px 0 rgba(30,20,34,.05);
     }
     .gal-keep-inner { max-width: 1180px; margin: 0 auto; }
     .gal-keep-head {
@@ -621,7 +637,7 @@
       font-weight: 800;
       letter-spacing: .14em;
       text-transform: uppercase;
-      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -633,10 +649,13 @@
       line-height: 1.09;
       font-weight: 800;
       letter-spacing: -.03em;
-      color: #fff;
+      color: #1A1420;
     }
     .gal-keep-head h2 .gal-em {
-      background: linear-gradient(113.667deg, #F9A8D4, #fff);
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -645,11 +664,11 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0;
-      border-top: 1px solid rgba(255,255,255,.12);
+      border-top: 1px solid #F0E6F2;
     }
     .gal-keep-item {
       padding: 28px 26px 32px;
-      border-right: 1px solid rgba(255,255,255,.12);
+      border-right: 1px solid #F0E6F2;
       animation: galFadeUp .65s ease both;
     }
     .gal-keep-item:last-child { border-right: none; }
@@ -660,7 +679,7 @@
       font-family: 'Instrument Serif', serif;
       font-size: 34px;
       font-style: italic;
-      color: #E8A0C4;
+      color: #C42E8B;
       line-height: 1;
     }
     .gal-keep-item strong {
@@ -669,13 +688,13 @@
       font-size: 20px;
       font-weight: 800;
       letter-spacing: -.02em;
-      color: #fff;
+      color: #1A1420;
     }
     .gal-keep-item p {
       margin: 10px 0 0;
       font-size: 15px;
       line-height: 1.55;
-      color: rgba(244,239,234,.72);
+      color: #5b5060;
       max-width: 280px;
     }
     .gal-keep-cta {
@@ -690,15 +709,16 @@
       text-decoration: none !important;
     }
     .gal-keep-cta .gal-cta-sec {
-      background: transparent;
-      border-color: rgba(255,255,255,.22);
-      color: #fff;
+      background: #fff;
+      border: 1px solid #F0E6F2;
+      color: #1E1422;
     }
 
     /* ——— Creator voices ——— */
     .gal-voices {
-      margin-top: 8px;
+      margin-top: 0;
       padding: 72px 32px 24px;
+      background: linear-gradient(180deg, #F4E8F6, #FBF1F9);
     }
     .gal-voices-inner { max-width: 1180px; margin: 0 auto; }
     .gal-voices-head {
@@ -762,9 +782,10 @@
 
     /* ——— End ——— */
     .gal-end {
-      margin-top: 72px;
+      margin-top: 0;
       border-top: none;
       padding: 56px 32px 80px;
+      background: #FAF4FB;
     }
     .gal-end-inner {
       max-width: 1180px; margin: 0 auto;
@@ -800,46 +821,89 @@
     }
     .gal-lb-panel {
       position: relative; width: min(960px, 100%);
-      background: #F3F0EC; padding: 24px;
-      box-shadow: 0 40px 90px -36px rgba(0,0,0,.65);
+      background: #fff; padding: 24px;
+      border-radius: 22px;
+      box-shadow: 0 40px 90px -36px rgba(30,20,34,.55);
     }
     .gal-lb-x {
-      position: absolute; top: 12px; right: 12px; width: 40px; height: 40px;
-      border: 0; background: #fff; color: #1A1420; font-size: 22px; cursor: pointer;
+      position: absolute; top: 14px; right: 14px; z-index: 3;
+      width: 40px; height: 40px;
+      border: none; border-radius: 50%;
+      background: rgba(255,255,255,.92);
+      color: #1E1422;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 22px -8px rgba(30,20,34,.5);
     }
     .gal-lb-nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 42px; height: 42px; border: 0; background: #fff;
-      color: #1A1420; font-size: 22px; cursor: pointer;
-      box-shadow: 0 10px 24px -12px rgba(0,0,0,.4);
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+      width: 44px; height: 44px;
+      border: none; border-radius: 50%;
+      background: rgba(255,255,255,.92);
+      color: #C42E8B;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 26px -10px rgba(30,20,34,.5);
     }
-    .gal-lb-prev { left: -16px; }
-    .gal-lb-next { right: -16px; }
+    .gal-lb-prev { left: 12px; }
+    .gal-lb-next { right: 12px; }
     .gal-lb-stage {
-      display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1.25fr;
+      gap: 10px 12px;
       margin-top: 8px;
+      align-items: center;
     }
     .gal-lb-col { min-width: 0; }
     .gal-lb-col img {
       width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
-      background: #DDD5CB;
+      background: #F0E6F2;
+      border-radius: 12px;
     }
     .gal-lb-col span {
       display: block; margin-top: 10px;
-      font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #8A8076;
+      font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #8A7E92;
+    }
+    .gal-lb-op {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      width: 36px;
+      height: 36px;
+      margin-top: -28px;
+      border-radius: 50%;
+      background: #fff;
+      color: #C42E8B;
+      border: 1px solid #F0E6F2;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: 0 6px 16px -10px rgba(196, 46, 139, .35);
+      flex: none;
     }
     .gal-lb-meta {
-      margin-top: 18px; padding-top: 16px; border-top: 1px solid #E4DDD4;
+      margin-top: 18px; padding-top: 16px; border-top: 1px solid #F0E6F2;
       display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
       align-items: center;
     }
     .gal-lb-meta strong {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 400;
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 20px; font-weight: 800; letter-spacing: -.02em;
+      color: #1A1420;
     }
     .gal-lb-meta span {
       font-size: 12px; font-weight: 800; letter-spacing: .08em;
-      color: #8A4A6E; background: #EDE4EA; padding: 6px 12px;
+      color: #C42E8B; background: #F7ECF8; padding: 6px 12px;
+      border-radius: 999px;
     }
 
     @media (max-width: 1100px) {
@@ -915,7 +979,7 @@
       .gal-recipe { grid-template-columns: 1fr; }
       .gal-recipe-step {
         border-right: none;
-        border-bottom: 1px solid #E4DDD4;
+        border-bottom: 1px solid #F0E6F2;
         padding: 22px 20px 24px;
       }
       .gal-recipe-step:last-child { border-bottom: none; }
@@ -966,19 +1030,65 @@
       }
       .gal-lb {
         padding: 12px;
-        align-items: flex-end;
+        align-items: center;
       }
       .gal-lb-panel {
-        width: 100%;
-        max-height: min(92vh, 900px);
+        width: min(420px, 100%);
+        max-height: min(88dvh, 720px);
         overflow: auto;
-        padding: 18px 16px 20px;
-        border-radius: 16px 16px 0 0;
+        padding: 40px 14px 16px;
+        border-radius: 18px;
       }
-      .gal-lb-stage { grid-template-columns: 1fr 1fr; }
-      .gal-lb-col:last-child { grid-column: 1 / -1; }
+      /* Product + Background on one row, Result compact below — not a tall stack */
+      .gal-lb-stage {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 6px 8px;
+        align-items: center;
+      }
+      .gal-lb-op {
+        display: flex;
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+        margin-top: 0;
+      }
+      .gal-lb-stage > .gal-lb-op:nth-child(4) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        margin: 2px 0 0;
+      }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) {
+        grid-column: 1 / -1;
+        max-width: min(200px, 52vw);
+        justify-self: center;
+        width: 100%;
+      }
+      .gal-lb-col img {
+        aspect-ratio: 1 / 1;
+        max-height: 140px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) img {
+        aspect-ratio: 3 / 4;
+        max-height: 200px;
+      }
+      .gal-lb-col span {
+        margin-top: 6px;
+        font-size: 10px;
+        text-align: center;
+      }
+      .gal-lb-meta {
+        margin-top: 12px;
+        padding-top: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
       .gal-lb-nav { display: none; }
-      .gal-lb-x { top: 8px; right: 8px; }
+      .gal-lb-x { top: 10px; right: 10px; }
     }
 
     @media (max-width: 760px) {
@@ -1220,10 +1330,17 @@
       .gal-voice:first-child { min-height: 240px; border-radius: 14px; }
       .gal-voice > div { padding: 18px; }
       .gal-voice blockquote { font-size: 20px; }
-      .gal-lb-stage { grid-template-columns: 1fr; gap: 10px; }
-      .gal-lb-col:last-child { grid-column: auto; }
-      .gal-lb-meta strong { font-size: 18px; }
-      .gal-lb-panel { padding: 16px 14px 18px; }
+      .gal-lb-stage {
+        grid-template-columns: 1fr auto 1fr;
+        gap: 6px 8px;
+      }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) {
+        max-width: min(180px, 50vw);
+      }
+      .gal-lb-col img { max-height: 120px; }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) img { max-height: 180px; }
+      .gal-lb-meta strong { font-size: 16px; }
+      .gal-lb-panel { padding: 38px 12px 14px; }
     }
 
     @media (max-width: 400px) {
@@ -1345,34 +1462,6 @@
       </div>
     </section>
 
-    <section class="gal-band">
-      <div class="gal-band-inner">
-        <div class="gal-head-row">
-          <h2>How to read any look in the <span class="gal-em">gallery</span>.</h2>
-    </div>
-        <div class="gal-recipe">
-          <div class="gal-recipe-step">
-            <img src="assets/images/dca77fff-acd9-4dc4-9a90-5c1f4162d170.jpg" alt="Product">
-            <div class="gal-recipe-n">01</div>
-            <strong>The product</strong>
-            <p>Packshot or phone photo — sharp focus, even light, whole object in frame.</p>
-          </div>
-          <div class="gal-recipe-step">
-            <img src="assets/images/17c99c23-d1cf-48e8-a604-0ddac6b6279f.jpg" alt="Background">
-            <div class="gal-recipe-n">02</div>
-            <strong>The background</strong>
-            <p>Creator listing, Unsplash save, screenshot, or anything on your camera roll.</p>
-          </div>
-          <div class="gal-recipe-step">
-            <img src="assets/images/c76c5d00-7acc-4c9d-ab79-32ca8d3fab84.jpg" alt="Result">
-            <div class="gal-recipe-n">03</div>
-            <strong>The blend</strong>
-            <p>Same product in the new scene — ready for listings, ads, and social.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="gal-keep" aria-label="What stays yours">
       <div class="gal-keep-inner">
         <div class="gal-keep-head">
@@ -1399,51 +1488,6 @@
         <div class="gal-keep-cta">
           <a href="#browse" class="gal-cta-pri">Browse looks to remake</a>
           <a href="#compare" class="gal-cta-sec">See before / after</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="gal-band">
-      <div class="gal-band-inner">
-        <div class="gal-head-row">
-          <h2>Jump into a <span class="gal-em">mood board</span>.</h2>
-        </div>
-        <div class="gal-moods">
-          <a class="gal-mood" href="#browse" data-jump="Lifestyle">
-            <img src="assets/images/d82ec365-4d7a-4740-93ae-51e14c2d8f08.jpg" alt="">
-            <span>
-              <strong>Lifestyle</strong>
-              <em>Rooms, beaches, linen light</em>
-            </span>
-          </a>
-          <a class="gal-mood" href="#browse" data-jump="Studio">
-            <img src="assets/images/52bf1ea1-7b1e-44f8-afbb-5c6976702fe4.jpg" alt="">
-            <span>
-              <strong>Studio</strong>
-              <em>Catalog-ready sets</em>
-            </span>
-          </a>
-          <a class="gal-mood" href="#browse" data-jump="Fragrance">
-            <img src="assets/images/844de4b8-3bd6-4b55-8a73-a8830610ddf4.jpg" alt="">
-            <span>
-              <strong>Beauty</strong>
-              <em>Detail &amp; fragrance</em>
-            </span>
-          </a>
-          <a class="gal-mood" href="#browse" data-jump="Nature">
-            <img src="assets/images/75c54c95-db9c-4e83-a339-9eeb5044aa53.jpg" alt="">
-            <span>
-              <strong>Nature</strong>
-              <em>Forest &amp; outdoor</em>
-            </span>
-          </a>
-          <a class="gal-mood" href="#browse" data-jump="Modern">
-            <img src="assets/images/d8af21e1-d95b-4016-a705-ec49ae7de3b8.jpg" alt="">
-            <span>
-              <strong>Modern</strong>
-              <em>City &amp; editorial</em>
-            </span>
-          </a>
         </div>
       </div>
     </section>
@@ -1496,7 +1540,7 @@
   <div class="gal-lb" id="lp-lb" hidden aria-hidden="true">
     <div class="gal-lb-backdrop" data-lb-close></div>
     <div class="gal-lb-panel" role="dialog" aria-modal="true" aria-label="Blend detail">
-      <button type="button" class="gal-lb-x" data-lb-close aria-label="Close">×</button>
+      <button type="button" class="gal-lb-x" data-lb-close aria-label="Close">✕</button>
       <button type="button" class="gal-lb-nav gal-lb-prev" data-lb-prev aria-label="Previous">‹</button>
       <button type="button" class="gal-lb-nav gal-lb-next" data-lb-next aria-label="Next">›</button>
       <div class="gal-lb-stage">
@@ -1504,10 +1548,12 @@
           <img id="lp-lb-user" alt="Product">
           <span>PRODUCT</span>
         </div>
+        <div class="gal-lb-op" aria-hidden="true">+</div>
         <div class="gal-lb-col">
           <img id="lp-lb-cloth" alt="Background">
           <span>BACKGROUND</span>
         </div>
+        <div class="gal-lb-op" aria-hidden="true">=</div>
         <div class="gal-lb-col">
           <img id="lp-lb-result" alt="AI result">
           <span>RESULT</span>
@@ -1521,7 +1567,7 @@
   </div>
 
   <div id="pb-chrome-footer"></div>
-  <script src="legal-chrome.js?v=18"></script>
+  <script src="legal-chrome.js?v=26"></script>
   <script>
   (function () {
     function U(id, w) {
