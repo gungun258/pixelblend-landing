@@ -1973,13 +1973,8 @@ body.gal-page [data-reveal][data-delay="3"].is-in { transition-delay: .24s; }
   opacity: 1;
   transform: none;
 }
-/* Never leave scroll-reveal blocks blank if IntersectionObserver misses a frame */
-@keyframes pbRevealFailsafe {
-  to { opacity: 1 !important; transform: none !important; }
-}
-html[data-pb-motion="1"] .pb-reveal-scroll:not(.pb-in) {
-  animation: pbRevealFailsafe 0.01s linear 2.2s forwards;
-}
+/* No timed failsafe here — it was revealing below-fold blocks before scroll,
+   so sections looked static when the user finally reached them. */
 /* Beat inline opacity — but never kill directional hero keyframes */
 html[data-pb-motion="1"] [data-reveal].pb-in,
 html[data-pb-motion="1"] .pb-reveal-scroll.pb-in,

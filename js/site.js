@@ -327,16 +327,23 @@ function bindBaSlider() {
         el.style.removeProperty('transition');
       }
       function revealEl(el) {
-        if (!el || el.classList.contains('pb-in')) return;
-        el.classList.add('pb-in');
-        clearRevealInline(el);
-        if (el.__pbIsCard) el.classList.add('pb-card');
-        /* Parent [data-reveal] wrappers must not stay at inline opacity:0 */
-        var wrap = el.closest && el.closest('[data-reveal]');
-        if (wrap && wrap !== el) {
-          wrap.classList.add('pb-in', 'pb-done');
-          clearRevealInline(wrap);
-        }
+        if (!el || el.__pbShown || el.classList.contains('pb-in')) return;
+        el.__pbShown = 1;
+        /* Start frame so opacity:0 → pb-in always transitions */
+        el.classList.remove('pb-in');
+        void el.offsetWidth;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            el.classList.add('pb-in');
+            clearRevealInline(el);
+            if (el.__pbIsCard) el.classList.add('pb-card');
+            var wrap = el.closest && el.closest('[data-reveal]');
+            if (wrap && wrap !== el) {
+              wrap.classList.add('pb-in', 'pb-done');
+              clearRevealInline(wrap);
+            }
+          });
+        });
       }
 
       io = new IntersectionObserver(function (entries) {
@@ -366,8 +373,14 @@ function bindBaSlider() {
           }
         });
       }
-      function forceRevealAll() {
-        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal:not(.pb-in), .pb-reveal-scroll:not(.pb-in), .pb-pop:not(.pb-done), [data-reveal]:not(.pb-in)'), function (el) {
+      /* Only unstick nodes that are already on-screen — never auto-reveal
+         below-fold sections (that made the page feel static on scroll). */
+      function forceRevealStuckVisible() {
+        var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+        Array.prototype.forEach.call(document.querySelectorAll('.pb-reveal:not(.pb-in), .pb-reveal-scroll:not(.pb-in), .pb-pop:not(.pb-done)'), function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > vh) return;
+          el.__pbShown = 1;
           el.classList.add('pb-in', 'pb-done');
           clearRevealInline(el);
           if (el.__pbIsCard) el.classList.add('pb-card');
@@ -391,7 +404,7 @@ function bindBaSlider() {
         setTimeout(revealVisible, 250);
         setTimeout(revealVisible, 700);
         setTimeout(revealVisible, 1500);
-        setTimeout(forceRevealAll, 2500);
+        setTimeout(forceRevealStuckVisible, 3200);
         setTimeout(rescanNewNodes, 600);
         setTimeout(rescanNewNodes, 1800);
       });
@@ -400,7 +413,7 @@ function bindBaSlider() {
       window.addEventListener('pageshow', function () {
         revealVisible();
         setTimeout(revealVisible, 400);
-        setTimeout(forceRevealAll, 1200);
+        setTimeout(forceRevealStuckVisible, 1600);
       });
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', revealVisible);
