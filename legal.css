@@ -229,6 +229,7 @@ body {
 }
 .lp-policy .lp-cta-band {
   text-align: center;
+  overflow: visible;
 }
 .lp-policy .lp-cta-band h2 {
   color: #fff !important;
@@ -541,13 +542,20 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+  align-items: center;
 }
 .lp-cta-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
   padding: 12px 22px;
   border-radius: 999px;
+  box-sizing: border-box;
+  overflow: visible;
 }
 .lp-cta-actions a:first-child {
   background: #fff;
@@ -555,7 +563,10 @@ body {
 }
 .lp-cta-ghost {
   color: #fff !important;
-  border: 1.5px solid rgba(255,255,255,.35);
+  background: transparent !important;
+  /* Inset ring — border was getting clipped on some mobile browsers */
+  border: none !important;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .45);
 }
 
 /* Pricing page */
