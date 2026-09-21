@@ -227,6 +227,23 @@ body {
   text-transform: none;
   margin: 0 0 14px;
 }
+.lp-policy .lp-cta-band {
+  text-align: center;
+}
+.lp-policy .lp-cta-band h2 {
+  color: #fff !important;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  text-transform: none;
+  margin: 0 0 10px;
+}
+.lp-policy .lp-cta-band p {
+  color: rgba(255, 255, 255, .82) !important;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto 22px;
+}
 .lp-policy .lp-contact-mark {
   width: 42px;
   height: 42px;
