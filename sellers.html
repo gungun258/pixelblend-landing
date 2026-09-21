@@ -44,8 +44,8 @@
   @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes pop { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(var(--pb-rise-sm, 18px)); }
+    to { opacity: 1; transform: none; }
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -56,41 +56,27 @@
     50% { transform: translate(-50%, 12px); }
   }
 
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
-    will-change: opacity, transform;
-  }
-  [data-reveal].is-in {
-    opacity: 1;
-    transform: none;
-  }
-  [data-reveal][data-delay="1"].is-in { transition-delay: .08s; }
-  [data-reveal][data-delay="2"].is-in { transition-delay: .16s; }
-  [data-reveal][data-delay="3"].is-in { transition-delay: .24s; }
-  [data-reveal][data-delay="4"].is-in { transition-delay: .32s; }
-
+  /* Scroll reveals come from styles.css (shared with home/gallery) */
   .hero-anim-copy {
-    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) both;
+    animation: fadeUp var(--pb-dur-hero, .75s) var(--pb-ease-out, cubic-bezier(.16,1,.3,1)) both;
   }
   .hero-anim-card {
-    animation: fadeUp .9s cubic-bezier(.16,1,.3,1) .12s both;
+    animation: fadeUp var(--pb-dur-hero, .75s) var(--pb-ease-out, cubic-bezier(.16,1,.3,1)) .1s both;
   }
   .hero-anim-proofs {
-    animation: fadeUp .85s cubic-bezier(.16,1,.3,1) .22s both;
+    animation: fadeUp .7s var(--pb-ease-out, cubic-bezier(.16,1,.3,1)) .2s both;
   }
   .hero-anim-tri > div {
-    animation: fadeUp .8s cubic-bezier(.16,1,.3,1) both;
+    animation: fadeUp .7s var(--pb-ease-out, cubic-bezier(.16,1,.3,1)) both;
   }
-  .hero-anim-tri > div:nth-child(1) { animation-delay: .28s; }
-  .hero-anim-tri > div:nth-child(3) { animation-delay: .36s; }
-  .hero-anim-tri > div:nth-child(5) { animation-delay: .44s; }
+  .hero-anim-tri > div:nth-child(1) { animation-delay: .26s; }
+  .hero-anim-tri > div:nth-child(3) { animation-delay: .34s; }
+  .hero-anim-tri > div:nth-child(5) { animation-delay: .42s; }
   .hero-anim-tri > .tri-op {
-    animation: fadeIn .55s ease both;
+    animation: fadeIn .5s ease both;
   }
-  .hero-anim-tri > .tri-op:nth-child(2) { animation-delay: .32s; }
-  .hero-anim-tri > .tri-op:nth-child(4) { animation-delay: .40s; }
+  .hero-anim-tri > .tri-op:nth-child(2) { animation-delay: .3s; }
+  .hero-anim-tri > .tri-op:nth-child(4) { animation-delay: .38s; }
   .hero-glow {
     animation: softFloat 7s ease-in-out infinite;
   }
@@ -150,7 +136,8 @@
     .respad { padding: 34px 26px !important; }
     .free-num { font-size: 82px !important; }
     .hero-h1 { font-size: 42px !important; }
-    .proof-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+    .proof-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; justify-items: start; }
+    .proof-row > span { justify-content: flex-start !important; text-align: left; }
     .cat-grid {
       display: flex !important;
       flex-wrap: nowrap !important;
@@ -271,7 +258,28 @@
 
   @media (max-width: 640px) {
     .hero-h1 { font-size: 32px !important; }
-    .proof-row { grid-template-columns: 1fr !important; }
+    .proof-row {
+      grid-template-columns: max-content !important;
+      justify-items: start !important;
+      justify-content: center !important;
+      width: max-content;
+      max-width: 100%;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .proof-row > span {
+      justify-content: flex-start !important;
+      text-align: left;
+      width: auto;
+    }
+    .story-kicker {
+      white-space: normal !important;
+      letter-spacing: .12em !important;
+      font-size: 9.5px !important;
+      padding: 7px 12px !important;
+      line-height: 1.35 !important;
+      text-align: center;
+    }
     .hero-zero { font-size: 44px !important; }
     .h2 { font-size: 28px !important; }
     .sec { padding-top: 52px !important; padding-bottom: 52px !important; }
@@ -618,34 +626,36 @@
     z-index: 2;
     display: grid;
     grid-template-columns: 1.05fr .78fr;
-    grid-template-rows: auto auto auto;
-    gap: 0 40px;
+    gap: 40px;
     align-items: start;
     padding-bottom: 28px;
     box-sizing: border-box;
   }
-  #story .story-b0 {
-    grid-column: 1;
-    grid-row: 1;
-  }
+  /* Desktop: one column of steps — no row split (that stretched the rail after step 1) */
   #story .story-points-slot {
     grid-column: 1;
-    grid-row: 1 / span 2;
-    display: contents;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+  #story .story-b0 {
+    grid-column: auto;
+    grid-row: auto;
   }
   #story .story-steps-rest {
-    grid-column: 1;
-    grid-row: 2;
+    grid-column: auto;
+    grid-row: auto;
     padding-top: 0 !important;
     min-height: 0 !important;
     display: flex;
     flex-direction: column;
     gap: 0;
-    align-self: start;
   }
   #story .story-cost-wrap {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2;
     padding: 8px 0 24px 58px;
   }
   #story .story-steps {
@@ -658,7 +668,7 @@
   }
   #story .story-phone {
     grid-column: 2;
-    grid-row: 1 / -1;
+    grid-row: 1;
     position: relative !important;
     top: auto !important;
     padding-top: 0 !important;
@@ -674,7 +684,7 @@
     background: transparent !important;
   }
   #story .phone-body {
-    height: 620px !important;
+    height: 548px !important;
     border-radius: 26px !important;
   }
   #story .story-block {
@@ -700,8 +710,8 @@
     grid-template-columns: 44px 1fr;
     gap: 14px;
     align-items: stretch;
-    flex: 1 1 auto;
-    min-height: 100%;
+    flex: none;
+    min-height: 0;
     transition: opacity .35s ease;
   }
   #story .story-block:last-of-type {
@@ -737,7 +747,7 @@
     justify-content: flex-start;
     align-self: stretch;
     height: auto;
-    min-height: 100%;
+    min-height: 0;
     padding-top: 16px;
   }
   #story .story-rail {
@@ -745,7 +755,7 @@
     width: 3px !important;
     flex: 1 1 auto !important;
     align-self: center !important;
-    min-height: 48px !important;
+    min-height: 28px !important;
     margin-top: 10px;
     margin-left: 0;
     margin-right: 0;
@@ -763,7 +773,7 @@
   }
   #story .story-phone-shell {
     width: auto !important;
-    max-width: 360px !important;
+    max-width: 340px !important;
     margin: 0 auto !important;
     border-radius: 34px !important;
     padding: 8px !important;
@@ -778,26 +788,29 @@
     #story .story-pin-sticky.story-grid {
       display: grid !important;
       grid-template-columns: 1.05fr .78fr !important;
-      grid-template-rows: auto auto auto !important;
+      grid-template-rows: none !important;
       flex-direction: unset !important;
       position: sticky !important;
       top: 88px !important;
-      gap: 0 28px !important;
+      gap: 28px !important;
       padding: 0 0 28px !important;
       align-items: start !important;
     }
     #story .story-points-slot {
-      display: contents !important;
+      display: flex !important;
+      flex-direction: column !important;
+      grid-column: 1 !important;
+      grid-row: 1 !important;
     }
     #story .story-steps-rest {
       display: flex !important;
       flex-direction: column !important;
-      grid-column: 1 !important;
-      grid-row: 2 !important;
+      grid-column: auto !important;
+      grid-row: auto !important;
     }
     #story .story-b0 {
-      grid-column: 1 !important;
-      grid-row: 1 !important;
+      grid-column: auto !important;
+      grid-row: auto !important;
       position: relative !important;
       opacity: 1 !important;
       transform: none !important;
@@ -805,7 +818,7 @@
     }
     #story .story-phone {
       grid-column: 2 !important;
-      grid-row: 1 / -1 !important;
+      grid-row: 1 !important;
       order: unset !important;
       align-self: center !important;
     }
@@ -813,11 +826,11 @@
       max-width: 300px !important;
     }
     #story .phone-body {
-      height: 540px !important;
+      height: 520px !important;
     }
     #story .story-cost-wrap {
       grid-column: 1 !important;
-      grid-row: 3 !important;
+      grid-row: 2 !important;
       order: unset !important;
       padding: 8px 0 24px 58px !important;
       justify-content: flex-start !important;
@@ -1679,7 +1692,7 @@
   <div style="position: absolute; left: -200px; top: 240px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.10), transparent 68%); pointer-events: none;"></div>
   <div class="pad" style="position: relative; max-width: 1160px; margin: 0 auto; padding: 40px 32px 0;">
   <div data-reveal="" style="padding-bottom: 30px;">
-    <span style="display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
+    <span class="story-kicker" style="display: inline-block; max-width: 100%; box-sizing: border-box; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
     <h2 class="h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
     <p style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
   </div>
@@ -1724,7 +1737,7 @@
 
     <div class="story-phone">
       <div class="story-phone-shell" style="background: #1E1422; border-radius: 32px; padding: 8px; box-shadow: 0 24px 56px -32px rgba(30,20,34,.52);">
-        <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 620px;">
+        <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 548px;">
           <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; border-bottom: 1px solid #EFE2F0; flex: none;">
             <span style="font-size: 17px; color: #8A7E92; line-height: 1;">‹</span>
             <span style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>

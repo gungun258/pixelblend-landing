@@ -39,8 +39,8 @@
       50% { transform: translateY(3px); box-shadow: 0 6px 16px -10px rgba(236,72,153,.4); }
     }
     @keyframes hiwSoftUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(var(--pb-rise-sm, 18px)); }
+      to { opacity: 1; transform: none; }
     }
     @keyframes hiwGradSoft {
       0%, 100% { background-position: 0% 50%; }
@@ -48,10 +48,10 @@
     }
     .hiw-soft {
       opacity: 0;
-      transform: translateY(22px);
+      transform: translateY(var(--pb-rise, 24px));
       transition:
-        opacity .8s cubic-bezier(.16, 1, .3, 1),
-        transform .8s cubic-bezier(.16, 1, .3, 1);
+        opacity var(--pb-dur, .7s) var(--pb-ease-out, cubic-bezier(.16, 1, .3, 1)),
+        transform var(--pb-dur, .7s) var(--pb-ease-out, cubic-bezier(.16, 1, .3, 1));
       will-change: opacity, transform;
     }
     .hiw-soft.is-in {
@@ -59,7 +59,7 @@
       transform: none;
     }
     .hiw-hero-enter {
-      animation: hiwSoftUp .9s cubic-bezier(.16, 1, .3, 1) var(--hiw-d, 0ms) both;
+      animation: hiwSoftUp var(--pb-dur-hero, .75s) var(--pb-ease-out, cubic-bezier(.16, 1, .3, 1)) var(--hiw-d, 0ms) both;
     }
     .hiw-demo-result-shot img {
       transition: opacity .45s ease, transform .55s cubic-bezier(.16, 1, .3, 1);
@@ -91,11 +91,12 @@
     body.hiw-page { background: #FAF4FB; }
     /* dc-runtime swaps the template root for an empty #dc-root, then React fills it.
        Without a viewport min-height the footer (sibling below) flashes at the top. */
-    html { height: auto !important; }
+    html { height: auto !important; overflow-x: clip; }
     body.hiw-page {
       height: auto !important;
       min-height: 100%;
-      overflow-x: clip;
+      /* visible — clip on body breaks position:sticky for the walkthrough phone */
+      overflow-x: visible;
     }
     body.hiw-page #dc-root,
     body.hiw-page #dc-root > .sc-host {
@@ -620,46 +621,131 @@
       .hiw-mkt-card { padding: 22px; }
     }
     .hiw-walk {
-      max-width: 1160px; margin: 0 auto; padding: 0 32px 84px;
-      display: grid; grid-template-columns: 1fr 420px; gap: 72px;
-      align-items: stretch;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px 64px;
+      display: block;
     }
     .hiw-walk-sticky {
-      display: contents;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 72px;
+      align-items: start;
     }
-    .hiw-walk-aside { min-width: 0; }
-    .hiw-walk-steps { padding-bottom: min(55vh, 480px); }
-    .hiw-walk-phone {
+    .hiw-walk-aside {
+      min-width: 0;
       position: sticky;
       top: 96px;
+      align-self: start;
+    }
+    .hiw-walk-steps {
+      /* Extra travel so the phone stays pinned through step 3 */
+      padding-bottom: min(42vh, 360px);
+      overflow-anchor: none;
+    }
+    .hiw-walk-steps .hiw-pin,
+    .hiw-walk-steps .hiw-opt-card {
+      overflow-anchor: none;
+    }
+    .hiw-walk-phone {
+      position: relative;
+      top: auto;
+    }
+    /* Desktop: compact step cards + chips in fewer rows */
+    @media (min-width: 769px) {
+      .hiw-opt-card:not(.is-open) > p,
+      .hiw-opt-card:not(.is-open) > .hiw-chip-row,
+      .hiw-opt-card:not(.is-open) > div:not(.hiw-opt-head) {
+        display: none !important;
+      }
+      .hiw-opt-card:not(.is-open) {
+        padding: 12px 14px !important;
+      }
+      .hiw-opt-card.is-open .hiw-opt-detail {
+        display: block;
+      }
+      #walkthrough .hiw-pin-0,
+      #walkthrough .hiw-pin-1,
+      #walkthrough .hiw-pin-3 {
+        padding-top: 10px !important;
+        padding-bottom: 12px !important;
+      }
+      #walkthrough .hiw-branch-rail {
+        margin-top: 12px !important;
+      }
+      #walkthrough .hiw-branch-rail > div[style*="height: 14px"] {
+        height: 8px !important;
+      }
+      .hiw-step-grid {
+        grid-template-columns: 44px minmax(0, 1fr) !important;
+        gap: 12px !important;
+      }
+      #walkthrough .hiw-pin-0 .hiw-step-grid h3,
+      #walkthrough .hiw-pin-3 .hiw-step-grid h3,
+      #walkthrough .hiw-pin-1 .hiw-step2-title h3 {
+        font-size: 20px !important;
+        line-height: 1.2 !important;
+      }
+      #walkthrough .hiw-pin-0 .hiw-step-grid p,
+      #walkthrough .hiw-pin-3 .hiw-step-grid p,
+      #walkthrough .hiw-pin-1 .hiw-step-grid > div > p {
+        font-size: 14.5px !important;
+        line-height: 1.45 !important;
+        margin-top: 6px !important;
+      }
+      #walkthrough .hiw-chip-row {
+        margin-top: 8px !important;
+        gap: 6px !important;
+      }
+      #walkthrough .hiw-chip {
+        font-size: 11.5px !important;
+        padding: 5px 10px !important;
+      }
+      #walkthrough .hiw-opt-title {
+        font-size: 16px !important;
+      }
+      #walkthrough .hiw-opt-card > p {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+        margin-top: 6px !important;
+      }
     }
     @media (max-width: 1100px) {
-      .hiw-root { min-width: 0 !important; overflow-x: clip; }
+      .hiw-root { min-width: 0 !important; overflow-x: visible; }
       /* Keep left content / right phone whenever width allows */
       .hiw-walk {
+        display: block !important;
+        padding: 0 32px 48px !important;
+        height: auto !important;
+      }
+      .hiw-walk-sticky {
         display: grid !important;
         grid-template-columns: minmax(0, 1.05fr) minmax(280px, 360px) !important;
         gap: 36px !important;
-        padding: 0 32px 56px !important;
-        height: auto !important;
+        position: relative !important;
+        top: auto !important;
+        flex-direction: unset !important;
+        padding: 0 !important;
         align-items: start !important;
-      }
-      .hiw-walk-sticky {
-        display: contents !important;
+        background: transparent !important;
       }
       .hiw-walk-steps {
-        padding-bottom: min(45vh, 360px) !important;
+        padding-bottom: min(36vh, 280px) !important;
         order: unset !important;
         position: relative !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
       }
       .hiw-walk-aside {
         order: unset !important;
         width: auto !important;
         display: block !important;
-      }
-      .hiw-walk-phone {
         position: sticky !important;
         top: 88px !important;
+        align-self: start !important;
+      }
+      .hiw-walk-phone {
+        position: relative !important;
+        top: auto !important;
         width: auto !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
@@ -670,7 +756,7 @@
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
-        padding: 28px 0 32px !important;
+        padding: 18px 0 22px !important;
         margin: 0 !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin.is-on {
@@ -713,6 +799,9 @@
         width: 100% !important;
         display: flex !important;
         justify-content: center !important;
+        position: relative !important;
+        top: auto !important;
+        align-self: stretch !important;
       }
       .hiw-walk-phone { position: relative !important; top: 0 !important; width: 100% !important; }
       #walkthrough .hiw-walk-steps > .hiw-pin {
@@ -800,7 +889,7 @@
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
     }
 
-    body.hiw-page { overflow-x: clip; }
+    body.hiw-page { background: #FAF4FB; }
     .hiw-shoot-body {
       margin-top: 36px;
       display: grid;
@@ -1030,171 +1119,205 @@
     .hiw-root, .hiw-root * { box-sizing: border-box; }
 
     @media (max-width: 1100px) {
-      .hiw-demo-eq { display: none !important; }
-      .hiw-demo-plus {
-        height: 36px !important;
-        padding-top: 0 !important;
-        align-self: center !important;
-        width: 100%;
-        display: flex !important;
-        justify-content: center !important;
-      }
-      /* Always stack + center below desktop — no left-stuck half layout */
+      /* Limited width: 1 + 2 side-by-side, result underneath */
       .hiw-demo-cols {
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
-        padding: 0 16px !important;
+        align-items: stretch !important;
+        padding: 0 18px !important;
         gap: 12px !important;
+        max-width: 720px;
+        margin: 0 auto;
+        grid-template-columns: none !important;
       }
       .hiw-demo-cols > * {
         min-width: 0;
-        max-width: 420px !important;
+        max-width: none !important;
         width: 100% !important;
+        box-sizing: border-box !important;
         grid-column: auto !important;
         grid-row: auto !important;
-        box-sizing: border-box !important;
+      }
+      .hiw-demo-label-in {
+        justify-content: flex-start !important;
+        padding-left: 4px !important;
+        order: 1;
       }
       .hiw-demo-cols > div:nth-child(2) { display: none !important; }
-      .hiw-demo-label-out { display: none !important; }
-      .hiw-demo-label-in {
-        justify-content: center !important;
-        padding-left: 0 !important;
-        max-width: 420px !important;
-      }
-      .hiw-demo-label-in > span:last-child { display: none; }
-      .hiw-in-cols {
+      .hiw-demo-label-out {
         display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        padding: 16px 14px 18px !important;
-        gap: 0 !important;
-        margin: 0 auto !important;
-        border-radius: 18px !important;
-        text-align: center;
+        justify-content: flex-start !important;
+        padding-left: 4px !important;
+        order: 4;
+        padding-top: 4px !important;
       }
-      .hiw-demo-product {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      .hiw-in-cols {
+        display: grid !important;
+        grid-template-columns: minmax(140px, 200px) 44px minmax(0, 1fr) !important;
+        align-items: start !important;
+        padding: 16px !important;
+        gap: 0 8px !important;
+        margin: 0 !important;
+        border-radius: 16px !important;
+        text-align: left !important;
+        width: 100% !important;
+        order: 2;
       }
-      .hiw-demo-product-head,
-      .hiw-demo-bgs-head {
+      .hiw-demo-plus {
+        height: auto !important;
+        padding-top: 36px !important;
+        align-self: start !important;
+        width: auto !important;
+        display: flex !important;
         justify-content: center !important;
-        width: 100%;
+      }
+      .hiw-demo-product,
+      .hiw-demo-bgs-block {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        min-width: 0 !important;
       }
       .hiw-demo-product-shot {
-        width: min(160px, 42vw) !important;
-        margin: 10px auto 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 8px 0 0 !important;
         aspect-ratio: 1 / 1 !important;
         border-radius: 12px !important;
       }
-      .hiw-demo-product-shot img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-      }
       .hiw-demo-prod-opts {
-        max-width: 200px;
-        width: 100%;
-        margin: 8px auto 0;
+        max-width: none;
+        margin: 8px 0 0 !important;
       }
       .hiw-demo-prod-note {
-        text-align: center;
-        max-width: 260px;
-        margin-left: auto;
-        margin-right: auto;
+        font-size: 11.5px !important;
+        margin-top: 6px !important;
+        text-align: left !important;
       }
-      .hiw-demo-bgs-block {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        width: 100% !important;
+      .hiw-demo-product-head,
+      .hiw-demo-bgs-head {
+        justify-content: flex-start !important;
       }
-      .hiw-demo-bgs-block .hiw-try-hint {
-        display: flex !important;
-        justify-content: center !important;
-        width: 100%;
-        text-align: center;
+      .hiw-try-hint > span {
+        white-space: normal !important;
+        font-size: 12px !important;
       }
       .hiw-demo-bgs {
-        width: 100% !important;
-        max-width: 280px !important;
-        margin: 10px auto 0 !important;
+        margin: 8px 0 0 !important;
         gap: 8px !important;
-        padding-right: 0 !important;
-        max-height: 340px !important;
+        max-height: 280px !important;
+        max-width: none !important;
         grid-template-columns: 1fr 1fr !important;
-        box-sizing: border-box !important;
       }
-      .hiw-demo-bg-card {
-        border-radius: 10px !important;
-        box-shadow: none !important;
-        transform: none !important;
-        min-width: 0 !important;
+      .hiw-demo-bg-card { border-radius: 10px !important; min-width: 0 !important; }
+      .hiw-demo-bg-shot { aspect-ratio: 1 / 1 !important; border-radius: 8px 8px 0 0 !important; }
+      .hiw-demo-bg-meta { padding: 6px 7px 7px !important; text-align: center !important; }
+      .hiw-demo-bg-name { font-size: 11px !important; }
+      .hiw-demo-bg-btn { margin-top: 4px !important; padding: 6px 4px !important; font-size: 11px !important; }
+      .hiw-demo-eq {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 2px 0 !important;
+        width: 100% !important;
+        order: 3;
       }
-      .hiw-demo-bg-shot {
-        aspect-ratio: 1 / 1 !important;
-        border-radius: 10px 10px 0 0 !important;
-      }
-      .hiw-demo-bg-meta {
-        padding: 6px 6px 8px !important;
-        text-align: center !important;
-      }
-      .hiw-demo-bg-name {
-        font-size: 11px !important;
-        text-align: center !important;
-        white-space: normal !important;
-      }
-      .hiw-demo-bg-btn {
-        margin-top: 5px !important;
-        padding: 6px 4px !important;
-        font-size: 11px !important;
+      .hiw-demo-eq > span {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 22px !important;
       }
       .hiw-demo-result {
+        display: block !important;
         margin: 0 auto !important;
-        padding: 16px 14px 18px !important;
-        border-radius: 18px !important;
-        text-align: center;
+        padding: 16px !important;
+        border-radius: 16px !important;
+        text-align: left !important;
+        max-width: 360px !important;
+        order: 5;
       }
-      .hiw-demo-result-head {
-        justify-content: center !important;
-      }
+      .hiw-demo-result-head { justify-content: flex-start !important; }
       .hiw-demo-result-shot {
-        aspect-ratio: 1 / 1 !important;
-        max-width: 280px;
-        margin-left: auto;
-        margin-right: auto;
+        aspect-ratio: 3 / 4 !important;
+        max-width: none !important;
+        margin: 10px 0 0 !important;
+        max-height: 380px !important;
       }
       .hiw-demo-banner { padding: 16px 18px !important; }
       .hiw-demo { margin-top: 32px !important; border-radius: 18px !important; }
     }
     @media (max-width: 640px) {
       .hiw-demo-cols {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
         padding: 0 12px !important;
         gap: 14px !important;
+        grid-template-columns: none !important;
       }
       .hiw-demo-cols > * {
         max-width: 100% !important;
+        width: 100% !important;
+        grid-column: auto !important;
+        grid-row: auto !important;
+      }
+      .hiw-demo-eq { display: none !important; }
+      .hiw-demo-label-out { display: none !important; }
+      .hiw-demo-label-in {
+        justify-content: center !important;
+        max-width: 100% !important;
       }
       .hiw-in-cols {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        grid-template-columns: none !important;
+        text-align: center !important;
         padding: 14px 12px 16px !important;
         border-radius: 16px !important;
+        gap: 0 !important;
       }
-      .hiw-demo-plus { height: 36px; padding-top: 0 !important; }
+      .hiw-demo-plus {
+        height: 36px !important;
+        padding-top: 0 !important;
+        width: 100% !important;
+        align-self: center !important;
+      }
+      .hiw-demo-product,
+      .hiw-demo-bgs-block {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+      }
+      .hiw-demo-product-head,
+      .hiw-demo-bgs-head {
+        justify-content: center !important;
+      }
       .hiw-demo-product-shot {
         width: min(140px, 38vw) !important;
+        max-width: none !important;
+        margin: 10px auto 0 !important;
       }
       .hiw-demo-prod-opts {
         max-width: 180px;
+        margin: 8px auto 0 !important;
       }
       .hiw-demo-prod-note {
-        font-size: 11.5px !important;
-        margin-top: 6px !important;
+        text-align: center !important;
+        max-width: 260px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .hiw-demo-bgs-block {
+        align-items: center !important;
+      }
+      .hiw-demo-bgs-block .hiw-try-hint {
+        justify-content: center !important;
+        text-align: center !important;
       }
       .hiw-demo-bgs {
-        max-width: 248px !important;
+        max-width: 260px !important;
+        margin: 8px auto 0 !important;
       }
       .hiw-demo-result-shot {
         max-width: 260px;
@@ -1588,7 +1711,7 @@
             <span style="font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.86)">This one actually runs — <strong style="font-weight: 800; color: #fff">tap a background below</strong> and watch the result change.</span>
           </div>
         </div>
-        <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 68px 336px; align-items: stretch; column-gap: 0; padding: 0 34px">
+        <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 56px minmax(280px, 320px); align-items: start; justify-items: stretch; column-gap: 12px; padding: 0 34px">
 
           <div class="hiw-demo-label-in" style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
             <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #A2968D; white-space: nowrap">WHAT GOES IN</span>
@@ -1600,15 +1723,15 @@
             <span style="flex: 1; height: 1px; background: #F4D6E8"></span>
           </div>
 
-          <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: 236px 62px minmax(0, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 22px 24px 24px">
+          <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: minmax(180px, 220px) 56px minmax(240px, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 20px 22px 22px; gap: 0 8px; width: 100%; box-sizing: border-box">
 
             <div class="hiw-demo-product">
               <div class="hiw-demo-product-head" style="display: flex; align-items: center; gap: 10px; height: 34px">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">1</span>
                 <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">YOUR PRODUCT</span>
               </div>
-              <div class="hiw-demo-product-shot" style="margin-top: 13px; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ photoSrc }}" alt="The sample product" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s ease"></div>
-              <div class="hiw-demo-prod-opts" style="margin-top: 11px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
+              <div class="hiw-demo-product-shot" style="margin-top: 12px; border-radius: 14px; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0; border: 1px solid #E6DED6"><img src="{{ photoSrc }}" alt="The sample product" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .35s ease"></div>
+              <div class="hiw-demo-prod-opts" style="margin-top: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px">
                 <sc-for list="{{ prodOpts }}" as="p" hint-placeholder-count="4">
                   <button sc-camel-on-click="{{ p.pick }}" title="{{ p.name }}" style="{{ p.btn }}" >
                     <img src="{{ p.src }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
@@ -1616,23 +1739,23 @@
                   </button>
                 </sc-for>
               </div>
-              <div class="hiw-demo-prod-note" style="margin-top: 9px; font-size: 12.5px; line-height: 1.45; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
+              <div class="hiw-demo-prod-note" style="margin-top: 8px; font-size: 12px; line-height: 1.4; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
             </div>
 
             <div class="hiw-demo-plus" style="display: flex; align-items: center; justify-content: center; align-self: stretch; padding-top: 34px"><span style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 1px solid #E6DED6; box-shadow: 0 6px 14px -10px rgba(74,52,40,.9); font-family: 'Playfair Display', serif; font-size: 25px; line-height: 1; color: #8D8296">+</span></div>
 
-            <div class="hiw-demo-bgs-block">
-              <div class="hiw-demo-bgs-head" style="display: flex; align-items: center; gap: 10px; height: 34px">
+            <div class="hiw-demo-bgs-block" style="min-width: 0">
+              <div class="hiw-demo-bgs-head" style="display: flex; align-items: center; gap: 10px; height: 34px; min-width: 0">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1420; color: #fff; font-size: 14px; font-weight: 800; flex: none">2</span>
-                <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap">PICK A BACKGROUND</span>
+                <span style="font-size: 13px; font-weight: 800; letter-spacing: .09em; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">PICK A BACKGROUND</span>
               </div>
-              <div class="hiw-try-hint" style="margin-top: 11px; min-width: 0"><span style="{{ tryHint }}">{{ tryHintText }}<span class="hiw-try-hint-arrow">↓</span></span></div>
-              <div class="hiw-demo-bgs" style="margin-top: 10px; max-height: 404px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start">
+              <div class="hiw-try-hint" style="margin-top: 10px; min-width: 0; overflow: hidden"><span style="{{ tryHint }}">{{ tryHintText }}<span class="hiw-try-hint-arrow">↓</span></span></div>
+              <div class="hiw-demo-bgs" style="margin-top: 8px; max-height: 340px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start">
                 <sc-for list="{{ tryOutfits }}" as="o" hint-placeholder-count="4">
                   <div class="hiw-demo-bg-card" sc-camel-on-click="{{ o.pick }}" style="{{ o.card }}" >
-                    <div class="hiw-demo-bg-shot" style="position: relative; border-radius: 12px 12px 0 0; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0"><img src="{{ o.src }}" alt="{{ o.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"><div style="{{ o.tick }}">✓</div><div style="{{ o.ripple }}"></div></div>
-                    <div class="hiw-demo-bg-meta" style="padding: 9px 11px 11px">
-                      <div class="hiw-demo-bg-name" style="font-size: 13px; font-weight: 700; line-height: 1.2; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.name }}</div>
+                    <div class="hiw-demo-bg-shot" style="position: relative; border-radius: 10px 10px 0 0; overflow: hidden; aspect-ratio: 1/1; background: #EFE7E0"><img src="{{ o.src }}" alt="{{ o.name }}" style="width: 100%; height: 100%; object-fit: cover; display: block"><div style="{{ o.tick }}">✓</div><div style="{{ o.ripple }}"></div></div>
+                    <div class="hiw-demo-bg-meta" style="padding: 6px 7px 7px">
+                      <div class="hiw-demo-bg-name" style="font-size: 11.5px; font-weight: 700; line-height: 1.2; color: #1A1420; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ o.name }}</div>
                       <button class="hiw-demo-bg-btn" sc-camel-on-click="{{ o.pick }}" style="{{ o.btn }}">{{ o.btnLabel }}</button>
                     </div>
                   </div>
@@ -1642,9 +1765,9 @@
 
           </div>
 
-          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center"><span style="display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 27px; line-height: 1; color: #fff">=</span></div>
+          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; padding-top: 48px"><span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #fff">=</span></div>
 
-          <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 22px 24px 24px">
+          <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 20px 22px 22px; width: 100%; box-sizing: border-box">
             <div class="hiw-demo-result-head">
               <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; font-size: 14px; font-weight: 800; flex: none">3</span>
@@ -1652,7 +1775,7 @@
               </div>
               <span class="hiw-demo-status" style="{{ tryStatusStyle }}">{{ tryStatus }}</span>
             </div>
-            <div style="margin-top: 13px; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; border: 1px solid #F0DCE9; background: repeating-linear-gradient(135deg, #F7EDF3 0 12px, #FFFBFD 12px 24px)" class="hiw-demo-result-shot">
+            <div style="margin-top: 12px; position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4; border: 1px solid #F0DCE9; background: repeating-linear-gradient(135deg, #F7EDF3 0 12px, #FFFBFD 12px 24px)" class="hiw-demo-result-shot">
               <img src="{{ trySrc }}" alt="The background you picked" style="{{ tryImg }}">
               <img src="{{ tryProductSrc }}" alt="Your product in the new scene" style="{{ tryProductStyle }}">
               <div style="{{ tryIdle }}">
@@ -1664,7 +1787,7 @@
               <div style="{{ tryScan }}"></div>
               <div style="{{ tryChip }}">{{ tryChipText }}</div>
             </div>
-            <div style="margin-top: 10px; font-size: 13px; line-height: 1.45; color: #8D8296">Same shape, same colour, same label. This preview drops in the product still — the app matches light and shadow.</div>
+            <div style="margin-top: 10px; font-size: 12.5px; line-height: 1.45; color: #8D8296">Same shape, same colour, same label. This preview drops in the product still — the app matches light and shadow.</div>
           </div>
 
         </div>
@@ -1699,12 +1822,12 @@
               <span class="hiw-step-lab">Step 1</span>
             </div>
             <div style="{{ stepOne.card }}">
-              <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepOne.t }}</h3>
-              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepOne.d }}</p>
+              <h3 style="font-size: 20px; font-weight: 700; letter-spacing: -.018em; line-height: 1.2">{{ stepOne.t }}</h3>
+              <p style="margin-top: 6px; font-size: 14.5px; line-height: 1.45; color: #4C4453; max-width: 520px; text-wrap: pretty">{{ stepOne.d }}</p>
               <sc-if value="{{ stepOne.active }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
+                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px" class="hiw-chip-row">
                   <sc-for list="{{ stepOne.chips }}" as="c" hint-placeholder-count="4">
-                    <span class="hiw-chip" style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                    <span class="hiw-chip" style="font-size: 11.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 5px 10px; border-radius: 999px">{{ c }}</span>
                   </sc-for>
                 </div>
               </sc-if>
@@ -1720,16 +1843,16 @@
             </div>
             <div>
               <div class="hiw-step2-title">
-                <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">Bring in a background</h3>
+                <h3 style="font-size: 20px; font-weight: 700; letter-spacing: -.018em; line-height: 1.2">Bring in a background</h3>
                 <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .14em; color: #C42E8B; background: #FCF0F7; border: 1px solid #F3D9EA; padding: 6px 12px; border-radius: 999px">CHOOSE ONE</span>
               </div>
-              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">Two routes to the same place. Upload a background you found or shot anywhere, or tap a scene a creator already put in the marketplace.</p>
+              <p style="margin-top: 6px; font-size: 14.5px; line-height: 1.45; color: #4C4453; max-width: 520px; text-wrap: pretty">Two routes to the same place. Upload a background you found or shot anywhere, or tap a scene a creator already put in the marketplace.</p>
 
               <div class="hiw-branch-rail" style="margin-top: 20px; position: relative; padding-left: 30px">
                 <div class="hiw-branch-line" style="position: absolute; left: 0; top: 12px; bottom: 12px; width: 1.5px; background: #E6DED6"></div>
                 <div class="hiw-branch-or" style="position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; background: #FAF4FB; border: 1.5px solid #E6DED6; display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; color: #8D8296">OR</div>
 
-                <div class="hiw-pin hiw-pin-1 hiw-opt-card" role="button" tabindex="0" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
+                <div class="hiw-pin hiw-pin-1 hiw-opt-card {{ optA.openClass }}" role="button" tabindex="0" sc-camel-on-click="{{ optA.pick }}" style="{{ optA.card }}">
                   <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optA.badge }}">A</span>
                     <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em; flex: 1; min-width: 0">Upload a background from anywhere</span>
@@ -1745,7 +1868,7 @@
 
                 <div style="height: 14px"></div>
 
-                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2 hiw-opt-card" role="button" tabindex="0" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
+                <div id="hiw-pin-2" class="hiw-pin hiw-pin-2 hiw-opt-card {{ optB.openClass }}" role="button" tabindex="0" sc-camel-on-click="{{ optB.pick }}" style="{{ optB.card }}">
                   <div class="hiw-opt-head" style="display: flex; align-items: center; gap: 10px">
                     <span style="{{ optB.badge }}">B</span>
                     <span class="hiw-opt-title" style="font-size: 19px; font-weight: 700; letter-spacing: -.015em; flex: 1; min-width: 0">Pick a creator listing instead</span>
@@ -1772,12 +1895,12 @@
               <span class="hiw-step-lab">Step 3</span>
             </div>
             <div style="{{ stepThree.card }}">
-              <h3 style="font-size: 26px; font-weight: 700; letter-spacing: -.018em; line-height: 1.16">{{ stepThree.t }}</h3>
-              <p style="margin-top: 9px; font-size: 17px; line-height: 1.6; color: #4C4453; max-width: 560px; text-wrap: pretty">{{ stepThree.d }}</p>
+              <h3 style="font-size: 20px; font-weight: 700; letter-spacing: -.018em; line-height: 1.2">{{ stepThree.t }}</h3>
+              <p style="margin-top: 6px; font-size: 14.5px; line-height: 1.45; color: #4C4453; max-width: 520px; text-wrap: pretty">{{ stepThree.d }}</p>
               <sc-if value="{{ stepThree.active }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px" class="hiw-chip-row">
+                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px" class="hiw-chip-row">
                   <sc-for list="{{ stepThree.chips }}" as="c" hint-placeholder-count="4">
-                    <span class="hiw-chip" style="font-size: 13px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 7px 13px; border-radius: 999px">{{ c }}</span>
+                    <span class="hiw-chip" style="font-size: 11.5px; font-weight: 600; color: #7A2E6A; background: #FFF5FA; border: 1px solid #F3D9EA; padding: 5px 10px; border-radius: 999px">{{ c }}</span>
                   </sc-for>
                 </div>
               </sc-if>
@@ -2331,6 +2454,8 @@ class Component extends DCLogic {
   goWalkStep = (n) => {
     this._branchLockUntil = Date.now() + 2200;
     window.__hiwBranchLockUntil = this._branchLockUntil;
+    /* Keep scroll stable while accordion collapses (esp. step 3) */
+    var keepY = window.scrollY || window.pageYOffset || 0;
     this.setState({ step: n, branchB: n === 2 });
     var wrap = document.querySelector('#walkthrough .hiw-walk-pin-wrap');
     var mobile = window.matchMedia('(max-width: 768px)').matches;
@@ -2343,8 +2468,22 @@ class Component extends DCLogic {
       window.scrollTo({ top: start + span * t, behavior: 'smooth' });
       return;
     }
-    var el = document.getElementById('hiw-pin-' + n);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    /* Desktop: hold scroll Y while accordion opens — never yank the section upward. */
+    requestAnimationFrame(() => {
+      window.scrollTo(0, keepY);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, keepY);
+        var el = document.getElementById('hiw-pin-' + n);
+        if (!el) return;
+        var rect = el.getBoundingClientRect();
+        var bottomPad = 28;
+        /* Only nudge down if the opened card is clipped below the fold. */
+        if (rect.bottom > window.innerHeight - bottomPad) {
+          var delta = rect.bottom - (window.innerHeight - bottomPad);
+          window.scrollTo({ top: keepY + delta, behavior: 'smooth' });
+        }
+      });
+    });
   };
 
   pickLook = (i) => {
@@ -2750,19 +2889,19 @@ class Component extends DCLogic {
       const done = on && tp === 'done';
       return {
         name: o.name, src: o.src,
-        card: 'cursor: pointer; overflow: hidden; border-radius: 12px; transition: transform .25s, border-color .25s, box-shadow .25s, background .25s; border: 1.5px solid ' +
-          (on ? '#E9BBD9; background: #FFF8FC; box-shadow: 0 22px 44px -34px rgba(196,46,139,.9); transform: translateY(-2px);' : '#E6DED6; background: #fff;'),
+        card: 'cursor: pointer; overflow: hidden; border-radius: 10px; transition: transform .25s, border-color .25s, box-shadow .25s, background .25s; border: 1.5px solid ' +
+          (on ? '#E9BBD9; background: #FFF8FC; box-shadow: 0 14px 28px -24px rgba(196,46,139,.85); transform: translateY(-1px);' : '#E6DED6; background: #fff;'),
         tick: {
-          position: 'absolute', top: '8px', left: '8px', width: '24px', height: '24px', borderRadius: '50%',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 800, color: '#fff',
+          position: 'absolute', top: '6px', left: '6px', width: '20px', height: '20px', borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 800, color: '#fff',
           background: 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)', boxShadow: '0 6px 14px -6px rgba(196,46,139,.9)',
           opacity: done ? 1 : 0, transform: done ? 'scale(1)' : 'scale(.6)', transition: 'opacity .25s ease, transform .25s ease'
         },
-        btn: 'margin-top: 8px; width: 100%; padding: 9px 6px; border-radius: 999px; font-family: inherit; font-size: 12.5px; font-weight: 800; letter-spacing: .01em; cursor: pointer; transition: background .25s, color .25s, border-color .25s, box-shadow .25s; ' +
+        btn: 'margin-top: 5px; width: 100%; padding: 6px 4px; border-radius: 999px; font-family: inherit; font-size: 11px; font-weight: 800; letter-spacing: .01em; cursor: pointer; transition: background .25s, color .25s, border-color .25s, box-shadow .25s; ' +
           (i === pulseIdx ? 'animation: v4Ring 2s infinite; ' : '') + 'border: 1.5px solid ' +
           (done ? '#F0CFE4; background: #fff; color: #C42E8B;'
             : busy ? 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; opacity: .72;'
-              : 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; box-shadow: 0 8px 18px -9px rgba(236,72,153,.95);'),
+              : 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; box-shadow: 0 6px 14px -8px rgba(236,72,153,.9);'),
         btnLabel: done ? 'Blended ✓' : busy ? 'Working…' : 'Blend',
         ripple: {
           position: 'absolute', left: '50%', top: '50%', width: '90px', height: '90px', marginLeft: '-45px', marginTop: '-45px',
@@ -2774,20 +2913,20 @@ class Component extends DCLogic {
       };
     });
 
-    const stepRow = (i) => 'padding: 28px 0 32px; cursor: pointer; transition: opacity .25s, transform .25s;' +
+    const stepRow = (i) => 'padding: 18px 0 22px; cursor: pointer; transition: opacity .25s, transform .25s;' +
       (s.step === i ? '' : ' opacity: .7;');
-    const numStyle = (on) => 'font-family: \'Hanken Grotesk\', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: .06em; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; ' +
+    const numStyle = (on) => 'font-family: \'Hanken Grotesk\', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .06em; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; ' +
       (on
-        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
+        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 18px -8px rgba(236,72,153,.55);'
         : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
     /* Active step body — same gradient frame as open 2A */
-    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 18px; ' +
+    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 16px; ' +
       (on
-        ? 'padding: 20px 22px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
+        ? 'padding: 14px 16px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 12px 28px -20px rgba(196,46,139,.42);'
         : 'padding: 0; border: 1.5px solid transparent; background: transparent; box-shadow: none;');
-    const optCard = (on) => 'border-radius: 18px; cursor: pointer; padding: 20px 22px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; ' +
+    const optCard = (on) => 'border-radius: 16px; cursor: pointer; padding: 14px 16px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; ' +
       (on
-        ? 'border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
+        ? 'border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 12px 28px -20px rgba(196,46,139,.42);'
         : 'border: 1.5px solid #E6DED6; background: #fff; box-shadow: none;');
     const optBadge = (on) => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex: none; ' +
       (on
@@ -2822,6 +2961,7 @@ class Component extends DCLogic {
       tryHint: {
         display: 'inline-flex', alignItems: 'center', gap: '6px', maxWidth: '100%',
         fontSize: '13px', fontWeight: 700, color: '#C42E8B', whiteSpace: 'nowrap',
+        overflow: 'hidden', textOverflow: 'ellipsis',
         transition: 'opacity .4s ease',
         animation: 'v4Pulse 1.8s infinite'
       },
@@ -2900,7 +3040,7 @@ class Component extends DCLogic {
       },
 
       branch: {
-        wrap: 'padding: 28px 0 32px; transition: opacity .25s;' + (onStep2 ? '' : ' opacity: .7;'),
+        wrap: 'padding: 18px 0 22px; transition: opacity .25s;' + (onStep2 ? '' : ' opacity: .7;'),
         num: numStyle(onStep2),
         pinClass: 'hiw-pin hiw-pin-1' + (onStep2 ? ' is-on' : '')
       },
@@ -2909,12 +3049,14 @@ class Component extends DCLogic {
         active: onOptA,
         pick: () => this._pickBranch ? this._pickBranch('a') : this.goWalkStep(1),
         card: optCard(onOptA), badge: optBadge(onOptA), chevron: optChevron(onOptA),
+        openClass: onOptA ? 'is-open' : '',
         chips: ['Screenshots work', 'Any source', 'Your own photos']
       },
       optB: {
         active: onOptB,
         pick: () => this._pickBranch ? this._pickBranch('b') : this.goWalkStep(2),
         card: optCard(onOptB), badge: optBadge(onOptB), chevron: optChevron(onOptB),
+        openClass: onOptB ? 'is-open' : '',
         body: '',
         chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
       },
