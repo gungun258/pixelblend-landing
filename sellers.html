@@ -125,18 +125,32 @@
     }
   }
 
+  /* Section gutters only — match chrome logo (32px). Do not touch hero. */
+  body.sellers-page {
+    --pb-gutter: 32px;
+  }
+  body.sellers-page section.pad,
+  body.sellers-page section.sec.pad,
+  body.sellers-page #story > .pad {
+    padding-left: var(--pb-gutter) !important;
+    padding-right: var(--pb-gutter) !important;
+    box-sizing: border-box;
+  }
+
   /* —— Sellers responsive system —— */
   @media (max-width: 1040px) {
-    .pad { padding-left: 22px !important; padding-right: 22px !important; }
+    body.sellers-page section.pad,
+    body.sellers-page section.sec.pad,
+    body.sellers-page #story > .pad {
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+    }
     .split { grid-template-columns: 1fr !important; gap: 34px !important; }
     .free-grid { grid-template-columns: 1fr !important; gap: 34px !important; }
     .respad { padding: 34px 26px !important; }
     .free-num { font-size: 82px !important; }
     .hero-h1 { font-size: 42px !important; }
     .proof-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
-    .story-grid { display: flex !important; flex-direction: column !important; gap: 0 !important; }
-    .story-phone { display: none !important; }
-    .story-steps { padding-top: 0 !important; order: 0 !important; }
     .cat-grid {
       display: flex !important;
       flex-wrap: nowrap !important;
@@ -227,8 +241,9 @@
     .pay-grid { grid-template-columns: 1fr !important; }
     .disco-stats { grid-template-columns: 1fr !important; }
     #drag-compare .cmp-visual { margin-top: 12px !important; }
+    #story .story-phone { top: 56px !important; }
     #story .story-phone-shell { max-width: 260px !important; }
-    #story .phone-body { height: 440px !important; }
+    #story .phone-body { height: 460px !important; }
     #discover .disco-phone-body { height: 500px !important; }
     #cost .cost-zero { font-size: 72px !important; }
     #cost .cost-forever { font-size: 24px !important; }
@@ -260,6 +275,12 @@
     .hero-zero { font-size: 44px !important; }
     .h2 { font-size: 28px !important; }
     .sec { padding-top: 52px !important; padding-bottom: 52px !important; }
+    #cost.sec { padding-top: 4px !important; padding-bottom: 24px !important; }
+    #discover.sec { padding-bottom: 24px !important; }
+    #list.sec { padding-bottom: 28px !important; }
+    #same-catalogue.sec { padding-top: 28px !important; padding-bottom: 52px !important; }
+    #faq.sec { padding-bottom: 24px !important; }
+    #sellers-cta.sec { padding-top: 20px !important; padding-bottom: 52px !important; }
     .benefit-grid { grid-template-columns: 1fr !important; }
     .cat-card {
       flex: 0 0 58% !important;
@@ -293,8 +314,9 @@
       max-width: none;
       margin: 0;
     }
-    .story-phone-shell { max-width: 100% !important; }
-    #story .phone-body { height: 420px !important; }
+    .story-phone-shell { max-width: 250px !important; }
+    #story .story-phone { top: 52px !important; }
+    #story .phone-body { height: 440px !important; }
     #discover .disco-phone { max-width: 280px !important; margin: 0 auto !important; }
     #discover .disco-phone-body { height: 520px !important; }
     #cost .cost-zero { font-size: 64px !important; }
@@ -346,9 +368,15 @@
   @media (max-width: 400px) {
     .hero-h1 { font-size: 28px !important; }
     .hero-zero { font-size: 38px !important; }
-    .pad { padding-left: 16px !important; padding-right: 16px !important; }
+    body.sellers-page section.pad,
+    body.sellers-page section.sec.pad,
+    body.sellers-page #story > .pad {
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+    }
     #cost .cost-zero { font-size: 56px !important; }
-    #story .phone-body { height: 380px !important; }
+    #story .phone-body { height: 420px !important; }
+    #story .story-phone-shell { max-width: 240px !important; }
     .sellers-cta-panel .sellers-cta-h2 { font-size: 26px !important; }
     .sellers-cta-panel .sellers-cta-sub { font-size: 18px !important; }
   }
@@ -420,7 +448,7 @@
 
   /* Where the sale is lost — polish */
   #lost-sale {
-    padding: 72px 40px 8px !important;
+    padding: 72px 32px 8px !important;
   }
   #lost-sale .lost-kicker {
     font-size: 11.5px;
@@ -526,9 +554,11 @@
     transition: background .25s ease, border-color .25s ease, color .25s ease;
   }
   @media (max-width: 1040px) {
-    #lost-sale { padding-left: 22px !important; padding-right: 22px !important; }
+    #lost-sale { padding-left: 32px !important; padding-right: 32px !important; }
     #lost-sale .lost-h2 { font-size: 32px !important; max-width: none; }
-    #discover .disco-h2 { font-size: 32px !important; }
+    #discover .disco-h2 { font-size: 26px !important; line-height: 1.18 !important; }
+    #discover .disco-lead { font-size: 14px !important; }
+    #discover .disco-head { margin-bottom: 28px !important; }
   }
   @media (max-width: 640px) {
     #lost-sale .lost-row {
@@ -588,10 +618,35 @@
     z-index: 2;
     display: grid;
     grid-template-columns: 1.05fr .78fr;
-    gap: 40px;
+    grid-template-rows: auto auto auto;
+    gap: 0 40px;
     align-items: start;
     padding-bottom: 28px;
     box-sizing: border-box;
+  }
+  #story .story-b0 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #story .story-points-slot {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: contents;
+  }
+  #story .story-steps-rest {
+    grid-column: 1;
+    grid-row: 2;
+    padding-top: 0 !important;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-self: start;
+  }
+  #story .story-cost-wrap {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 8px 0 24px 58px;
   }
   #story .story-steps {
     padding-top: 8px !important;
@@ -602,6 +657,8 @@
     align-self: start;
   }
   #story .story-phone {
+    grid-column: 2;
+    grid-row: 1 / -1;
     position: relative !important;
     top: auto !important;
     padding-top: 0 !important;
@@ -610,13 +667,14 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    align-self: center !important; /* vertically center vs steps column */
+    align-self: center !important;
     justify-self: center;
     height: fit-content;
     z-index: 2;
+    background: transparent !important;
   }
   #story .phone-body {
-    height: 540px !important;
+    height: 620px !important;
     border-radius: 26px !important;
   }
   #story .story-block {
@@ -658,17 +716,19 @@
     padding: 16px;
     box-sizing: border-box;
     border-radius: 18px;
-    background: #fff;
-    border: 1px solid #EFE2F0;
+    border: 1.5px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box;
     box-shadow: 0 10px 28px -20px rgba(30, 20, 34, .38);
-    transition: opacity .35s ease, border-color .3s ease, box-shadow .3s ease;
+    transition: opacity .35s ease, box-shadow .3s ease;
     align-self: start;
   }
   #story .story-block.is-on .story-block-inner {
-    border-color: #E9D5F0;
+    border-width: 2px;
     box-shadow:
       0 18px 44px -22px rgba(196, 46, 139, .42),
-      0 0 0 1px rgba(236, 72, 153, .1);
+      0 0 0 1px rgba(236, 72, 153, .12);
   }
   #story .story-dot-col {
     display: flex !important;
@@ -703,28 +763,221 @@
   }
   #story .story-phone-shell {
     width: auto !important;
-    max-width: 340px !important;
+    max-width: 360px !important;
     margin: 0 auto !important;
-    border-radius: 32px !important;
+    border-radius: 34px !important;
     padding: 8px !important;
     box-sizing: border-box;
   }
-  @media (max-width: 1040px) {
+  @media (max-width: 1040px) and (min-width: 769px) {
+    /* Tablet+: keep desktop left/right story layout */
     #story .story-pin-wrap {
-      height: auto !important;
+      height: 240vh !important;
     }
-    #story .story-pin-sticky {
-      position: relative !important;
-      top: auto !important;
+    #story .story-pin-sticky,
+    #story .story-pin-sticky.story-grid {
+      display: grid !important;
+      grid-template-columns: 1.05fr .78fr !important;
+      grid-template-rows: auto auto auto !important;
+      flex-direction: unset !important;
+      position: sticky !important;
+      top: 88px !important;
+      gap: 0 28px !important;
+      padding: 0 0 28px !important;
+      align-items: start !important;
+    }
+    #story .story-points-slot {
+      display: contents !important;
+    }
+    #story .story-steps-rest {
       display: flex !important;
       flex-direction: column !important;
-      max-height: none !important;
-      gap: 0 !important;
-      align-items: stretch !important;
+      grid-column: 1 !important;
+      grid-row: 2 !important;
+    }
+    #story .story-b0 {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      position: relative !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
     }
     #story .story-phone {
-      margin: 12px auto 24px !important;
+      grid-column: 2 !important;
+      grid-row: 1 / -1 !important;
+      order: unset !important;
       align-self: center !important;
+    }
+    #story .story-phone-shell {
+      max-width: 300px !important;
+    }
+    #story .phone-body {
+      height: 540px !important;
+    }
+    #story .story-cost-wrap {
+      grid-column: 1 !important;
+      grid-row: 3 !important;
+      order: unset !important;
+      padding: 8px 0 24px 58px !important;
+      justify-content: flex-start !important;
+      display: block !important;
+    }
+    #story .story-cost {
+      max-width: 440px !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    #story .story-rail {
+      display: block !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .story-grid { display: flex !important; flex-direction: column !important; gap: 0 !important; }
+    .story-phone { display: flex !important; }
+    .story-steps { padding-top: 0 !important; }
+    /* Sticky section: phone stays put, points swap in the same slot */
+    #story .story-pin-wrap {
+      height: 280vh !important;
+    }
+    #story .story-pin-sticky,
+    #story .story-pin-sticky.story-grid {
+      position: sticky !important;
+      top: 80px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      grid-template-columns: none !important;
+      grid-template-rows: none !important;
+      max-height: none !important;
+      gap: 8px !important;
+      align-items: stretch !important;
+      padding: 14px 4px 10px !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+    #story .story-points-slot {
+      display: block !important;
+      position: relative !important;
+      order: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: visible !important;
+      padding: 4px 2px 6px;
+      margin-top: 0;
+    }
+    #story .story-steps-rest {
+      display: contents !important;
+      padding: 0 !important;
+    }
+    #story .story-b0,
+    #story .story-steps-rest .story-block,
+    #story .story-points-slot .story-block {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      position: absolute !important;
+      left: 0;
+      right: 0;
+      top: 0;
+      opacity: 0 !important;
+      transform: translateY(10px);
+      pointer-events: none !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: visible !important;
+      transition: opacity .35s ease, transform .35s ease !important;
+    }
+    #story .story-points-slot .story-block.is-on {
+      position: relative !important;
+      opacity: 1 !important;
+      transform: none;
+      pointer-events: auto !important;
+      padding: 0 !important;
+    }
+    #story .story-points-slot .story-block.is-on .story-block-row {
+      opacity: 1 !important;
+      grid-template-columns: 32px 1fr !important;
+      gap: 10px !important;
+      align-items: start !important;
+    }
+    #story .story-rail {
+      display: none !important;
+    }
+    #story .story-dot-col {
+      min-height: 0 !important;
+      height: auto !important;
+      padding-top: 8px !important;
+      align-self: start !important;
+    }
+    #story .story-points-slot .story-dot-col > span:first-child {
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 12px !important;
+      flex: none !important;
+    }
+    #story .story-points-slot .story-block-inner {
+      padding: 10px 12px !important;
+      border-radius: 14px !important;
+      box-shadow: 0 8px 20px -16px rgba(30, 20, 34, .35) !important;
+    }
+    #story .story-points-slot .story-block-inner > span:first-child {
+      font-size: 8.5px !important;
+      padding: 3px 8px !important;
+      margin-bottom: 6px !important;
+    }
+    #story .story-points-slot .story-block-inner > div {
+      font-size: 16px !important;
+      line-height: 1.2 !important;
+      margin-bottom: 4px !important;
+    }
+    #story .story-points-slot .story-block-inner > p {
+      font-size: 12.5px !important;
+      line-height: 1.35 !important;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    #story .story-phone {
+      order: 2;
+      position: relative !important;
+      top: auto !important;
+      grid-column: auto !important;
+      grid-row: auto !important;
+      margin: 0 auto !important;
+      align-self: center !important;
+      width: auto !important;
+      max-width: 100% !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 2px 0 6px !important;
+      display: flex !important;
+      justify-content: center !important;
+    }
+    #story .story-phone-shell {
+      max-width: 280px !important;
+      background: #1E1422 !important;
+      box-shadow: 0 24px 56px -32px rgba(30,20,34,.52) !important;
+    }
+    #story .phone-body {
+      height: 500px !important;
+    }
+    #story .story-cost-wrap {
+      order: 3;
+      grid-column: auto !important;
+      grid-row: auto !important;
+      padding: 8px 0 16px !important;
+      margin-top: 4px;
+      width: 100%;
+      display: flex !important;
+      justify-content: center !important;
+    }
+    #story .story-cost {
+      margin-left: auto !important;
+      margin-right: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
     }
   }
   #story .story-cost {
@@ -764,41 +1017,46 @@
     line-height: 1.4;
     color: rgba(255,255,255,.68);
   }
-  #story .story-cost-wrap {
-    padding: 8px 0 24px 58px;
-  }
   @media (max-width: 1040px) {
-    #story .story-cost-wrap { padding-left: 0 !important; }
+    #story .story-cost-wrap {
+      padding-left: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+    }
+    #story .story-cost {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
     #story .story-cost-zero { font-size: 32px !important; }
     #story .story-cost-copy { font-size: 12px !important; }
     #story .story-cost-kicker { font-size: 9px !important; letter-spacing: .14em !important; }
   }
   #discover {
     padding-top: 72px !important;
-    padding-bottom: 88px !important;
+    padding-bottom: 48px !important;
     position: relative;
     z-index: 2;
     background: #FAF4FB;
   }
   #discover .disco-head {
-    margin-bottom: 48px;
-    max-width: 860px;
+    margin-bottom: 36px;
+    max-width: 760px;
   }
   #discover .disco-kicker {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: .2em;
+    letter-spacing: .18em;
     text-transform: uppercase;
     color: #C42E8B;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
   }
   #discover .disco-h2 {
-    font-size: 40px;
-    line-height: 1.12;
-    letter-spacing: -.035em;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -.03em;
     font-weight: 800;
     color: #1E1422;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
   }
   #discover .disco-h2 em {
     font-family: 'Instrument Serif', serif;
@@ -812,11 +1070,11 @@
     padding-right: 4px;
   }
   #discover .disco-lead {
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.55;
     color: #5b5060;
     margin: 0;
-    max-width: 620px;
+    max-width: 560px;
   }
   #discover .disco-side-title {
     font-size: 26px;
@@ -824,7 +1082,8 @@
     letter-spacing: -.032em;
     line-height: 1.2;
     color: #1E1422;
-    max-width: 520px;
+    max-width: none;
+    width: 100%;
     margin: 0 0 8px;
   }
   #discover .disco-facts {
@@ -868,6 +1127,26 @@
     border-radius: 22px;
     padding: 28px 30px 30px;
   }
+  #discover .disco-cta-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.25;
+    max-width: 520px;
+  }
+  @media (max-width: 768px) {
+    #discover .disco-side-title {
+      font-size: 20px !important;
+      line-height: 1.25 !important;
+    }
+    #discover .disco-cta-title {
+      font-size: 18px;
+      line-height: 1.3;
+    }
+    #discover .disco-cta-card {
+      padding: 22px 20px 24px;
+    }
+  }
   #discover .disco-listings {
     grid-template-rows: 1fr 1fr !important;
     overflow: hidden !important;
@@ -884,10 +1163,10 @@
 
   /* Pricing polish */
   #cost {
-    padding: 24px 40px 88px;
+    padding: 8px 32px 40px;
   }
   #cost .cost-head {
-    margin-bottom: 32px;
+    margin-bottom: 18px;
   }
   #cost .cost-kicker-top {
     font-size: 11.5px;
@@ -895,11 +1174,11 @@
     letter-spacing: .2em;
     text-transform: uppercase;
     color: #C42E8B;
-    margin: 0 0 16px;
+    margin: 0 0 10px;
   }
   #cost .cost-h2 {
-    font-size: 40px;
-    line-height: 1.12;
+    font-size: 36px;
+    line-height: 1.15;
     letter-spacing: -.035em;
     font-weight: 800;
     color: #1E1422;
@@ -1023,13 +1302,42 @@
   }
   #cost .cost-cta:hover { color: #fff !important; -webkit-text-fill-color: #fff !important; transform: translateY(-2px); }
   @media (max-width: 1040px) {
-    #cost { padding-left: 22px !important; padding-right: 22px !important; }
-    #cost .cost-h2 { font-size: 32px !important; }
-    #cost .cost-panel { padding: 32px 26px !important; }
+    #cost {
+      padding-top: 4px !important;
+      padding-bottom: 28px !important;
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+    }
+    #cost .cost-head { margin-bottom: 14px !important; }
+    #cost .cost-h2 { font-size: 26px !important; line-height: 1.2 !important; }
+    #cost .cost-lead { font-size: 15px !important; }
+    #cost .cost-panel { padding: 28px 22px !important; }
     #cost .cost-zero { font-size: 80px !important; }
+    #discover { padding-bottom: 28px !important; }
   }
 
   /* Journey heading polish */
+  #journey {
+    padding-top: 48px !important;
+  }
+  @media (max-width: 1040px) {
+    #journey {
+      padding-top: 36px !important;
+      padding-bottom: 64px !important;
+    }
+    #list {
+      padding-bottom: 32px !important;
+    }
+    #same-catalogue {
+      padding-top: 32px !important;
+    }
+  }
+  @media (max-width: 640px) {
+    #journey {
+      padding-top: 28px !important;
+      padding-bottom: 52px !important;
+    }
+  }
   #journey .journey-kicker {
     font-size: 11.5px;
     font-weight: 800;
@@ -1064,6 +1372,19 @@
     margin: 0;
     max-width: 540px;
   }
+  #journey .stepper-tab {
+    position: relative;
+    overflow: hidden;
+  }
+  #journey .stepper-prog {
+    position: absolute !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    height: 3px !important;
+    transform-origin: left center;
+    pointer-events: none;
+    z-index: 2;
+  }
   #faq {
     width: 100%;
     max-width: 760px;
@@ -1076,9 +1397,9 @@
   }
   @media (max-width: 768px) {
     #faq {
-      padding-left: 22px !important;
-      padding-right: 22px !important;
-      padding-bottom: 64px !important;
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+      padding-bottom: 28px !important;
     }
     #faq .faq-h2 {
       font-size: 28px !important;
@@ -1105,8 +1426,8 @@
   }
   @media (max-width: 640px) {
     #faq {
-      padding-left: 16px !important;
-      padding-right: 16px !important;
+      padding-left: 32px !important;
+      padding-right: 32px !important;
     }
     #faq .faq-h2 { font-size: 26px !important; }
   }
@@ -1331,7 +1652,7 @@
 </div>
 
 <!-- WHERE THE SALE IS LOST -->
-<section id="lost-sale" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+<section id="lost-sale" class="sec pad" style="max-width: 1160px; margin: 0 auto;">
   <div class="split" style="display: grid; grid-template-columns: .95fr 1.05fr; gap: 60px; align-items: start;">
     <div data-reveal="">
       <p class="lost-kicker">Where the sale is lost</p>
@@ -1356,7 +1677,7 @@
 <section id="story" style="position: relative; background: #fff; margin-top: 0; overflow: visible;">
   <div style="position: absolute; right: -180px; top: -160px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.13), transparent 66%); pointer-events: none;"></div>
   <div style="position: absolute; left: -200px; top: 240px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.10), transparent 68%); pointer-events: none;"></div>
-  <div class="pad" style="position: relative; max-width: 1220px; margin: 0 auto; padding: 40px 40px 0;">
+  <div class="pad" style="position: relative; max-width: 1160px; margin: 0 auto; padding: 40px 32px 0;">
   <div data-reveal="" style="padding-bottom: 30px;">
     <span style="display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
     <h2 class="h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
@@ -1365,9 +1686,26 @@
 
   <div id="story-track" class="story-pin-wrap" data-reveal="" data-delay="1">
     <div class="story-pin-sticky story-grid">
-    <div class="story-steps" style="padding-top: 8px;">
-      <sc-for list="{{ storySteps }}" as="s" hint-placeholder-count="5">
-        <div class="story-block" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
+    <div class="story-points-slot">
+    <!-- Point 1 -->
+    <div class="story-block story-b0 {{ storyStep0.blockClass }}" sc-camel-on-click="{{ storyStep0.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
+      <div class="story-block-row" style="opacity: {{ storyStep0.opacity }};">
+        <div class="story-dot-col">
+          <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ storyStep0.dotBg }}; color: {{ storyStep0.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ storyStep0.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ storyStep0.n }}</span>
+          <span class="story-rail"></span>
+        </div>
+        <div class="story-block-inner">
+          <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ storyStep0.tagFg }}; background: {{ storyStep0.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 10px;">{{ storyStep0.who }}</span>
+          <div style="font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.2; margin-bottom: 6px;">{{ storyStep0.title }}</div>
+          <p style="font-size: 14.5px; line-height: 1.5; color: #5b5060; margin: 0; max-width: 440px;">{{ storyStep0.body }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Points 2–4 -->
+    <div class="story-steps story-steps-rest" style="padding-top: 8px;">
+      <sc-for list="{{ storyStepsRest }}" as="s" hint-placeholder-count="3">
+        <div class="story-block {{ s.blockClass }}" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
           <div class="story-block-row" style="opacity: {{ s.opacity }};">
             <div class="story-dot-col">
               <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ s.dotBg }}; color: {{ s.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ s.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ s.n }}</span>
@@ -1381,20 +1719,12 @@
           </div>
         </div>
       </sc-for>
-      <div class="story-cost-wrap">
-        <div class="story-cost" style="background: #1E1422; color: #fff;">
-          <div class="story-cost-kicker">Cost to the seller for this entire chat</div>
-          <div class="story-cost-row">
-            <span class="story-cost-zero">₹0</span>
-            <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span>
-          </div>
-        </div>
-      </div>
     </div>
+    </div><!-- /.story-points-slot -->
 
     <div class="story-phone">
       <div class="story-phone-shell" style="background: #1E1422; border-radius: 32px; padding: 8px; box-shadow: 0 24px 56px -32px rgba(30,20,34,.52);">
-        <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 548px;">
+        <div class="phone-body" style="background: #FAF4FB; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; height: 620px;">
           <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; border-bottom: 1px solid #EFE2F0; flex: none;">
             <span style="font-size: 17px; color: #8A7E92; line-height: 1;">‹</span>
             <span style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
@@ -1433,41 +1763,38 @@
             <!-- 3 they blend their product in + AI result -->
             <div data-g="2" style="{{ b3 }}">
               <div style="display: flex; align-items: flex-end; gap: 8px;">
-                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
-                <div style="max-width: 82%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 10px 10px 12px;">
-                  <div style="display: flex; align-items: center; gap: 7px; margin-bottom: 8px;">
-                    <div style="width: 78px; aspect-ratio: 3/4; border-radius: 11px; overflow: hidden; position: relative;">
+                <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 88%; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 8px 8px 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <div style="width: 48px; aspect-ratio: 3/4; border-radius: 9px; overflow: hidden; position: relative;">
                       <img src="assets/images/59f3c472-7bba-4cdd-a4f6-908dc36c56ca.jpg" alt="Your background scene" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-                      <span style="position: absolute; left: 4px; bottom: 4px; font-size: 7.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 3px 6px; border-radius: 999px;">Your scene</span>
+                      <span style="position: absolute; left: 50%; bottom: 3px; transform: translateX(-50%); font-size: 6px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 2px 4px; border-radius: 999px; white-space: nowrap;">Your scene</span>
                     </div>
-                    <span style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #FCE7F0; color: #C42E8B; font-size: 15px; font-weight: 800; line-height: 1; display: flex; align-items: center; justify-content: center;">+</span>
-                    <div style="width: 78px; aspect-ratio: 3/4; border-radius: 11px; overflow: hidden; position: relative;">
+                    <span style="flex: none; width: 18px; height: 18px; border-radius: 50%; background: #FCE7F0; color: #C42E8B; font-size: 13px; font-weight: 800; line-height: 1; display: flex; align-items: center; justify-content: center;">+</span>
+                    <div style="width: 48px; aspect-ratio: 3/4; border-radius: 9px; overflow: hidden; position: relative;">
                       <img src="assets/images/ebb2b6e8-5f2a-4dd6-8729-f3cbb6dc44c8.jpg" alt="The brand's product photo" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-                      <span style="position: absolute; left: 4px; bottom: 4px; font-size: 7.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 3px 6px; border-radius: 999px;">Their product</span>
+                      <span style="position: absolute; left: 50%; bottom: 3px; transform: translateX(-50%); font-size: 6px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.64); padding: 2px 4px; border-radius: 999px; white-space: nowrap;">Their product</span>
                     </div>
                   </div>
-                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Uploaded our bottle into your marble scene, it’s generating…</div>
+                  <div style="font-size: 13px; line-height: 1.35; color: #1E1422;">Uploaded our bottle into your marble scene — generating…</div>
                 </div>
               </div>
-              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 10px;">
-                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); flex: none; display: flex; align-items: center; justify-content: center;">
-                  <span style="width: 9px; height: 9px; border: 2px solid #fff; border-radius: 50%;"></span>
+              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 6px;">
+                <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); flex: none; display: flex; align-items: center; justify-content: center;">
+                  <span style="width: 8px; height: 8px; border: 2px solid #fff; border-radius: 50%;"></span>
                 </span>
-                <div style="max-width: 82%; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); border-radius: 20px 20px 20px 6px; padding: 4px;">
-                  <div style="background: #fff; border-radius: 17px 17px 17px 4px; padding: 10px 10px 12px;">
-                    <div style="position: relative; width: 132px; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; margin-bottom: 9px;">
-                      <img src="assets/images/2f9dca33-485a-4c55-a5ce-71f7a2fea47a.jpg" alt="AI blend result" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-                      <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.6s ease-in-out infinite; pointer-events: none;"></div>
-                      <span style="position: absolute; left: 8px; bottom: 8px; font-size: 9.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.6); padding: 4px 8px; border-radius: 999px; white-space: nowrap;">Your blend</span>
-                    </div>
-                    <div style="font-size: 13px; font-weight: 700; color: #C42E8B;">Result 1 of 4 · free for the seller</div>
+                <div style="flex: 1; min-width: 0; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 5px;">
+                  <div style="position: relative; width: 100%; height: 148px; border-radius: 10px; overflow: hidden;">
+                    <img src="assets/images/2f9dca33-485a-4c55-a5ce-71f7a2fea47a.jpg" alt="AI blend result" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.6s ease-in-out infinite; pointer-events: none;"></div>
+                    <span style="position: absolute; left: 6px; bottom: 6px; font-size: 8.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.6); padding: 3px 7px; border-radius: 999px; white-space: nowrap;">Your blend</span>
                   </div>
                 </div>
               </div>
-              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 10px;">
-                <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
-                <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
-                  <div style="font-size: 14.5px; line-height: 1.45; color: #1E1422;">Okayyy it actually matches 😍 I ran it in three lighting variants, the warm one is perfect</div>
+              <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 6px;">
+                <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
+                <div style="max-width: 88%; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 9px 11px;">
+                  <div style="font-size: 13px; line-height: 1.35; color: #1E1422;">Okayyy it actually matches 😍 I ran it in three lighting variants, the warm one is perfect</div>
                 </div>
               </div>
             </div>
@@ -1502,20 +1829,30 @@
         </div>
       </div>
     </div>
+
+    <div class="story-cost-wrap">
+      <div class="story-cost" style="background: #1E1422; color: #fff;">
+        <div class="story-cost-kicker">Cost to the seller for this entire chat</div>
+        <div class="story-cost-row">
+          <span class="story-cost-zero">₹0</span>
+          <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
   </div>
 </section>
 
 <!-- NEW CUSTOMERS -->
-<section id="discover" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+<section id="discover" class="sec pad" style="max-width: 1160px; margin: 0 auto;">
   <div class="disco-head" data-reveal="">
     <p class="disco-kicker">New customers from our marketplace</p>
     <h2 class="h2 disco-h2">We don’t just help you convert the customers you have. We bring you <em>new ones.</em></h2>
     <p class="disco-lead">Every scene you list also gets a storefront inside the PixelBlend app, where brands who have never heard of you browse, blend their product in, and message you to license it.</p>
   </div>
 
-  <div data-reveal="" data-delay="1" class="disco" style="display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: start;">
+  <div data-reveal="" data-delay="1" class="disco" style="display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: center;">
 
     <!-- seller storefront in the app -->
     <div>
@@ -1587,7 +1924,7 @@
       <div class="disco-side-title">Today your reach ends at your follower count. In the marketplace it doesn’t.</div>
 
       <div class="disco-cta-card">
-        <div style="font-size: 25px; font-weight: 800; letter-spacing: -.03em; line-height: 1.22; max-width: 520px;">Reach beyond your own followers — without spending a rupee on ads.</div>
+        <div class="disco-cta-title">Reach beyond your own followers — without spending a rupee on ads.</div>
         <div class="disco-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.18);">
           <sc-for list="{{ discoStats }}" as="d" hint-placeholder-count="3">
             <div>
@@ -1606,7 +1943,7 @@
 </section>
 
 <!-- PRICING -->
-<section id="cost" class="sec pad" style="max-width: 1220px; margin: 0 auto;">
+<section id="cost" class="sec pad" style="max-width: 1160px; margin: 0 auto;">
   <div class="cost-head" data-reveal="">
     <p class="cost-kicker-top">Zero cost</p>
     <h2 class="h2 cost-h2">What all of this costs you — <em>nothing.</em></h2>
@@ -1648,12 +1985,12 @@
 </section>
 
 <!-- FIVE STEPS — STEPPER -->
-<section id="journey" class="sec pad" sc-camel-on-mouse-enter="{{ pauseSteps }}" sc-camel-on-mouse-leave="{{ resumeSteps }}" style="padding: 86px 40px 86px; max-width: 1220px; margin: 0 auto;">
+<section id="journey" class="sec pad" style="padding: 48px 32px 86px; max-width: 1160px; margin: 0 auto;">
   <div data-reveal="" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 28px;">
     <div>
       <p class="journey-kicker">Your listing path</p>
       <h2 class="h2 journey-h2">Four steps, and only two of them are <em>yours.</em></h2>
-      <p class="journey-lead">They play through on their own — hover to pause, or click any step. You list and you share; they do the other two, at no cost to you.</p>
+      <p class="journey-lead">They play through on their own — click any step to jump ahead. You list and you share; they do the other two, at no cost to you.</p>
     </div>
     <div style="display: flex; align-items: center; gap: 16px;">
       <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: #1E1422;"><span style="width: 10px; height: 10px; border-radius: 50%; background: #1E1422;"></span>You · 2</span>
@@ -1663,8 +2000,8 @@
   <div data-reveal="" style="background: #fff; border: 1px solid #EFE2F0; border-radius: 26px; overflow: hidden;">
     <div class="stepper-tabs" style="display: flex; border-bottom: 1px solid #EFE2F0;">
       <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
-        <button sc-camel-on-click="{{ s.pick }}" style="{{ s.tabStyle }}">
-          <span style="position: absolute; left: 0; bottom: -3px; height: 3px; width: {{ s.progW }}; background: {{ s.fillBg }}; transition: width .12s linear;"></span>
+        <button class="stepper-tab" sc-camel-on-click="{{ s.pick }}" style="{{ s.tabStyle }}">
+          <span class="stepper-prog" style="{{ s.barStyle }}"></span>
           <span style="display: flex; align-items: center; gap: 9px; margin-bottom: 9px;">
             <span style="font-family: 'Instrument Serif', serif; font-size: 26px; line-height: 1; color: {{ s.numFg }};">{{ s.n }}</span>
             <span style="font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: {{ s.whoFg }}; background: {{ s.whoBg }}; padding: 4px 8px; border-radius: 999px;">{{ s.who }}</span>
@@ -1699,7 +2036,7 @@
 </section>
 
 <!-- WHAT YOU CAN LIST (auto-shifting) -->
-<section id="list" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+<section id="list" class="sec pad" style="padding: 0 32px 40px; max-width: 1160px; margin: 0 auto;">
   <div data-reveal="" style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 22px;">
     <div>
       <p style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #C42E8B; margin: 0 0 16px;">What you can list</p>
@@ -1731,7 +2068,7 @@
 </section>
 
 <!-- SAME CATALOGUE -->
-<section class="sec pad" style="padding: 86px 40px; max-width: 1220px; margin: 0 auto;">
+<section id="same-catalogue" class="sec pad" style="padding: 40px 32px 86px; max-width: 1160px; margin: 0 auto;">
   <div data-reveal="" style="max-width: 660px; margin: 0 0 34px;">
     <h2 class="h2" style="font-size: 38px; line-height: 1.1; letter-spacing: -.032em; font-weight: 800; margin: 0 0 12px;">Same catalogue. Different conversation.</h2>
     <p style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0;">Nothing about your studio changes except what the brand can see.</p>
@@ -1770,7 +2107,7 @@
 </section>
 
 <!-- DRAG COMPARE -->
-<section id="drag-compare" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+<section id="drag-compare" class="sec pad" style="padding: 0 32px 86px; max-width: 1160px; margin: 0 auto;">
   <div class="split" style="display: grid; grid-template-columns: .85fr 1.15fr; gap: 56px; align-items: start;">
     <div data-reveal="">
       <div class="cmp-head">
@@ -1810,7 +2147,7 @@
 </section>
 
 <!-- BENEFITS BEYOND SALES -->
-<section id="benefits" class="sec pad" style="padding: 0 40px 86px; max-width: 1220px; margin: 0 auto;">
+<section id="benefits" class="sec pad" style="padding: 0 32px 86px; max-width: 1160px; margin: 0 auto;">
   <div data-reveal="" class="benefit-panel" style="background: #1E1422; color: #fff; border-radius: 30px; padding: 44px 44px 34px; overflow: hidden; position: relative;">
     <div style="position: absolute; right: -120px; top: -140px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.22), transparent 66%); pointer-events: none;"></div>
     <div style="position: relative;">
@@ -1838,7 +2175,7 @@
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="sec pad" style="padding: 0 40px 82px; max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box;">
+<section id="faq" class="sec pad" style="padding: 0 32px 36px; max-width: 760px; margin: 0 auto; width: 100%; box-sizing: border-box;">
   <h2 data-reveal="" class="h2 faq-h2" style="font-size: 36px; line-height: 1.08; letter-spacing: -.035em; font-weight: 800; margin: 0 0 28px; text-align: center;">The questions sellers ask first</h2>
   <div class="faq-list" data-reveal="">
   <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
@@ -1857,7 +2194,7 @@
 </section>
 
 <!-- CTA -->
-<section class="sec pad" style="padding: 0 40px 90px; max-width: 1000px; margin: 0 auto;">
+<section id="sellers-cta" class="sec pad" style="padding: 28px 32px 72px; max-width: 1000px; margin: 0 auto;">
   <div data-reveal="" class="sellers-cta-panel" style="background: #1E1422; color: #fff; border-radius: 8px; padding: 60px 56px;">
     <h2 class="h2 sellers-cta-h2" style="font-size: 44px; line-height: 1.04; letter-spacing: -.04em; font-weight: 800; margin: 0 0 12px;">Let them see their product in it.</h2>
     <p class="sellers-cta-sub" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 30px; line-height: 1.2; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 30px;">It costs you nothing to find out.</p>
@@ -1900,10 +2237,12 @@ class Component extends DCLogic {
       });
     }, 120);
     this._stepIv = setInterval(() => {
-      if (this.state.stepPaused || this.props.stepperAutoplay === false) return;
+      if (this.props.stepperAutoplay === false) return;
       this.setState((s) => {
-        const next = s.stepProg + 0.028;
-        return next >= 1 ? { step: (s.step + 1) % 4, stepProg: 0 } : { stepProg: next };
+        const next = (s.stepProg || 0) + 0.0375;
+        return next >= 1
+          ? { step: ((s.step || 0) + 1) % 4, stepProg: 0 }
+          : { stepProg: next };
       });
     }, 120);
   }
@@ -1961,50 +2300,34 @@ class Component extends DCLogic {
       rail.classList.toggle('is-on', !last && step >= 0 && i <= step);
     });
   }
+  _isStoryMobile() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
   _syncStory() {
     const track = document.getElementById('story-track');
     if (!track) return;
     const phone = track.querySelector('.story-phone');
-    const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
     const sticky = track.querySelector('.story-pin-sticky');
-
-    /* Mobile: no pin wrap — advance by which block is in view */
-    if (phoneHidden) {
-      const blocks = track.querySelectorAll('.story-block');
-      let best = 0;
-      const mid = window.innerHeight * 0.38;
-      blocks.forEach((b, i) => {
-        if (b.getBoundingClientRect().top <= mid) best = i;
-      });
-      best = Math.max(0, Math.min(3, best));
-      this._storyEngaged = true;
-      this._storyVisualStep = best;
-      if (best !== this.state.storyStep) this.setState({ storyStep: best });
-      else {
-        this._syncStoryBlocks(best);
-        this._positionFeed();
-      }
-      return;
-    }
-
     const stickyTop = sticky
-      ? (parseFloat(getComputedStyle(sticky).top) || 88)
+      ? (parseFloat(getComputedStyle(sticky).top) || (this._isStoryMobile() ? 80 : 88))
       : 88;
     const r = track.getBoundingClientRect();
     const travel = Math.max(1, track.offsetHeight - (sticky ? sticky.offsetHeight : (phone ? phone.offsetHeight : 600)));
     const raw = stickyTop - r.top;
-    /* Not started until pin wrap reaches sticky top */
+    /* Not started until pin wrap reaches sticky top — still show point 1 */
     if (raw < 0) {
       this._storyEngaged = false;
-      this._storyVisualStep = -1;
-      this._syncStoryBlocks(-1);
-      this._positionFeed();
+      this._storyVisualStep = 0;
+      if (this.state.storyStep !== 0) this.setState({ storyStep: 0 });
+      else {
+        this._syncStoryBlocks(0);
+        this._positionFeed();
+      }
       return;
     }
     this._storyEngaged = true;
     const scrolled = Math.max(0, Math.min(travel, raw));
     const p = scrolled / travel;
-    /* 4 equal segments; hold step 4 through the last stretch before release */
     let best;
     if (p < 0.22) best = 0;
     else if (p < 0.44) best = 1;
@@ -2020,24 +2343,13 @@ class Component extends DCLogic {
   _gotoStory(i) {
     const track = document.getElementById('story-track');
     if (!track) return;
-    const phone = track.querySelector('.story-phone');
-    const phoneHidden = !phone || getComputedStyle(phone).display === 'none';
     this._storyEngaged = true;
     this._storyVisualStep = i;
     this.setState({ storyStep: i });
 
-    if (phoneHidden) {
-      const blocks = track.querySelectorAll('.story-block');
-      const el = blocks[i];
-      if (!el) return;
-      const top = el.getBoundingClientRect().top + window.scrollY - 88;
-      window.scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'smooth' });
-      return;
-    }
-
     const sticky = track.querySelector('.story-pin-sticky');
     const stickyTop = sticky
-      ? (parseFloat(getComputedStyle(sticky).top) || 88)
+      ? (parseFloat(getComputedStyle(sticky).top) || (this._isStoryMobile() ? 80 : 88))
       : 88;
     const travel = Math.max(1, track.offsetHeight - (sticky ? sticky.offsetHeight : 600));
     const centers = [0.11, 0.33, 0.55, 0.78];
@@ -2049,23 +2361,35 @@ class Component extends DCLogic {
     const view = document.getElementById('chat-view');
     const feed = document.getElementById('chat-feed');
     if (!view || !feed) return;
-    // skip the layout read entirely when the story block is nowhere near the viewport
     const vr = view.getBoundingClientRect();
     const vh = window.innerHeight || 800;
     if (vr.bottom < -vh || vr.top > vh * 2) return;
-    const g = feed.querySelector('[data-g="' + this.state.storyStep + '"]');
+    const step = this.state.storyStep;
+    const g = feed.querySelector('[data-g="' + step + '"]');
     if (!g) return;
-    const topPad = 12;
-    const bottomPad = 16;
+    const topPad = 10;
+    const bottomPad = 14;
     const viewH = view.clientHeight;
     const groupTop = g.offsetTop;
-    const groupBottom = groupTop + g.offsetHeight;
-    // Prefer seating the active step near the bottom (chat feel).
-    // If that would clip the top of a tall step (esp. step 3), pin the top instead.
-    let y = Math.min(0, viewH - groupBottom - bottomPad);
-    if (groupTop + y < topPad) {
+    const groupH = g.offsetHeight;
+    const groupBottom = groupTop + groupH;
+    const usable = viewH - topPad - bottomPad;
+
+    let y;
+    if (groupH <= usable) {
+      /* Fits fully — show from top so no bubble is clipped */
+      y = Math.min(0, topPad - groupTop);
+      if (groupBottom + y > viewH - bottomPad) {
+        y = Math.min(0, viewH - groupBottom - bottomPad);
+      }
+    } else if (step === 2) {
+      /* Step 3 tall — keep full group as visible as possible from top */
+      y = Math.min(0, topPad - groupTop);
+    } else {
+      /* Other tall steps — keep start visible */
       y = Math.min(0, topPad - groupTop);
     }
+    if (groupTop + y > topPad) y = Math.min(0, y);
     const t = 'translateY(' + Math.round(y) + 'px)';
     if (feed.style.transform !== t) feed.style.transform = t;
   }
@@ -2167,6 +2491,8 @@ class Component extends DCLogic {
         tagBg: s.who === 'You' ? '#1E1422' : '#FCE7F0',
       };
     });
+    const storyStep0 = storySteps[0];
+    const storyStepsRest = storySteps.slice(1);
     const bubble = (n) => ({
       opacity: st >= n ? 1 : 0,
       transform: st >= n ? 'none' : 'translateY(14px)',
@@ -2310,16 +2636,20 @@ class Component extends DCLogic {
     ];
     const steps = flowData.map((s, i) => {
       const on = S.step === i, mine = s.who === 'You';
+      const prog = on ? Math.max(0, Math.min(1, S.stepProg || 0)) : 0;
       return {
         n: '0' + (i + 1), short: s.short, who: s.who,
         pick: () => this.setState({ step: i, stepProg: 0 }),
         tabStyle: {
           flex: 1, minWidth: 0, textAlign: 'left', padding: '20px 22px', border: 0,
-          borderBottom: '3px solid ' + (on ? (mine ? '#1E1422' : '#EC4899') : 'transparent'),
-          background: on ? '#FDF7FD' : '#fff', cursor: 'pointer', transition: 'background .2s', position: 'relative',
+          background: on ? '#FDF7FD' : '#fff', cursor: 'pointer', transition: 'background .2s',
         },
-        progW: on ? (Math.min(1, S.stepProg) * 100).toFixed(1) + '%' : '0%',
-        fillBg: mine ? '#1E1422' : '#EC4899',
+        barStyle: {
+          width: '100%',
+          transform: 'scaleX(' + prog.toFixed(4) + ')',
+          background: mine ? '#1E1422' : '#EC4899',
+          opacity: on ? 1 : 0,
+        },
         numFg: on ? '#C42E8B' : '#DCCFDE',
         titleFg: on ? '#1E1422' : '#8A7E92',
         whoFg: mine ? (on ? '#fff' : '#8A7E92') : '#C42E8B',
@@ -2455,7 +2785,7 @@ class Component extends DCLogic {
       burgerBg: sc ? '#fff' : 'rgba(255,255,255,.10)',
       burgerBd: sc ? '#EFE2F0' : 'rgba(255,255,255,.22)',
       heroBg, handle, triptych, tickerLoop, heroProofs, benefits,
-      storySteps, pips, stepBadge,
+      storySteps, storyStep0, storyStepsRest, pips, stepBadge,
       b1: bubble(0), b2: bubble(1), b3: bubble(2), b4: bubble(3),
       compareRows, dragStart, dragMove, dragEnd,
       splitPct: S.split.toFixed(1) + '%',
