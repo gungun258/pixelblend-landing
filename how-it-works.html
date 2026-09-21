@@ -91,12 +91,11 @@
     body.hiw-page { background: #FAF4FB; }
     /* dc-runtime swaps the template root for an empty #dc-root, then React fills it.
        Without a viewport min-height the footer (sibling below) flashes at the top. */
-    html { height: auto !important; overflow-x: clip; }
+    html { height: auto !important; }
     body.hiw-page {
       height: auto !important;
       min-height: 100%;
-      /* visible — clip on body breaks position:sticky for the walkthrough phone */
-      overflow-x: visible;
+      overflow-x: clip;
     }
     body.hiw-page #dc-root,
     body.hiw-page #dc-root > .sc-host {
@@ -621,24 +620,16 @@
       .hiw-mkt-card { padding: 22px; }
     }
     .hiw-walk {
-      max-width: 1160px; margin: 0 auto; padding: 0 32px 64px;
-      display: block;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px 84px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 72px;
+      align-items: stretch;
     }
     .hiw-walk-sticky {
-      display: grid;
-      grid-template-columns: 1fr 420px;
-      gap: 72px;
-      align-items: start;
+      display: contents;
     }
-    .hiw-walk-aside {
-      min-width: 0;
-      position: sticky;
-      top: 96px;
-      align-self: start;
-    }
+    .hiw-walk-aside { min-width: 0; }
     .hiw-walk-steps {
-      /* Extra travel so the phone stays pinned through step 3 */
-      padding-bottom: min(42vh, 360px);
+      padding-bottom: min(55vh, 480px);
       overflow-anchor: none;
     }
     .hiw-walk-steps .hiw-pin,
@@ -646,89 +637,76 @@
       overflow-anchor: none;
     }
     .hiw-walk-phone {
-      position: relative;
-      top: auto;
+      position: sticky;
+      top: 96px;
     }
-    /* Desktop: compact step cards + chips in fewer rows */
+    /* Desktop: both 2A and 2B stay expanded (highlight only changes) */
     @media (min-width: 769px) {
-      .hiw-opt-card:not(.is-open) > p,
-      .hiw-opt-card:not(.is-open) > .hiw-chip-row,
-      .hiw-opt-card:not(.is-open) > div:not(.hiw-opt-head) {
-        display: none !important;
-      }
-      .hiw-opt-card:not(.is-open) {
-        padding: 12px 14px !important;
-      }
       .hiw-opt-card.is-open .hiw-opt-detail {
         display: block;
       }
       #walkthrough .hiw-pin-0,
       #walkthrough .hiw-pin-1,
       #walkthrough .hiw-pin-3 {
-        padding-top: 10px !important;
-        padding-bottom: 12px !important;
+        padding-top: 28px !important;
+        padding-bottom: 32px !important;
       }
       #walkthrough .hiw-branch-rail {
-        margin-top: 12px !important;
+        margin-top: 20px !important;
       }
       #walkthrough .hiw-branch-rail > div[style*="height: 14px"] {
-        height: 8px !important;
+        height: 14px !important;
       }
       .hiw-step-grid {
-        grid-template-columns: 44px minmax(0, 1fr) !important;
-        gap: 12px !important;
+        grid-template-columns: 56px minmax(0, 1fr) !important;
+        gap: 18px !important;
       }
       #walkthrough .hiw-pin-0 .hiw-step-grid h3,
       #walkthrough .hiw-pin-3 .hiw-step-grid h3,
       #walkthrough .hiw-pin-1 .hiw-step2-title h3 {
-        font-size: 20px !important;
+        font-size: 22px !important;
         line-height: 1.2 !important;
       }
       #walkthrough .hiw-pin-0 .hiw-step-grid p,
       #walkthrough .hiw-pin-3 .hiw-step-grid p,
       #walkthrough .hiw-pin-1 .hiw-step-grid > div > p {
-        font-size: 14.5px !important;
-        line-height: 1.45 !important;
-        margin-top: 6px !important;
+        font-size: 15.5px !important;
+        line-height: 1.55 !important;
+        margin-top: 8px !important;
       }
       #walkthrough .hiw-chip-row {
-        margin-top: 8px !important;
-        gap: 6px !important;
+        margin-top: 12px !important;
+        gap: 8px !important;
       }
       #walkthrough .hiw-chip {
-        font-size: 11.5px !important;
-        padding: 5px 10px !important;
+        font-size: 12.5px !important;
+        padding: 6px 12px !important;
       }
       #walkthrough .hiw-opt-title {
-        font-size: 16px !important;
+        font-size: 19px !important;
       }
       #walkthrough .hiw-opt-card > p {
-        font-size: 14px !important;
-        line-height: 1.45 !important;
-        margin-top: 6px !important;
+        font-size: 15.5px !important;
+        line-height: 1.55 !important;
+        margin-top: 8px !important;
       }
     }
     @media (max-width: 1100px) {
-      .hiw-root { min-width: 0 !important; overflow-x: visible; }
+      .hiw-root { min-width: 0 !important; overflow-x: clip; }
       /* Keep left content / right phone whenever width allows */
       .hiw-walk {
-        display: block !important;
-        padding: 0 32px 48px !important;
-        height: auto !important;
-      }
-      .hiw-walk-sticky {
         display: grid !important;
         grid-template-columns: minmax(0, 1.05fr) minmax(280px, 360px) !important;
         gap: 36px !important;
-        position: relative !important;
-        top: auto !important;
-        flex-direction: unset !important;
-        padding: 0 !important;
+        padding: 0 32px 56px !important;
+        height: auto !important;
         align-items: start !important;
-        background: transparent !important;
+      }
+      .hiw-walk-sticky {
+        display: contents !important;
       }
       .hiw-walk-steps {
-        padding-bottom: min(36vh, 280px) !important;
+        padding-bottom: min(45vh, 360px) !important;
         order: unset !important;
         position: relative !important;
         width: auto !important;
@@ -739,13 +717,13 @@
         order: unset !important;
         width: auto !important;
         display: block !important;
-        position: sticky !important;
-        top: 88px !important;
-        align-self: start !important;
-      }
-      .hiw-walk-phone {
         position: relative !important;
         top: auto !important;
+        align-self: auto !important;
+      }
+      .hiw-walk-phone {
+        position: sticky !important;
+        top: 88px !important;
         width: auto !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
@@ -756,7 +734,7 @@
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
-        padding: 18px 0 22px !important;
+        padding: 28px 0 32px !important;
         margin: 0 !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin.is-on {
@@ -2913,20 +2891,20 @@ class Component extends DCLogic {
       };
     });
 
-    const stepRow = (i) => 'padding: 18px 0 22px; cursor: pointer; transition: opacity .25s, transform .25s;' +
+    const stepRow = (i) => 'padding: 28px 0 32px; cursor: pointer; transition: opacity .25s, transform .25s;' +
       (s.step === i ? '' : ' opacity: .7;');
-    const numStyle = (on) => 'font-family: \'Hanken Grotesk\', sans-serif; font-size: 12px; font-weight: 800; letter-spacing: .06em; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; ' +
+    const numStyle = (on) => 'font-family: \'Hanken Grotesk\', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: .06em; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; ' +
       (on
-        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 18px -8px rgba(236,72,153,.55);'
+        ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
         : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
     /* Active step body — same gradient frame as open 2A */
-    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 16px; ' +
+    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 18px; ' +
       (on
-        ? 'padding: 14px 16px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 12px 28px -20px rgba(196,46,139,.42);'
+        ? 'padding: 20px 22px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
         : 'padding: 0; border: 1.5px solid transparent; background: transparent; box-shadow: none;');
-    const optCard = (on) => 'border-radius: 16px; cursor: pointer; padding: 14px 16px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; ' +
+    const optCard = (on) => 'border-radius: 18px; cursor: pointer; padding: 20px 22px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; ' +
       (on
-        ? 'border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 12px 28px -20px rgba(196,46,139,.42);'
+        ? 'border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
         : 'border: 1.5px solid #E6DED6; background: #fff; box-shadow: none;');
     const optBadge = (on) => 'width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex: none; ' +
       (on
@@ -3049,14 +3027,14 @@ class Component extends DCLogic {
         active: onOptA,
         pick: () => this._pickBranch ? this._pickBranch('a') : this.goWalkStep(1),
         card: optCard(onOptA), badge: optBadge(onOptA), chevron: optChevron(onOptA),
-        openClass: onOptA ? 'is-open' : '',
+        openClass: 'is-open',
         chips: ['Screenshots work', 'Any source', 'Your own photos']
       },
       optB: {
         active: onOptB,
         pick: () => this._pickBranch ? this._pickBranch('b') : this.goWalkStep(2),
         card: optCard(onOptB), badge: optBadge(onOptB), chevron: optChevron(onOptB),
-        openClass: onOptB ? 'is-open' : '',
+        openClass: 'is-open',
         body: '',
         chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
       },
