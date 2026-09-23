@@ -15,7 +15,7 @@
   </script>
   <script>window.__resources = {"u_1542291026-7eec264c27ff":"assets/images/dca77fff-acd9-4dc4-9a90-5c1f4162d170.jpg","u_1517842645767-c639042777db":"assets/images/f7a82f2e-0124-4bd3-b9f8-837472ef9b7f.jpg","u_1600185365483-26d7a4cc7519":"assets/images/c76c5d00-7acc-4c9d-ab79-32ca8d3fab84.jpg","u_1523275335684-37898b6baf30":"assets/images/3b547e49-62bd-4b26-825e-4350d3d08c85.jpg","u_1441974231531-c6227db76b6e":"assets/images/75c54c95-db9c-4e83-a339-9eeb5044aa53.jpg","u_1557683316-973673baf926":"assets/images/52bf1ea1-7b1e-44f8-afbb-5c6976702fe4.jpg","u_1541643600914-78b084683601":"assets/images/6e002e29-82f9-47fa-b7c2-723718c3e30f.jpg","u_1594035910387-fea47794261f":"assets/images/844de4b8-3bd6-4b55-8a73-a8830610ddf4.jpg","u_1511499767150-a48a237f0083":"assets/images/dc849ff4-2001-4a12-8347-f0440689ccd7.jpg","u_1519681393784-d120267933ba":"assets/images/17c99c23-d1cf-48e8-a604-0ddac6b6279f.jpg","u_1507525428034-b723cf961d3e":"assets/images/d82ec365-4d7a-4740-93ae-51e14c2d8f08.jpg","u_1595950653106-6c9ebd614d3a":"assets/images/ac80296f-afa5-4ec0-8ec5-f1f8439ccd00.jpg","u_1586495777744-4413f21062fa":"assets/images/b3080294-e5f1-4e32-b44d-053a66d4aa5a.jpg","u_1505740420928-5e560c06d30e":"assets/images/073eb3f9-a854-4e96-901b-d081c02d2584.jpg","u_1434056886845-dac89ffe9b56":"assets/images/a14077bb-c396-411e-a99b-d07c0a9fdd50.jpg","u_1522335789203-aabd1fc54bc9":"assets/images/eeba96c5-8f07-4234-8f66-9aec6f826296.jpg","u_1509042239860-f550ce710b93":"assets/images/e4edff68-11bf-45b9-b67c-b7c9430a5078.jpg","u_1584917865442-de89df76afd3":"assets/images/2c1a6193-dedd-426d-aeb5-d7ff0bbfb3e8.jpg","u_1550226891-ef816aed4a98":"assets/images/ad6c186e-64c7-44c9-bc7e-55ac5f50bf1a.jpg","u_1513694203232-719a280e022f":"assets/images/7efa025e-9ee0-476a-9aab-839f0a8c654f.jpg","u_1460353581641-37baddab0fa2":"assets/images/7391a5a9-a541-4ed7-88a5-b4338cf63a22.jpg","u_1493934558415-9d19f0b2b4d2":"assets/images/cc1c8b41-5a3e-4696-a307-0b8555a4ac8c.jpg","u_1556228578-8c89e6adf883":"assets/images/ee9598b9-6ba5-4c99-9a35-42457c2f815e.jpg","u_1516035069371-29a1b244cc32":"assets/images/e8e2a74b-1d5b-4418-b481-419094305b35.jpg","u_1618366712010-f4ae9c647dcb":"assets/images/c71bedae-842b-4b0c-b536-3398e0c25bf1.jpg","u_1495616811223-4d98c6e9c869":"assets/images/d8af21e1-d95b-4016-a705-ec49ae7de3b8.jpg","https://unpkg.com/react@18.3.1/umd/react.production.min.js":"assets/js/dc-runtime.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"assets/js/dc-runtime.js"};</script>
   <script src="assets/js/dc-runtime.js"></script>
-  <link rel="stylesheet" href="styles.css?v=motion5">
+  <link rel="stylesheet" href="styles.css?v=motion22">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -66,6 +66,14 @@
     }
     .hiw-demo-bg-card {
       transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .hiw-demo-bg-btn {
+      width: auto !important;
+      max-width: 100%;
+      align-self: center;
+      box-sizing: border-box;
+      padding: 9px 18px !important;
+      line-height: 1.2 !important;
     }
     @media (hover: hover) and (pointer: fine) {
       .hiw-demo-bg-card:hover {
@@ -140,20 +148,81 @@
       margin: 28px auto 0; max-width: 600px;
       font-size: 18px; line-height: 1.7; color: #5b5060;
     }
-    .hiw-hero-ctas { margin-top: 36px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
-    .hiw-hero-ctas a { text-decoration: none; box-sizing: border-box; }
+    .hiw-hero-ctas,
+    .hiw-end-ctas,
+    .hiw-mkt-ctas,
+    .hiw-dev-ctas {
+      display: inline-grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 12px;
+      align-items: stretch;
+      width: max-content;
+      max-width: 100%;
+      justify-content: center;
+    }
+    .hiw-hero-ctas { margin-top: 36px; margin-left: auto; margin-right: auto; }
+    .hiw-end-ctas { margin-top: 28px; margin-left: auto; margin-right: auto; }
+    .hiw-mkt-ctas { margin-top: 26px; }
+    .hiw-dev-ctas { margin-top: 24px; }
+    .hiw-hero-ctas a,
+    .hiw-end-ctas a,
+    .hiw-mkt-ctas a,
+    .hiw-dev-ctas a {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    /* Long labels: stack before they overflow */
+    @media (max-width: 720px) {
+      .hiw-hero-ctas,
+      .hiw-end-ctas,
+      .hiw-mkt-ctas,
+      .hiw-dev-ctas {
+        display: grid !important;
+        grid-auto-flow: row !important;
+        grid-auto-columns: unset !important;
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        gap: 10px !important;
+      }
+      .hiw-hero-ctas a,
+      .hiw-end-ctas a,
+      .hiw-mkt-ctas a,
+      .hiw-dev-ctas a {
+        white-space: normal !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+      }
+    }
+    .hiw-cta-pri,
+    .hiw-cta-sec {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      min-height: 48px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      box-sizing: border-box;
+      transition: transform .28s ease, box-shadow .28s ease, filter .28s ease, border-color .28s ease;
+    }
     .hiw-cta-pri {
-      font-size: 15px; font-weight: 700; color: #fff;
-      padding: 13px 24px; border-radius: 999px;
+      color: #fff;
+      border: 1px solid transparent;
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       box-shadow: 0 10px 24px rgba(236,72,153,.28);
-      transition: transform .28s ease, box-shadow .28s ease, filter .28s ease;
     }
     .hiw-cta-sec {
-      font-size: 15px; font-weight: 700; color: #1A1420;
-      padding: 12px 22px; border-radius: 999px;
-      background: #fff; border: 1.5px solid #E6DED6;
-      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+      color: #1A1420;
+      background: #fff;
+      border: 1.5px solid #E6DED6;
     }
     @media (hover: hover) and (pointer: fine) {
       .hiw-cta-pri:hover {
@@ -408,6 +477,150 @@
       flex-direction: column;
       min-width: 0;
       max-width: 100%;
+      position: relative;
+    }
+    .hiw-mkt-act {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-width: 0;
+      line-height: 1;
+    }
+    .hiw-mkt-act--contact {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1A1420;
+      padding: 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1.5px solid #E6DED6;
+      cursor: pointer;
+    }
+    .hiw-mkt-act-ico {
+      width: 14px;
+      height: 14px;
+      flex: none;
+      display: block;
+    }
+    .hiw-mkt-act > span {
+      display: block;
+      line-height: 1;
+    }
+    .hiw-mkt-contact {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .hiw-mkt-contact.is-open {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    .hiw-mkt-contact-scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 20, 32, .42);
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+    .hiw-mkt-contact-sheet {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      border-radius: 22px 22px 0 0;
+      padding: 16px 14px 18px;
+      box-shadow: 0 -16px 40px -28px rgba(26, 20, 32, .45);
+      transform: translateY(110%);
+      transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+    }
+    .hiw-mkt-contact.is-open .hiw-mkt-contact-sheet {
+      transform: translateY(0);
+    }
+    .hiw-mkt-contact-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .hiw-mkt-contact-head strong {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: #1A1420;
+    }
+    .hiw-mkt-contact-x {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 0;
+      background: #F3EEF0;
+      color: #5b5060;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+    }
+    .hiw-mkt-contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hiw-mkt-contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #F7F2F4;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+    .hiw-mkt-contact-row .hiw-mkt-contact-ico {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #fff;
+      line-height: 0;
+    }
+    .hiw-mkt-contact-row .hiw-mkt-contact-ico svg {
+      display: block;
+      width: 18px;
+      height: 18px;
+      flex: none;
+      margin: 0;
+    }
+    .hiw-mkt-contact-row strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: -.015em;
+      color: #1A1420;
+    }
+    .hiw-mkt-contact-row > div span {
+      display: block;
+      margin-top: 1px;
+      font-size: 11.5px;
+      color: #8D8296;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .hiw-mkt-phone-status,
     .hiw-phone-status {
@@ -477,13 +690,7 @@
       min-width: 0;
     }
     .hiw-mkt-tabs {
-      padding: 10px 12px 8px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      min-width: 0;
-      max-width: 100%;
-      box-sizing: border-box;
+      display: none !important;
     }
     .hiw-mkt-tabs > span {
       flex: none;
@@ -546,6 +753,183 @@
       min-width: 0;
     }
     .hiw-uc-pins > * { min-width: 0; }
+    .hiw-uc-inspire {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) 36px minmax(0, .85fr);
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .hiw-uc-moodboard {
+      background: #fff;
+      border: 1.5px solid #E6DED6;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 18px 44px -34px rgba(74,52,40,.6);
+      min-width: 0;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .hiw-uc-pins-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8D8296;
+      margin-bottom: 10px;
+    }
+    .hiw-uc-pin {
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #EFE7E0;
+      min-width: 0;
+      position: relative;
+    }
+    .hiw-uc-pin img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hiw-uc-pin--pick {
+      outline: 2.5px solid #C42E8B;
+      outline-offset: 1px;
+    }
+    .hiw-uc-pin--pick > span,
+    .hiw-uc-inspire-shot > span {
+      position: absolute;
+      left: 6px;
+      bottom: 6px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: #fff;
+      background: #C42E8B;
+      padding: 4px 8px;
+      border-radius: 999px;
+      max-width: calc(100% - 12px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .hiw-uc-inspire .hiw-uc-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .hiw-uc-arrow-lab {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: #8D8296;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .hiw-uc-arrow-mark {
+      font-size: 18px;
+      color: #C9BCC6;
+    }
+    .hiw-uc-inspire-out {
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+    }
+    .hiw-uc-inspire-shot {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid #F3D9EA;
+      background: #FAF4FB;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .hiw-uc-inspire-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hiw-uc-inspire-shot > span {
+      left: 8px;
+      bottom: 8px;
+      font-size: 10px;
+    }
+    .hiw-uc-social {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) 36px minmax(0, 1.1fr);
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .hiw-uc-social-in,
+    .hiw-uc-social-out {
+      min-width: 0;
+      max-width: 100%;
+    }
+    .hiw-uc-social-pack {
+      aspect-ratio: 3 / 4;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #E6DED6;
+      background: #EFE7E0;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .hiw-uc-social-pack img,
+    .hiw-uc-social-post img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hiw-uc-social-lab {
+      margin-top: 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      color: #8D8296;
+    }
+    .hiw-uc-social-lab--out { color: #C42E8B; }
+    .hiw-uc-social .hiw-uc-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .hiw-uc-social-posts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .hiw-uc-social-post {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid #F3D9EA;
+      background: #FAF4FB;
+      min-width: 0;
+    }
+    .hiw-uc-social-post > span {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #1A1420;
+      background: rgba(255,255,255,.92);
+      padding: 3px 7px;
+      border-radius: 999px;
+    }
     .hiw-mkt-card a { text-decoration: none; }
     #devices { padding: 72px 32px 0; }
     .hiw-dev {
@@ -562,8 +946,7 @@
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
     .hiw-dev-copy p { margin: 14px 0 0; font-size: 16.5px; line-height: 1.65; color: #5b5060; max-width: 480px; }
-    .hiw-dev-ctas { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
-    .hiw-dev-ctas a { text-decoration: none; }
+    .hiw-dev-ctas { margin-top: 24px; }
     .hiw-dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .hiw-dev-card {
       background: #fff; border: 1px solid #F0E6F2; border-radius: 16px; padding: 18px 16px;
@@ -601,12 +984,9 @@
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hiw-end-ctas { margin-top: 28px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; }
-    .hiw-end-ctas a { text-decoration: none; }
     .hiw-end-note { margin-top: 16px; font-size: 15px; color: #8D8296; }
     @media (max-width: 640px) {
       .hiw-end h2 { font-size: 30px; }
-      .hiw-end-ctas a { width: 100%; text-align: center; box-sizing: border-box; }
     }
     .hiw-mkt-scroll {
       overflow-y: auto !important;
@@ -621,7 +1001,7 @@
     }
     .hiw-walk {
       max-width: 1160px; margin: 0 auto; padding: 0 32px 84px;
-      display: grid; grid-template-columns: 1fr 420px; gap: 72px;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 420px); gap: 36px;
       align-items: stretch;
     }
     .hiw-walk-sticky {
@@ -636,12 +1016,59 @@
     .hiw-walk-steps .hiw-opt-card {
       overflow-anchor: none;
     }
+
+    /* Kill walk blink: no opacity/transform thrash on step swap */
+    #walkthrough .hiw-pin,
+    #walkthrough .hiw-opt-card,
+    #walkthrough .hiw-walk-steps > .hiw-pin-0,
+    #walkthrough .hiw-walk-steps > .hiw-pin-1,
+    #walkthrough .hiw-walk-steps > .hiw-pin-3 {
+      transition: none !important;
+    }
+    #walkthrough .hiw-phone-screen,
+    #walkthrough .hiw-phone-screen img {
+      transition: none !important;
+      animation: none !important;
+    }
+
     .hiw-walk-phone {
       position: sticky;
       top: 96px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
-    /* Desktop: both 2A and 2B stay expanded (highlight only changes) */
-    @media (min-width: 769px) {
+    .hiw-walk-phone-frame {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .hiw-phone-screen {
+      position: relative;
+      border-radius: 36px;
+      background: #FAF4FB;
+      overflow: hidden;
+      height: 640px;
+      max-height: min(640px, 78vh);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    /* Desktop only: both 2A and 2B stay expanded (highlight only changes) */
+    @media (min-width: 1101px) {
+      .hiw-opt-card > p,
+      .hiw-opt-card .hiw-chip-row,
+      .hiw-opt-card > div:not(.hiw-opt-head) {
+        display: block !important;
+      }
       .hiw-opt-card.is-open .hiw-opt-detail {
         display: block;
       }
@@ -658,7 +1085,7 @@
         height: 14px !important;
       }
       .hiw-step-grid {
-        grid-template-columns: 56px minmax(0, 1fr) !important;
+        grid-template-columns: 64px minmax(0, 1fr) !important;
         gap: 18px !important;
       }
       #walkthrough .hiw-pin-0 .hiw-step-grid h3,
@@ -696,22 +1123,21 @@
       /* Keep left content / right phone whenever width allows */
       .hiw-walk {
         display: grid !important;
-        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 360px) !important;
-        gap: 36px !important;
-        padding: 0 32px 56px !important;
+        grid-template-columns: minmax(0, 1fr) minmax(340px, 400px) !important;
+        gap: 22px !important;
+        padding: 0 24px 40px !important;
         height: auto !important;
         align-items: start !important;
-      }
-      .hiw-walk-sticky {
-        display: contents !important;
+        overflow: visible !important;
       }
       .hiw-walk-steps {
-        padding-bottom: min(45vh, 360px) !important;
+        padding-bottom: min(28vh, 200px) !important;
         order: unset !important;
         position: relative !important;
         width: auto !important;
         max-width: none !important;
         margin: 0 !important;
+        overflow: visible !important;
       }
       .hiw-walk-aside {
         order: unset !important;
@@ -719,12 +1145,17 @@
         display: block !important;
         position: relative !important;
         top: auto !important;
-        align-self: auto !important;
+        align-self: stretch !important;
       }
       .hiw-walk-phone {
         position: sticky !important;
-        top: 88px !important;
+        top: 80px !important;
         width: auto !important;
+      }
+      .hiw-walk-phone-frame,
+      .hiw-phone-shell {
+        max-width: 380px !important;
+        width: 100% !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
         position: relative !important;
@@ -734,131 +1165,445 @@
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
-        padding: 28px 0 32px !important;
+        padding: 12px 0 14px !important;
         margin: 0 !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin.is-on {
         position: relative !important;
       }
-      .hiw-step-marker::after { display: block !important; }
+      /* Tablet: compact left column — only active A/B body open */
+      .hiw-step-grid {
+        grid-template-columns: 56px minmax(0, 1fr) !important;
+        gap: 12px !important;
+      }
+      #walkthrough .hiw-pin-0 .hiw-step-grid h3,
+      #walkthrough .hiw-pin-3 .hiw-step-grid h3,
+      #walkthrough .hiw-pin-1 .hiw-step2-title h3 {
+        font-size: 17px !important;
+        line-height: 1.25 !important;
+      }
+      #walkthrough .hiw-pin-0 .hiw-step-grid p,
+      #walkthrough .hiw-pin-3 .hiw-step-grid p,
+      #walkthrough .hiw-pin-1 .hiw-step-grid > div > p {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        margin-top: 5px !important;
+      }
+      #walkthrough .hiw-step2-title > span {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+      }
+      #walkthrough .hiw-branch-rail {
+        margin-top: 10px !important;
+        padding-left: 22px !important;
+      }
+      #walkthrough .hiw-branch-rail > div[style*="height: 14px"] {
+        height: 8px !important;
+      }
+      #walkthrough .hiw-opt-title {
+        font-size: 14.5px !important;
+        line-height: 1.25 !important;
+      }
+      #walkthrough .hiw-opt-card {
+        padding: 18px 28px !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+      }
+      #walkthrough .hiw-opt-card > p {
+        font-size: 12.5px !important;
+        line-height: 1.4 !important;
+        margin-top: 6px !important;
+        max-width: 28em !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden !important;
+      }
+      #walkthrough .hiw-opt-card:not(.is-active) > p,
+      #walkthrough .hiw-opt-card:not(.is-active) .hiw-chip-row,
+      #walkthrough .hiw-opt-card:not(.is-active) > div:not(.hiw-opt-head) {
+        display: none !important;
+      }
+      #walkthrough .hiw-opt-card:not(.is-active) {
+        padding: 14px 24px !important;
+      }
+      #walkthrough .hiw-chip-row {
+        margin-top: 8px !important;
+        gap: 5px !important;
+      }
+      #walkthrough .hiw-chip {
+        font-size: 10.5px !important;
+        padding: 4px 8px !important;
+      }
+      /* Tablet landscape 2-col: collapse inactive steps so left column stays short */
+      @media (min-width: 901px) {
+        #walkthrough .hiw-pin-0:not(.is-on),
+        #walkthrough .hiw-pin-1:not(.is-on),
+        #walkthrough .hiw-pin-3:not(.is-on) {
+          opacity: .55 !important;
+          padding: 16px 0 !important;
+          min-height: 72px !important;
+        }
+        #walkthrough .hiw-pin-0:not(.is-on) .hiw-chip-row,
+        #walkthrough .hiw-pin-3:not(.is-on) .hiw-chip-row,
+        #walkthrough .hiw-pin-1:not(.is-on) .hiw-branch-rail {
+          display: none !important;
+        }
+        #walkthrough .hiw-pin-1:not(.is-on) .hiw-step2-title > span {
+          display: none !important;
+        }
+        #walkthrough .hiw-pin-0.is-on,
+        #walkthrough .hiw-pin-1.is-on,
+        #walkthrough .hiw-pin-3.is-on {
+          padding: 16px 0 20px !important;
+        }
+      }
+      .hiw-step-marker::before { display: block !important; }
+      .hiw-step-marker::after { display: none !important; }
       .hiw-pin-3 .hiw-step-marker::after { display: none !important; }
       .hiw-hero h1 { font-size: 38px !important; }
       .hiw-hero .hiw-lead { font-size: 16px !important; }
     }
-    /* Mobile only: step then phone, sticky swap */
-    @media (max-width: 768px) {
-      .hiw-walk {
-        display: block !important;
-        padding: 0 32px 40px !important;
-        /* ~1–2 scrolls per step (1→2→3→4 phone screens) */
-        height: 380vh !important;
-        grid-template-columns: none !important;
+    /* Mobile/tablet portrait: sticky panel — phone fixed, points 1→2→3 on scroll */
+    @media (max-width: 900px) {
+      #walkthrough {
+        overflow-x: clip !important;
+        max-width: 100vw !important;
       }
-      .hiw-walk-sticky {
-        display: flex !important;
-        flex-direction: column !important;
-        position: sticky !important;
-        top: 72px !important;
-        gap: 16px !important;
-        padding: 6px 0 8px !important;
-        align-items: stretch !important;
-        background: transparent !important;
-      }
-      .hiw-walk-steps {
-        order: 1 !important;
-        position: relative !important;
-        padding-bottom: 0 !important;
-        width: 100% !important;
-        /* Lock height so Step 2 (tall) ↔ Step 3 doesn't retarget scroll */
-        min-height: 228px !important;
-        height: 228px !important;
-        max-width: none !important;
-        margin: 0 !important;
-        overflow: hidden !important;
+      .hiw-walk-head {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
       }
-      .hiw-walk-aside {
-        order: 2 !important;
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        position: relative !important;
-        top: auto !important;
-        align-self: stretch !important;
+      .hiw-walk-head-note {
+        font-size: 0 !important;
       }
-      .hiw-walk-phone { position: relative !important; top: 0 !important; width: 100% !important; }
-      #walkthrough .hiw-walk-steps > .hiw-pin {
+      .hiw-walk-head-note::after {
+        content: 'SCROLL A STEP';
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .14em;
+        color: #C42E8B;
+      }
+      /* Tall runway so sticky panel can hold while points advance */
+      .hiw-walk.hiw-walk-pin-wrap {
+        display: block !important;
+        position: relative !important;
+        height: 320vh !important;
+        min-height: 320vh !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 16px !important;
+        margin: 0 !important;
+        gap: 0 !important;
+        grid-template-columns: none !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+      }
+      .hiw-walk-sticky {
+        position: sticky !important;
+        top: var(--hiw-sticky-top, 64px) !important;
+        height: auto !important;
+        max-height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        padding: 10px 0 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        background: linear-gradient(180deg, #FAF4FB 0%, #fff 42%, #FFF7FB 100%);
+        z-index: 2;
+      }
+      .hiw-walk-steps {
+        display: block !important;
+        position: relative !important;
+        flex: 0 1 auto !important;
+        min-height: 140px !important;
+        height: auto !important;
+        max-height: min(34dvh, 260px) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 4px 0 0 !important;
+        overflow: hidden !important;
+        order: unset !important;
+      }
+      /* One active point visible — relative so height follows content (no giant gap) */
+      #walkthrough .hiw-walk-steps > .hiw-pin-0,
+      #walkthrough .hiw-walk-steps > .hiw-pin-1,
+      #walkthrough .hiw-walk-steps > .hiw-pin-3 {
         position: absolute !important;
         left: 0 !important;
         right: 0 !important;
         top: 0 !important;
-        opacity: 0 !important;
-        transform: translateY(8px) !important;
-        pointer-events: none !important;
-        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
-        transition: opacity .18s ease, transform .18s ease !important;
+        padding: 6px 0 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateY(8px);
+        transition: opacity .3s ease, transform .3s ease !important;
+        box-sizing: border-box !important;
+        min-width: 0 !important;
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        cursor: default;
+        z-index: 1;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on {
-        position: absolute !important;
+      #walkthrough .hiw-walk-steps > .hiw-pin-0.is-on,
+      #walkthrough .hiw-walk-steps > .hiw-pin-1.is-on,
+      #walkthrough .hiw-walk-steps > .hiw-pin-3.is-on {
         opacity: 1 !important;
-        transform: none !important;
         pointer-events: auto !important;
+        transform: none !important;
+        position: relative !important;
         z-index: 2;
+        max-height: none;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-grid {
-        opacity: 1 !important;
-        grid-template-columns: 32px minmax(0, 1fr) !important;
-        gap: 10px !important;
+      #walkthrough .hiw-step-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        grid-template-columns: 52px minmax(0, 1fr) !important;
+        gap: 12px !important;
         align-items: start !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-num {
-        width: 28px !important;
-        height: 28px !important;
+      #walkthrough .hiw-step-grid > div:last-child {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      #walkthrough .hiw-step-grid p {
+        max-width: 100% !important;
+      }
+      #walkthrough .hiw-pin-0.is-on .hiw-step-num,
+      #walkthrough .hiw-pin-1.is-on .hiw-step-num,
+      #walkthrough .hiw-pin-3.is-on .hiw-step-num {
+        width: 30px !important;
+        height: 30px !important;
         font-size: 11px !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-lab {
-        font-size: 8px !important;
-        letter-spacing: .06em !important;
+      #walkthrough .hiw-pin-0.is-on .hiw-step-lab,
+      #walkthrough .hiw-pin-1.is-on .hiw-step-lab,
+      #walkthrough .hiw-pin-3.is-on .hiw-step-lab {
+        font-size: 8.5px !important;
+        letter-spacing: .07em !important;
         margin-top: 4px !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-grid h3 {
-        font-size: 16px !important;
-        line-height: 1.2 !important;
+      #walkthrough .hiw-pin-0.is-on .hiw-step-grid h3,
+      #walkthrough .hiw-pin-1.is-on .hiw-step2-title h3,
+      #walkthrough .hiw-pin-3.is-on .hiw-step-grid h3 {
+        font-size: 17px !important;
+        line-height: 1.25 !important;
         margin: 0 !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-grid p {
-        font-size: 12.5px !important;
-        line-height: 1.35 !important;
-        margin-top: 4px !important;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+      #walkthrough .hiw-pin-0.is-on .hiw-step-grid p,
+      #walkthrough .hiw-pin-1.is-on .hiw-step-grid > div > p,
+      #walkthrough .hiw-pin-3.is-on .hiw-step-grid p {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        margin-top: 5px !important;
+        display: block !important;
+        -webkit-line-clamp: unset !important;
+        overflow: visible !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-chip-row {
-        margin-top: 8px !important;
-        gap: 5px !important;
+      #walkthrough .hiw-pin-0.is-on .hiw-chip-row,
+      #walkthrough .hiw-pin-3.is-on .hiw-chip-row,
+      #walkthrough .hiw-walk-steps .hiw-chip-row {
+        display: none !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-chip {
+      #walkthrough .hiw-chip {
         font-size: 10.5px !important;
         padding: 4px 8px !important;
+        max-width: 100%;
       }
       #walkthrough .hiw-pin-0.is-on .hiw-step-grid > div:last-child,
       #walkthrough .hiw-pin-3.is-on .hiw-step-grid > div:last-child {
         padding: 10px 12px !important;
-        border-radius: 14px !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-step2-title {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-step2-title > span {
+        display: none !important;
+      }
+      #walkthrough #hiw-pin-1.is-on .hiw-step-grid > div > p {
+        display: none !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-branch-rail {
+        margin-top: 10px !important;
+        padding-left: 0 !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-opt-title {
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-opt-card.is-active p {
+        font-size: 12.5px !important;
+        line-height: 1.4 !important;
+        margin-top: 6px !important;
+      }
+      #walkthrough .hiw-pin-1.is-on .hiw-branch-rail > div[style*="height: 14px"] {
+        height: 8px !important;
+      }
+      .hiw-branch-line,
+      .hiw-branch-or {
+        display: none !important;
+      }
+      /* Mobile: only 2A — hide option B / chooser chrome */
+      #walkthrough #hiw-pin-2,
+      #walkthrough .hiw-pin-2,
+      #walkthrough .hiw-branch-rail > div[style*="height: 14px"],
+      #walkthrough .hiw-step2-title > span,
+      #walkthrough .hiw-opt-card .hiw-opt-head > span:first-child,
+      #walkthrough .hiw-opt-card .hiw-opt-head > span[aria-hidden] {
+        display: none !important;
+      }
+      #walkthrough .hiw-opt-card {
+        pointer-events: none !important;
+        cursor: default !important;
+      }
+      #walkthrough .hiw-opt-card.is-active,
+      #walkthrough .hiw-opt-card.is-open {
+        padding: 18px 28px !important;
+      }
+      #walkthrough .hiw-opt-card > p,
+      #walkthrough .hiw-opt-card.is-active > p {
+        display: block !important;
+      }
+      #walkthrough .hiw-opt-card:not(.is-active) > p,
+      #walkthrough .hiw-opt-card:not(.is-active) .hiw-chip-row,
+      #walkthrough .hiw-opt-card:not(.is-active) > div:not(.hiw-opt-head) {
+        display: none !important;
+      }
+      #walkthrough .hiw-opt-card:not(.is-active) {
+        padding: 14px 24px !important;
+      }
+      #walkthrough .hiw-opt-card.is-active {
+        padding: 18px 28px !important;
+      }
+      .hiw-step-marker::before {
+        display: none !important;
+      }
+      .hiw-step-marker::after {
+        display: none !important;
+      }
+      /* Phone: solid wider portrait — looks like a real phone */
+      .hiw-walk-aside {
+        position: relative !important;
+        top: auto !important;
+        order: unset !important;
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        align-self: stretch !important;
+        margin: 0 !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        box-sizing: border-box !important;
+        z-index: 3;
+      }
+      .hiw-walk-phone {
+        position: relative !important;
+        top: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+      }
+      .hiw-walk-phone-frame,
+      .hiw-phone-shell {
+        width: 290px !important;
+        max-width: 290px !important;
+        flex: none !important;
+        height: auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         box-sizing: border-box !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step2-title {
-        gap: 8px !important;
-        margin: 0 !important;
+      .hiw-phone-shell {
+        padding: 11px !important;
+        border-radius: 40px !important;
+        box-shadow: 0 22px 44px -24px rgba(26,20,32,.55) !important;
+        display: block !important;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step2-title > span {
-        font-size: 9px !important;
-        padding: 4px 8px !important;
+      .hiw-phone-screen {
+        flex: none !important;
+        width: 100% !important;
+        height: 520px !important;
+        min-height: 520px !important;
+        max-height: 520px !important;
+        border-radius: 30px !important;
+        box-sizing: border-box !important;
       }
-      .hiw-step-marker::after { display: none !important; }
+      .hiw-walk-dots {
+        margin-top: 12px !important;
+        flex: 0 0 auto !important;
+      }
+      .hiw-phone-head {
+        padding: 12px 14px 6px !important;
+      }
+      .hiw-phone-kicker {
+        font-size: 10.5px !important;
+        letter-spacing: .1em !important;
+      }
+      .hiw-phone-title {
+        font-size: 19px !important;
+        margin-top: 4px !important;
+        line-height: 1.15 !important;
+      }
+      .hiw-phone-body {
+        padding: 6px 14px 0 !important;
+        gap: 9px !important;
+      }
+      .hiw-phone-row {
+        padding: 10px 12px !important;
+        border-radius: 12px !important;
+      }
+      .hiw-phone-row > span:first-child {
+        font-size: 12.5px !important;
+      }
+      .hiw-phone-row > span:last-child {
+        font-size: 11.5px !important;
+      }
+      .hiw-phone-foot {
+        padding: 10px 14px 14px !important;
+      }
+      .hiw-phone-screen #hiw-phone-cta {
+        font-size: 13.5px !important;
+        padding: 12px 14px !important;
+      }
+      .hiw-mkt-phone-status,
+      .hiw-phone-status {
+        padding: 10px 10px 0 !important;
+        font-size: 10.5px !important;
+        min-height: 28px !important;
+      }
+      .hiw-mkt-notch {
+        width: 56px !important;
+        height: 16px !important;
+        margin-top: 3px !important;
+      }
     }
     @media (min-width: 1100px) {
       .hiw-hero-inner { padding-top: 64px !important; }
@@ -868,8 +1613,15 @@
     }
     @media (max-width: 640px) {
       .hiw-hero h1 { font-size: 30px !important; }
-      .hiw-hero-ctas { flex-direction: column; width: 100%; }
-      .hiw-hero-ctas a { width: 100%; text-align: center; }
+      .hiw-hero-ctas,
+      .hiw-end-ctas,
+      .hiw-mkt-ctas,
+      .hiw-dev-ctas {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
     }
 
@@ -961,11 +1713,11 @@
       margin-top: 20px; font-family: 'Hanken Grotesk', sans-serif;
       font-size: 36px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: #fff;
     }
-    .hiw-mkt-ctas { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .hiw-mkt-ctas { margin-top: 26px; }
     .hiw-uc-visual { min-width: 0; }
 
     @media (max-width: 1024px) {
-      .hiw-walk-phone-frame { width: 100% !important; max-width: 340px; }
+      .hiw-walk-phone-frame { width: 100% !important; max-width: 380px; }
       .hiw-dev-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 900px) {
@@ -985,11 +1737,104 @@
         gap: 10px !important;
         align-items: start !important;
       }
+      .hiw-uc-visual.hiw-uc-social {
+        display: grid !important;
+        grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+      }
+      .hiw-uc-social > * { min-width: 0 !important; max-width: 100% !important; }
+      .hiw-uc-social-in,
+      .hiw-uc-social-out {
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 0 !important;
+        align-self: stretch !important;
+      }
+      .hiw-uc-social-posts {
+        flex: none !important;
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        gap: 6px !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 1fr 1fr !important;
+        min-height: 0 !important;
+      }
+      .hiw-uc-social-post {
+        aspect-ratio: auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        border-radius: 8px !important;
+      }
+      .hiw-uc-social-pack {
+        flex: 1 1 auto !important;
+        aspect-ratio: auto !important;
+        width: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        border-radius: 12px !important;
+      }
+      .hiw-uc-social-lab {
+        flex: none !important;
+        margin-top: 6px !important;
+        font-size: 9px !important;
+        letter-spacing: .06em !important;
+        text-align: center !important;
+        line-height: 1.3 !important;
+      }
+      .hiw-uc-social-post > span {
+        font-size: 8px !important;
+        padding: 2px 5px !important;
+        right: 5px !important;
+        top: 5px !important;
+      }
       .hiw-uc-visual.hiw-uc-inspire {
         display: grid !important;
-        grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) !important;
-        gap: 10px !important;
-        align-items: start !important;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .hiw-uc-inspire > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
+      }
+      .hiw-uc-inspire .hiw-uc-moodboard {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+      .hiw-uc-inspire .hiw-uc-inspire-out {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+      .hiw-uc-inspire .hiw-uc-shot,
+      .hiw-uc-inspire .hiw-uc-inspire-shot {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-uc-inspire .hiw-uc-shot > span,
+      .hiw-uc-inspire-shot > span {
+        font-size: 8.5px !important;
+        letter-spacing: .04em !important;
+        padding: 3px 6px !important;
+        max-width: calc(100% - 10px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .hiw-uc-arrow { display: none !important; }
       .hiw-uc-listing-head,
@@ -1041,11 +1886,39 @@
       .hiw-walk-head { padding: 48px 20px 8px; }
       .hiw-walk-head h2 { font-size: 30px; }
       .hiw-faq-head h2 { font-size: 30px; }
-      .hiw-mkt-ctas a, .hiw-dev-ctas a { width: 100%; text-align: center; box-sizing: border-box; }
       #devices, #marketplace, #faq { padding-left: 16px; padding-right: 16px; }
       .hiw-walk-phone { display: flex; flex-direction: column; align-items: center; }
     }
     .hiw-demo-result { min-width: 0; max-width: 100%; }
+    .hiw-demo-eq {
+      align-self: center;
+      padding-top: 0 !important;
+      height: auto;
+    }
+    .hiw-demo-plus {
+      align-self: center;
+      padding-top: 0 !important;
+      height: auto;
+    }
+    .hiw-demo-plus-ico {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid #E6DED6;
+      box-shadow: 0 6px 14px -10px rgba(74,52,40,.9);
+      font-family: 'Hanken Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1;
+      color: #8D8296;
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
     .hiw-demo-result-head {
       display: flex; align-items: center; justify-content: space-between;
       gap: 8px; min-height: 34px; height: auto; flex-wrap: wrap;
@@ -1057,103 +1930,220 @@
       .hiw-try-hint > span { font-size: 12px !important; }
     }
     .hiw-phone-shell {
-      width: 340px; max-width: 100%; box-sizing: border-box;
+      width: 100%; max-width: 380px; box-sizing: border-box;
       border-radius: 46px; background: #1A1420; padding: 11px;
       box-shadow: 0 40px 80px -40px rgba(26,20,32,.7);
+      margin-left: auto;
+      margin-right: auto;
     }
-    .hiw-step-grid { display: grid; grid-template-columns: 56px 1fr; gap: 18px; align-items: stretch; }
+    .hiw-phone-head {
+      padding: 18px 20px 8px;
+    }
+    .hiw-phone-kicker {
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      color: #C42E8B;
+    }
+    .hiw-phone-title {
+      margin-top: 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      line-height: 1.16;
+      color: #1A1420;
+    }
+    .hiw-phone-body {
+      flex: 1;
+      padding: 8px 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .hiw-phone-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #EFE7E0;
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .hiw-phone-row > span:first-child {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #1A1420;
+    }
+    .hiw-phone-row > span:last-child {
+      font-size: 12.5px;
+      color: #8D8296;
+    }
+    .hiw-phone-foot {
+      padding: 14px 20px 20px;
+    }
+    .hiw-walk-dots {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+    }
+    .hiw-step-grid { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; align-items: stretch; }
+    #walkthrough .hiw-step-grid > div:last-child {
+      width: fit-content;
+      max-width: 100%;
+      min-width: 0;
+    }
+    #walkthrough .hiw-branch-rail {
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    #walkthrough .hiw-opt-card {
+      width: fit-content;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 22px 32px !important;
+    }
+    #walkthrough .hiw-step-grid p {
+      max-width: 28em !important;
+    }
+    #walkthrough .hiw-opt-card > p {
+      max-width: 26em !important;
+    }
     .hiw-step-marker {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
+      align-self: stretch;
       z-index: 1;
+      min-height: 100%;
+      width: 100%;
+      overflow: visible;
     }
     .hiw-step-num {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       flex: none;
+      background-clip: padding-box;
     }
     .hiw-step-lab {
       margin-top: 7px;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: .1em;
+      letter-spacing: .04em;
       text-transform: uppercase;
       color: #9A8FA2;
       white-space: nowrap;
-      line-height: 1;
-      z-index: 1;
+      line-height: 1.1;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: visible;
     }
-    /* Vertical connector between Step 1 → 2 → 3 circles */
-    .hiw-step-marker::after {
+    /* Continuous vertical rail through circle centers (01 → 02 → 03) */
+    .hiw-step-marker::before {
       content: '';
-      flex: 1 1 auto;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       width: 2px;
-      min-height: 28px;
-      margin-top: 10px;
-      margin-bottom: -40px;
-      border-radius: 2px;
       background: #F0D6E6;
+      border-radius: 2px;
       z-index: 0;
+      pointer-events: none;
+      top: 0;
+      bottom: 0;
     }
-    .hiw-pin-3 .hiw-step-marker::after { display: none; }
+    /* First step: rail starts at circle midpoint */
+    #walkthrough .hiw-pin-0 .hiw-step-marker::before {
+      top: 21px;
+    }
+    /* Last step: rail ends at circle midpoint */
+    #walkthrough .hiw-pin-3 .hiw-step-marker::before {
+      top: 0;
+      bottom: auto;
+      height: 21px;
+    }
+    /* Remove old flex stub connector */
+    .hiw-step-marker::after {
+      display: none !important;
+      content: none !important;
+    }
+    .hiw-pin-3 .hiw-step-marker::after { display: none !important; }
+    #walkthrough .hiw-step-grid {
+      align-items: stretch !important;
+    }
     .hiw-step2-title { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .hiw-root img { max-width: 100%; }
     .hiw-root, .hiw-root * { box-sizing: border-box; }
 
     @media (max-width: 1100px) {
-      /* Limited width: 1 + 2 side-by-side, result underneath */
+      /* Tablet: stack demo — inputs then result, full width */
       .hiw-demo-cols {
         display: flex !important;
         flex-direction: column !important;
         align-items: stretch !important;
-        padding: 0 18px !important;
-        gap: 12px !important;
-        max-width: 720px;
-        margin: 0 auto;
+        padding: 0 20px 8px !important;
+        gap: 14px !important;
+        max-width: none !important;
+        margin: 0 !important;
+        width: 100% !important;
         grid-template-columns: none !important;
       }
       .hiw-demo-cols > * {
-        min-width: 0;
+        min-width: 0 !important;
         max-width: none !important;
         width: 100% !important;
         box-sizing: border-box !important;
         grid-column: auto !important;
         grid-row: auto !important;
       }
+      .hiw-demo-cols > .hiw-in-cols {
+        width: fit-content !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
       .hiw-demo-label-in {
-        justify-content: flex-start !important;
-        padding-left: 4px !important;
+        justify-content: center !important;
+        padding: 0 2px 4px !important;
         order: 1;
       }
       .hiw-demo-cols > div:nth-child(2) { display: none !important; }
       .hiw-demo-label-out {
         display: flex !important;
-        justify-content: flex-start !important;
-        padding-left: 4px !important;
+        justify-content: center !important;
+        padding: 4px 2px 4px !important;
         order: 4;
-        padding-top: 4px !important;
       }
       .hiw-in-cols {
         display: grid !important;
-        grid-template-columns: minmax(140px, 200px) 44px minmax(0, 1fr) !important;
+        grid-template-columns: 240px 40px minmax(0, 400px) !important;
         align-items: start !important;
-        padding: 16px !important;
-        gap: 0 8px !important;
-        margin: 0 !important;
-        border-radius: 16px !important;
+        justify-content: start !important;
+        padding: 18px !important;
+        gap: 0 10px !important;
+        margin: 0 auto !important;
+        border-radius: 18px !important;
         text-align: left !important;
-        width: 100% !important;
+        width: fit-content !important;
+        max-width: 100% !important;
         order: 2;
       }
       .hiw-demo-plus {
         height: auto !important;
-        padding-top: 36px !important;
-        align-self: start !important;
-        width: auto !important;
+        padding-top: 0 !important;
+        align-self: center !important;
+        width: 40px !important;
         display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
+        justify-self: center !important;
       }
       .hiw-demo-product,
       .hiw-demo-bgs-block {
@@ -1162,21 +2152,33 @@
         margin: 0 !important;
         min-width: 0 !important;
       }
+      .hiw-demo-product {
+        width: 240px !important;
+        max-width: 240px !important;
+        justify-self: stretch !important;
+      }
+      .hiw-demo-bgs-block {
+        max-width: 400px !important;
+        width: 100% !important;
+        justify-self: stretch !important;
+      }
       .hiw-demo-product-shot {
         width: 100% !important;
-        max-width: none !important;
-        margin: 8px 0 0 !important;
+        max-width: 240px !important;
+        margin: 10px 0 0 !important;
         aspect-ratio: 1 / 1 !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
       }
       .hiw-demo-prod-opts {
-        max-width: none;
-        margin: 8px 0 0 !important;
+        width: 100% !important;
+        max-width: 240px !important;
+        margin: 10px 0 0 !important;
       }
       .hiw-demo-prod-note {
-        font-size: 11.5px !important;
-        margin-top: 6px !important;
+        font-size: 12px !important;
+        margin-top: 8px !important;
         text-align: left !important;
+        max-width: none !important;
       }
       .hiw-demo-product-head,
       .hiw-demo-bgs-head {
@@ -1184,136 +2186,204 @@
       }
       .hiw-try-hint > span {
         white-space: normal !important;
-        font-size: 12px !important;
+        font-size: 12.5px !important;
       }
       .hiw-demo-bgs {
-        margin: 8px 0 0 !important;
-        gap: 8px !important;
-        max-height: 280px !important;
-        max-width: none !important;
+        margin: 10px 0 0 !important;
+        gap: 10px !important;
+        max-height: 320px !important;
+        max-width: 400px !important;
+        width: 100% !important;
         grid-template-columns: 1fr 1fr !important;
       }
-      .hiw-demo-bg-card { border-radius: 10px !important; min-width: 0 !important; }
-      .hiw-demo-bg-shot { aspect-ratio: 1 / 1 !important; border-radius: 8px 8px 0 0 !important; }
-      .hiw-demo-bg-meta { padding: 6px 7px 7px !important; text-align: center !important; }
-      .hiw-demo-bg-name { font-size: 11px !important; }
-      .hiw-demo-bg-btn { margin-top: 4px !important; padding: 6px 4px !important; font-size: 11px !important; }
+      .hiw-demo-bg-card { border-radius: 12px !important; min-width: 0 !important; }
+      .hiw-demo-bg-shot { aspect-ratio: 1 / 1 !important; border-radius: 10px 10px 0 0 !important; }
+      .hiw-demo-bg-meta { padding: 8px !important; text-align: center !important; }
+      .hiw-demo-bg-name { font-size: 12px !important; }
+      .hiw-demo-bg-btn { margin-top: 6px !important; padding: 9px 16px !important; font-size: 12px !important; }
       .hiw-demo-eq {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        align-self: center !important;
         padding: 2px 0 !important;
         width: 100% !important;
         order: 3;
       }
       .hiw-demo-eq > span {
-        width: 40px !important;
-        height: 40px !important;
+        width: 42px !important;
+        height: 42px !important;
         font-size: 22px !important;
       }
       .hiw-demo-result {
         display: block !important;
-        margin: 0 auto !important;
-        padding: 16px !important;
-        border-radius: 16px !important;
+        margin: 0 !important;
+        padding: 18px !important;
+        border-radius: 18px !important;
         text-align: left !important;
-        max-width: 360px !important;
+        max-width: none !important;
+        width: 100% !important;
         order: 5;
       }
-      .hiw-demo-result-head { justify-content: flex-start !important; }
+      .hiw-demo-result-head { justify-content: space-between !important; }
       .hiw-demo-result-shot {
-        aspect-ratio: 3 / 4 !important;
-        max-width: none !important;
-        margin: 10px 0 0 !important;
-        max-height: 380px !important;
+        width: 100% !important;
+        max-width: 420px !important;
+        max-height: none !important;
+        margin: 12px auto 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 14px !important;
       }
-      .hiw-demo-banner { padding: 16px 18px !important; }
-      .hiw-demo { margin-top: 32px !important; border-radius: 18px !important; }
+      .hiw-demo-result > div:last-child {
+        max-width: 420px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .hiw-demo-banner { padding: 18px 20px !important; }
+      .hiw-demo { margin-top: 36px !important; border-radius: 20px !important; }
     }
     @media (max-width: 640px) {
       .hiw-demo-cols {
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
-        padding: 0 12px !important;
-        gap: 14px !important;
+        align-items: stretch !important;
+        padding: 0 12px 6px !important;
+        gap: 12px !important;
         grid-template-columns: none !important;
+        max-width: none !important;
       }
       .hiw-demo-cols > * {
-        max-width: 100% !important;
+        max-width: none !important;
         width: 100% !important;
         grid-column: auto !important;
         grid-row: auto !important;
       }
+      .hiw-demo-cols > .hiw-in-cols {
+        width: 100% !important;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
       .hiw-demo-eq { display: none !important; }
-      .hiw-demo-label-out { display: none !important; }
+      .hiw-demo-label-out {
+        display: flex !important;
+        justify-content: center !important;
+        padding: 4px 2px 2px !important;
+        max-width: none !important;
+        order: 4;
+      }
       .hiw-demo-label-in {
         justify-content: center !important;
-        max-width: 100% !important;
+        padding: 0 2px 2px !important;
+        max-width: none !important;
       }
       .hiw-in-cols {
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
+        align-items: stretch !important;
         grid-template-columns: none !important;
-        text-align: center !important;
-        padding: 14px 12px 16px !important;
+        text-align: left !important;
+        padding: 14px !important;
         border-radius: 16px !important;
-        gap: 0 !important;
+        gap: 14px !important;
+        width: 100% !important;
       }
       .hiw-demo-plus {
-        height: 36px !important;
-        padding-top: 0 !important;
+        height: auto !important;
+        padding: 0 !important;
         width: 100% !important;
         align-self: center !important;
+        justify-content: center !important;
       }
       .hiw-demo-product,
       .hiw-demo-bgs-block {
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
       }
-      .hiw-demo-product-head,
-      .hiw-demo-bgs-head {
+      .hiw-demo-product-head {
         justify-content: center !important;
       }
+      .hiw-demo-bgs-head {
+        justify-content: flex-start !important;
+        width: 100% !important;
+      }
       .hiw-demo-product-shot {
-        width: min(140px, 38vw) !important;
-        max-width: none !important;
+        width: 100% !important;
+        max-width: 280px !important;
         margin: 10px auto 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 14px !important;
       }
       .hiw-demo-prod-opts {
-        max-width: 180px;
-        margin: 8px auto 0 !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 10px auto 0 !important;
+        gap: 8px !important;
       }
       .hiw-demo-prod-note {
         text-align: center !important;
-        max-width: 260px;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: 280px !important;
+        margin: 8px auto 0 !important;
+        font-size: 12px !important;
       }
       .hiw-demo-bgs-block {
-        align-items: center !important;
+        align-items: stretch !important;
       }
       .hiw-demo-bgs-block .hiw-try-hint {
-        justify-content: center !important;
-        text-align: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
       }
       .hiw-demo-bgs {
-        max-width: 260px !important;
-        margin: 8px auto 0 !important;
+        max-width: none !important;
+        width: 100% !important;
+        margin: 10px 0 0 !important;
+        max-height: none !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+      }
+      .hiw-demo-bg-card { border-radius: 12px !important; }
+      .hiw-demo-bg-shot { aspect-ratio: 4 / 5 !important; }
+      .hiw-demo-bg-meta { padding: 7px !important; }
+      .hiw-demo-bg-name { font-size: 11.5px !important; }
+      .hiw-demo-bg-btn { font-size: 12px !important; padding: 9px 16px !important; }
+      .hiw-demo-result {
+        padding: 14px !important;
+        border-radius: 16px !important;
+        max-width: none !important;
+        width: 100% !important;
+        margin: 0 !important;
       }
       .hiw-demo-result-shot {
-        max-width: 260px;
-        max-height: 260px;
+        width: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        margin: 10px 0 0 !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 12px !important;
       }
-      .hiw-demo-result {
-        padding: 14px 12px 16px !important;
-        border-radius: 16px !important;
+      .hiw-demo-result > div:last-child {
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
+      .hiw-demo-banner { padding: 14px 14px !important; }
+      .hiw-demo-banner > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+      }
+      .hiw-demo-banner > div:last-child > span:last-child {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+      }
+      .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
       .hiw-dev-grid { grid-template-columns: 1fr; }
       .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
-      .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
       .hiw-step-grid { grid-template-columns: 48px 1fr; gap: 12px; }
       .hiw-step-grid h3 { font-size: 22px !important; }
       .hiw-step-lab { font-size: 9px; letter-spacing: .08em; }
@@ -1346,6 +2416,14 @@
         gap: 12px !important;
         margin-bottom: 12px !important;
         border-radius: 18px !important;
+        overflow: hidden !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-uc-row > *,
+      .hiw-uc-row-rev > * {
+        min-width: 0 !important;
+        max-width: 100% !important;
       }
       .hiw-uc-num {
         width: 34px !important;
@@ -1393,27 +2471,47 @@
         aspect-ratio: 1 / 1 !important;
       }
 
-      /* Inspiration: keep side-by-side, shorten pins */
+      /* Inspiration: equal cols, no horizontal clip */
       .hiw-uc-inspire {
         gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
       }
       .hiw-uc-moodboard {
         padding: 8px !important;
         border-radius: 12px !important;
         max-height: none;
-        overflow: hidden;
+        overflow: hidden !important;
+        min-width: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .hiw-uc-pins {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 5px !important;
       }
       .hiw-uc-pins > *:nth-child(n+5) { display: none; }
-      .hiw-uc-pins > * {
+      .hiw-uc-pin {
         aspect-ratio: 1 / 1 !important;
+        min-width: 0 !important;
       }
+      .hiw-uc-pin--pick > span,
+      .hiw-uc-inspire-shot > span {
+        font-size: 8px !important;
+        letter-spacing: .04em !important;
+        padding: 3px 6px !important;
+        max-width: calc(100% - 8px);
+      }
+      .hiw-uc-inspire .hiw-uc-inspire-out {
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .hiw-uc-inspire .hiw-uc-inspire-shot,
       .hiw-uc-inspire .hiw-uc-shot {
         width: 100% !important;
-        max-width: none !important;
+        max-width: 100% !important;
         margin: 0 !important;
         aspect-ratio: 1 / 1 !important;
       }
@@ -1461,14 +2559,10 @@
       .hiw-mkt-card { padding: 18px 14px 22px !important; overflow: hidden; }
       .hiw-mkt-body { gap: 28px !important; min-width: 0; }
       .hiw-mkt-ctas {
-        width: 100%;
-        flex-direction: column;
-      }
-      .hiw-mkt-ctas a {
         width: 100% !important;
-        text-align: center;
-        box-sizing: border-box !important;
-        justify-content: center;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
       .hiw-thumbs-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -1491,11 +2585,36 @@
     }
 
     @media (max-width: 640px) {
-      .hiw-walk { padding: 0 32px 36px !important; height: 360vh !important; display: block !important; }
-      .hiw-walk-head { padding: 40px 32px 8px !important; }
+      .hiw-walk.hiw-walk-pin-wrap {
+        height: 320vh !important;
+        min-height: 320vh !important;
+        padding: 0 14px !important;
+        display: block !important;
+      }
+      .hiw-walk-head { padding: 40px 16px 8px !important; }
       .hiw-walk-head h2 { font-size: 26px !important; }
-      .hiw-walk-sticky { top: 68px !important; gap: 14px !important; display: flex !important; flex-direction: column !important; }
-      .hiw-walk-head-note { font-size: 11px !important; margin-top: 6px !important; }
+      .hiw-walk-sticky {
+        position: sticky !important;
+        top: var(--hiw-sticky-top, 60px) !important;
+        height: auto !important;
+        max-height: calc(100dvh - var(--hiw-sticky-top, 60px)) !important;
+        gap: 14px !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .hiw-walk-head-note { margin-top: 6px !important; }
+      .hiw-walk-phone-frame,
+      .hiw-phone-shell {
+        width: 290px !important;
+        max-width: 290px !important;
+      }
+      .hiw-phone-screen {
+        width: 100% !important;
+        height: 520px !important;
+        min-height: 520px !important;
+        max-height: 520px !important;
+        border-radius: 30px !important;
+      }
       #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-grid {
         grid-template-columns: 28px minmax(0, 1fr) !important;
         gap: 8px !important;
@@ -1510,14 +2629,10 @@
       }
       #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-step-grid p {
         font-size: 12px !important;
-        -webkit-line-clamp: 2;
       }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-chip-row {
-        margin-top: 6px !important;
-      }
-      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-chip {
-        font-size: 10px !important;
-        padding: 3px 7px !important;
+      #walkthrough .hiw-walk-steps > .hiw-pin.is-on .hiw-chip-row,
+      #walkthrough .hiw-walk-steps .hiw-chip-row {
+        display: none !important;
       }
       .hiw-step-grid {
         grid-template-columns: 44px minmax(0, 1fr) !important;
@@ -1567,8 +2682,13 @@
         max-width: 100% !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        padding: 14px 14px !important;
         box-sizing: border-box !important;
+      }
+      #walkthrough .hiw-opt-card:not(.is-active) {
+        padding: 12px 20px !important;
+      }
+      #walkthrough .hiw-opt-card.is-active {
+        padding: 14px 22px !important;
       }
       #hiw-pin-1 .hiw-step-grid > div:last-child {
         width: 100%;
@@ -1583,41 +2703,18 @@
         line-height: 1.25 !important;
         flex: 1 1 auto;
       }
-      .hiw-phone-shell {
-        width: 100% !important;
-        max-width: 260px !important;
-        margin: 0 auto !important;
-      }
-      .hiw-walk-phone-frame {
-        width: 100% !important;
-        max-width: 260px !important;
-        margin: 0 auto !important;
-      }
-      #walkthrough .hiw-phone-shell > div[style*="height: 620px"] {
-        height: 440px !important;
-      }
-      /* Compact step-2 options under sticky phone */
-      #walkthrough .hiw-pin-1.is-on .hiw-opt-card p,
-      #walkthrough .hiw-pin-1.is-on .hiw-opt-card .hiw-chip-row,
-      #walkthrough .hiw-pin-1.is-on .hiw-opt-detail {
-        display: none !important;
-      }
       #walkthrough .hiw-pin-1.is-on .hiw-opt-card {
-        padding: 10px 12px !important;
+        padding: 14px 22px !important;
       }
       #walkthrough .hiw-pin-1.is-on .hiw-branch-rail {
-        margin-top: 10px !important;
+        margin-top: 12px !important;
       }
-      #walkthrough .hiw-pin-1.is-on .hiw-step-grid > div:last-child > p {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+      #walkthrough .hiw-pin-1.is-on .hiw-opt-card p {
         font-size: 12.5px !important;
-        margin-top: 4px !important;
+        margin-top: 6px !important;
       }
       #walkthrough .hiw-pin-1.is-on .hiw-branch-rail > div[style*="height: 14px"] {
-        height: 8px !important;
+        height: 10px !important;
       }
 
       .hiw-mkt-flow-row {
@@ -1695,7 +2792,7 @@
         </div>
       </div>
 
-      <div class="hiw-demo" ref="{{ demoRef }}" style="margin-top: 52px; background: #fff; border: 1px solid #E6DED6; border-radius: 24px; padding: 0 0 34px; box-shadow: 0 40px 90px -70px rgba(74,52,40,1); overflow: hidden">
+      <div class="hiw-demo" ref="{{ demoRef }}" style="margin-top: 52px; background: #fff; border: 1px solid #E6DED6; border-radius: 24px; padding: 0 0 22px; box-shadow: 0 40px 90px -70px rgba(74,52,40,1); overflow: hidden">
         <div class="hiw-demo-banner" style="position: relative; overflow: hidden; padding: 22px 34px; margin-bottom: 26px; background: linear-gradient(105deg, #2A1030 0%, #6B1349 46%, #A81F6B 100%)">
           <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 88% 130%, rgba(244,63,94,.55), rgba(168,31,107,0) 62%); pointer-events: none"></div>
           <div style="position: relative; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap">
@@ -1706,13 +2803,15 @@
         <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 56px minmax(280px, 320px); align-items: start; justify-items: stretch; column-gap: 12px; padding: 0 34px">
 
           <div class="hiw-demo-label-in" style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
-            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #A2968D; white-space: nowrap">WHAT GOES IN</span>
-            <span style="flex: 1; height: 1px; background: #EDE4DB"></span>
+            <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #EDE4DB"></span>
+            <span class="hiw-demo-label-txt" style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #A2968D; white-space: nowrap">WHAT GOES IN</span>
+            <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #EDE4DB"></span>
           </div>
-          <div style="grid-column: 2"></div>
+          <div class="hiw-demo-label-gap" style="grid-column: 2"></div>
           <div class="hiw-demo-label-out" style="grid-column: 3; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
-            <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #C42E8B; white-space: nowrap">WHAT COMES OUT</span>
-            <span style="flex: 1; height: 1px; background: #F4D6E8"></span>
+            <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #F4D6E8"></span>
+            <span class="hiw-demo-label-txt" style="font-size: 11.5px; font-weight: 800; letter-spacing: .18em; color: #C42E8B; white-space: nowrap">WHAT COMES OUT</span>
+            <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #F4D6E8"></span>
           </div>
 
           <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: minmax(180px, 220px) 56px minmax(240px, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 20px 22px 22px; gap: 0 8px; width: 100%; box-sizing: border-box">
@@ -1734,7 +2833,7 @@
               <div class="hiw-demo-prod-note" style="margin-top: 8px; font-size: 12px; line-height: 1.4; color: #8D8296">Sample products for this demo. In the app they are yours.</div>
             </div>
 
-            <div class="hiw-demo-plus" style="display: flex; align-items: center; justify-content: center; align-self: stretch; padding-top: 34px"><span style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; border: 1px solid #E6DED6; box-shadow: 0 6px 14px -10px rgba(74,52,40,.9); font-family: 'Playfair Display', serif; font-size: 25px; line-height: 1; color: #8D8296">+</span></div>
+            <div class="hiw-demo-plus" style="display: flex; align-items: center; justify-content: center; align-self: center; padding-top: 0"><span class="hiw-demo-plus-ico" aria-hidden="true">+</span></div>
 
             <div class="hiw-demo-bgs-block" style="min-width: 0">
               <div class="hiw-demo-bgs-head" style="display: flex; align-items: center; gap: 10px; height: 34px; min-width: 0">
@@ -1757,7 +2856,7 @@
 
           </div>
 
-          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; padding-top: 48px"><span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #fff">=</span></div>
+          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; align-self: center; padding-top: 0"><span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #fff">=</span></div>
 
           <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 20px 22px 22px; width: 100%; box-sizing: border-box">
             <div class="hiw-demo-result-head">
@@ -1803,7 +2902,7 @@
       <h2>Three steps, from packshot to <em>campaign</em></h2>
       <div class="hiw-walk-head-note">SCROLL OR TAP A STEP</div>
     </div>
-    <div class="hiw-walk hiw-walk-pin-wrap">
+    <div class="hiw-walk hiw-walk-pin-wrap" data-mob-step="{{ walkMobStep }}">
       <div class="hiw-walk-sticky">
       <div class="hiw-walk-steps">
 
@@ -1827,7 +2926,7 @@
           </div>
         </div>
 
-        <div id="hiw-pin-1" class="{{ branch.pinClass }}" style="{{ branch.wrap }}">
+        <div id="hiw-pin-1" class="{{ branch.pinClass }}" sc-camel-on-click="{{ branch.pick }}" style="{{ branch.wrap }}">
           <div class="hiw-step-grid">
             <div class="hiw-step-marker">
               <div class="hiw-step-num" style="{{ branch.num }}">02</div>
@@ -1904,19 +3003,19 @@
 
       <div class="hiw-walk-aside">
         <div class="hiw-walk-phone">
-        <div class="hiw-walk-phone-frame" style="width: 420px; display: flex; justify-content: center">
+        <div class="hiw-walk-phone-frame">
         <div class="hiw-phone-shell">
-          <div style="position: relative; border-radius: 36px; background: #FAF4FB; overflow: hidden; height: 620px; display: flex; flex-direction: column">
+          <div class="hiw-phone-screen">
             <div class="hiw-phone-status">
               <span>9:41</span>
               <span class="hiw-mkt-notch" aria-hidden="true"></span>
               <span>PixelBlend</span>
             </div>
-            <div style="padding: 18px 20px 8px">
-              <div style="font-size: 11.5px; font-weight: 800; letter-spacing: .12em; color: #C42E8B">{{ screen.kicker }}</div>
-              <div style="margin-top: 6px; font-family: 'Playfair Display', serif; font-size: 24px; line-height: 1.16">{{ screen.title }}</div>
+            <div class="hiw-phone-head">
+              <div class="hiw-phone-kicker">{{ screen.kicker }}</div>
+              <div class="hiw-phone-title">{{ screen.title }}</div>
             </div>
-            <div style="flex: 1; padding: 8px 20px 0; display: flex; flex-direction: column; gap: 12px; overflow: hidden">
+            <div class="hiw-phone-body">
               <div style="{{ screen.visual }}">
                 <sc-if value="{{ screen.hasImage }}" hint-placeholder-val="{{ true }}">
                   <img src="{{ screen.img }}" alt="App screen" class="{{ screen.imgClass }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
@@ -1939,19 +3038,19 @@
                 </div>
               </sc-if>
               <sc-for list="{{ screen.rows }}" as="r" hint-placeholder-count="2">
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
-                  <span style="font-size: 13.5px; font-weight: 700; color: #1A1420">{{ r.t }}</span>
-                  <span style="font-size: 12.5px; color: #8D8296">{{ r.v }}</span>
+                <div class="hiw-phone-row">
+                  <span>{{ r.t }}</span>
+                  <span>{{ r.v }}</span>
                 </div>
               </sc-for>
             </div>
-            <div style="padding: 14px 20px 20px">
+            <div class="hiw-phone-foot">
               <button type="button" id="hiw-phone-cta" sc-camel-on-click="{{ screen.ctaClick }}" style="{{ screen.ctaStyle }}">{{ screen.cta }}</button>
             </div>
           </div>
         </div>
         </div>
-        <div style="margin-top: 20px; display: flex; justify-content: center; gap: 7px">
+        <div class="hiw-walk-dots">
           <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
             <div sc-camel-on-click="{{ d.pick }}" style="{{ d.style }}"></div>
           </sc-for>
@@ -2139,53 +3238,55 @@
             <span class="hiw-uc-chip">~10 seconds a scene</span>
           </div>
         </div>
-        <div class="hiw-uc-visual" style="display: grid; grid-template-columns: .9fr 36px 1.1fr; align-items: center; gap: 8px">
-          <div>
-            <div style="aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1px solid #E6DED6; background: #EFE7E0"><img src="assets/images/6e002e29-82f9-47fa-b7c2-723718c3e30f.jpg" alt="Packshot you already have" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-            <div style="margin-top: 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296">ONE PACKSHOT YOU ALREADY HAVE</div>
+        <div class="hiw-uc-visual hiw-uc-social">
+          <div class="hiw-uc-social-in">
+            <div class="hiw-uc-social-pack">
+              <img src="assets/images/6e002e29-82f9-47fa-b7c2-723718c3e30f.jpg" alt="Packshot you already have">
+            </div>
+            <div class="hiw-uc-social-lab">ONE PACKSHOT YOU ALREADY HAVE</div>
           </div>
-          <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
-            <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">FOUR SCENES</span>
-            <span style="font-size: 18px; color: #C9BCC6">→</span>
+          <div class="hiw-uc-arrow">
+            <span class="hiw-uc-arrow-lab">FOUR SCENES</span>
+            <span class="hiw-uc-arrow-mark">→</span>
           </div>
-          <div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+          <div class="hiw-uc-social-out">
+            <div class="hiw-uc-social-posts">
               <sc-for list="{{ posts }}" as="p" hint-placeholder-count="4">
-                <div style="position: relative; aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
-                  <img src="{{ p.src }}" alt="{{ p.label }}" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                  <span style="position: absolute; right: 8px; top: 8px; font-size: 10px; font-weight: 700; color: #1A1420; background: rgba(255,255,255,.92); padding: 3px 7px; border-radius: 999px">{{ p.day }}</span>
+                <div class="hiw-uc-social-post">
+                  <img src="{{ p.src }}" alt="{{ p.label }}">
+                  <span>{{ p.day }}</span>
                 </div>
               </sc-for>
             </div>
-            <div style="margin-top: 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #C42E8B">FOUR POSTS, ONE AFTERNOON</div>
+            <div class="hiw-uc-social-lab hiw-uc-social-lab--out">FOUR POSTS, ONE AFTERNOON</div>
           </div>
         </div>
       </div>
 
       <div class="hiw-uc-row hiw-uc-row-rev">
-        <div class="hiw-uc-visual hiw-uc-inspire" style="display: grid; grid-template-columns: 1.25fr 36px .85fr; align-items: center; gap: 8px">
-          <div class="hiw-uc-moodboard" style="background: #fff; border: 1.5px solid #E6DED6; border-radius: 18px; padding: 14px; box-shadow: 0 18px 44px -34px rgba(74,52,40,.6); min-width: 0; overflow: hidden">
-            <div style="font-size: 11px; font-weight: 700; color: #8D8296; margin-bottom: 10px">48 pins</div>
+        <div class="hiw-uc-visual hiw-uc-inspire">
+          <div class="hiw-uc-moodboard">
+            <div class="hiw-uc-pins-label">48 pins</div>
             <div class="hiw-uc-pins">
-              <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="assets/images/17c99c23-d1cf-48e8-a604-0ddac6b6279f.jpg" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              <div style="position: relative; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0; outline: 2.5px solid #C42E8B; outline-offset: 1px">
-                <img src="assets/images/d82ec365-4d7a-4740-93ae-51e14c2d8f08.jpg" alt="Selected pin" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                <span style="position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">THIS ONE</span>
+              <div class="hiw-uc-pin"><img src="assets/images/17c99c23-d1cf-48e8-a604-0ddac6b6279f.jpg" alt="Pin"></div>
+              <div class="hiw-uc-pin hiw-uc-pin--pick">
+                <img src="assets/images/d82ec365-4d7a-4740-93ae-51e14c2d8f08.jpg" alt="Selected pin">
+                <span>THIS ONE</span>
               </div>
-              <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="assets/images/d8af21e1-d95b-4016-a705-ec49ae7de3b8.jpg" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              <div style="aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="assets/images/75c54c95-db9c-4e83-a339-9eeb5044aa53.jpg" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              <div style="aspect-ratio: 4/5; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="assets/images/f7a82f2e-0124-4bd3-b9f8-837472ef9b7f.jpg" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
-              <div style="aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; background: #EFE7E0"><img src="assets/images/52bf1ea1-7b1e-44f8-afbb-5c6976702fe4.jpg" alt="Pin" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+              <div class="hiw-uc-pin"><img src="assets/images/d8af21e1-d95b-4016-a705-ec49ae7de3b8.jpg" alt="Pin"></div>
+              <div class="hiw-uc-pin"><img src="assets/images/75c54c95-db9c-4e83-a339-9eeb5044aa53.jpg" alt="Pin"></div>
+              <div class="hiw-uc-pin"><img src="assets/images/f7a82f2e-0124-4bd3-b9f8-837472ef9b7f.jpg" alt="Pin"></div>
+              <div class="hiw-uc-pin"><img src="assets/images/52bf1ea1-7b1e-44f8-afbb-5c6976702fe4.jpg" alt="Pin"></div>
             </div>
           </div>
-          <div class="hiw-uc-arrow" style="display: flex; flex-direction: column; align-items: center; gap: 6px">
-            <span style="font-size: 9.5px; font-weight: 800; letter-spacing: .1em; color: #8D8296; writing-mode: vertical-rl; text-orientation: mixed">TAKE SCREENSHOT FROM PINTEREST</span>
-            <span style="font-size: 18px; color: #C9BCC6">→</span>
+          <div class="hiw-uc-arrow">
+            <span class="hiw-uc-arrow-lab">TAKE SCREENSHOT FROM PINTEREST</span>
+            <span class="hiw-uc-arrow-mark">→</span>
           </div>
-          <div class="hiw-uc-inspire-out" style="min-width: 0">
-            <div class="hiw-uc-shot" style="position: relative; aspect-ratio: 3/4; border-radius: 14px; overflow: hidden; border: 1.5px solid #F3D9EA; background: #FAF4FB">
-              <img src="assets/images/dca77fff-acd9-4dc4-9a90-5c1f4162d170.jpg" alt="The pin with your product" style="width: 100%; height: 100%; object-fit: cover; display: block">
-              <span style="position: absolute; left: 8px; bottom: 8px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #fff; background: #C42E8B; padding: 4px 8px; border-radius: 999px">YOUR PRODUCT</span>
+          <div class="hiw-uc-inspire-out">
+            <div class="hiw-uc-shot hiw-uc-inspire-shot">
+              <img src="assets/images/dca77fff-acd9-4dc4-9a90-5c1f4162d170.jpg" alt="The pin with your product">
+              <span>YOUR PRODUCT</span>
             </div>
           </div>
         </div>
@@ -2257,8 +3358,14 @@
                       </sc-for>
                     </div>
                     <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
-                      <div sc-camel-on-click="{{ shop.toggleFollow }}" style="{{ shop.followStyle }}">{{ shop.followLabel }}</div>
-                      <div style="text-align: center; font-size: 13px; font-weight: 700; color: #1A1420; padding: 10px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6; cursor: pointer">Contact</div>
+                      <div class="hiw-mkt-act" sc-camel-on-click="{{ shop.toggleFollow }}" style="{{ shop.followStyle }}">
+                        <svg class="hiw-mkt-act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+                        <span>{{ shop.followLabel }}</span>
+                      </div>
+                      <div class="hiw-mkt-act hiw-mkt-act--contact" sc-camel-on-click="{{ shop.openContact }}">
+                        <svg class="hiw-mkt-act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>Contact</span>
+                      </div>
                     </div>
                   </div>
 
@@ -2273,7 +3380,6 @@
                       <div class="hiw-mkt-listing">
                         <div class="hiw-mkt-listing-media">
                           <img src="{{ p.src }}" alt="Listing" style="width: 100%; height: 100%; object-fit: cover; display: block">
-                          <span style="position: absolute; left: 7px; top: 7px; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #1A1420; background: rgba(255,255,255,.92); padding: 4px 8px; border-radius: 999px">{{ p.price }}</span>
                         </div>
                         <div class="hiw-mkt-listing-body">
                           <div>{{ p.name }}</div>
@@ -2292,14 +3398,20 @@
                     <span style="font-size: 12.5px; color: #8D8296">Studio Noir</span>
                   </div>
                   <div style="padding: 0 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
-                    <div style="flex: 1; border-radius: 18px; border: 1.5px solid #F3D9EA; background: linear-gradient(160deg, #FDF3F9, #FAF4FB); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; padding: 20px; text-align: center">
-                      <span style="width: 32px; height: 32px; border-radius: 50%; border: 1.5px dashed #E39CC8"></span>
-                      <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">YOUR PRODUCT, IN THIS SCENE</span>
-                      <span style="font-size: 12px; line-height: 1.45; color: #8D8296">your packshot, their backdrop</span>
+                    <div style="flex: 1; position: relative; border-radius: 18px; border: 1.5px solid #F3D9EA; background: #FAF4FB; overflow: hidden; min-height: 0">
+                      <img src="{{ shop.sceneSrc }}" alt="Scene" style="{{ shop.sceneImg }}">
+                      <img src="{{ shop.productSrc }}" alt="Your product in the scene" style="{{ shop.productStyle }}">
+                      <div style="{{ shop.idle }}">
+                        <span style="width: 32px; height: 32px; border-radius: 50%; border: 1.5px dashed #E39CC8"></span>
+                        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">YOUR PRODUCT, IN THIS SCENE</span>
+                        <span style="font-size: 12px; line-height: 1.45; color: #8D8296">your packshot, their backdrop</span>
+                      </div>
+                      <div style="{{ shop.veil }}"></div>
+                      <div style="{{ shop.scan }}"></div>
+                      <div style="{{ shop.chip }}">{{ shop.chipText }}</div>
                     </div>
-                    <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px">
+                    <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
                       <span style="font-size: 13px; font-weight: 700; line-height: 1.3">{{ shop.picked.name }}</span>
-                      <span style="font-size: 13px; font-weight: 800; color: #C42E8B">{{ shop.picked.price }}</span>
                     </div>
                     <div style="display: flex; gap: 8px">
                       <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">Save</span>
@@ -2312,6 +3424,54 @@
                   </div>
                 </div>
               </sc-if>
+
+              <div class="{{ shop.contactClass }}">
+                <button type="button" class="hiw-mkt-contact-scrim" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close contact"></button>
+                <div class="hiw-mkt-contact-sheet">
+                  <div class="hiw-mkt-contact-head">
+                    <strong>Contact Seller</strong>
+                    <button type="button" class="hiw-mkt-contact-x" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close">×</button>
+                  </div>
+                  <div class="hiw-mkt-contact-list">
+                    <div class="hiw-mkt-contact-row">
+                      <span class="hiw-mkt-contact-ico" style="background:#25D366" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      </span>
+                      <div style="min-width: 0">
+                        <strong>WhatsApp</strong>
+                        <span>+91 98765 43210</span>
+                      </div>
+                    </div>
+                    <div class="hiw-mkt-contact-row">
+                      <span class="hiw-mkt-contact-ico" style="background:#1877F2" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                      </span>
+                      <div style="min-width: 0">
+                        <strong>Facebook</strong>
+                        <span>Studio Noir</span>
+                      </div>
+                    </div>
+                    <div class="hiw-mkt-contact-row">
+                      <span class="hiw-mkt-contact-ico" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                      </span>
+                      <div style="min-width: 0">
+                        <strong>Instagram</strong>
+                        <span>@studionoir.jaipur</span>
+                      </div>
+                    </div>
+                    <div class="hiw-mkt-contact-row">
+                      <span class="hiw-mkt-contact-ico" style="background:#A855F7" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
+                      </span>
+                      <div style="min-width: 0">
+                        <strong>Email</strong>
+                        <span>hello@studionoir.in</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           </div>
@@ -2333,8 +3493,8 @@
           </div>
 
           <div class="hiw-mkt-ctas">
-            <a href="index.html#marketplace" style="text-decoration: none; font-size: 15px; font-weight: 700; color: #fff; padding: 14px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 22px rgba(236,72,153,.28)">Browse the marketplace</a>
-            <a href="index.html#sellers" style="text-decoration: none; font-size: 15px; font-weight: 700; color: #1A1420; padding: 13px 24px; border-radius: 999px; background: #FAF4FB; border: 1.5px solid #E6DED6">List your collection</a>
+            <a href="index.html#marketplace" class="hiw-cta-pri">Browse the marketplace</a>
+            <a href="index.html#sellers" class="hiw-cta-sec">List your collection</a>
           </div>
         </div>
       </div>
@@ -2348,8 +3508,8 @@
         <h2>One account, every screen you <em>own</em></h2>
         <p>Start a blend in the browser on your laptop, finish it on your phone between meetings. Products, saved visuals and marketplace chats sync across desktop, tablet and mobile — app or browser, iOS or Android.</p>
         <div class="hiw-dev-ctas">
-          <a href="index.html#download" style="font-size: 15px; font-weight: 700; color: #fff; padding: 14px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 22px rgba(236,72,153,.28)">Get the app</a>
-          <a href="index.html" style="font-size: 15px; font-weight: 700; color: #1A1420; padding: 13px 24px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6">Open in browser</a>
+          <a href="index.html#download" class="hiw-cta-pri">Get the app</a>
+          <a href="index.html" class="hiw-cta-sec">Open in browser</a>
         </div>
       </div>
       <div class="hiw-dev-grid">
@@ -2409,8 +3569,8 @@
   <div class="hiw-end">
     <h2>Your next campaign, in a photo you <em>already have</em>.</h2>
     <div class="hiw-end-ctas">
-      <a href="index.html#download" style="font-size: 16px; font-weight: 700; color: #fff; padding: 15px 28px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 28px rgba(236,72,153,.3)">Try your first blend free</a>
-      <a href="index.html#sellers" style="font-size: 16px; font-weight: 700; color: #1A1420; padding: 14px 26px; border-radius: 999px; background: #fff; border: 1.5px solid #E6DED6">I sell backgrounds</a>
+      <a href="index.html#download" class="hiw-cta-pri">Try your first blend free</a>
+      <a href="index.html#sellers" class="hiw-cta-sec">I sell backgrounds</a>
     </div>
     <div class="hiw-end-note">Refund if you don't like the result. Works on every device you own.</div>
   </div>
@@ -2421,7 +3581,7 @@
 const U = (id, w) => (window.__resources && window.__resources['u_' + id]) || ('https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop');
 
 class Component extends DCLogic {
-  state = { scrolled: false, step: -1, look: 0, openFaq: 0, moment: 0, shopStep: 0, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0, branchB: false };
+  state = { scrolled: false, step: -1, look: 0, openFaq: 0, moment: 0, shopStep: 0, shopBlend: 'idle', shopContact: false, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0, branchB: false };
 
   backgrounds = [
     { name: 'Desk & notebook', id: '1517842645767-c639042777db' },
@@ -2440,31 +3600,24 @@ class Component extends DCLogic {
   ];
 
   outfitsFor(p) {
-    return this.backgrounds.map((b) => ({ name: b.name, src: U(b.id, 240), result: U(b.id, 620) }));
+    /* Live demo stays a tight 2×2 — six cards unbalance the product column on tablet. */
+    return this.backgrounds.slice(0, 4).map((b) => ({ name: b.name, src: U(b.id, 240), result: U(b.id, 620) }));
   }
 
   goWalkStep = (n) => {
+    var mobile = window.matchMedia('(max-width: 900px)').matches;
+    if (mobile && n === 2) n = 1; /* no 2B on mobile */
     this._branchLockUntil = Date.now() + 2200;
     window.__hiwBranchLockUntil = this._branchLockUntil;
-    /* Keep scroll stable while accordion collapses (esp. step 3) */
     var keepY = window.scrollY || window.pageYOffset || 0;
-    this.setState({ step: n, branchB: n === 2 });
-    var wrap = document.querySelector('#walkthrough .hiw-walk-pin-wrap');
-    var mobile = window.matchMedia('(max-width: 768px)').matches;
-    if (mobile && wrap) {
-      var r = wrap.getBoundingClientRect();
-      var start = window.scrollY + r.top;
-      var span = this._hiwWalkSpanLock != null
-        ? this._hiwWalkSpanLock
-        : Math.max(1, wrap.offsetHeight - window.innerHeight);
-      if (this._hiwWalkSpanLock == null) this._hiwWalkSpanLock = span;
+    this.setState({ step: n, branchB: mobile ? false : n === 2 });
+    if (mobile) {
       this._hiwWalkStep = n;
-      /* Map steps 0→1→2→3 across equal bands */
-      var t = n <= 0 ? 0.12 : n === 1 ? 0.37 : n === 2 ? 0.62 : 0.87;
-      window.scrollTo({ top: start + span * t, behavior: 'smooth' });
+      /* Sticky scroll owns position — don't jump the page on tap */
+      this._branchLockUntil = Date.now() + 1200;
+      window.__hiwBranchLockUntil = this._branchLockUntil;
       return;
     }
-    /* Desktop: hold scroll Y while accordion opens — never yank the section upward. */
     requestAnimationFrame(() => {
       window.scrollTo(0, keepY);
       requestAnimationFrame(() => {
@@ -2473,7 +3626,6 @@ class Component extends DCLogic {
         if (!el) return;
         var rect = el.getBoundingClientRect();
         var bottomPad = 28;
-        /* Only nudge down if the opened card is clipped below the fold. */
         if (rect.bottom > window.innerHeight - bottomPad) {
           var delta = rect.bottom - (window.innerHeight - bottomPad);
           window.scrollTo({ top: keepY + delta, behavior: 'smooth' });
@@ -2517,7 +3669,26 @@ class Component extends DCLogic {
     this._tryT = setTimeout(() => this.setState({ tryShown: i, tryPhase: 'done' }), 1150);
   };
 
+  runShopBlend = (i) => {
+    clearTimeout(this._shopBlendT);
+    this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
+    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1150);
+  };
+
+  backShop = () => {
+    clearTimeout(this._shopBlendT);
+    this.setState({ shopStep: 0, shopBlend: 'idle', shopContact: false });
+  };
+
+  openShopContact = () => this.setState({ shopContact: true });
+  closeShopContact = () => this.setState({ shopContact: false });
+
   componentDidMount() {
+    if (window.matchMedia('(max-width: 900px)').matches && this.state.step < 0) {
+      this.setState({ step: 0 });
+      this._hiwWalkStep = 0;
+    }
+    this._walkStepStable = this.state.step < 0 ? 0 : this.state.step;
     this._tick = () => {
       this._raf = 0;
       const next = {};
@@ -2527,62 +3698,86 @@ class Component extends DCLogic {
       const vh = window.innerHeight;
       const pinIds = [0, 1, 2, 3].map((i) => document.getElementById('hiw-pin-' + i));
       const wrap = document.querySelector('#walkthrough .hiw-walk-pin-wrap');
-      const mobileWalk = window.matchMedia('(max-width: 768px)').matches;
-      if (mobileWalk && wrap) {
-        const r = wrap.getBoundingClientRect();
-        const head = document.querySelector('#walkthrough .hiw-walk-head');
-        const headBottom = head ? head.getBoundingClientRect().bottom : 0;
-        const nearWalk = r.bottom > vh * 0.2 && r.top < vh * 0.85;
-        const engaged = nearWalk && r.top < vh * 0.55 && headBottom < vh * 0.58;
-        const branchLocked = this._branchLockUntil && Date.now() < this._branchLockUntil;
-        if (!nearWalk) {
-          /* Fully left the section — idle only when above it */
-          if (r.top > vh * 0.7) {
-            if (this.state.step !== -1) next.step = -1;
-            if (this.state.branchB) next.branchB = false;
-            this._hiwWalkSpanLock = null;
-            this._hiwWalkStep = -1;
+      const mobileWalk = window.matchMedia('(max-width: 900px)').matches;
+      const header = document.getElementById('pb-chrome-header');
+      const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
+      document.documentElement.style.setProperty('--hiw-sticky-top', Math.max(64, headerH + 8) + 'px');
+
+      const branchLocked = this._branchLockUntil && Date.now() < this._branchLockUntil;
+      const cur = this.state.step;
+
+      if (mobileWalk) {
+        /* Progress bands with hysteresis — stops blink at thresholds */
+        if (wrap) {
+          const rect = wrap.getBoundingClientRect();
+          const total = Math.max(1, wrap.offsetHeight - vh);
+          const scrolledInto = Math.min(total, Math.max(0, -rect.top));
+          const p = scrolledInto / total;
+          const inView = rect.bottom > 80 && rect.top < vh - 40;
+          let step = cur < 0 ? 0 : cur;
+          if (inView && !branchLocked) {
+            /* Dead zones: only advance/retreat past midpoints */
+            if (step <= 0) {
+              if (p >= 0.40) step = 1;
+              else step = 0;
+            } else if (step === 1 || step === 2) {
+              if (p >= 0.72) step = 3;
+              else if (p < 0.28) step = 0;
+              else step = 1;
+            } else {
+              if (p < 0.58) step = 1;
+              else step = 3;
+            }
+            if (step === 2) step = 1;
+            if (step !== cur) {
+              next.step = step;
+              next.branchB = false;
+            } else if (this.state.branchB) {
+              next.branchB = false;
+            }
           }
-        } else if (engaged && !branchLocked) {
-          const liveSpan = Math.max(1, wrap.offsetHeight - vh);
-          if (this._hiwWalkSpanLock == null) this._hiwWalkSpanLock = liveSpan;
-          const span = this._hiwWalkSpanLock;
-          const raw = Math.min(1, Math.max(0, -r.top / span));
-          const cur = (typeof this._hiwWalkStep === 'number' && this._hiwWalkStep >= 0)
-            ? this._hiwWalkStep
-            : (this.state.step >= 0 ? this.state.step : 0);
-          /* Equal quarters, ±1 only — same feel as sellers story */
-          const cuts = [0.25, 0.50, 0.75];
-          const h = 0.06;
-          let best = Math.min(3, Math.max(0, cur));
-          if (best < 3 && raw >= cuts[best] + h) best += 1;
-          else if (best > 0 && raw < cuts[best - 1] - h) best -= 1;
-          this._hiwWalkStep = best;
-          if (best !== this.state.step) next.step = best;
-          const wantB = best === 2;
-          if (wantB !== !!this.state.branchB) next.branchB = wantB;
+        } else if (cur < 0) {
+          next.step = 0;
         }
-        /* else: overlapping but not fully engaged — keep current step (no flash to 1) */
-      } else if (pinIds[0]) {
+        this._hiwWalkStep = (next.step != null ? next.step : cur);
+      } else if (pinIds[0] && !branchLocked) {
         const head = document.querySelector('#walkthrough .hiw-walk-head');
         const headBottom = head ? head.getBoundingClientRect().bottom : 0;
         const pin0Top = pinIds[0].getBoundingClientRect().top;
-        /* Stay idle while heading dominates; engage when Step 1 reaches the active band */
-        const walkEngaged = pin0Top < vh * 0.40 && headBottom < vh * 0.28;
-        const branchLocked = this._branchLockUntil && Date.now() < this._branchLockUntil;
+        const walkEngaged = pin0Top < vh * 0.42 && headBottom < vh * 0.32;
         if (!walkEngaged) {
-          if (this.state.step !== -1) next.step = -1;
-          if (this.state.branchB) next.branchB = false;
-        } else if (!branchLocked) {
-          /* Scroll: left highlight + phone screen follow the active pin */
-          const activateAt = vh * 0.22;
+          /* Hysteresis: only idle after clearly leaving */
+          if (cur >= 0 && pin0Top > vh * 0.55) {
+            if (cur !== -1) next.step = -1;
+            if (this.state.branchB) next.branchB = false;
+          }
+        } else {
+          /* Use only main pins 0,1,3 for scroll (2B is tap-only) — less thrash */
+          const activateAt = vh * 0.28;
+          const pins = [0, 1, 3];
           let best = 0;
-          pinIds.forEach((el, i) => {
-            if (el && el.getBoundingClientRect().top < activateAt) best = i;
+          pins.forEach((idx) => {
+            const el = pinIds[idx];
+            if (el && el.getBoundingClientRect().top < activateAt) best = idx;
           });
-          if (best !== this.state.step) next.step = best;
-          const wantB = best === 2;
-          if (wantB !== !!this.state.branchB) next.branchB = wantB;
+          /* Hysteresis vs current */
+          let step = cur < 0 ? 0 : cur;
+          if (cur < 0) step = best;
+          else if (best !== cur) {
+            const elBest = pinIds[best];
+            const elCur = pinIds[cur === 2 ? 1 : cur];
+            const bestTop = elBest ? elBest.getBoundingClientRect().top : 0;
+            const curTop = elCur ? elCur.getBoundingClientRect().top : 0;
+            /* Only switch when new pin is clearly past threshold and current has left */
+            if (best > (cur === 2 ? 1 : cur)) {
+              if (bestTop < activateAt - 12) step = best;
+            } else if (best < (cur === 2 ? 1 : cur)) {
+              if (curTop > activateAt + 28) step = best;
+            }
+          }
+          if (step === 2) step = 1;
+          if (step !== cur) next.step = step;
+          if (this.state.branchB && step !== 2) next.branchB = false;
         }
       }
 
@@ -2717,6 +3912,10 @@ class Component extends DCLogic {
     this._pickBranch = (which) => {
       this._branchLockUntil = Date.now() + 2200;
       window.__hiwBranchLockUntil = this._branchLockUntil;
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        this.setState({ step: 1, branchB: false });
+        return;
+      }
       if (which === 'b') this.setState({ step: 2, branchB: true });
       else this.setState({ step: 1, branchB: false });
     };
@@ -2762,13 +3961,13 @@ class Component extends DCLogic {
     if (this._onBranchClick) document.removeEventListener('click', this._onBranchClick, true);
     if (this._onShootWheel) window.removeEventListener('wheel', this._onShootWheel, true);
     if (this._raf) cancelAnimationFrame(this._raf);
-    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT);
+    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT);
     if (this._demoObs) this._demoObs.disconnect();
   }
 
   screens = [
     { kicker: 'STEP 01', title: 'Your product', img: U('1542291026-7eec264c27ff', 520), rows: [{ t: 'Saved to library', v: 'Reused every time' }, { t: 'Visible to', v: 'Only you' }], cta: 'Use this product' },
-    { kicker: 'STEP 02 · OPTION A', title: 'Pick from your gallery', placeholder: 'BACKGROUND IMAGE', note: 'a screenshot or scene photo', rows: [{ t: 'Source', v: 'Camera roll' }, { t: 'Accepted', v: 'JPG, PNG, screenshots' }], cta: 'Continue with this background' },
+    { kicker: 'STEP 02', title: 'Pick from your gallery', placeholder: 'BACKGROUND IMAGE', note: 'a screenshot or scene photo', rows: [{ t: 'Source', v: 'Camera roll' }, { t: 'Accepted', v: 'JPG, PNG, screenshots' }], cta: 'Continue with this background' },
     { kicker: 'STEP 02 · OPTION B', title: 'The marketplace', img: U('1557683316-973673baf926', 520), rows: [{ t: 'Creators listed', v: 'Studios & photographers' }, { t: 'Blend', v: 'One tap' }], cta: 'Blend this scene' },
     { kicker: 'STEP 03', title: 'Your blend', placeholder: 'YOUR PRODUCT, IN SCENE', note: 'saved to your library', bar: true, rows: [{ t: 'Saved visuals', v: '4 images' }, { t: 'Creator', v: 'Chat open' }], cta: 'Save, publish or message the creator' }
   ];
@@ -2865,9 +4064,8 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state;
     window.__hiwSetStep = (n) => {
-      if (typeof n !== 'number' || n === this.state.step) return;
-      if (window.__hiwBranchLockUntil && Date.now() < window.__hiwBranchLockUntil) return;
-      this.setState({ step: n, branchB: n === 2 });
+      /* Single owner: React scroll tick. Ignore duplicate vanilla spy. */
+      return;
     };
     window.__hiwGoStep = (n) => this.goWalkStep(n);
     /* Idle teaser until Step 1 engages; then phone follows the active step */
@@ -2899,7 +4097,7 @@ class Component extends DCLogic {
       const done = on && tp === 'done';
       return {
         name: o.name, src: o.src,
-        card: 'cursor: pointer; overflow: hidden; border-radius: 10px; transition: transform .25s, border-color .25s, box-shadow .25s, background .25s; border: 1.5px solid ' +
+        card: 'cursor: pointer; overflow: hidden; border-radius: 10px; display: flex; flex-direction: column; height: 100%; min-height: 0; transition: transform .25s, border-color .25s, box-shadow .25s, background .25s; border: 1.5px solid ' +
           (on ? '#E9BBD9; background: #FFF8FC; box-shadow: 0 14px 28px -24px rgba(196,46,139,.85); transform: translateY(-1px);' : '#E6DED6; background: #fff;'),
         tick: {
           position: 'absolute', top: '6px', left: '6px', width: '20px', height: '20px', borderRadius: '50%',
@@ -2907,7 +4105,7 @@ class Component extends DCLogic {
           background: 'linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)', boxShadow: '0 6px 14px -6px rgba(196,46,139,.9)',
           opacity: done ? 1 : 0, transform: done ? 'scale(1)' : 'scale(.6)', transition: 'opacity .25s ease, transform .25s ease'
         },
-        btn: 'margin-top: 5px; width: 100%; padding: 6px 4px; border-radius: 999px; font-family: inherit; font-size: 11px; font-weight: 800; letter-spacing: .01em; cursor: pointer; transition: background .25s, color .25s, border-color .25s, box-shadow .25s; ' +
+        btn: 'margin-top: 6px; width: auto; min-width: 0; max-width: 100%; padding: 9px 18px; border-radius: 999px; font-family: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: .01em; line-height: 1.2; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background .25s, color .25s, border-color .25s, box-shadow .25s; ' +
           (i === pulseIdx ? 'animation: v4Ring 2s infinite; ' : '') + 'border: 1.5px solid ' +
           (done ? '#F0CFE4; background: #fff; color: #C42E8B;'
             : busy ? 'transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; opacity: .72;'
@@ -2929,12 +4127,12 @@ class Component extends DCLogic {
       (on
         ? 'color: #fff; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 22px -8px rgba(236,72,153,.55);'
         : 'color: #C42E8B; background: #FCE8F4; border: 1px solid #F3D9EA;');
-    /* Active step body — same gradient frame as open 2A */
-    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 18px; ' +
+    /* Active step body — same gradient frame as open 2A; hug content width */
+    const stepCard = (on) => 'transition: background .25s, box-shadow .25s, border-color .25s, padding .25s; border-radius: 18px; width: fit-content; max-width: 100%; box-sizing: border-box; ' +
       (on
-        ? 'padding: 20px 22px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
+        ? 'padding: 20px 28px; border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
         : 'padding: 0; border: 1.5px solid transparent; background: transparent; box-shadow: none;');
-    const optCard = (on) => 'border-radius: 18px; cursor: pointer; padding: 20px 22px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; ' +
+    const optCard = (on) => 'border-radius: 18px; cursor: pointer; padding: 20px 28px; transition: background .25s, opacity .25s, box-shadow .25s, border-color .25s; width: fit-content; max-width: 100%; box-sizing: border-box; ' +
       (on
         ? 'border: 1.5px solid transparent; background: linear-gradient(#FFF8FC, #FFF8FC) padding-box, linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box; box-shadow: 0 16px 36px -22px rgba(196,46,139,.45);'
         : 'border: 1.5px solid #E6DED6; background: #fff; box-shadow: none;');
@@ -2979,14 +4177,15 @@ class Component extends DCLogic {
       trySrc: shown ? shown.result : 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
       tryProductSrc: U(this.products[s.prod].photo, 420),
       tryProductStyle: {
-        position: 'absolute', left: '50%', top: '54%', width: '62%', aspectRatio: '1 / 1',
+        position: 'absolute', left: '50%', top: '50%', width: '58%', aspectRatio: '1 / 1',
         transform: revealed ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
-        borderRadius: '10px', overflow: 'hidden', objectFit: 'cover',
+        borderRadius: '10px', overflow: 'hidden', objectFit: 'cover', objectPosition: 'center center',
         boxShadow: '0 26px 40px -22px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
         opacity: revealed ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
       },
       tryImg: {
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+        objectPosition: 'center center', display: 'block',
         opacity: revealed ? 1 : 0,
         transform: revealed ? 'scale(1)' : 'scale(1.05)',
         filter: revealed ? 'blur(0px)' : 'blur(12px)',
@@ -3044,32 +4243,48 @@ class Component extends DCLogic {
         t: 'Add your product, once',
         d: 'One clear packshot: the product filling the frame, even light, clean edges. It saves to your library, so every blend after this one starts at step two.',
         chips: ['Sharp focus', 'Even light', 'Whole product in frame', 'No hard shadows'],
-        active: onStep1 && s.step >= 0, pick: () => this.goWalkStep(0),
+        active: onStep1, pick: () => this.goWalkStep(0),
         pinClass: 'hiw-pin hiw-pin-0' + (onStep1 ? ' is-on' : ''),
-        row: stepRow(0), num: numStyle(onStep1 && s.step >= 0), card: stepCard(onStep1 && s.step >= 0)
+        row: stepRow(0), num: numStyle(onStep1), card: stepCard(onStep1)
       },
 
       branch: {
-        wrap: 'padding: 18px 0 22px; transition: opacity .25s;' + (onStep2 ? '' : ' opacity: .7;'),
+        wrap: 'padding: 18px 0 22px; transition: opacity .25s; cursor: pointer;' + (onStep2 ? '' : ' opacity: .7;'),
         num: numStyle(onStep2),
-        pinClass: 'hiw-pin hiw-pin-1' + (onStep2 ? ' is-on' : '')
+        pinClass: 'hiw-pin hiw-pin-1' + (onStep2 ? ' is-on' : ''),
+        pick: () => this.goWalkStep(1)
       },
 
       optA: {
         active: onOptA,
-        pick: () => this._pickBranch ? this._pickBranch('a') : this.goWalkStep(1),
+        pick: (e) => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          if (this._pickBranch) this._pickBranch('a');
+          else this.goWalkStep(1);
+        },
         card: optCard(onOptA), badge: optBadge(onOptA), chevron: optChevron(onOptA),
-        openClass: 'is-open',
+        openClass: 'is-open' + (onOptA ? ' is-active' : ''),
         chips: ['Screenshots work', 'Any source', 'Your own photos']
       },
       optB: {
         active: onOptB,
-        pick: () => this._pickBranch ? this._pickBranch('b') : this.goWalkStep(2),
+        pick: (e) => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          if (this._pickBranch) this._pickBranch('b');
+          else this.goWalkStep(2);
+        },
         card: optCard(onOptB), badge: optBadge(onOptB), chevron: optChevron(onOptB),
-        openClass: 'is-open',
+        openClass: 'is-open' + (onOptB ? ' is-active' : ''),
         body: '',
         chips: ['Studio backdrops', 'Lifestyle scenes', 'Nature', 'Seasonal sets', 'Interiors']
       },
+
+      walkMobStep: (function () {
+        var st = s.step < 0 ? 0 : s.step;
+        if (st <= 0) return '1';
+        if (st === 3) return '3';
+        return '2';
+      })(),
 
       stepThree: {
         t: 'See your blend and take action',
@@ -3080,10 +4295,19 @@ class Component extends DCLogic {
         row: stepRow(3), num: numStyle(onStep3), card: stepCard(onStep3)
       },
 
-      dots: this.screens.map((x, i) => ({
-        pick: () => this.goWalkStep(i),
-        style: 'width: ' + (s.step === i ? '26px' : '8px') + '; height: 8px; border-radius: 999px; cursor: pointer; transition: width .25s, background .25s; background: ' + (s.step === i ? 'linear-gradient(90deg, #A855F7, #EC4899)' : '#DED5CD') + ';'
-      })),
+      dots: (function () {
+        var mobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
+        var idxs = mobile ? [0, 1, 3] : [0, 1, 2, 3];
+        var active = s.step < 0 ? 0 : s.step;
+        if (mobile && active === 2) active = 1;
+        return idxs.map(function (i) {
+          var on = active === i;
+          return {
+            pick: function () { this.goWalkStep(i); }.bind(this),
+            style: 'width: ' + (on ? '26px' : '8px') + '; height: 8px; border-radius: 999px; cursor: pointer; transition: width .25s, background .25s; background: ' + (on ? 'linear-gradient(90deg, #A855F7, #EC4899)' : '#DED5CD') + ';'
+          };
+        }.bind(this));
+      }.bind(this))(),
 
       screen: {
         kicker: sc.kicker, title: sc.title, cta: sc.cta, rows: sc.rows,
@@ -3151,14 +4375,67 @@ class Component extends DCLogic {
         { tag: 'SEASONAL', t: 'Plan festive and sale campaigns', d: 'Compare autumn, festive and sale scenes on the same product before the calendar fills up.' }
       ],
 
-      shop: {
+      shop: (() => {
+        const sb = s.shopBlend || 'idle';
+        const shopDone = sb === 'done';
+        const shopWorking = sb === 'working';
+        return {
         storeView: s.shopStep === 0,
         tryView: s.shopStep === 1,
-        back: () => this.setState({ shopStep: 0 }),
-        picked: { name: picked.name, price: picked.price },
+        back: () => this.backShop(),
+        picked: { name: picked.name },
+        sceneSrc: picked.src,
+        productSrc: U(this.products[s.prod].photo, 420),
+        sceneImg: {
+          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+          objectPosition: 'center center', display: 'block',
+          opacity: shopDone || shopWorking ? 1 : 0,
+          transform: shopDone ? 'scale(1)' : 'scale(1.05)',
+          filter: shopDone ? 'blur(0px)' : (shopWorking ? 'blur(6px)' : 'blur(12px)'),
+          transition: 'opacity .65s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .65s ease'
+        },
+        productStyle: {
+          position: 'absolute', left: '50%', top: '50%', width: '52%', aspectRatio: '1 / 1',
+          transform: shopDone ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
+          borderRadius: '10px', overflow: 'hidden', objectFit: 'cover', objectPosition: 'center center',
+          boxShadow: '0 22px 36px -20px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
+          opacity: shopDone ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
+        },
+        idle: {
+          position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: '9px', padding: '20px', textAlign: 'center',
+          opacity: sb === 'idle' ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+        },
+        veil: {
+          position: 'absolute', inset: 0, background: 'rgba(26,20,32,.14)',
+          opacity: shopWorking ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+        },
+        scan: {
+          position: 'absolute', left: 0, right: 0, height: '46%',
+          background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.34) 50%, rgba(236,72,153,0) 100%)',
+          boxShadow: '0 0 24px rgba(236,72,153,.5)',
+          opacity: shopWorking ? 1 : 0,
+          animation: shopWorking ? 'v4Scan 1.15s linear infinite' : 'none',
+          pointerEvents: 'none'
+        },
+        chip: {
+          position: 'absolute', left: '10px', right: '10px', bottom: '10px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '7px 12px', borderRadius: '999px', background: 'rgba(255,255,255,.93)',
+          border: '1px solid rgba(230,222,214,.9)', boxShadow: '0 8px 22px -14px rgba(74,52,40,.9)',
+          fontSize: '10.5px', fontWeight: 800, letterSpacing: '.04em', whiteSpace: 'nowrap',
+          color: shopWorking ? '#8D8296' : '#C42E8B',
+          opacity: sb === 'idle' ? 0 : 1, transform: sb === 'idle' ? 'translateY(6px)' : 'translateY(0)',
+          transition: 'opacity .35s ease, transform .35s ease', pointerEvents: 'none'
+        },
+        chipText: shopWorking ? 'BLENDING…' : (shopDone ? picked.name.toUpperCase() : ''),
+        contactOpen: !!s.shopContact,
+        contactClass: 'hiw-mkt-contact' + (s.shopContact ? ' is-open' : ''),
+        openContact: () => this.openShopContact(),
+        closeContact: () => this.closeShopContact(),
         toggleFollow: () => this.setState({ following: !s.following }),
         followLabel: s.following ? 'Following' : 'Follow',
-        followStyle: 'text-align: center; font-size: 13.5px; font-weight: 700; padding: 11px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; ' +
+        followStyle: 'display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;font-weight:700;padding:10px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s; ' +
           (s.following
             ? 'color: #1A1420; background: #F4EDE6; border: 1.5px solid #E6DED6;'
             : 'color: #fff; border: 1.5px solid transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);'),
@@ -3169,9 +4446,10 @@ class Component extends DCLogic {
             (i === 0 ? 'color: #fff; background: #1A1420;' : 'color: #6B6070; background: #fff; border: 1px solid #EFE7E0;')
         })),
         listings: this.listings.map((p, i) => Object.assign({}, p, {
-          tryOn: () => this.setState({ shopStep: 1, picked: i })
+          tryOn: () => this.runShopBlend(i)
         }))
-      },
+      };
+      })(),
 
       flow: [
         { n: '01', t: 'Discover a creator', d: 'Browse studios by scene type, city or what they have just listed.' },
@@ -3218,83 +4496,12 @@ class Component extends DCLogic {
   <script src="legal-chrome.js?v=26"></script>
   <script>
   (function () {
-    var last = -1, ticking = false, lockUntil = 0;
-    var titles = [
-      'Add your product, once',
-      'Bring in a background',
-      'Pick a creator listing instead',
-      'See your blend and take action'
-    ];
-    function pin(n) {
-      var el = document.getElementById('hiw-pin-' + n);
-      if (el) return el;
-      var heads = document.querySelectorAll('#walkthrough h3');
-      for (var i = 0; i < heads.length; i++) {
-        if (heads[i].textContent.replace(/\s+/g, ' ').trim() === titles[n]) return heads[i].parentElement;
-      }
-      return null;
-    }
-    function sync() {
-      ticking = false;
-      if (Date.now() < lockUntil) return;
-      var vh = window.innerHeight;
-      var head = document.querySelector('#walkthrough .hiw-walk-head');
-      var pin0el = pin(0);
-      if (head && pin0el) {
-        var headBottom = head.getBoundingClientRect().bottom;
-        var pin0Top = pin0el.getBoundingClientRect().top;
-        if (!(pin0Top < vh * 0.40 && headBottom < vh * 0.28)) {
-          if (last !== -1) {
-            last = -1;
-            if (typeof window.__hiwSetStep === 'function') window.__hiwSetStep(-1);
-          }
-          return;
-        }
-      }
-      /* Scroll activates 01 → 02A → 02B → 03 so 2B also gets the highlight */
-      if (window.__hiwBranchLockUntil && Date.now() < window.__hiwBranchLockUntil) return;
-      var activateAt = vh * 0.22;
-      var best = 0, found = false;
-      for (var n = 0; n < 4; n++) {
-        var el = pin(n);
-        if (!el) continue;
-        found = true;
-        if (el.getBoundingClientRect().top < activateAt) best = n;
-      }
-      if (!found || best === last) return;
-      last = best;
-      if (typeof window.__hiwSetStep === 'function') window.__hiwSetStep(best);
-    }
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(sync);
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
-    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
-    window.addEventListener('resize', onScroll);
-    var tries = 0;
-    document.addEventListener('click', function (e) {
-      var btn = e.target.closest('#hiw-phone-cta');
-      if (!btn) return;
-      var cur = last < 0 ? 0 : last;
-      var next = cur === 0 ? 1 : (cur === 1 || cur === 2 ? 3 : 3);
-      last = next;
-      lockUntil = Date.now() + 1400;
-      if (typeof window.__hiwGoStep === 'function') window.__hiwGoStep(next);
-      else if (typeof window.__hiwSetStep === 'function') window.__hiwSetStep(next);
-    });
-    (function wait() {
-      if (typeof window.__hiwSetStep !== 'function' && tries < 50) {
-        tries += 1;
-        setTimeout(wait, 200);
-        return;
-      }
-      sync();
-    })();
+    /* Duplicate walk scroll-spy removed — caused step/phone blink.
+       React componentDidMount _tick owns walk steps (with hysteresis). */
   })();
+  </script>
 
+  <script>
   /* Soft page motion — hero entrance + scroll reveals (Softgen-safe) */
   (function () {
     function reduce() {
@@ -3312,7 +4519,7 @@ class Component extends DCLogic {
       }
       Array.prototype.forEach.call(document.querySelectorAll('.hiw-facts-row > div'), push);
       push(document.querySelector('.hiw-walk-head'));
-      Array.prototype.forEach.call(document.querySelectorAll('#walkthrough .hiw-pin-0, #walkthrough .hiw-pin-3, #walkthrough .hiw-opt-card'), push);
+      /* Do NOT reveal-animate walk pins/opt cards — causes blink on step change */
       push(document.querySelector('.hiw-rail-head'));
       push(document.querySelector('.hiw-rail-mask'));
       push(document.querySelector('.hiw-shoot-head'));

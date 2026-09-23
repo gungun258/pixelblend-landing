@@ -39,6 +39,7 @@
   img { max-width: 100%; }
   button { font-family: inherit; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @keyframes v4Scan { 0% { transform: translateY(-115%); } 100% { transform: translateY(115%); } }
   @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
   @keyframes dots { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
   @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -210,8 +211,9 @@
     body.sellers-page header.pad { padding-top: 88px !important; }
     body.sellers-page header.pad .split { padding-bottom: 28px !important; }
     .hero-proofs { padding-top: 16px !important; }
-    #discover .disco-phone { max-width: 280px !important; margin: 0 auto; }
-    #discover .disco-phone-body { height: 540px !important; }
+    #discover .hiw-mkt-phone-wrap,
+    #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto; }
+    #discover .hiw-mkt-phone-screen { height: 540px !important; }
     .benefit-panel { padding: 32px 26px !important; }
     .sellers-cta-panel { padding: 40px 28px !important; }
   }
@@ -246,7 +248,7 @@
     #story .story-phone { top: 56px !important; }
     #story .story-phone-shell { max-width: 260px !important; }
     #story .phone-body { height: 460px !important; }
-    #discover .disco-phone-body { height: 500px !important; }
+    #discover .hiw-mkt-phone-screen { height: 500px !important; }
     #cost .cost-zero { font-size: 72px !important; }
     #cost .cost-forever { font-size: 24px !important; }
     #cost .cost-foot { align-items: flex-start !important; }
@@ -340,8 +342,9 @@
     .story-phone-shell { max-width: 250px !important; }
     #story .story-phone { top: 52px !important; }
     #story .phone-body { height: 440px !important; }
-    #discover .disco-phone { max-width: 280px !important; margin: 0 auto !important; }
-    #discover .disco-phone-body { height: 520px !important; }
+    #discover .hiw-mkt-phone-wrap,
+    #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto !important; }
+    #discover .hiw-mkt-phone-screen { height: 520px !important; }
     #cost .cost-zero { font-size: 64px !important; }
     #cost .cost-cta { width: 100%; justify-content: center; }
     #lost-sale .lost-tag { white-space: nowrap; justify-self: center; }
@@ -655,9 +658,15 @@
     gap: 0;
     min-width: 0;
   }
-  #story .story-b0 {
-    grid-column: auto;
-    grid-row: auto;
+  #story .story-steps {
+    padding-top: 8px !important;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
   }
   #story .story-steps-rest {
     grid-column: auto;
@@ -667,19 +676,22 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  #story .story-b0 {
+    grid-column: auto;
+    grid-row: auto;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
   #story .story-cost-wrap {
     grid-column: 1;
     grid-row: 2;
     padding: 8px 0 24px 58px;
-  }
-  #story .story-steps {
-    padding-top: 8px !important;
-    min-height: 0 !important;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    align-self: start;
   }
   #story .story-phone {
     grid-column: 2;
@@ -714,6 +726,8 @@
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
     transition: none;
   }
   #story .story-block.is-on {
@@ -742,18 +756,28 @@
     box-sizing: border-box;
     border-radius: 18px;
     border: 1.5px solid transparent;
+    background: transparent;
+    box-shadow: none;
+    transition: background .25s ease, box-shadow .25s ease, border-color .25s ease;
+    align-self: stretch;
+  }
+  #story .story-block.is-on .story-block-inner {
     background:
       linear-gradient(#fff, #fff) padding-box,
       linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box;
-    box-shadow: 0 10px 28px -20px rgba(30, 20, 34, .38);
-    transition: opacity .35s ease, box-shadow .3s ease;
-    align-self: start;
+    box-shadow: 0 14px 32px -22px rgba(196, 46, 139, .36);
   }
-  #story .story-block.is-on .story-block-inner {
-    border-width: 2px;
-    box-shadow:
-      0 18px 44px -22px rgba(196, 46, 139, .42),
-      0 0 0 1px rgba(236, 72, 153, .12);
+  #story .story-block:not(.is-on) .story-block-inner > div {
+    color: #9A8E9E !important;
+  }
+  #story .story-block:not(.is-on) .story-block-inner > p {
+    color: #B5A8BA !important;
+  }
+  #story .story-block.is-on .story-block-inner > div {
+    color: #1E1422 !important;
+  }
+  #story .story-block.is-on .story-block-inner > p {
+    color: #5b5060 !important;
   }
   #story .story-dot-col {
     display: flex !important;
@@ -952,7 +976,14 @@
     #story .story-points-slot .story-block-inner {
       padding: 10px 12px !important;
       border-radius: 14px !important;
-      box-shadow: 0 8px 20px -16px rgba(30, 20, 34, .35) !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+    #story .story-points-slot .story-block.is-on .story-block-inner {
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box !important;
+      box-shadow: 0 8px 20px -16px rgba(196, 46, 139, .35) !important;
     }
     #story .story-points-slot .story-block-inner > span:first-child {
       font-size: 8.5px !important;
@@ -1196,6 +1227,309 @@
   #discover .disco-listing img {
     object-fit: cover !important;
     object-position: center !important;
+  }
+
+  /* HIW marketplace phone (swapped into #discover) */
+  #discover .hiw-mkt-phone-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  #discover .hiw-mkt-phone-wrap {
+    width: 300px;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  #discover .hiw-mkt-phone {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 40px;
+    background: #1A1420;
+    padding: 10px;
+    box-shadow: 0 40px 80px -44px rgba(26,20,32,.7);
+    box-sizing: border-box;
+    overflow: hidden;
+    min-width: 0;
+  }
+  #discover .hiw-mkt-phone-screen {
+    border-radius: 32px;
+    background: #FAF4FB;
+    overflow: hidden;
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+    position: relative;
+  }
+  #discover .hiw-mkt-act {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    line-height: 1;
+  }
+  #discover .hiw-mkt-act--contact {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1A1420;
+    padding: 10px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid #E6DED6;
+    cursor: pointer;
+  }
+  #discover .hiw-mkt-act-ico {
+    width: 14px;
+    height: 14px;
+    flex: none;
+    display: block;
+  }
+  #discover .hiw-mkt-act > span {
+    display: block;
+    line-height: 1;
+  }
+  #discover .hiw-mkt-contact {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  #discover .hiw-mkt-contact.is-open {
+    pointer-events: auto;
+    opacity: 1;
+  }
+  #discover .hiw-mkt-contact-scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 20, 32, .42);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  #discover .hiw-mkt-contact-sheet {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    padding: 16px 14px 18px;
+    box-shadow: 0 -16px 40px -28px rgba(26, 20, 32, .45);
+    transform: translateY(110%);
+    transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+  }
+  #discover .hiw-mkt-contact.is-open .hiw-mkt-contact-sheet {
+    transform: translateY(0);
+  }
+  #discover .hiw-mkt-contact-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  #discover .hiw-mkt-contact-head strong {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #1A1420;
+  }
+  #discover .hiw-mkt-contact-x {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 0;
+    background: #F3EEF0;
+    color: #5b5060;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  #discover .hiw-mkt-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  #discover .hiw-mkt-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #F7F2F4;
+    min-width: 0;
+  }
+  #discover .hiw-mkt-contact-row .hiw-mkt-contact-ico {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    line-height: 0;
+  }
+  #discover .hiw-mkt-contact-row .hiw-mkt-contact-ico svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex: none;
+    margin: 0;
+  }
+  #discover .hiw-mkt-contact-row strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: -.015em;
+    color: #1A1420;
+  }
+  #discover .hiw-mkt-contact-row > div span {
+    display: block;
+    margin-top: 1px;
+    font-size: 11.5px;
+    color: #8D8296;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #discover .hiw-mkt-phone-status {
+    position: relative;
+    padding: 12px 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8D8296;
+    min-width: 0;
+    min-height: 30px;
+  }
+  #discover .hiw-mkt-phone-status > span:first-child {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+  }
+  #discover .hiw-mkt-phone-status > span:last-child {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    flex: 1;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: -.01em;
+  }
+  #discover .hiw-mkt-notch {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 62px;
+    height: 18px;
+    margin-top: 4px;
+    background: #1A1420;
+    border-radius: 999px;
+    flex: none;
+    pointer-events: none;
+    z-index: 2;
+  }
+  #discover .hiw-mkt-store-head {
+    padding: 14px 14px 12px;
+    border-bottom: 1px solid #EFE7E0;
+    min-width: 0;
+  }
+  #discover .hiw-mkt-stats {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  #discover .hiw-mkt-stat {
+    background: #fff;
+    border: 1px solid #EFE7E0;
+    border-radius: 12px;
+    padding: 8px 6px;
+    text-align: center;
+    min-width: 0;
+  }
+  #discover .hiw-mkt-tabs {
+    display: none !important;
+  }
+  #discover .hiw-mkt-tabs > span {
+    flex: none;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  #discover .hiw-mkt-scroll {
+    flex: 1;
+    padding: 6px 12px 14px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+    grid-auto-rows: max-content;
+    align-content: start;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+  }
+  #discover .hiw-mkt-listing {
+    background: #fff;
+    border: 1px solid #EFE7E0;
+    border-radius: 14px;
+    overflow: hidden;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  #discover .hiw-mkt-listing-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: #EFE7E0;
+    flex: none;
+  }
+  #discover .hiw-mkt-listing-body {
+    padding: 7px 8px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+  #discover .hiw-mkt-listing-body > div:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+    min-height: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* Pricing polish */
@@ -1730,14 +2064,14 @@
         <div class="story-dot-col">
           <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ storyStep0.dotBg }}; color: {{ storyStep0.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ storyStep0.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ storyStep0.n }}</span>
           <span class="story-rail"></span>
-        </div>
+            </div>
         <div class="story-block-inner">
           <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ storyStep0.tagFg }}; background: {{ storyStep0.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 10px;">{{ storyStep0.who }}</span>
           <div style="font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.2; margin-bottom: 6px;">{{ storyStep0.title }}</div>
           <p style="font-size: 14.5px; line-height: 1.5; color: #5b5060; margin: 0; max-width: 440px;">{{ storyStep0.body }}</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
     <!-- Points 2–4 -->
     <div class="story-steps story-steps-rest" style="padding-top: 8px;">
@@ -1747,14 +2081,14 @@
             <div class="story-dot-col">
               <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ s.dotBg }}; color: {{ s.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ s.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ s.n }}</span>
               <span class="story-rail"></span>
-            </div>
+          </div>
             <div class="story-block-inner">
               <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ s.tagFg }}; background: {{ s.tagBg }}; padding: 5px 10px; border-radius: 999px; margin-bottom: 10px;">{{ s.who }}</span>
               <div style="font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.2; margin-bottom: 6px;">{{ s.title }}</div>
               <p style="font-size: 14.5px; line-height: 1.5; color: #5b5060; margin: 0; max-width: 440px;">{{ s.body }}</p>
-            </div>
-          </div>
         </div>
+      </div>
+    </div>
       </sc-for>
     </div>
     </div><!-- /.story-points-slot -->
@@ -1822,12 +2156,12 @@
                 </span>
                 <div style="flex: 1; min-width: 0; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 5px;">
                   <div style="position: relative; width: 100%; height: 148px; border-radius: 10px; overflow: hidden;">
-                    <img src="assets/images/2f9dca33-485a-4c55-a5ce-71f7a2fea47a.jpg" alt="AI blend result" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.6s ease-in-out infinite; pointer-events: none;"></div>
+                      <img src="assets/images/2f9dca33-485a-4c55-a5ce-71f7a2fea47a.jpg" alt="AI blend result" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                      <div style="position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); background-size: 200% 100%; animation: shimmer 3.6s ease-in-out infinite; pointer-events: none;"></div>
                     <span style="position: absolute; left: 6px; bottom: 6px; font-size: 8.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgba(30,20,34,.6); padding: 3px 7px; border-radius: 999px; white-space: nowrap;">Your blend</span>
+                    </div>
                   </div>
                 </div>
-              </div>
               <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 6px;">
                 <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
                 <div style="max-width: 88%; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 9px 11px;">
@@ -1873,9 +2207,9 @@
         <div class="story-cost-row">
           <span class="story-cost-zero">₹0</span>
           <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
   </div>
@@ -1891,69 +2225,157 @@
 
   <div data-reveal="" data-delay="1" class="disco" style="display: grid; grid-template-columns: 380px 1fr; gap: 48px; align-items: center;">
 
-    <!-- seller storefront in the app -->
-    <div>
-      <div class="disco-phone" style="width: 100%; max-width: 300px; background: #1E1422; border-radius: 36px; padding: 9px; box-shadow: 0 40px 80px -44px rgba(30,20,34,.6); margin: 0 auto;">
-        <div class="disco-phone-body" style="background: #fff; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; height: 620px;">
-          <div style="flex: none; display: flex; align-items: center; gap: 9px; padding: 13px 15px 11px; border-bottom: 1px solid #F1E7F2;">
-            <span style="font-size: 16px; color: #8A7E92; line-height: 1;">‹</span>
-            <span style="width: 22px; height: 22px; border-radius: 7px; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); flex: none; display: flex; align-items: center; justify-content: center;"><span style="width: 8px; height: 8px; border: 1.5px solid #fff; border-radius: 50%;"></span></span>
-            <span style="flex: 1; font-size: 12px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">PixelBlend</span>
-            <span style="font-size: 8px; font-weight: 800; letter-spacing: .1em; color: #C42E8B;">NEW BRAND</span>
-          </div>
-
-          <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column;">
-            <div style="flex: none; padding: 16px 15px 14px;">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <span style="width: 54px; height: 54px; flex: none; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); border: 2px solid #fff; box-shadow: 0 0 0 2px #EC4899;"></span>
-                <div style="flex: 1; min-width: 0;">
-                  <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="font-size: 15px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;">Studio Noir</span>
-                    <span style="width: 13px; height: 13px; flex: none; border-radius: 50%; background: #EC4899; color: #fff; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center;">✓</span>
-                  </div>
-                  <div style="font-size: 10.5px; color: #8A7E92; margin-top: 1px;">Studio &amp; marble scenes · Jaipur</div>
-                  <div style="display: flex; gap: 12px; margin-top: 6px;">
-                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">42 <span style="color: #8A7E92; font-weight: 600;">listings</span></span>
-                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">4.8 <span style="color: #8A7E92; font-weight: 600;">rating</span></span>
-                    <span style="font-size: 9.5px; font-weight: 700; color: #1E1422;">1.2k <span style="color: #8A7E92; font-weight: 600;">blends</span></span>
-                  </div>
-                </div>
-              </div>
-              <div style="display: flex; gap: 7px; margin-top: 14px;">
-                <span style="flex: 1; text-align: center; font-size: 11.5px; font-weight: 800; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 11px 10px; border-radius: 12px; box-shadow: 0 10px 22px -14px rgba(236,72,153,.9);">Connect with seller</span>
-                <span style="flex: none; font-size: 11.5px; font-weight: 800; color: #1E1422; border: 1.5px solid #E7D9E9; padding: 11px 15px; border-radius: 12px;">Follow</span>
-              </div>
+    <!-- HIW THE MARKETPLACE phone -->
+    <div class="hiw-mkt-phone-col">
+      <div class="hiw-mkt-phone-wrap">
+        <div class="hiw-mkt-phone">
+          <div class="hiw-mkt-phone-screen">
+            <div class="hiw-mkt-phone-status">
+              <span>9:41</span>
+              <span class="hiw-mkt-notch"></span>
+              <span>Marketplace</span>
             </div>
 
-            <div style="flex: none; display: flex; gap: 16px; padding: 0 15px; border-bottom: 1px solid #F1E7F2;">
-              <span style="font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1E1422; padding-bottom: 9px; border-bottom: 2px solid #1E1422;">Listings</span>
-              <span style="font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B7A9BC; padding-bottom: 9px;">Blends</span>
-              <span style="font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B7A9BC; padding-bottom: 9px;">About</span>
-            </div>
-
-            <div class="disco-listings" style="flex: 1; min-height: 0; padding: 10px 12px 8px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; overflow: hidden;">
-              <sc-for list="{{ storeItems }}" as="t" hint-placeholder-count="4">
-                <div class="disco-listing" style="position: relative; min-height: 0; height: 100%; border-radius: 12px; overflow: hidden; background: #F6EEF7;">
-                  <img src="{{ t.img }}" alt="{{ t.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                  <div style="position: absolute; left: 0; right: 0; top: 0; padding: 8px 8px 0; background: linear-gradient(180deg, rgba(30,20,34,.72), transparent 85%);">
-                    <div style="font-size: 9px; font-weight: 800; color: #fff; letter-spacing: -.01em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ t.name }}</div>
-                    <div style="font-size: 8.5px; color: rgba(255,255,255,.8); margin-top: 1px;">{{ t.price }}</div>
+            <sc-if value="{{ shop.storeView }}" hint-placeholder-val="{{ true }}">
+              <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0">
+                <div class="hiw-mkt-store-head">
+                  <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+                    <span style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 800; letter-spacing: -.02em">SN</span>
+                    <div style="flex: 1; min-width: 0">
+                      <div style="display: flex; align-items: center; gap: 6px; min-width: 0">
+                        <span style="font-size: 15.5px; font-weight: 800; letter-spacing: -.015em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Studio Noir</span>
+                        <span style="width: 15px; height: 15px; flex: none; border-radius: 50%; background: #C42E8B; color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center">✓</span>
+                      </div>
+                      <div style="margin-top: 2px; font-size: 12px; color: #8D8296; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Jaipur · Studio &amp; tabletop scenes</div>
                     </div>
-                  <div style="position: absolute; left: 7px; right: 7px; bottom: 7px; display: flex; align-items: center; justify-content: center; gap: 4px; background: #fff; border-radius: 8px; padding: 6px 6px;">
-                    <span style="width: 5px; height: 5px; border-radius: 50%; background: #EC4899; flex: none;"></span>
-                    <span style="font-size: 8px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #1E1422;">Blend</span>
+                  </div>
+                  <div class="hiw-mkt-stats">
+                    <sc-for list="{{ shop.stats }}" as="st" hint-placeholder-count="3">
+                      <div class="hiw-mkt-stat">
+                        <div style="font-size: 13.5px; font-weight: 800; letter-spacing: -.01em">{{ st.k }}</div>
+                        <div style="margin-top: 1px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296">{{ st.v }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                    <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+                      <div class="hiw-mkt-act" sc-camel-on-click="{{ shop.toggleFollow }}" style="{{ shop.followStyle }}">
+                        <svg class="hiw-mkt-act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+                        <span>{{ shop.followLabel }}</span>
+                      </div>
+                      <div class="hiw-mkt-act hiw-mkt-act--contact" sc-camel-on-click="{{ shop.openContact }}">
+                        <svg class="hiw-mkt-act-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <span>Contact</span>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="hiw-mkt-tabs">
+                  <sc-for list="{{ shop.tabs }}" as="t" hint-placeholder-count="4">
+                    <span style="{{ t.style }}">{{ t.label }}</span>
+                  </sc-for>
+                </div>
+
+                <div class="hiw-mkt-scroll">
+                  <sc-for list="{{ shop.listings }}" as="p" hint-placeholder-count="4">
+                    <div class="hiw-mkt-listing">
+                      <div class="hiw-mkt-listing-media">
+                        <img src="{{ p.src }}" alt="Listing" style="width: 100%; height: 100%; object-fit: cover; display: block">
+                      </div>
+                      <div class="hiw-mkt-listing-body">
+                        <div>{{ p.name }}</div>
+                        <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ shop.tryView }}" hint-placeholder-val="{{ false }}">
+              <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
+                <div style="padding: 14px 18px 10px; display: flex; align-items: center; gap: 10px">
+                  <span sc-camel-on-click="{{ shop.back }}" style="font-size: 13px; font-weight: 700; color: #C42E8B; cursor: pointer">← Store</span>
+                  <span style="font-size: 12.5px; color: #8D8296">Studio Noir</span>
+                </div>
+                <div style="padding: 0 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
+                  <div style="flex: 1; position: relative; border-radius: 18px; border: 1.5px solid #F3D9EA; background: #FAF4FB; overflow: hidden; min-height: 0">
+                    <img src="{{ shop.sceneSrc }}" alt="Scene" style="{{ shop.sceneImg }}">
+                    <img src="{{ shop.productSrc }}" alt="Your product in the scene" style="{{ shop.productStyle }}">
+                    <div style="{{ shop.idle }}">
+                      <span style="width: 32px; height: 32px; border-radius: 50%; border: 1.5px dashed #E39CC8"></span>
+                      <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #C42E8B">YOUR PRODUCT, IN THIS SCENE</span>
+                      <span style="font-size: 12px; line-height: 1.45; color: #8D8296">your packshot, their backdrop</span>
+                    </div>
+                    <div style="{{ shop.veil }}"></div>
+                    <div style="{{ shop.scan }}"></div>
+                    <div style="{{ shop.chip }}">{{ shop.chipText }}</div>
+                  </div>
+                  <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
+                    <span style="font-size: 13px; font-weight: 700; line-height: 1.3">{{ shop.picked.name }}</span>
+                  </div>
+                  <div style="display: flex; gap: 8px">
+                    <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">Save</span>
+                    <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">Share</span>
+                    <span style="flex: 1; text-align: center; font-size: 12.5px; font-weight: 700; color: #4C4453; background: #fff; border: 1px solid #EFE7E0; border-radius: 999px; padding: 10px">License</span>
                   </div>
                 </div>
-              </sc-for>
-            </div>
+                <div style="padding: 14px 18px 18px">
+                  <div style="text-align: center; font-size: 14.5px; font-weight: 700; color: #fff; padding: 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)">Message the creator</div>
+                </div>
+              </div>
+            </sc-if>
 
-            <div class="disco-store-note" style="flex: none; margin: 0 12px 12px; display: flex; align-items: center; gap: 8px; background: #FDF1F8; border: 1px solid #FBD7E8; border-radius: 12px; padding: 9px 11px;">
-              <span style="width: 18px; height: 18px; flex: none; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 9px; font-weight: 800; display: flex; align-items: center; justify-content: center;">✓</span>
-              <span style="font-size: 9px; font-weight: 700; line-height: 1.35; color: #1E1422;">They found this store in the app. They can blend their product in, then message you to license it.</span>
+            <div class="{{ shop.contactClass }}">
+              <button type="button" class="hiw-mkt-contact-scrim" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close contact"></button>
+              <div class="hiw-mkt-contact-sheet">
+                <div class="hiw-mkt-contact-head">
+                  <strong>Contact Seller</strong>
+                  <button type="button" class="hiw-mkt-contact-x" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close">×</button>
+                </div>
+                <div class="hiw-mkt-contact-list">
+                  <div class="hiw-mkt-contact-row">
+                    <span class="hiw-mkt-contact-ico" style="background:#25D366" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </span>
+                    <div style="min-width: 0">
+                      <strong>WhatsApp</strong>
+                      <span>+91 98765 43210</span>
+                    </div>
+                  </div>
+                  <div class="hiw-mkt-contact-row">
+                    <span class="hiw-mkt-contact-ico" style="background:#1877F2" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                    </span>
+                    <div style="min-width: 0">
+                      <strong>Facebook</strong>
+                      <span>Studio Noir</span>
+                    </div>
+                  </div>
+                  <div class="hiw-mkt-contact-row">
+                    <span class="hiw-mkt-contact-ico" style="background:linear-gradient(135deg,#F58529,#DD2A7B,#8134AF)" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </span>
+                    <div style="min-width: 0">
+                      <strong>Instagram</strong>
+                      <span>@studionoir.jaipur</span>
+                    </div>
+                  </div>
+                  <div class="hiw-mkt-contact-row">
+                    <span class="hiw-mkt-contact-ico" style="background:#A855F7" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>
+                    </span>
+                    <div style="min-width: 0">
+                      <strong>Email</strong>
+                      <span>hello@studionoir.in</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div style="margin-top: 12px; font-size: 13px; color: #8D8296; text-align: center">Tap <strong style="color:#C42E8B">Blend</strong> on any listing to see your product in it.</div>
     </div>
 
     <!-- acquisition chain -->
@@ -2247,7 +2669,7 @@
 <script type="text/x-dc" data-dc-script="">
 
 class Component extends DCLogic {
-  state = { scrolled: false, menuOpen: false, openFaq: 0, storyStep: 0, split: 50, dragging: false, cat: 0, catProg: 0, catPaused: false, step: 0, stepProg: 0, stepPaused: false };
+  state = { scrolled: false, menuOpen: false, openFaq: 0, storyStep: 0, split: 50, dragging: false, cat: 0, catProg: 0, catPaused: false, step: 0, stepProg: 0, stepPaused: false, shopStep: 0, shopBlend: 'idle', shopContact: false, following: false, picked: 0 };
   componentDidMount() {
     this._onScroll = () => {
       const s = window.scrollY > 60;
@@ -2301,7 +2723,19 @@ class Component extends DCLogic {
     if (this._catIv) clearInterval(this._catIv);
     if (this._stepIv) clearInterval(this._stepIv);
     if (this._revealIO) this._revealIO.disconnect();
+    clearTimeout(this._shopBlendT);
   }
+  runShopBlend(i) {
+    clearTimeout(this._shopBlendT);
+    this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
+    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1150);
+  }
+  backShop() {
+    clearTimeout(this._shopBlendT);
+    this.setState({ shopStep: 0, shopBlend: 'idle', shopContact: false });
+  }
+  openShopContact() { this.setState({ shopContact: true }); }
+  closeShopContact() { this.setState({ shopContact: false }); }
   _syncLostRows() {
     const rows = document.querySelectorAll('#lost-sale .lost-row');
     if (!rows.length) return;
@@ -2563,13 +2997,13 @@ class Component extends DCLogic {
       return {
         n: String(i + 1), who: s.who, title: s.title, body: s.body, goto: () => this._gotoStory(i),
         blockClass: on ? 'is-on' : (past ? 'is-past' : ''),
-        opacity: on ? 1 : (past ? 0.78 : 0.58),
-        dotBg: on ? (s.who === 'You' ? '#1E1422' : 'linear-gradient(113.667deg,#A855F7,#F43F5E)') : (past ? '#E9D5F0' : '#F3E7F4'),
-        dotFg: on ? '#fff' : (past ? '#7A3D8A' : '#8A7E92'),
+        opacity: on ? 1 : 0.7,
+        dotBg: on ? (s.who === 'You' ? '#1E1422' : 'linear-gradient(113.667deg,#A855F7,#F43F5E)') : '#FCE8F4',
+        dotFg: on ? '#fff' : '#C42E8B',
         dotShadow: on ? '0 8px 18px -10px rgba(196,46,139,.55)' : 'none',
         railOn: last ? 'is-hidden' : ((past || on) ? 'is-on' : ''),
-        tagFg: s.who === 'You' ? '#fff' : '#C42E8B',
-        tagBg: s.who === 'You' ? '#1E1422' : '#FCE7F0',
+        tagFg: on ? (s.who === 'You' ? '#fff' : '#C42E8B') : '#B5A8BA',
+        tagBg: on ? (s.who === 'You' ? '#1E1422' : '#FCE7F0') : '#F4EEF2',
       };
     });
     const storyStep0 = storySteps[0];
@@ -2772,13 +3206,87 @@ class Component extends DCLogic {
       'They were sure before paying — so far fewer come back for a redo',
     ];
 
-    // ---- new customers
-    const storeItems = [
-      { img: U('1522335789203-aabd1fc54bc9', 320), name: 'Sunlit marble tabletop', price: '₹1,499' },
-      { img: U('1557683316-973673baf926', 320), name: 'Minimal studio gradient', price: '₹4,199' },
-      { img: U('1441974231531-c6227db76b6e', 320), name: 'Lush forest backdrop', price: '₹3,750' },
-      { img: U('1507525428034-b723cf961d3e', 320), name: 'Golden-hour beach', price: '₹2,290' },
+    // ---- new customers (HIW marketplace phone)
+    const shopListings = [
+      { name: 'Sunlit marble tabletop', price: '₹1,499', src: U('1517842645767-c639042777db', 400) },
+      { name: 'Golden-hour beach scene', price: '₹2,290', src: U('1507525428034-b723cf961d3e', 400) },
+      { name: 'Minimal studio gradient', price: '₹3,750', src: U('1557683316-973673baf926', 400) },
+      { name: 'Lush forest backdrop', price: '₹4,199', src: U('1441974231531-c6227db76b6e', 400) },
     ];
+    const pickedListing = shopListings[S.picked] || shopListings[0];
+    const sb = S.shopBlend || 'idle';
+    const shopDone = sb === 'done';
+    const shopWorking = sb === 'working';
+    const shop = {
+      storeView: S.shopStep === 0,
+      tryView: S.shopStep === 1,
+      back: () => this.backShop(),
+      picked: { name: pickedListing.name },
+      sceneSrc: pickedListing.src,
+      productSrc: U('1542291026-7eec264c27ff', 420),
+      sceneImg: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
+        objectPosition: 'center center', display: 'block',
+        opacity: shopDone || shopWorking ? 1 : 0,
+        transform: shopDone ? 'scale(1)' : 'scale(1.05)',
+        filter: shopDone ? 'blur(0px)' : (shopWorking ? 'blur(6px)' : 'blur(12px)'),
+        transition: 'opacity .65s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .65s ease'
+      },
+      productStyle: {
+        position: 'absolute', left: '50%', top: '50%', width: '52%', aspectRatio: '1 / 1',
+        transform: shopDone ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
+        borderRadius: '10px', overflow: 'hidden', objectFit: 'cover', objectPosition: 'center center',
+        boxShadow: '0 22px 36px -20px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
+        opacity: shopDone ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
+      },
+      idle: {
+        position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: '9px', padding: '20px', textAlign: 'center',
+        opacity: sb === 'idle' ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+      },
+      veil: {
+        position: 'absolute', inset: 0, background: 'rgba(26,20,32,.14)',
+        opacity: shopWorking ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+      },
+      scan: {
+        position: 'absolute', left: 0, right: 0, height: '46%',
+        background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.34) 50%, rgba(236,72,153,0) 100%)',
+        boxShadow: '0 0 24px rgba(236,72,153,.5)',
+        opacity: shopWorking ? 1 : 0,
+        animation: shopWorking ? 'v4Scan 1.15s linear infinite' : 'none',
+        pointerEvents: 'none'
+      },
+      chip: {
+        position: 'absolute', left: '10px', right: '10px', bottom: '10px',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '7px 12px', borderRadius: '999px', background: 'rgba(255,255,255,.93)',
+        border: '1px solid rgba(230,222,214,.9)', boxShadow: '0 8px 22px -14px rgba(74,52,40,.9)',
+        fontSize: '10.5px', fontWeight: 800, letterSpacing: '.04em', whiteSpace: 'nowrap',
+        color: shopWorking ? '#8D8296' : '#C42E8B',
+        opacity: sb === 'idle' ? 0 : 1, transform: sb === 'idle' ? 'translateY(6px)' : 'translateY(0)',
+        transition: 'opacity .35s ease, transform .35s ease', pointerEvents: 'none'
+      },
+      chipText: shopWorking ? 'BLENDING…' : (shopDone ? pickedListing.name.toUpperCase() : ''),
+      contactOpen: !!S.shopContact,
+      contactClass: 'hiw-mkt-contact' + (S.shopContact ? ' is-open' : ''),
+      openContact: () => this.openShopContact(),
+      closeContact: () => this.closeShopContact(),
+      toggleFollow: () => this.setState({ following: !S.following }),
+      followLabel: S.following ? 'Following' : 'Follow',
+      followStyle: 'display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;font-weight:700;padding:10px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s; ' +
+        (S.following
+          ? 'color: #1A1420; background: #F4EDE6; border: 1.5px solid #E6DED6;'
+          : 'color: #fff; border: 1.5px solid transparent; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);'),
+      stats: [{ k: '1,240', v: 'FOLLOWERS' }, { k: '86', v: 'LISTINGS' }, { k: '4.9', v: 'RATING' }],
+      tabs: ['All', 'Studio', 'Lifestyle', 'Nature'].map((label, i) => ({
+        label,
+        style: 'font-size: 12.5px; font-weight: 700; padding: 7px 13px; border-radius: 999px; white-space: nowrap; ' +
+          (i === 0 ? 'color: #fff; background: #1A1420;' : 'color: #6B6070; background: #fff; border: 1px solid #EFE7E0;'),
+      })),
+      listings: shopListings.map((p, i) => Object.assign({}, p, {
+        tryOn: () => this.runShopBlend(i),
+      })),
+    };
     const discoveryFacts = [
       { title: 'They find you while browsing, not because they know you', body: 'Your scenes sit in the categories brands already search — studio backdrops, marble surfaces, festive sets — next to everyone else’s.' },
       { title: 'They see their product in your scene before they learn your name', body: 'Blend comes first in the app, so the decision is made on their own packshot. Every result is free for you.' },
@@ -2873,7 +3381,7 @@ class Component extends DCLogic {
       compareLeft: U('1557683316-973673baf926', 900),
       compareRight: U('1600185365483-26d7a4cc7519', 900),
       five,
-      hesitations, steps, activeStep, nextStep, nextLabel, stepCounter, storeItems, discoveryFacts, discoStats,
+      hesitations, steps, activeStep, nextStep, nextLabel, stepCounter, shop, discoveryFacts, discoStats,
       pauseSteps: () => { if (!this.state.stepPaused) this.setState({ stepPaused: true }); },
       resumeSteps: () => { if (this.state.stepPaused) this.setState({ stepPaused: false }); },
       cats, activeCat: { count: catData[S.cat].count }, catCards: catData[S.cat].cards, catIndexLabel,

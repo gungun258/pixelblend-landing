@@ -184,44 +184,82 @@
       line-height: 1.55;
       color: #5b5060;
     }
+    .gal-hero-ctas,
+    .gal-end-ctas {
+      display: inline-grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 12px;
+      align-items: stretch;
+      width: max-content;
+      max-width: 100%;
+    }
     .gal-hero-ctas {
       margin: 0 0 16px;
+      justify-content: start;
+    }
+    .gal-keep-cta {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 14px;
+      gap: 12px;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+      margin: 36px auto 0;
     }
-    .gal-hero-ctas a { text-decoration: none; box-sizing: border-box; }
-    .gal-cta-pri {
+    .gal-keep-cta a {
+      width: auto;
+      flex: 0 1 auto;
+      min-width: 0;
+      box-sizing: border-box;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none !important;
+      white-space: nowrap;
+    }
+    .gal-end-ctas {
+      justify-content: end;
+    }
+    .gal-hero-ctas a,
+    .gal-end-ctas a {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none !important;
+      white-space: nowrap;
+    }
+    .gal-cta-pri,
+    .gal-cta-sec {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
       font-size: 16px;
       font-weight: 700;
-      color: #fff;
-      padding: 16px 28px;
+      line-height: 1.2;
+      padding: 14px 26px;
       border-radius: 999px;
       text-decoration: none;
+      box-sizing: border-box;
+    }
+    .gal-cta-pri {
+      color: #fff;
+      border: 1px solid transparent;
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       box-shadow: 0 6px 16px rgba(236,72,153,.18);
     }
     .gal-cta-sec {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 16px;
-      font-weight: 600;
       color: #1E1422;
-      padding: 15px 24px;
-      border-radius: 999px;
-      text-decoration: none;
       background: #fff;
       border: 1px solid #F0E6F2;
     }
     .gal-cta-sec i {
-      width: 30px;
-      height: 30px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: #FCE7F0;
       display: inline-flex;
@@ -229,7 +267,8 @@
       justify-content: center;
       color: #C42E8B;
       font-style: normal;
-      font-size: 11px;
+      font-size: 9px;
+      flex-shrink: 0;
     }
     .gal-hero-note {
       margin: 0;
@@ -415,12 +454,12 @@
       margin-top: 28px; display: flex; flex-direction: column; gap: 10px;
     }
     .gal-compare-meta div {
-      display: flex; gap: 12px; align-items: baseline;
+      display: flex; gap: 8px; align-items: baseline;
       font-size: 14.5px; color: rgba(244,239,234,.78);
     }
     .gal-compare-meta b {
       font-size: 12px; font-weight: 800; letter-spacing: .1em;
-      color: #F9A8D4; min-width: 64px;
+      color: #F9A8D4; min-width: 0; flex: none;
     }
     .gal-ba {
       position: relative;
@@ -560,9 +599,9 @@
     .gal-card-recipe {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
-      gap: 6px;
+      gap: 5px;
       align-items: center;
-      padding: 8px 8px 0;
+      padding: 6px 6px 0;
       background: #fff;
     }
     .gal-card-thumb {
@@ -578,22 +617,23 @@
       aspect-ratio: 1 / 1;
       object-fit: cover;
       display: block;
-      max-height: 64px;
+      max-height: none;
     }
     .gal-card-thumb span {
-      position: absolute; left: 4px; top: 4px;
-      padding: 2px 5px; border-radius: 999px;
+      position: absolute; left: 5px; top: 5px;
+      padding: 2px 6px; border-radius: 999px;
       background: rgba(255,255,255,.94);
-      font-size: 7.5px; font-weight: 800; letter-spacing: .05em;
+      font-size: 8px; font-weight: 800; letter-spacing: .05em;
       color: #1E1422;
     }
     .gal-card-plus {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #fff; color: #C42E8B;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #fff; color: #EC4899;
       border: 1px solid #F0E6F2;
       display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 700; line-height: 1;
+      font-size: 13px; font-weight: 800; line-height: 1;
       box-shadow: 0 4px 10px -6px rgba(196,46,139,.35);
+      flex-shrink: 0;
     }
     .gal-card-body { padding: 8px 10px 10px; }
     .gal-card-title {
@@ -719,17 +759,6 @@
       color: #5b5060;
       max-width: 280px;
     }
-    .gal-keep-cta {
-      margin-top: 36px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-    .gal-keep-cta a.gal-cta-pri,
-    .gal-keep-cta a.gal-cta-sec {
-      text-decoration: none !important;
-    }
     .gal-keep-cta .gal-cta-sec {
       background: #fff;
       border: 1px solid #F0E6F2;
@@ -739,7 +768,7 @@
     /* ——— Creator voices ——— */
     .gal-voices {
       margin-top: 0;
-      padding: 72px 32px 24px;
+      padding: 72px 32px 8px;
       background: linear-gradient(180deg, #F4E8F6, #FBF1F9);
     }
     .gal-voices-inner { max-width: 1180px; margin: 0 auto; }
@@ -758,18 +787,18 @@
     }
     .gal-voice-grid {
       display: grid;
-      grid-template-columns: 1.15fr 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
     .gal-voice {
       position: relative;
       overflow: hidden;
       border-radius: 18px;
-      min-height: 320px;
+      min-height: 280px;
       color: #fff;
       background: #1A1420;
     }
-    .gal-voice:first-child { min-height: 360px; }
+    .gal-voice:first-child { min-height: 280px; }
     .gal-voice img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -806,7 +835,7 @@
     .gal-end {
       margin-top: 0;
       border-top: none;
-      padding: 56px 32px 80px;
+      padding: 28px 32px 72px;
       background: #FAF4FB;
     }
     .gal-end-inner {
@@ -828,7 +857,6 @@
       margin: 12px 0 0; font-size: 16px; line-height: 1.55; color: #5b5060;
       max-width: 460px;
     }
-    .gal-end-ctas { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
 
     /* ——— Lightbox ——— */
     .gal-lb[hidden] { display: none !important; }
@@ -894,23 +922,94 @@
       display: block; margin-top: 10px;
       font-size: 11px; font-weight: 800; letter-spacing: .1em; color: #8A7E92;
     }
+    .gal-lb-result {
+      position: relative;
+    }
+    .gal-lb-result-frame {
+      position: relative;
+      border-radius: 16px;
+      padding: 4px;
+      background: linear-gradient(150deg, #A855F7, #EC4899, #F43F5E);
+      box-shadow: 0 12px 32px -18px rgba(196, 46, 139, .4);
+    }
+    .gal-lb-result-inner {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #F0E6F2;
+    }
+    .gal-lb-result-inner img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+    }
+    .gal-lb-result-tag {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 2;
+      display: inline-flex !important;
+      align-items: center;
+      gap: 5px;
+      margin: 0 !important;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(113.667deg, #A855F7, #F43F5E);
+      font-size: 10px !important;
+      font-weight: 800;
+      letter-spacing: .04em;
+      color: #fff !important;
+      box-shadow: 0 6px 16px -8px rgba(196, 46, 139, .55);
+    }
+    .gal-lb-result-tag i {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fff;
+      display: block;
+      flex: none;
+      animation: blink 1.4s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .35; }
+    }
     .gal-lb-op {
       display: flex;
       align-items: center;
       justify-content: center;
       align-self: center;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       margin-top: -28px;
       border-radius: 50%;
       background: #fff;
-      color: #C42E8B;
+      color: #EC4899;
       border: 1px solid #F0E6F2;
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 800;
       line-height: 1;
-      box-shadow: 0 6px 16px -10px rgba(196, 46, 139, .35);
+      box-shadow: 0 8px 20px -8px rgba(168, 85, 247, .42);
       flex: none;
+      box-sizing: border-box;
+    }
+    .gal-lb-op.gal-lb-eq {
+      background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+      color: #fff;
+      border: none;
+      font-size: 20px;
+      box-shadow: 0 8px 20px -8px rgba(236, 72, 153, .55);
+    }
+    .gal-lb-eq-sign {
+      display: block;
+      line-height: 1;
+    }
+    .gal-lb-ai-pill {
+      display: none;
+      white-space: nowrap;
+      line-height: 1.2;
     }
     .gal-lb-meta {
       margin-top: 18px; padding-top: 16px; border-top: 1px solid #F0E6F2;
@@ -929,16 +1028,114 @@
     }
 
     @media (max-width: 1100px) {
-      .gal-voice-grid { grid-template-columns: 1fr 1fr; }
-      .gal-voice:first-child { grid-column: 1 / -1; min-height: 300px; }
+      .gal-voice-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .gal-voice:first-child {
+        grid-column: auto;
+        min-height: 0;
+        max-height: none;
+      }
+      .gal-voice {
+        min-height: 0;
+        aspect-ratio: 3 / 4;
+      }
+      .gal-voice:first-child blockquote,
+      .gal-voice blockquote {
+        font-size: clamp(14px, 1.6vw, 18px);
+        line-height: 1.25;
+      }
+      .gal-voice > div { padding: 14px; }
+      .gal-voice cite { font-size: 10.5px; }
       .gal-masonry { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+      /* Tablet: compare side-by-side — copy left, image right */
+      .gal-compare {
+        padding: 52px 28px;
+      }
+      .gal-compare-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+        gap: 28px;
+        align-items: center;
+      }
+      .gal-compare-copy {
+        text-align: left;
+        max-width: none;
+        margin: 0;
+      }
+      .gal-compare .gal-brand-mark { display: inline-block; }
+      .gal-compare h2 {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+        max-width: none;
+        font-size: clamp(26px, 3.2vw, 34px);
+      }
+      .gal-compare p {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+        max-width: 380px;
+      }
+      .gal-compare-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+        margin: 22px 0 0;
+      }
+      .gal-compare-meta div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 6px 8px;
+        width: auto;
+        max-width: 100%;
+        text-align: left;
+      }
+      .gal-compare-meta b {
+        min-width: 0;
+        flex: none;
+      }
+      .gal-ba {
+        max-width: 100%;
+        max-height: 420px;
+        margin: 0;
+      }
+      .gal-keep-head {
+        max-width: none;
+        margin: 0 auto 32px;
+        text-align: center;
+      }
+      .gal-keep-kicker { display: inline-block; }
+      .gal-keep-head h2 { text-align: center; }
+      .gal-keep-item { text-align: center; }
+      .gal-keep-n,
+      .gal-keep-item strong {
+        display: block;
+        text-align: center;
+      }
+      .gal-keep-item p {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .gal-keep-cta {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 980px) {
       .gal-hero-inner {
         grid-template-columns: 1fr;
-        gap: 28px;
-        padding: 48px 22px 36px;
+        gap: 22px;
+        padding: 20px 22px 28px;
         min-height: 0;
         justify-items: center;
       }
@@ -956,6 +1153,7 @@
         justify-content: center;
         width: max-content;
         max-width: 100%;
+        margin-bottom: 16px;
       }
       .gal-hero h1 {
         font-size: clamp(36px, 5.5vw, 46px);
@@ -969,7 +1167,10 @@
         max-width: 520px;
       }
       .gal-hero-ctas {
-        width: 100%;
+        width: max-content;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
         justify-content: center;
       }
       .gal-hero-note {
@@ -992,11 +1193,58 @@
       }
       .gal-band { padding: 56px 22px 0; }
       .gal-compare { padding: 52px 22px; margin-top: 56px; }
-      .gal-compare-inner { grid-template-columns: 1fr; gap: 28px; }
+      /* Mid tablet: still side-by-side */
+      .gal-compare-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 22px;
+        align-items: center;
+      }
+      .gal-compare-copy {
+        text-align: left;
+        max-width: none;
+        margin: 0;
+      }
+      .gal-compare .gal-brand-mark {
+        display: inline-block;
+      }
+      .gal-compare h2 {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+        font-size: clamp(24px, 3.4vw, 30px);
+      }
+      .gal-compare p {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+        max-width: 340px;
+        font-size: 14.5px;
+      }
+      .gal-compare-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+        width: 100%;
+        margin: 18px 0 0;
+      }
+      .gal-compare-meta div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: baseline;
+        gap: 5px 7px;
+        text-align: left;
+      }
+      .gal-compare-meta b {
+        min-width: 0;
+        flex: none;
+        font-size: 11px;
+      }
       .gal-ba {
-        max-width: 420px;
-        max-height: 380px;
-        margin: 0 auto;
+        max-width: 100%;
+        max-height: 360px;
+        margin: 0;
       }
       .gal-recipe { grid-template-columns: 1fr; }
       .gal-recipe-step {
@@ -1022,17 +1270,60 @@
       }
       .gal-head-row p { text-align: left; max-width: none; }
       .gal-keep { padding: 52px 22px; margin-top: 56px; }
-      .gal-keep-grid { grid-template-columns: 1fr; }
+      .gal-keep-head {
+        max-width: none;
+        margin: 0 auto 28px;
+        text-align: center;
+      }
+      .gal-keep-kicker {
+        display: inline-block;
+      }
+      .gal-keep-head h2 {
+        font-size: clamp(28px, 5vw, 34px);
+        line-height: 1.12;
+        text-align: center;
+      }
+      .gal-keep-grid {
+        grid-template-columns: 1fr;
+        border-top: 1px solid #F0E6F2;
+      }
       .gal-keep-item {
         border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,.12);
-        padding: 22px 4px 24px;
+        border-bottom: 1px solid #F0E6F2;
+        padding: 22px 12px 24px;
+        text-align: center;
       }
       .gal-keep-item:last-child { border-bottom: none; }
-      .gal-voices { padding: 56px 22px 16px; }
+      .gal-keep-item p {
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .gal-keep-n {
+        font-size: 30px;
+        display: block;
+        text-align: center;
+      }
+      .gal-keep-item strong {
+        font-size: 18px;
+        margin-top: 8px;
+        display: block;
+        text-align: center;
+      }
+      .gal-keep-item p { font-size: 14.5px; margin-top: 8px; }
+      .gal-keep-cta {
+        margin-top: 28px;
+        width: max-content;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
+      .gal-voices { padding: 56px 22px 4px; }
       .gal-end {
-        margin-top: 48px;
-        padding: 44px 22px 64px;
+        margin-top: 0;
+        padding: 20px 22px 56px;
       }
       .gal-end-inner {
         grid-template-columns: 1fr;
@@ -1048,7 +1339,8 @@
       }
       .gal-end-ctas {
         justify-content: center;
-        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
       .gal-lb {
         padding: 12px;
@@ -1070,19 +1362,35 @@
       }
       .gal-lb-op {
         display: flex;
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
         margin-top: 0;
       }
+      .gal-lb-op.gal-lb-eq {
+        width: auto;
+        height: auto;
+        min-height: 0;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .02em;
+        background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+        color: #fff;
+        border: none;
+        box-shadow: 0 8px 20px -10px rgba(196, 46, 139, .7);
+      }
+      .gal-lb-eq-sign { display: none; }
+      .gal-lb-ai-pill { display: inline; }
       .gal-lb-stage > .gal-lb-op:nth-child(4) {
         grid-column: 1 / -1;
         justify-self: center;
-        margin: 2px 0 0;
+        margin: 6px 0 4px;
       }
       .gal-lb-stage > .gal-lb-col:nth-child(5) {
         grid-column: 1 / -1;
-        max-width: min(200px, 52vw);
+        max-width: min(220px, 56vw);
         justify-self: center;
         width: 100%;
       }
@@ -1093,9 +1401,23 @@
         object-fit: cover;
         border-radius: 10px;
       }
-      .gal-lb-stage > .gal-lb-col:nth-child(5) img {
+      .gal-lb-result-frame {
+        border-radius: 14px;
+        padding: 3px;
+      }
+      .gal-lb-result-inner,
+      .gal-lb-result-inner img {
+        border-radius: 11px;
+      }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) .gal-lb-result-inner img {
         aspect-ratio: 3 / 4;
         max-height: 200px;
+      }
+      .gal-lb-result-tag {
+        left: 8px;
+        top: 8px;
+        font-size: 9px !important;
+        padding: 4px 8px;
       }
       .gal-lb-col span {
         margin-top: 6px;
@@ -1113,11 +1435,62 @@
       .gal-lb-x { top: 10px; right: 10px; }
     }
 
+    /* 3-col: hide 10th so last row stays full (9 = 3×3). 4-col/2-col keep all 10. */
+    @media (max-width: 760px) and (min-width: 401px) {
+      .gal-masonry > .gal-card:nth-child(10) { display: none; }
+    }
+
     @media (max-width: 760px) {
-      .gal-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      /* Phone only: stack compare — copy above, image below, centered */
+      .gal-compare-inner {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+      }
+      .gal-compare-copy {
+        text-align: center !important;
+        max-width: 520px !important;
+        margin: 0 auto !important;
+      }
+      .gal-compare h2,
+      .gal-compare p {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+      }
+      .gal-compare-meta {
+        align-items: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .gal-compare-meta div {
+        justify-content: center !important;
+        text-align: center !important;
+      }
+      .gal-ba {
+        max-width: 380px !important;
+        margin: 0 auto !important;
+      }
+      .gal-masonry { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
       .gal-card { border-radius: 12px; }
       .gal-card-media { aspect-ratio: 4 / 5; }
-      .gal-card-recipe { display: none; }
+      .gal-card-recipe {
+        display: grid;
+        gap: 4px;
+        padding: 5px 5px 0;
+      }
+      .gal-card-thumb img {
+        aspect-ratio: 1 / 1;
+        max-height: none;
+      }
+      .gal-card-thumb span {
+        font-size: 7px;
+        padding: 2px 5px;
+      }
+      .gal-card-plus {
+        width: 16px;
+        height: 16px;
+        font-size: 11px;
+      }
       .gal-card-body { padding: 8px 9px 10px; }
       .gal-card-title {
         font-size: 12px;
@@ -1133,8 +1506,24 @@
         font-size: 8.5px;
         padding: 2px 6px;
       }
-      .gal-voice-grid { grid-template-columns: 1fr; }
-      .gal-voice:first-child { grid-column: auto; min-height: 280px; }
+      /* Keep 3-up through tablet; don't full-bleed stretch */
+      .gal-voice-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 10px;
+      }
+      .gal-voice,
+      .gal-voice:first-child {
+        grid-column: auto !important;
+        min-height: 0 !important;
+        aspect-ratio: 3 / 4;
+        border-radius: 14px;
+      }
+      .gal-voice blockquote {
+        font-size: 13px !important;
+        line-height: 1.25 !important;
+      }
+      .gal-voice > div { padding: 12px !important; }
+      .gal-voice cite { font-size: 10px !important; }
       .gal-filters {
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -1164,13 +1553,6 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      .gal-end-ctas a,
-      .gal-keep-cta a {
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-      }
-      .gal-keep-cta { width: 100%; }
       .gal-card-plus { width: 20px; height: 20px; font-size: 13px; }
     }
 
@@ -1208,11 +1590,11 @@
         max-width: 520px;
       }
       .gal-hero-ctas {
-        width: 100%;
+        width: max-content;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
         justify-content: center;
-      }
-      .gal-hero-ctas a {
-        width: auto;
       }
       .gal-hero-note {
         text-align: center;
@@ -1236,14 +1618,21 @@
       .gal-band { padding-top: 44px; }
       .gal-compare { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
       .gal-keep { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
-      .gal-voices { padding-top: 44px; }
-      .gal-end { padding-top: 36px; padding-bottom: 56px; margin-top: 36px; }
-      .gal-hero-inner { padding: 28px 16px 24px; gap: 22px; }
+      .gal-keep-head { margin-bottom: 22px; }
+      .gal-keep-head h2 { font-size: 28px; }
+      .gal-keep-item { padding: 18px 0 20px; }
+      .gal-keep-n { font-size: 28px; }
+      .gal-keep-item strong { font-size: 17px; }
+      .gal-keep-item p { font-size: 14px; line-height: 1.5; }
+      .gal-keep-cta { margin-top: 24px; }
+      .gal-voices { padding-top: 44px; padding-bottom: 4px; }
+      .gal-end { padding-top: 16px; padding-bottom: 48px; margin-top: 0; }
+      .gal-hero-inner { padding: 14px 16px 20px; gap: 18px; }
       .gal-hero-badge {
         display: inline-flex;
         width: max-content;
         max-width: 100%;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -1274,21 +1663,17 @@
         text-align: center;
       }
       .gal-hero-ctas {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        gap: 12px;
-      }
-      .gal-hero-ctas a {
-        width: 100%;
+        width: max-content;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
         justify-content: center;
-        text-align: center;
-        box-sizing: border-box;
       }
       .gal-cta-pri,
       .gal-cta-sec {
         font-size: 15px;
-        padding: 14px 20px;
+        padding: 13px 22px;
+        min-height: 48px;
       }
       .gal-hero-note {
         font-size: 12.5px;
@@ -1317,19 +1702,27 @@
       .gal-peek-label { padding: 0 16px; }
       .gal-peek-row { padding: 0 16px 16px; gap: 10px; }
       .gal-peek-row a { width: 120px; }
-      .gal-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .gal-masonry { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
       .gal-card { border-radius: 10px; }
       .gal-card-body { padding: 7px 8px 9px; }
       .gal-card-title { font-size: 11.5px; }
       .gal-card-sub { font-size: 10px; }
-      .gal-card-recipe,
-      .gal-card-thumb,
-      .gal-card-thumb img,
+      .gal-card-recipe {
+        display: grid;
+        gap: 3px;
+        padding: 4px 4px 0;
+      }
+      .gal-card-thumb img {
+        aspect-ratio: 1 / 1;
+        max-height: none;
+      }
       .gal-card-thumb span { display: none; }
+      .gal-card-plus { width: 14px; height: 14px; font-size: 10px; }
       .gal-ba {
         max-width: 100%;
         max-height: 360px;
-        margin-left: 0;
+        margin-left: auto;
+        margin-right: auto;
         border-radius: 14px;
       }
       .gal-ba-tag { top: 12px; font-size: 10px; padding: 5px 9px; }
@@ -1348,10 +1741,32 @@
       }
       .gal-mood strong { font-size: 22px; }
       .gal-mood > span { padding: 16px; }
+      .gal-voice-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+        justify-items: stretch;
+        width: 100%;
+      }
       .gal-voice,
-      .gal-voice:first-child { min-height: 240px; border-radius: 14px; }
-      .gal-voice > div { padding: 18px; }
-      .gal-voice blockquote { font-size: 20px; }
+      .gal-voice:first-child,
+      .gal-voice:nth-child(3) {
+        grid-column: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: auto !important;
+        height: auto !important;
+        min-height: 260px !important;
+        max-height: none !important;
+        border-radius: 16px;
+        justify-self: stretch;
+        margin: 0 !important;
+      }
+      .gal-voice > div { padding: 20px 18px; }
+      .gal-voice blockquote {
+        font-size: 18px;
+        line-height: 1.3;
+      }
+      .gal-voice cite { font-size: 12px; }
       .gal-lb-stage {
         grid-template-columns: 1fr auto 1fr;
         gap: 6px 8px;
@@ -1360,13 +1775,31 @@
         max-width: min(180px, 50vw);
       }
       .gal-lb-col img { max-height: 120px; }
-      .gal-lb-stage > .gal-lb-col:nth-child(5) img { max-height: 180px; }
+      .gal-lb-stage > .gal-lb-col:nth-child(5) .gal-lb-result-inner img { max-height: 180px; }
       .gal-lb-meta strong { font-size: 16px; }
       .gal-lb-panel { padding: 38px 12px 14px; }
     }
 
     @media (max-width: 400px) {
       .gal-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .gal-voice-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+      }
+      .gal-voice,
+      .gal-voice:first-child,
+      .gal-voice:nth-child(3) {
+        grid-column: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: auto !important;
+        height: auto !important;
+        min-height: 240px !important;
+        max-height: none !important;
+        justify-self: stretch;
+        margin: 0 !important;
+      }
+      .gal-voice blockquote { font-size: 16px !important; line-height: 1.3 !important; }
       .gal-hero h1 { font-size: 34px !important; line-height: 1.1 !important; }
       .gal-hero h1 .gal-h1-em {
         word-spacing: 0;
@@ -1374,6 +1807,13 @@
       }
       .gal-hero-stack { --gal-hero-h: 240px; }
       .gal-card-recipe { grid-template-columns: 1fr auto 1fr; }
+      .gal-hero-ctas,
+      .gal-keep-cta,
+      .gal-end-ctas {
+        grid-auto-flow: row;
+        grid-auto-columns: unset;
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1403,8 +1843,7 @@
         <div class="gal-hero-copy">
           <h1>
             <span class="gal-h1-l1">Scenes worth</span><br>
-            <span class="gal-h1-em">stealing the idea</span><br>
-            <span class="gal-h1-l3">from.</span>
+            <span class="gal-h1-em">stealing the idea</span> <span class="gal-h1-l3">from.</span>
           </h1>
           <p class="gal-lead">A living shelf of blends — open any look to see the product you started with, the background you chose, and the visual that came back.</p>
           <div class="gal-hero-ctas">
@@ -1464,7 +1903,7 @@
 
     <section class="gal-compare" id="compare" data-reveal="">
       <div class="gal-compare-inner">
-        <div>
+        <div class="gal-compare-copy">
           <div class="gal-brand-mark">Drag the seam</div>
           <h2>Same bottle. New room. Still your <span class="gal-em">brand</span>.</h2>
           <p>Slide to compare a plain packshot with the finished blend — lighting and shadows follow the scene, the label doesn’t move.</p>
@@ -1579,10 +2018,17 @@
           <img id="lp-lb-cloth" alt="Background">
           <span>BACKGROUND</span>
         </div>
-        <div class="gal-lb-op" aria-hidden="true">=</div>
-        <div class="gal-lb-col">
-          <img id="lp-lb-result" alt="AI result">
-          <span>RESULT</span>
+        <div class="gal-lb-op gal-lb-eq" aria-hidden="true">
+          <span class="gal-lb-eq-sign">=</span>
+          <span class="gal-lb-ai-pill">★ AI Blend = Result</span>
+        </div>
+        <div class="gal-lb-col gal-lb-result">
+          <div class="gal-lb-result-frame">
+            <div class="gal-lb-result-inner">
+              <img id="lp-lb-result" alt="AI result">
+            </div>
+            <span class="gal-lb-result-tag"><i aria-hidden="true"></i>③ AI RESULT</span>
+          </div>
         </div>
       </div>
       <div class="gal-lb-meta">
