@@ -1007,9 +1007,9 @@
     .hiw-walk-sticky {
       display: contents;
     }
-    .hiw-walk-aside { min-width: 0; }
+    .hiw-walk-aside { min-width: 0; align-self: stretch; }
     .hiw-walk-steps {
-      padding-bottom: min(55vh, 480px);
+      padding-bottom: min(65vh, 560px);
       overflow-anchor: none;
     }
     .hiw-walk-steps .hiw-pin,
@@ -1033,7 +1033,7 @@
 
     .hiw-walk-phone {
       position: sticky;
-      top: 96px;
+      top: var(--hiw-sticky-top, 96px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1131,7 +1131,7 @@
         overflow: visible !important;
       }
       .hiw-walk-steps {
-        padding-bottom: min(28vh, 200px) !important;
+        padding-bottom: min(70vh, 560px) !important;
         order: unset !important;
         position: relative !important;
         width: auto !important;
@@ -1143,13 +1143,17 @@
         order: unset !important;
         width: auto !important;
         display: block !important;
-        position: relative !important;
-        top: auto !important;
-        align-self: stretch !important;
+        /* Stick the whole aside so the phone stays put through steps 1→3 */
+        position: sticky !important;
+        top: var(--hiw-sticky-top, 80px) !important;
+        align-self: start !important;
+        height: fit-content !important;
+        max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px)) !important;
+        overflow: visible !important;
       }
       .hiw-walk-phone {
-        position: sticky !important;
-        top: 80px !important;
+        position: relative !important;
+        top: auto !important;
         width: auto !important;
       }
       .hiw-walk-phone-frame,
@@ -1235,27 +1239,35 @@
         font-size: 10.5px !important;
         padding: 4px 8px !important;
       }
-      /* Tablet landscape 2-col: collapse inactive steps so left column stays short */
+      /* Tablet landscape 2-col: dim inactive steps, keep height stable so sticky phone doesn’t jump */
       @media (min-width: 901px) {
         #walkthrough .hiw-pin-0:not(.is-on),
         #walkthrough .hiw-pin-1:not(.is-on),
         #walkthrough .hiw-pin-3:not(.is-on) {
           opacity: .55 !important;
-          padding: 16px 0 !important;
-          min-height: 72px !important;
+          padding: 20px 0 !important;
         }
         #walkthrough .hiw-pin-0:not(.is-on) .hiw-chip-row,
-        #walkthrough .hiw-pin-3:not(.is-on) .hiw-chip-row,
+        #walkthrough .hiw-pin-3:not(.is-on) .hiw-chip-row {
+          visibility: hidden !important;
+          height: 0 !important;
+          margin: 0 !important;
+          overflow: hidden !important;
+        }
         #walkthrough .hiw-pin-1:not(.is-on) .hiw-branch-rail {
-          display: none !important;
+          visibility: hidden !important;
+          height: 0 !important;
+          margin: 0 !important;
+          overflow: hidden !important;
+          padding: 0 !important;
         }
         #walkthrough .hiw-pin-1:not(.is-on) .hiw-step2-title > span {
-          display: none !important;
+          visibility: hidden !important;
         }
         #walkthrough .hiw-pin-0.is-on,
         #walkthrough .hiw-pin-1.is-on,
         #walkthrough .hiw-pin-3.is-on {
-          padding: 16px 0 20px !important;
+          padding: 20px 0 24px !important;
         }
       }
       .hiw-step-marker::before { display: block !important; }
@@ -3968,8 +3980,8 @@ class Component extends DCLogic {
       }
 
       if (Object.keys(next).length) {
-        /* Softgen setState can jump scroll — pin Y while step swaps in carousel */
-        if (chaptersMode && next.step != null) {
+        /* Softgen setState can jump scroll — pin Y whenever walk step swaps */
+        if (next.step != null) {
           const y = window.scrollY || window.pageYOffset || 0;
           this.setState(next);
           requestAnimationFrame(() => {
