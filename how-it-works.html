@@ -1055,8 +1055,8 @@
       border-radius: 36px;
       background: #FAF4FB;
       overflow: hidden;
-      height: 640px;
-      max-height: min(640px, 78vh);
+      height: min(560px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 56px));
+      max-height: min(560px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 56px));
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -1172,8 +1172,12 @@
       }
       .hiw-walk-phone-frame,
       .hiw-phone-shell {
-        max-width: 380px !important;
+        max-width: 340px !important;
         width: 100% !important;
+      }
+      .hiw-walk-aside .hiw-phone-screen {
+        height: min(500px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 72px)) !important;
+        max-height: min(500px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 72px)) !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
         position: relative !important;
@@ -1528,7 +1532,7 @@
         overflow: hidden !important;
         flex: none !important;
       }
-      /* Phone fills most leftover space — slightly short of full so it doesn’t feel oversized */
+      /* Phone sized to fit sticky viewport — no top/bottom clip */
       .hiw-chapter-phone {
         flex: 1 1 auto !important;
         min-height: 0 !important;
@@ -1539,12 +1543,12 @@
         justify-content: center !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 258px !important;
-        max-width: min(258px, 78vw) !important;
-        height: 90% !important;
-        max-height: 90% !important;
-        padding: 10px !important;
-        border-radius: 36px !important;
+        width: 248px !important;
+        max-width: min(248px, 74vw) !important;
+        height: auto !important;
+        max-height: min(460px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 168px)) !important;
+        padding: 9px !important;
+        border-radius: 34px !important;
         display: flex !important;
         flex-direction: column !important;
         box-sizing: border-box !important;
@@ -1552,10 +1556,10 @@
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
         width: 100% !important;
-        height: auto !important;
+        height: min(440px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 186px)) !important;
         min-height: 0 !important;
-        max-height: none !important;
-        border-radius: 28px !important;
+        max-height: min(440px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 186px)) !important;
+        border-radius: 26px !important;
         display: flex !important;
         flex-direction: column !important;
       }
@@ -1653,20 +1657,20 @@
         justify-content: flex-end !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 260px !important;
+        width: 236px !important;
         max-width: 100% !important;
-        height: min(520px, 72vh) !important;
-        max-height: min(520px, 72vh) !important;
-        padding: 10px !important;
-        border-radius: 38px !important;
+        height: auto !important;
+        max-height: min(450px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 100px)) !important;
+        padding: 9px !important;
+        border-radius: 36px !important;
         display: flex !important;
         flex-direction: column !important;
       }
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
-        height: auto !important;
+        height: min(430px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 118px)) !important;
         min-height: 0 !important;
-        max-height: none !important;
+        max-height: min(430px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 118px)) !important;
         border-radius: 28px !important;
       }
       .hiw-chapter-phone .hiw-phone-title { font-size: 18px !important; }
