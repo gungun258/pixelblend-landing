@@ -1533,10 +1533,10 @@
       }
     }
 
-    /* Tablet sizing: slightly larger phone + copy; sticky stays full-bleed */
+    /* Tablet: text left + phone right inside the sticky carousel */
     @media (min-width: 600px) and (max-width: 900px) {
       .hiw-walk-chapters-sticky {
-        padding: 8px 24px 12px !important;
+        padding: 10px 28px 14px !important;
         max-width: none !important;
         width: 100% !important;
         margin: 0 !important;
@@ -1544,29 +1544,63 @@
         justify-content: flex-start !important;
       }
       .hiw-walk-chapters-stage {
-        max-width: 480px !important;
+        max-width: 760px !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
-      .hiw-chapter-title { font-size: 22px !important; }
+      .hiw-chapter {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 280px) !important;
+        grid-template-rows: auto auto auto 1fr !important;
+        column-gap: 28px !important;
+        row-gap: 0 !important;
+        align-items: center !important;
+        justify-content: stretch !important;
+        padding: 8px 0 !important;
+      }
+      .hiw-chapter-label {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        margin-bottom: 10px !important;
+        align-self: end !important;
+      }
+      .hiw-chapter-title {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        font-size: 24px !important;
+        align-self: start !important;
+      }
       .hiw-chapter-desc {
+        grid-column: 1 !important;
+        grid-row: 3 !important;
         font-size: 14.5px !important;
-        line-height: 1.45 !important;
-        -webkit-line-clamp: 3;
+        line-height: 1.5 !important;
+        margin-top: 8px !important;
+        -webkit-line-clamp: 6;
+        align-self: start !important;
+        max-width: 34ch !important;
       }
       .hiw-chapter-phone {
-        margin-top: 10px !important;
-        flex: 1 1 auto !important;
+        grid-column: 2 !important;
+        grid-row: 1 / -1 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        flex: none !important;
+        width: 100% !important;
+        height: 100% !important;
         min-height: 0 !important;
+        align-self: stretch !important;
+        display: flex !important;
         align-items: center !important;
+        justify-content: flex-end !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 286px !important;
-        max-width: min(286px, 68vw) !important;
-        height: 92% !important;
-        max-height: 92% !important;
-        padding: 11px !important;
-        border-radius: 40px !important;
+        width: 260px !important;
+        max-width: 100% !important;
+        height: min(520px, 78%) !important;
+        max-height: min(520px, 78%) !important;
+        padding: 10px !important;
+        border-radius: 38px !important;
         display: flex !important;
         flex-direction: column !important;
       }
@@ -1575,12 +1609,12 @@
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
-        border-radius: 30px !important;
+        border-radius: 28px !important;
       }
-      .hiw-chapter-phone .hiw-phone-title { font-size: 19px !important; }
+      .hiw-chapter-phone .hiw-phone-title { font-size: 18px !important; }
       .hiw-chapter-phone .hiw-phone-head { padding: 12px 14px 6px !important; }
       .hiw-chapter-phone .hiw-phone-body { padding: 6px 14px 0 !important; gap: 9px !important; }
-      .hiw-chapter-phone .hiw-phone-foot { padding: 12px 14px 18px !important; }
+      .hiw-chapter-phone .hiw-phone-foot { padding: 12px 14px 16px !important; }
       .hiw-chapter-phone .hiw-phone-row { padding: 10px 12px !important; }
     }
 
