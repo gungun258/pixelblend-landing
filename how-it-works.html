@@ -1181,28 +1181,29 @@
         top: var(--hiw-sticky-top, 80px) !important;
         align-self: start !important;
         height: fit-content !important;
-        max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px)) !important;
+        max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 12px) !important;
         overflow: visible !important;
         margin-left: auto !important;
         margin-right: auto !important;
+        box-sizing: border-box !important;
       }
       .hiw-walk-phone {
         position: relative !important;
         top: auto !important;
         width: 100% !important;
-        max-width: 280px !important;
+        max-width: 268px !important;
         margin: 0 auto !important;
       }
       .hiw-walk-phone-frame,
       .hiw-phone-shell {
-        max-width: 280px !important;
+        max-width: 268px !important;
         width: 100% !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
       .hiw-walk-aside .hiw-phone-screen {
-        height: min(520px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 88px)) !important;
-        max-height: min(520px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 88px)) !important;
+        height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 110px)) !important;
+        max-height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 110px)) !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
         position: relative !important;
@@ -1282,8 +1283,15 @@
         font-size: 10.5px !important;
         padding: 4px 8px !important;
       }
-      /* Tablet landscape 2-col: dim inactive steps, keep height stable so sticky phone doesn’t jump */
+      /* Tablet landscape 2-col: dim inactive steps, reserve height so step-3 swap doesn’t jump */
       @media (min-width: 901px) {
+        #walkthrough .hiw-walk-steps > .hiw-pin-0,
+        #walkthrough .hiw-walk-steps > .hiw-pin-3 {
+          min-height: 210px !important;
+        }
+        #walkthrough .hiw-walk-steps > .hiw-pin-1 {
+          min-height: 260px !important;
+        }
         #walkthrough .hiw-pin-0:not(.is-on),
         #walkthrough .hiw-pin-1:not(.is-on),
         #walkthrough .hiw-pin-3:not(.is-on) {
@@ -1292,17 +1300,19 @@
         }
         #walkthrough .hiw-pin-0:not(.is-on) .hiw-chip-row,
         #walkthrough .hiw-pin-3:not(.is-on) .hiw-chip-row {
+          opacity: 0 !important;
+          pointer-events: none !important;
+          /* Keep layout space — height:0 caused a jump into step 3 */
           visibility: hidden !important;
-          height: 0 !important;
-          margin: 0 !important;
-          overflow: hidden !important;
         }
         #walkthrough .hiw-pin-1:not(.is-on) .hiw-branch-rail {
+          opacity: 0 !important;
+          pointer-events: none !important;
           visibility: hidden !important;
-          height: 0 !important;
+          max-height: 0 !important;
           margin: 0 !important;
-          overflow: hidden !important;
           padding: 0 !important;
+          overflow: hidden !important;
         }
         #walkthrough .hiw-pin-1:not(.is-on) .hiw-step2-title > span {
           visibility: hidden !important;
@@ -1311,6 +1321,11 @@
         #walkthrough .hiw-pin-1.is-on,
         #walkthrough .hiw-pin-3.is-on {
           padding: 20px 0 24px !important;
+        }
+        #walkthrough .hiw-pin-0.is-on .hiw-chip-row,
+        #walkthrough .hiw-pin-3.is-on .hiw-chip-row {
+          opacity: 1 !important;
+          visibility: visible !important;
         }
       }
       .hiw-step-marker::before { display: block !important; }
@@ -3960,15 +3975,16 @@ class Component extends DCLogic {
             if (curIdx <= 0) {
               if (p >= 0.42) idx = 1;
             } else if (curIdx === 1) {
-              if (p >= 0.76) idx = 2;
+              if (p >= 0.78) idx = 2;
               else if (p < 0.20) idx = 0;
             } else {
-              if (p < 0.54) idx = 1;
+              /* Harder to leave step 3 — stops end-of-runway thrash/glitch */
+              if (p < 0.42) idx = 1;
             }
           }
           if (idx !== curIdx) {
             this._walkChapterIdx = idx;
-            this._chapterLockUntil = Date.now() + 580;
+            this._chapterLockUntil = Date.now() + (idx === 2 ? 900 : 580);
             const step = idx === 2 ? 3 : idx;
             if (step !== cur) {
               next.step = step;
@@ -3985,16 +4001,19 @@ class Component extends DCLogic {
         const head = document.querySelector('#walkthrough .hiw-walk-head');
         const headBottom = head ? head.getBoundingClientRect().bottom : 0;
         const pin0Top = pinIds[0].getBoundingClientRect().top;
+        const pin3 = pinIds[3];
+        const pin3Bottom = pin3 ? pin3.getBoundingClientRect().bottom : 0;
         const walkEngaged = pin0Top < vh * 0.42 && headBottom < vh * 0.32;
+        const deskLocked = this._deskStepLockUntil && Date.now() < this._deskStepLockUntil;
         if (!walkEngaged) {
-          /* Hysteresis: only idle after clearly leaving (desktop); tablet stays on a step */
-          if (!narrow && cur >= 0 && pin0Top > vh * 0.55) {
+          /* Hysteresis: only idle after clearly leaving (desktop); never idle while still on step 3 runway */
+          if (!narrow && cur >= 0 && pin0Top > vh * 0.55 && !(cur === 3 && pin3Bottom > 80)) {
             if (cur !== -1) next.step = -1;
             if (this.state.branchB) next.branchB = false;
           } else if (narrow && cur < 0) {
             next.step = 0;
           }
-        } else {
+        } else if (!deskLocked) {
           /* Use only main pins 0,1,3 for scroll (2B is tap-only) — less thrash */
           const activateAt = vh * 0.28;
           const pins = [0, 1, 3];
@@ -4015,12 +4034,17 @@ class Component extends DCLogic {
             if (best > (cur === 2 ? 1 : cur)) {
               if (bestTop < activateAt - 12) step = best;
             } else if (best < (cur === 2 ? 1 : cur)) {
-              if (curTop > activateAt + 28) step = best;
+              /* Leaving step 3 needs a clearer exit */
+              const leavePad = cur === 3 ? 48 : 28;
+              if (curTop > activateAt + leavePad) step = best;
             }
           }
           if (narrow && step === 2) step = 1;
           if (!narrow && step === 2) step = 1; /* scroll spy never opens 2B */
-          if (step !== cur) next.step = step;
+          if (step !== cur) {
+            next.step = step;
+            this._deskStepLockUntil = Date.now() + (step === 3 ? 850 : 420);
+          }
           if (this.state.branchB && step !== 2) next.branchB = false;
           if (narrow && this.state.branchB) next.branchB = false;
         }
@@ -4233,7 +4257,7 @@ class Component extends DCLogic {
     { kicker: 'STEP 01', title: 'Your product', img: U('1542291026-7eec264c27ff', 520), rows: [{ t: 'Saved to library', v: 'Reused every time' }, { t: 'Visible to', v: 'Only you' }], cta: 'Use this product' },
     { kicker: 'STEP 02', title: 'Pick from your gallery', placeholder: 'BACKGROUND IMAGE', note: 'a screenshot or scene photo', rows: [{ t: 'Source', v: 'Camera roll' }, { t: 'Accepted', v: 'JPG, PNG, screenshots' }], cta: 'Continue with this background' },
     { kicker: 'STEP 02 · OPTION B', title: 'The marketplace', img: U('1557683316-973673baf926', 520), rows: [{ t: 'Creators listed', v: 'Studios & photographers' }, { t: 'Blend', v: 'One tap' }], cta: 'Blend this scene' },
-    { kicker: 'STEP 03', title: 'Your blend', placeholder: 'YOUR PRODUCT, IN SCENE', note: 'saved to your library', bar: true, rows: [{ t: 'Saved visuals', v: '4 images' }, { t: 'Creator', v: 'Chat open' }], cta: 'Save, publish or message the creator' }
+    { kicker: 'STEP 03', title: 'Your blend', img: U('1600185365483-26d7a4cc7519', 520), bar: true, rows: [{ t: 'Saved visuals', v: '4 images' }, { t: 'Creator', v: 'Chat open' }], cta: 'Save, publish or message the creator' }
   ];
 
   lookData = [
