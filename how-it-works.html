@@ -1400,11 +1400,17 @@
         max-width: 100% !important;
         box-sizing: border-box !important;
       }
+      #walkthrough {
+        background: #FAF4FB !important;
+      }
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
         height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
         max-height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
@@ -1412,7 +1418,10 @@
         padding: 8px 16px 16px !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
-        background: linear-gradient(180deg, #FAF4FB 0%, #fff 40%, #FFF7FB 100%);
+        /* Match page bg — no white card / side gutters */
+        background: #FAF4FB !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
         z-index: 2;
       }
       .hiw-walk-chapters-progress {
@@ -1482,11 +1491,17 @@
       .hiw-chapter-phone .hiw-phone-row { padding: 8px 10px !important; }
     }
 
-    /* Tablet sizing: slightly larger phone + copy inside the same carousel */
+    /* Tablet sizing: slightly larger phone + copy; sticky stays full-bleed */
     @media (min-width: 600px) and (max-width: 900px) {
       .hiw-walk-chapters-sticky {
-        padding: 12px 28px 20px !important;
-        max-width: 560px !important;
+        padding: 12px 24px 20px !important;
+        max-width: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+        background: #FAF4FB !important;
+      }
+      .hiw-walk-chapters-stage {
+        max-width: 480px !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
