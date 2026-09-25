@@ -1548,8 +1548,8 @@
       }
       /* Same gradient border frame as desktop step card — only the point, not the section */
       .hiw-chapter-copy {
-        width: fit-content !important;
-        max-width: 100% !important;
+        width: 100% !important;
+        max-width: 280px !important;
         box-sizing: border-box !important;
         border-radius: 18px !important;
         border: 1.5px solid transparent !important;
@@ -1557,6 +1557,8 @@
         box-shadow: none !important;
         padding: 0 !important;
         flex: none !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         transition:
           background .4s ease,
           box-shadow .4s ease,
@@ -1564,7 +1566,7 @@
           border-color .4s ease !important;
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
-        padding: 16px 18px !important;
+        padding: 14px 16px !important;
         border: 1.5px solid transparent !important;
         background:
           linear-gradient(#FFF8FC, #FFF8FC) padding-box,
@@ -1572,7 +1574,7 @@
         box-shadow: 0 16px 36px -22px rgba(196,46,139,.45) !important;
       }
       .hiw-chapter-label { margin-bottom: 6px !important; flex: none !important; }
-      .hiw-chapter-title { font-size: 18px !important; flex: none !important; }
+      .hiw-chapter-title { font-size: 17px !important; flex: none !important; }
       .hiw-chapter-desc {
         font-size: 12.5px !important;
         line-height: 1.4 !important;
@@ -1583,24 +1585,25 @@
         overflow: hidden !important;
         flex: none !important;
       }
-      /* Phone: centered, narrower, taller — natural phone aspect */
+      /* Phone matches card width — natural phone aspect, not skinny or squat */
       .hiw-chapter-phone {
         flex: 0 0 auto !important;
         min-height: 0 !important;
-        margin-top: 10px !important;
+        margin-top: 12px !important;
         margin-bottom: 0 !important;
         width: 100% !important;
+        max-width: 280px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 210px !important;
-        max-width: min(210px, 62vw) !important;
-        height: min(470px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 150px)) !important;
-        max-height: min(470px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 150px)) !important;
-        padding: 9px !important;
-        border-radius: 34px !important;
+        width: 252px !important;
+        max-width: min(252px, 78vw) !important;
+        height: min(508px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        max-height: min(508px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        padding: 10px !important;
+        border-radius: 36px !important;
         display: flex !important;
         flex-direction: column !important;
         box-sizing: border-box !important;
