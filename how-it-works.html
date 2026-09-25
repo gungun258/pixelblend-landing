@@ -1062,8 +1062,22 @@
       width: 100%;
       box-sizing: border-box;
     }
-    /* Desktop only: both 2A and 2B stay expanded (highlight only changes) */
+    /* Desktop: stick the phone column through all three steps, then release */
     @media (min-width: 1101px) {
+      .hiw-walk {
+        align-items: start;
+      }
+      .hiw-walk-aside {
+        position: sticky;
+        top: var(--hiw-sticky-top, 96px);
+        align-self: start;
+        height: fit-content;
+        max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px));
+      }
+      .hiw-walk-phone {
+        position: relative;
+        top: auto;
+      }
       .hiw-opt-card > p,
       .hiw-opt-card .hiw-chip-row,
       .hiw-opt-card > div:not(.hiw-opt-head) {
