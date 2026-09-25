@@ -1037,14 +1037,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       width: 100%;
       max-width: 100%;
       min-width: 0;
       box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hiw-walk-phone-frame {
       width: 100%;
-      max-width: 380px;
+      max-width: 300px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -1055,8 +1058,8 @@
       border-radius: 36px;
       background: #FAF4FB;
       overflow: hidden;
-      height: min(560px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 56px));
-      max-height: min(560px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 56px));
+      height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
+      max-height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -1073,10 +1076,23 @@
         align-self: start;
         height: fit-content;
         max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .hiw-walk-phone {
         position: relative;
         top: auto;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .hiw-walk-phone-frame,
+      .hiw-phone-shell {
+        max-width: 300px;
+      }
+      .hiw-walk-aside .hiw-phone-screen {
+        height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
+        max-height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
       }
       .hiw-opt-card > p,
       .hiw-opt-card .hiw-chip-row,
@@ -1156,7 +1172,10 @@
       .hiw-walk-aside {
         order: unset !important;
         width: auto !important;
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
         /* Stick the whole aside so the phone stays put through steps 1→3 */
         position: sticky !important;
         top: var(--hiw-sticky-top, 80px) !important;
@@ -1164,20 +1183,26 @@
         height: fit-content !important;
         max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px)) !important;
         overflow: visible !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-walk-phone {
         position: relative !important;
         top: auto !important;
-        width: auto !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 0 auto !important;
       }
       .hiw-walk-phone-frame,
       .hiw-phone-shell {
-        max-width: 340px !important;
+        max-width: 280px !important;
         width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-walk-aside .hiw-phone-screen {
-        height: min(500px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 72px)) !important;
-        max-height: min(500px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 72px)) !important;
+        height: min(520px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 88px)) !important;
+        max-height: min(520px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 88px)) !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
         position: relative !important;
@@ -1482,8 +1507,8 @@
         border: 0 !important;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: flex-start !important;
-        align-items: stretch !important;
+        justify-content: center !important;
+        align-items: center !important;
         opacity: 0 !important;
         transform: translate3d(0, 16px, 0);
         transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1) !important;
@@ -1532,33 +1557,36 @@
         overflow: hidden !important;
         flex: none !important;
       }
-      /* Phone sized to fit sticky viewport — no top/bottom clip */
+      /* Phone: centered, narrower, taller — natural phone aspect */
       .hiw-chapter-phone {
-        flex: 1 1 auto !important;
+        flex: 0 0 auto !important;
         min-height: 0 !important;
-        margin-top: 8px !important;
+        margin-top: 10px !important;
         margin-bottom: 0 !important;
+        width: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 248px !important;
-        max-width: min(248px, 74vw) !important;
-        height: auto !important;
-        max-height: min(460px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 168px)) !important;
+        width: 228px !important;
+        max-width: min(228px, 66vw) !important;
+        height: min(478px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 150px)) !important;
+        max-height: min(478px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 150px)) !important;
         padding: 9px !important;
         border-radius: 34px !important;
         display: flex !important;
         flex-direction: column !important;
         box-sizing: border-box !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
         width: 100% !important;
-        height: min(440px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 186px)) !important;
+        height: auto !important;
         min-height: 0 !important;
-        max-height: min(440px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 186px)) !important;
+        max-height: none !important;
         border-radius: 26px !important;
         display: flex !important;
         flex-direction: column !important;
@@ -1604,14 +1632,14 @@
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: space-between !important;
-        gap: 32px !important;
+        justify-content: center !important;
+        gap: 36px !important;
         padding: 8px 0 !important;
       }
       .hiw-chapter-copy {
         flex: 1 1 auto !important;
         min-width: 0 !important;
-        max-width: 360px !important;
+        max-width: 340px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
@@ -1654,23 +1682,25 @@
         align-self: center !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: flex-end !important;
+        justify-content: center !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 236px !important;
+        width: 224px !important;
         max-width: 100% !important;
-        height: auto !important;
-        max-height: min(450px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 100px)) !important;
+        height: min(488px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 96px)) !important;
+        max-height: min(488px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 96px)) !important;
         padding: 9px !important;
         border-radius: 36px !important;
         display: flex !important;
         flex-direction: column !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
-        height: min(430px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 118px)) !important;
+        height: auto !important;
         min-height: 0 !important;
-        max-height: min(430px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 118px)) !important;
+        max-height: none !important;
         border-radius: 28px !important;
       }
       .hiw-chapter-phone .hiw-phone-title { font-size: 18px !important; }
