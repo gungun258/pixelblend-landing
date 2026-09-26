@@ -152,14 +152,14 @@
     .hiw-end-ctas,
     .hiw-mkt-ctas,
     .hiw-dev-ctas {
-      display: inline-grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 1fr;
+      display: inline-flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
       gap: 12px;
-      align-items: stretch;
+      align-items: center;
+      justify-content: center;
       width: max-content;
       max-width: 100%;
-      justify-content: center;
     }
     .hiw-hero-ctas { margin-top: 36px; margin-left: auto; margin-right: auto; }
     .hiw-end-ctas { margin-top: 28px; margin-left: auto; margin-right: auto; }
@@ -169,8 +169,10 @@
     .hiw-end-ctas a,
     .hiw-mkt-ctas a,
     .hiw-dev-ctas a {
-      width: 100%;
+      width: auto;
+      max-width: 100%;
       min-width: 0;
+      flex: 0 0 auto;
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;
@@ -179,27 +181,32 @@
       text-decoration: none;
       white-space: nowrap;
     }
-    /* Long labels: stack before they overflow */
-    @media (max-width: 720px) {
+    /* Stack CTAs only below 500. From 500px up: side-by-side */
+    @media (max-width: 499px) {
       .hiw-hero-ctas,
       .hiw-end-ctas,
       .hiw-mkt-ctas,
       .hiw-dev-ctas {
-        display: grid !important;
-        grid-auto-flow: row !important;
-        grid-auto-columns: unset !important;
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: max-content !important;
         max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         gap: 10px !important;
       }
       .hiw-hero-ctas a,
       .hiw-end-ctas a,
       .hiw-mkt-ctas a,
       .hiw-dev-ctas a {
+        width: auto !important;
+        max-width: 100% !important;
         white-space: normal !important;
-        padding-left: 18px !important;
-        padding-right: 18px !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
       }
     }
     .hiw-cta-pri,
@@ -335,10 +342,26 @@
       .hiw-rail-track:last-child .hiw-rail-img { border-radius: 24px 3px 3px 3px !important; }
       .hiw-rail-mask { padding-bottom: 22px !important; }
     }
-    .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 80px 32px 72px; }
-    .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; }
+    .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 0; }
+    .hiw-shoot-runway { position: relative; }
+    .hiw-shoot-pin { box-sizing: border-box; }
+    .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; padding: 80px 32px 72px; }
+    @media (min-width: 901px) {
+      /* Sticky runway: scroll progress drives look 0→1→2 (replaces fragile wheel-pin) */
+      .hiw-shoot-runway { height: 260vh; }
+      .hiw-shoot-pin {
+        position: sticky;
+        top: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: #1A1420;
+        color: #F7F2F6;
+      }
+      .hiw-shoot-inner { padding: 64px 32px; width: 100%; }
+    }
     @media (min-width: 1101px) {
-      .hiw-shoot { padding: 72px 32px 80px; }
+      .hiw-shoot-inner { padding: 72px 32px 64px; }
     }
     .hiw-shoot-head {
       display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
@@ -360,10 +383,21 @@
     .hiw-shoot-head p {
       margin: 8px 0 0; font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.68);
     }
-    @media (max-width: 800px) {
-      .hiw-shoot { padding: 56px 20px; }
-      .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; }
+    @media (max-width: 900px) {
+      .hiw-shoot-runway { height: auto; }
+      .hiw-shoot-pin { position: static; min-height: 0; display: block; }
+      .hiw-shoot-inner { padding: 48px 16px; }
+      .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; text-align: center; }
       .hiw-shoot-head h2 { font-size: 30px; }
+      .hiw-shoot-head p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (max-width: 800px) {
+      .hiw-shoot-inner { padding: 48px 16px; }
+      .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; text-align: center; }
+      .hiw-shoot-head h2 { font-size: 28px; }
     }
     #usecases { padding: 76px 32px 84px; border-bottom: 1px solid #EBDCEC; scroll-margin-top: 72px; }
     .hiw-uc { max-width: 1160px; margin: 0 auto; }
@@ -950,12 +984,67 @@
     .hiw-dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .hiw-dev-card {
       background: #fff; border: 1px solid #F0E6F2; border-radius: 16px; padding: 18px 16px;
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hiw-dev-card:hover {
+      border-color: #E8C4DE;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -22px rgba(196, 46, 139, .55);
+    }
+    .hiw-dev-ico {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 12px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #F8ECF6, #FCEAF1);
+      color: #C42E8B;
+      line-height: 0;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    .hiw-dev-ico svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      flex: none;
+      margin: 0;
     }
     .hiw-dev-card strong { display: block; font-size: 15.5px; font-weight: 800; letter-spacing: -.02em; color: #1A1420; }
-    .hiw-dev-card span { display: block; margin-top: 4px; font-size: 13.5px; line-height: 1.45; color: #6B6070; }
+    .hiw-dev-card > span:not(.hiw-dev-ico) {
+      display: block;
+      margin-top: 4px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #6B6070;
+    }
     @media (max-width: 900px) {
       .hiw-dev { grid-template-columns: 1fr; gap: 28px; }
       .hiw-dev h2 { font-size: 30px; }
+      .hiw-dev-copy {
+        text-align: center;
+      }
+      .hiw-dev-copy p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hiw-dev-ctas {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hiw-dev-card {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hiw-dev-ico { margin-left: auto; margin-right: auto; }
     }
     #faq { padding: 72px 32px 0; }
     .hiw-faq { max-width: 760px; margin: 0 auto; }
@@ -1000,17 +1089,27 @@
       .hiw-mkt-card { padding: 22px; }
     }
     .hiw-walk {
-      max-width: 1160px; margin: 0 auto; padding: 0 32px 84px;
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 420px); gap: 36px;
-      align-items: stretch;
+      max-width: 1160px; margin: 0 auto; padding: 0 40px 84px;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 340px); gap: 32px 40px;
+      align-items: start;
+      box-sizing: border-box;
     }
     .hiw-walk-sticky {
       display: contents;
     }
-    .hiw-walk-aside { min-width: 0; align-self: stretch; }
+    .hiw-walk-aside {
+      min-width: 0;
+      align-self: start;
+      justify-self: center;
+      width: 100%;
+      max-width: 320px;
+      box-sizing: border-box;
+      padding: 4px 10px;
+    }
     .hiw-walk-steps {
-      padding-bottom: min(65vh, 560px);
+      padding-bottom: min(55vh, 480px);
       overflow-anchor: none;
+      min-width: 0;
     }
     .hiw-walk-steps .hiw-pin,
     .hiw-walk-steps .hiw-opt-card {
@@ -1039,7 +1138,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 100%;
+      max-width: 300px;
       min-width: 0;
       box-sizing: border-box;
       margin-left: auto;
@@ -1051,6 +1150,13 @@
       margin: 0 auto;
       display: flex;
       justify-content: center;
+      box-sizing: border-box;
+    }
+    .hiw-walk-phone-frame .hiw-phone-shell {
+      width: 100%;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
       box-sizing: border-box;
     }
     .hiw-phone-screen {
@@ -1074,25 +1180,36 @@
         position: sticky;
         top: var(--hiw-sticky-top, 96px);
         align-self: start;
-        height: fit-content;
+        justify-self: center;
+        /* Full sticky viewport height so phone can sit vertically centered */
+        height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px));
         max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px));
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 320px;
+        padding: 8px 12px;
+        box-sizing: border-box;
       }
       .hiw-walk-phone {
         position: relative;
         top: auto;
         max-width: 300px;
         margin: 0 auto;
+        justify-content: center;
       }
       .hiw-walk-phone-frame,
-      .hiw-phone-shell {
+      .hiw-walk-aside .hiw-phone-shell {
         max-width: 300px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
       .hiw-walk-aside .hiw-phone-screen {
-        height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
-        max-height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 72px));
+        height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 96px));
+        max-height: min(540px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 96px) - 96px));
       }
       .hiw-opt-card > p,
       .hiw-opt-card .hiw-chip-row,
@@ -1154,8 +1271,8 @@
       .hiw-walk {
         display: grid !important;
         grid-template-columns: minmax(0, 1fr) minmax(260px, 300px) !important;
-        gap: 18px !important;
-        padding: 0 24px 40px !important;
+        gap: 20px 28px !important;
+        padding: 0 28px 40px !important;
         height: auto !important;
         align-items: start !important;
         justify-content: center !important;
@@ -1163,51 +1280,56 @@
         max-width: 980px !important;
         margin-left: auto !important;
         margin-right: auto !important;
+        box-sizing: border-box !important;
       }
       .hiw-walk-steps {
-        padding-bottom: min(70vh, 560px) !important;
+        padding-bottom: min(60vh, 480px) !important;
         order: unset !important;
         position: relative !important;
         width: auto !important;
         max-width: none !important;
         margin: 0 !important;
         overflow: visible !important;
+        min-width: 0 !important;
       }
       .hiw-walk-aside {
         order: unset !important;
-        width: auto !important;
+        width: 100% !important;
+        max-width: 290px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        justify-content: flex-start !important;
-        /* Stick the whole aside so the phone stays put through steps 1→3 */
+        justify-content: center !important;
+        justify-self: center !important;
         position: sticky !important;
         top: var(--hiw-sticky-top, 80px) !important;
         align-self: start !important;
-        height: fit-content !important;
+        height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 12px) !important;
         max-height: calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 12px) !important;
         overflow: visible !important;
         margin-left: auto !important;
         margin-right: auto !important;
+        padding: 6px 8px !important;
         box-sizing: border-box !important;
       }
       .hiw-walk-phone {
         position: relative !important;
         top: auto !important;
         width: 100% !important;
-        max-width: 268px !important;
+        max-width: 270px !important;
         margin: 0 auto !important;
+        justify-content: center !important;
       }
       .hiw-walk-phone-frame,
-      .hiw-phone-shell {
-        max-width: 268px !important;
+      .hiw-walk-aside .hiw-phone-shell {
+        max-width: 270px !important;
         width: 100% !important;
         margin-left: auto !important;
         margin-right: auto !important;
       }
       .hiw-walk-aside .hiw-phone-screen {
-        height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 110px)) !important;
-        max-height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 110px)) !important;
+        height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 100px)) !important;
+        max-height: min(480px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 80px) - 100px)) !important;
       }
       #walkthrough .hiw-walk-steps > .hiw-pin {
         position: relative !important;
@@ -1468,8 +1590,8 @@
       .hiw-walk-chapters {
         display: block !important;
         position: relative !important;
-        height: 450vh !important;
-        min-height: 450vh !important;
+        height: 520vh !important;
+        min-height: 520vh !important;
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
@@ -1503,17 +1625,18 @@
         display: flex !important;
         position: relative !important;
         z-index: 3;
-        margin-bottom: 6px !important;
+        margin-bottom: 16px !important;
         flex: none !important;
       }
       .hiw-walk-chapters-progress span {
-        transition: width .55s cubic-bezier(.16,1,.3,1), background .55s ease !important;
+        transition: width .7s cubic-bezier(.22, 1, .36, 1), background .7s ease !important;
       }
       .hiw-walk-chapters-stage {
         position: relative !important;
         flex: 1 1 auto !important;
         min-height: 0 !important;
         width: 100% !important;
+        padding-top: 4px !important;
       }
       .hiw-chapter {
         position: absolute !important;
@@ -1522,17 +1645,17 @@
         top: 0 !important;
         bottom: 0 !important;
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 12px 0 8px !important;
         border: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         opacity: 0 !important;
-        transform: translate3d(0, 10px, 0);
+        transform: translate3d(0, 6px, 0);
         transition:
-          opacity .9s cubic-bezier(.16, 1, .3, 1),
-          transform .9s cubic-bezier(.16, 1, .3, 1) !important;
+          opacity 1.05s cubic-bezier(.22, 1, .36, 1),
+          transform 1.05s cubic-bezier(.22, 1, .36, 1) !important;
         pointer-events: none !important;
         z-index: 1;
         box-sizing: border-box !important;
@@ -1600,8 +1723,9 @@
       .hiw-chapter-phone .hiw-phone-shell {
         width: 252px !important;
         max-width: min(252px, 78vw) !important;
-        height: min(508px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
-        max-height: min(508px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        height: auto !important;
+        aspect-ratio: 9 / 19.2 !important;
+        max-height: min(540px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -1642,10 +1766,10 @@
       }
     }
 
-    /* Tablet: text left (vertically centered) + phone right inside sticky carousel */
+    /* Tablet: text left, phone right + wider */
     @media (min-width: 600px) and (max-width: 900px) {
       .hiw-walk-chapters-sticky {
-        padding: 10px 28px 14px !important;
+        padding: 10px 20px 14px !important;
         max-width: none !important;
         width: 100% !important;
         margin: 0 !important;
@@ -1653,26 +1777,27 @@
         justify-content: flex-start !important;
       }
       .hiw-walk-chapters-stage {
-        max-width: 780px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: none !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
       .hiw-chapter {
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
-        justify-content: center !important;
-        gap: 28px !important;
+        justify-content: space-between !important;
+        gap: 24px !important;
         padding: 8px 0 !important;
         width: 100% !important;
-        max-width: 720px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        max-width: none !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
       }
       .hiw-chapter-copy {
-        flex: 0 1 auto !important;
+        flex: 1 1 auto !important;
         min-width: 0 !important;
-        max-width: 300px !important;
+        max-width: 340px !important;
         width: auto !important;
         display: flex !important;
         flex-direction: column !important;
@@ -1682,7 +1807,7 @@
         margin-right: 0 !important;
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
-        padding: 20px 26px !important;
+        padding: 18px 22px !important;
       }
       .hiw-chapter-label {
         margin-bottom: 14px !important;
@@ -1697,12 +1822,12 @@
         letter-spacing: .14em !important;
       }
       .hiw-chapter-title {
-        font-size: 30px !important;
+        font-size: 26px !important;
         line-height: 1.15 !important;
         letter-spacing: -.028em !important;
       }
       .hiw-chapter-desc {
-        font-size: 16.5px !important;
+        font-size: 15px !important;
         line-height: 1.5 !important;
         margin-top: 12px !important;
         -webkit-line-clamp: 7;
@@ -1710,29 +1835,27 @@
       }
       .hiw-chapter-phone {
         flex: 0 0 auto !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin: 0 0 0 auto !important;
         width: auto !important;
         height: auto !important;
         min-height: 0 !important;
         align-self: center !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
+        justify-content: flex-end !important;
       }
       .hiw-chapter-phone .hiw-phone-shell {
-        width: 224px !important;
-        max-width: 100% !important;
-        height: min(488px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 96px)) !important;
-        max-height: min(488px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 96px)) !important;
-        padding: 9px !important;
-        border-radius: 36px !important;
+        width: 280px !important;
+        max-width: min(280px, 38vw) !important;
+        height: auto !important;
+        aspect-ratio: 9 / 19.2 !important;
+        max-height: min(580px, calc(var(--hiw-vvh, 100vh) - var(--hiw-sticky-top, 64px) - 90px)) !important;
+        padding: 11px !important;
+        border-radius: 38px !important;
         display: flex !important;
         flex-direction: column !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
       }
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
@@ -1760,10 +1883,10 @@
       .hiw-end-ctas,
       .hiw-mkt-ctas,
       .hiw-dev-ctas {
-        width: 100% !important;
+        width: max-content !important;
         max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
     }
@@ -1861,14 +1984,87 @@
 
     @media (max-width: 1024px) {
       .hiw-walk-phone-frame { width: 100% !important; max-width: 380px; }
-      .hiw-dev-grid { grid-template-columns: 1fr 1fr; }
+      .hiw-dev-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    }
+    /* Mobile: 1 card per row. From 500px up: 3 per row */
+    @media (max-width: 499px) {
+      .hiw-dev-grid { grid-template-columns: 1fr !important; gap: 10px; }
     }
     @media (max-width: 900px) {
       .hiw-shoot-body, .hiw-refund-grid { grid-template-columns: 1fr; gap: 28px; }
-      .hiw-shoot-rail-label { margin-bottom: 10px; }
-      .hiw-shoot-shots {
-        margin-inline: auto;
+      .hiw-shoot-rail-label { margin-bottom: 10px; text-align: center; }
+      .hiw-shoot-body { gap: 18px; }
+      /* Chips → compact horizontal pills */
+      .hiw-shoot-chips {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
         width: 100%;
+      }
+      .hiw-look-pin {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+        padding: 10px 11px !important;
+        border-radius: 14px !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+      }
+      .hiw-look-pin.is-on { transform: none !important; }
+      .hiw-look-pin > span:first-child {
+        font-size: 12.5px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+      }
+      .hiw-look-pin > span:last-child {
+        font-size: 10.5px !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        max-width: 100% !important;
+        opacity: .7 !important;
+      }
+      /* 3 product shots in one row */
+      .hiw-shoot-shots {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        justify-items: stretch !important;
+      }
+      .hiw-shoot-shots > * {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+      }
+      .hiw-shoot-shot-frame {
+        aspect-ratio: 3 / 4 !important;
+        border-radius: 12px !important;
+      }
+      .hiw-shoot-shot-frame > div {
+        left: 6px !important;
+        top: 6px !important;
+        font-size: 9.5px !important;
+        padding: 3px 7px !important;
+      }
+      .hiw-shoot-caption > div:nth-child(2),
+      .hiw-shoot-caption > div:nth-child(3) {
+        display: none !important;
+      }
+      .hiw-shoot-note {
+        margin-top: 14px !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        text-align: center !important;
       }
       .hiw-refund { padding: 48px 16px 0; }
       .hiw-refund-card { padding: 28px 20px; border-radius: 22px; }
@@ -2034,14 +2230,29 @@
     }
     .hiw-demo-result { min-width: 0; max-width: 100%; }
     .hiw-demo-eq {
-      align-self: center;
+      align-self: center !important;
       padding-top: 0 !important;
-      height: auto;
+      height: 100%;
+      min-height: 0;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     .hiw-demo-plus {
-      align-self: center;
+      align-self: center !important;
+      justify-self: center !important;
       padding-top: 0 !important;
       height: auto;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .hiw-demo-cols {
+      align-items: stretch;
+    }
+    .hiw-in-cols {
+      align-items: center;
+      height: 100%;
     }
     .hiw-demo-plus-ico {
       display: flex;
@@ -2081,6 +2292,7 @@
     }
     .hiw-phone-head {
       padding: 18px 20px 8px;
+      text-align: center;
     }
     .hiw-phone-kicker {
       font-size: 11.5px;
@@ -2094,6 +2306,7 @@
       font-size: 24px;
       line-height: 1.16;
       color: #1A1420;
+      text-align: center;
     }
     .hiw-phone-body {
       flex: 1;
@@ -2276,7 +2489,7 @@
       .hiw-in-cols {
         display: grid !important;
         grid-template-columns: 240px 40px minmax(0, 400px) !important;
-        align-items: start !important;
+        align-items: center !important;
         justify-content: start !important;
         padding: 18px !important;
         gap: 0 10px !important;
@@ -2415,8 +2628,30 @@
         max-width: none !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
+        order: 2;
       }
-      .hiw-demo-eq { display: none !important; }
+      .hiw-demo-label-in {
+        justify-content: center !important;
+        padding: 0 2px 2px !important;
+        max-width: none !important;
+        order: 1;
+      }
+      /* Show = between inputs and result on small */
+      .hiw-demo-eq {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        align-self: center !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 2px 0 !important;
+        order: 3;
+      }
+      .hiw-demo-eq > span {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 22px !important;
+      }
       .hiw-demo-label-out {
         display: flex !important;
         justify-content: center !important;
@@ -2424,10 +2659,8 @@
         max-width: none !important;
         order: 4;
       }
-      .hiw-demo-label-in {
-        justify-content: center !important;
-        padding: 0 2px 2px !important;
-        max-width: none !important;
+      .hiw-demo-result {
+        order: 5;
       }
       .hiw-in-cols {
         display: flex !important;
@@ -2534,23 +2767,33 @@
         line-height: 1.45 !important;
       }
       .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
-      .hiw-dev-grid { grid-template-columns: 1fr; }
+      .hiw-dev-card { padding: 14px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+      .hiw-dev-ico { width: 36px; height: 36px; border-radius: 10px; margin-bottom: 8px; }
+      .hiw-dev-ico svg { width: 18px; height: 18px; }
+      .hiw-dev-card strong { font-size: 14px; }
+      .hiw-dev-card > span:not(.hiw-dev-ico) { font-size: 12.5px; line-height: 1.4; }
       .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
       .hiw-step-grid { grid-template-columns: 72px 1fr; gap: 12px; }
       .hiw-step-grid h3 { font-size: 22px !important; }
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
       .hiw-end { padding: 48px 16px 64px; }
       .hiw-thumbs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+      .hiw-shoot-inner { padding: 48px 16px !important; }
+      .hiw-shoot-head p { font-size: 14.5px !important; }
+      .hiw-shoot-chips { gap: 6px !important; }
+      .hiw-look-pin { padding: 9px 8px !important; border-radius: 12px !important; }
+      .hiw-look-pin > span:first-child { font-size: 11.5px !important; }
+      .hiw-look-pin > span:last-child { display: none !important; }
       .hiw-shoot-shots {
-        grid-template-columns: 1fr;
-        max-width: 360px;
-        width: 100%;
-        margin-inline: auto;
-        justify-items: center;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+        max-width: none !important;
+        width: 100% !important;
+        margin: 0 !important;
       }
       .hiw-shoot-shots > * {
-        width: 100%;
-        max-width: 360px;
+        width: 100% !important;
+        max-width: none !important;
       }
       .hiw-facts-row { grid-template-columns: 1fr; }
       .hiw-facts-row > div { border-right: none !important; }
@@ -2710,10 +2953,10 @@
       .hiw-mkt-card { padding: 18px 14px 22px !important; overflow: hidden; }
       .hiw-mkt-body { gap: 28px !important; min-width: 0; }
       .hiw-mkt-ctas {
-        width: 100% !important;
+        width: max-content !important;
         max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
       }
       .hiw-thumbs-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -2982,7 +3225,7 @@
             <span style="font-size: 17px; line-height: 1.5; color: rgba(255,255,255,.86)">This one actually runs — <strong style="font-weight: 800; color: #fff">tap a background below</strong> and watch the result change.</span>
           </div>
         </div>
-        <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 56px minmax(280px, 320px); align-items: start; justify-items: stretch; column-gap: 12px; padding: 0 34px">
+        <div class="hiw-demo-cols" style="display: grid; grid-template-columns: minmax(0, 1fr) 56px minmax(280px, 320px); align-items: stretch; justify-items: stretch; column-gap: 12px; padding: 0 34px">
 
           <div class="hiw-demo-label-in" style="grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 12px 4px">
             <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #EDE4DB"></span>
@@ -2996,7 +3239,7 @@
             <span class="hiw-demo-label-rule" style="flex: 1; height: 1px; background: #F4D6E8"></span>
           </div>
 
-          <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: minmax(180px, 220px) 56px minmax(240px, 1fr); align-items: start; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 20px 22px 22px; gap: 0 8px; width: 100%; box-sizing: border-box">
+          <div class="hiw-in-cols" style="grid-column: 1; grid-row: 2; display: grid; grid-template-columns: minmax(180px, 220px) 56px minmax(240px, 1fr); align-items: center; align-content: center; background: #FAF4FB; border: 1px solid #EDE4DB; border-radius: 20px; padding: 20px 22px 22px; gap: 0 8px; width: 100%; height: 100%; box-sizing: border-box">
 
             <div class="hiw-demo-product">
               <div class="hiw-demo-product-head" style="display: flex; align-items: center; gap: 10px; height: 34px">
@@ -3038,9 +3281,9 @@
 
           </div>
 
-          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; align-self: center; padding-top: 0"><span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #fff">=</span></div>
+          <div class="hiw-demo-eq" style="grid-column: 2; grid-row: 2; display: flex; align-items: center; justify-content: center; align-self: center; height: 100%; padding-top: 0"><span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 12px 26px -12px rgba(236,72,153,.95); font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1; color: #fff">=</span></div>
 
-          <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 20px 22px 22px; width: 100%; box-sizing: border-box">
+          <div class="hiw-demo-result" style="grid-column: 3; grid-row: 2; background: #FFF8FC; border: 1px solid #F4D6E8; border-radius: 20px; padding: 20px 22px 22px; width: 100%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column">
             <div class="hiw-demo-result-head">
               <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
                 <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); color: #fff; font-size: 14px; font-weight: 800; flex: none">3</span>
@@ -3348,6 +3591,8 @@
   </div>
 
   <div class="hiw-shoot">
+    <div class="hiw-shoot-runway">
+    <div class="hiw-shoot-pin">
     <div class="hiw-shoot-inner">
       <div class="hiw-shoot-head">
         <div>
@@ -3383,6 +3628,8 @@
           </sc-for>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   </div>
 
@@ -3774,12 +4021,48 @@
         </div>
       </div>
       <div class="hiw-dev-grid">
-        <sc-for list="{{ platforms }}" as="p">
-          <div class="hiw-dev-card">
-            <strong>{{ p.t }}</strong>
-            <span>{{ p.d }}</span>
-          </div>
-        </sc-for>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </span>
+          <strong>Desktop</strong>
+          <span>Full browser experience</span>
+        </div>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          </span>
+          <strong>Tablet</strong>
+          <span>Touch-first layouts</span>
+        </div>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          </span>
+          <strong>Mobile</strong>
+          <span>Shoot and blend on the spot</span>
+        </div>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          </span>
+          <strong>iOS</strong>
+          <span>Native app on the App Store</span>
+        </div>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24A11.457 11.457 0 0012 8.25c-1.53 0-2.98.3-4.29.85L5.83 5.67c-.18-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85L6.58 9.48C3.7 11.14 1.8 14.19 1.7 17.7h20.6c-.1-3.51-2-6.56-4.7-8.22zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></svg>
+          </span>
+          <strong>Android</strong>
+          <span>Native app on Play</span>
+        </div>
+        <div class="hiw-dev-card">
+          <span class="hiw-dev-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </span>
+          <strong>Browser</strong>
+          <span>No install needed</span>
+        </div>
       </div>
     </div>
   </div>
@@ -3893,10 +4176,6 @@ class Component extends DCLogic {
     });
   };
 
-  pickLook = (i) => {
-    this._goLook(i);
-  };
-
   _goLook = (i) => {
     if (i === this.state.look) return;
     this._lookLockUntil = Date.now() + 420;
@@ -3909,6 +4188,29 @@ class Component extends DCLogic {
         img.style.animation = 'hiwShootFade .5s cubic-bezier(.22,.61,.36,1) ' + (n * 0.06) + 's both';
       });
     });
+  };
+
+  /** When user taps a chip, scroll runway so sticky progress matches that look */
+  _scrollShootToLook = (i) => {
+    if (!window.matchMedia('(min-width: 901px)').matches) return;
+    const runway = document.querySelector('.hiw-shoot-runway');
+    if (!runway) return;
+    const vh = window.innerHeight || 1;
+    const total = Math.max(1, runway.offsetHeight - vh);
+    const centers = [0.14, 0.45, 0.78];
+    const t = centers[Math.max(0, Math.min(2, i))] || 0.14;
+    const top = runway.getBoundingClientRect().top + window.scrollY + t * total;
+    this._lookLockUntil = Date.now() + 600;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  };
+
+  pickLook = (i) => {
+    /* User tap pauses auto-cycle briefly */
+    this._lookAutoPaused = true;
+    clearTimeout(this._lookAutoResumeT);
+    this._lookAutoResumeT = setTimeout(() => { this._lookAutoPaused = false; }, 8000);
+    this._goLook(i);
+    this._scrollShootToLook(i);
   };
 
 
@@ -3958,25 +4260,32 @@ class Component extends DCLogic {
         document.documentElement.style.setProperty('--hiw-sticky-top', top + 'px');
       }
       const vvh = window.innerHeight;
-      if (this._lastVvh !== vvh) {
+      /* Freeze visual height while scrolling — mobile chrome show/hide used to shake sticky */
+      if (this._scrollSettling) return;
+      if (this._lastVvh == null) {
         this._lastVvh = vvh;
         document.documentElement.style.setProperty('--hiw-vvh', vvh + 'px');
+        return;
       }
+      if (Math.abs(vvh - this._lastVvh) < 48) return;
+      this._lastVvh = vvh;
+      document.documentElement.style.setProperty('--hiw-vvh', vvh + 'px');
     };
     this._syncWalkViewport();
     this._tick = () => {
       this._raf = 0;
+      if (typeof this._syncShootLook === 'function') this._syncShootLook();
       const next = {};
-      const scrolled = window.scrollY > 16;
-      /* Skip scrolled flag updates in chapters mode — Softgen remounts thrash the sticky carousel */
-      if (scrolled !== this.state.scrolled && !window.matchMedia('(max-width: 900px)').matches) {
-        next.scrolled = scrolled;
-      }
-
       const vh = this._lastVvh || window.innerHeight;
       const pinIds = [0, 1, 2, 3].map((i) => document.getElementById('hiw-pin-' + i));
       const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
       const narrow = chaptersMode;
+      const scrolled = window.scrollY > 16;
+      /* Skip scrolled flag while walk active — Softgen remount thrash / hang feel */
+      const walkBusy = !chaptersMode && this.state.step >= 0;
+      if (scrolled !== this.state.scrolled && !narrow && !walkBusy) {
+        next.scrolled = scrolled;
+      }
 
       const branchLocked = this._branchLockUntil && Date.now() < this._branchLockUntil;
       const cur = this.state.step;
@@ -3998,18 +4307,19 @@ class Component extends DCLogic {
           const locked = this._chapterLockUntil && Date.now() < this._chapterLockUntil;
           let idx = curIdx;
           if (inView && !locked) {
+            /* Wider hysteresis = fewer mid-scroll flips / jump feel */
             if (curIdx <= 0) {
-              if (p >= 0.40) idx = 1;
+              if (p >= 0.46) idx = 1;
             } else if (curIdx === 1) {
-              if (p >= 0.76) idx = 2;
-              else if (p < 0.18) idx = 0;
+              if (p >= 0.82) idx = 2;
+              else if (p < 0.14) idx = 0;
             } else {
-              if (p < 0.38) idx = 1;
+              if (p < 0.32) idx = 1;
             }
           }
           if (idx !== curIdx) {
             this._walkChapterIdx = idx;
-            this._chapterLockUntil = Date.now() + (idx === 2 ? 1100 : 850);
+            this._chapterLockUntil = Date.now() + (idx === 2 ? 1400 : 1100);
             const step = idx === 2 ? 3 : idx;
 
             /* Play CSS fade on current DOM before Softgen remounts phone content */
@@ -4028,12 +4338,10 @@ class Component extends DCLogic {
               const y = window.scrollY || window.pageYOffset || 0;
               this.setState({ step: step, branchB: false });
               requestAnimationFrame(() => {
-                if (Math.abs((window.scrollY || 0) - y) > 0.5) window.scrollTo(0, y);
-                requestAnimationFrame(() => {
-                  if (Math.abs((window.scrollY || 0) - y) > 0.5) window.scrollTo(0, y);
-                });
+                const jumped = Math.abs((window.scrollY || 0) - y);
+                if (jumped > 16) window.scrollTo(0, y);
               });
-            }, 340);
+            }, 420);
           } else {
             this._hiwWalkStep = curIdx === 2 ? 3 : curIdx;
           }
@@ -4058,7 +4366,7 @@ class Component extends DCLogic {
           }
         } else if (!deskLocked) {
           /* Use only main pins 0,1,3 for scroll (2B is tap-only) — less thrash */
-          const activateAt = vh * 0.28;
+          const activateAt = vh * 0.34;
           const pins = [0, 1, 3];
           let best = 0;
           pins.forEach((idx) => {
@@ -4075,10 +4383,10 @@ class Component extends DCLogic {
             const curTop = elCur ? elCur.getBoundingClientRect().top : 0;
             /* Only switch when new pin is clearly past threshold and current has left */
             if (best > (cur === 2 ? 1 : cur)) {
-              if (bestTop < activateAt - 12) step = best;
+              if (bestTop < activateAt - 24) step = best;
             } else if (best < (cur === 2 ? 1 : cur)) {
               /* Leaving step 3 needs a clearer exit */
-              const leavePad = cur === 3 ? 48 : 28;
+              const leavePad = cur === 3 ? 64 : 40;
               if (curTop > activateAt + leavePad) step = best;
             }
           }
@@ -4086,7 +4394,8 @@ class Component extends DCLogic {
           if (!narrow && step === 2) step = 1; /* scroll spy never opens 2B */
           if (step !== cur) {
             next.step = step;
-            this._deskStepLockUntil = Date.now() + (step === 3 ? 850 : 420);
+            /* Longer lock = fewer Softgen remounts while user is still scrolling */
+            this._deskStepLockUntil = Date.now() + (step === 3 ? 1200 : 780);
           }
           if (this.state.branchB && step !== 2) next.branchB = false;
           if (narrow && this.state.branchB) next.branchB = false;
@@ -4095,15 +4404,13 @@ class Component extends DCLogic {
       }
 
       if (Object.keys(next).length) {
-        /* Softgen setState can jump scroll — pin Y whenever walk step swaps */
+        /* Softgen setState can jump scroll — restore only on real jumps (avoid hang/fight) */
         if (next.step != null) {
           const y = window.scrollY || window.pageYOffset || 0;
           this.setState(next);
           requestAnimationFrame(() => {
-            if (Math.abs((window.scrollY || 0) - y) > 0.5) window.scrollTo(0, y);
-            requestAnimationFrame(() => {
-              if (Math.abs((window.scrollY || 0) - y) > 0.5) window.scrollTo(0, y);
-            });
+            const jumped = Math.abs((window.scrollY || 0) - y);
+            if (jumped > 12) window.scrollTo(0, y);
           });
         } else {
           this.setState(next);
@@ -4111,133 +4418,108 @@ class Component extends DCLogic {
       }
     };
     this._onScroll = () => {
-      if (this._shootActive && typeof this._shootPinY === 'number') {
-        if (Math.abs(window.scrollY - this._shootPinY) > 1) {
-          window.scrollTo(0, this._shootPinY);
-        }
-      }
+      this._scrollSettling = true;
+      clearTimeout(this._scrollSettleT);
+      this._scrollSettleT = setTimeout(() => {
+        this._scrollSettling = false;
+        this._syncWalkViewport();
+      }, 180);
+      this._syncShootLook();
       if (!this._raf) this._raf = requestAnimationFrame(this._tick);
     };
     this._onResize = () => {
       this._syncWalkViewport();
       this._onScroll();
     };
-    window.addEventListener('scroll', this._onScroll, { passive: false });
+    window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onResize);
     this._tick();
 
-    /* Same layout height. Wheel-pin: hold body fully in view until looks 1→2→3 done */
+    /* Shoot section: sticky runway scroll → look 0/1/2 (desktop/tablet). Chips still tap. */
+    this._syncShootLook = () => {
+      if (!window.matchMedia('(min-width: 901px)').matches) return;
+      if (this._lookLockUntil && Date.now() < this._lookLockUntil) return;
+      const runway = document.querySelector('.hiw-shoot-runway');
+      if (!runway) return;
+      const vh = window.innerHeight || 1;
+      const r = runway.getBoundingClientRect();
+      const total = Math.max(1, r.height - vh);
+      const scrolled = Math.min(total, Math.max(0, -r.top));
+      const progress = scrolled / total;
+      var look = 0;
+      if (progress >= 0.62) look = 2;
+      else if (progress >= 0.28) look = 1;
+      if (look !== this.state.look) this._goLook(look);
+    };
     this._shootAcc = 0;
     this._shootActive = false;
     this._shootPinY = null;
     this._shootCool = 0;
+    /* Keep a light wheel assist only as fallback if sticky runway missing */
     this._onShootWheel = (e) => {
-      if (!window.matchMedia('(min-width: 1101px) and (hover: hover) and (pointer: fine)').matches) return;
+      if (!window.matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)').matches) return;
+      if (document.querySelector('.hiw-shoot-runway')) return; /* scroll progress owns it */
       const body = document.querySelector('.hiw-shoot-body');
       if (!body) return;
-
-      const vh = window.innerHeight;
-      const header = document.getElementById('pb-chrome-header');
-      const headerH = header ? header.getBoundingClientRect().height : 0;
-      /* Extra top gap so label + cards aren't clipped under the chrome */
-      const engage = Math.max(108, Math.round(headerH + 28));
       const r = body.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (!(r.top < vh * 0.65 && r.bottom > vh * 0.35)) return;
       const dy = e.deltaY;
+      if (!dy) return;
       const look = this.state.look;
-      const need = 130;
-      const step = Math.max(-65, Math.min(65, dy));
+      const last = (this.lookData && this.lookData.length ? this.lookData.length : 3) - 1;
+      const need = 100;
       const now = Date.now();
-
-      if (!this._shootActive && this._shootCool > now) return;
-
-      const seatPin = () => {
-        /* Fixed pin once — full block under header, no cut */
-        const pinY = Math.max(0, window.scrollY + (r.top - engage));
-        this._shootPinY = pinY;
-        this._shootActive = true;
-        this._shootAcc = 0;
-        this._shootCool = 0;
-        window.scrollTo(0, pinY);
-      };
-      const holdPin = () => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (this._shootPinY != null) window.scrollTo(0, this._shootPinY);
-      };
-      const release = () => {
-        this._shootActive = false;
-        this._shootPinY = null;
-        this._shootAcc = 0;
-        this._shootCool = now + 700;
-      };
-
-      if (!this._shootActive) {
-        const inZone = r.bottom > vh * 0.35 && r.top < vh * 0.55;
-        if (!inZone) return;
-
-        /* Down: lock once body hits the seat line (seat fully — fixes cut on fast scroll too) */
-        if (dy > 0 && r.top <= engage + 10 && r.bottom > vh * 0.42) {
-          e.preventDefault();
-          e.stopPropagation();
-          seatPin();
-          if (look !== 0) this._goLook(0);
-          return;
-        }
-        /* Up (back): lock when body is in view — seat so nothing is clipped */
-        if (dy < 0 && r.top < engage + 80 && r.bottom > vh * 0.35 && (look > 0 || r.top < engage)) {
-          e.preventDefault();
-          e.stopPropagation();
-          seatPin();
-          return;
-        }
-        return;
-      }
-
-      /* Active — hold fixed pinY */
       if (this._lookLockUntil && now < this._lookLockUntil) {
-        holdPin();
+        e.preventDefault();
         return;
       }
-
-      if (look >= 2 && dy > 0) {
-        if (this._shootAcc < 0) this._shootAcc = 0;
-        this._shootAcc += Math.max(0, step);
-        if (this._shootAcc >= need) {
-          release();
-          return; /* let this wheel move to next section */
-        }
-        holdPin();
-        return;
-      }
-
-      if (look <= 0 && dy < 0) {
-        if (this._shootAcc > 0) this._shootAcc = 0;
-        this._shootAcc += Math.min(0, step);
-        if (this._shootAcc <= -need) {
-          release();
-          return;
-        }
-        holdPin();
-        return;
-      }
-
-      holdPin();
-
-      if ((step > 0 && this._shootAcc < 0) || (step < 0 && this._shootAcc > 0)) {
-        if (Math.abs(step) < 30) return;
-        this._shootAcc = 0;
-      }
-      this._shootAcc += step;
-
-      if (this._shootAcc >= need && look < 2) {
+      this._shootAcc += Math.max(-70, Math.min(70, dy));
+      if (this._shootAcc >= need && look < last) {
+        e.preventDefault();
         this._shootAcc = 0;
         this._goLook(look + 1);
       } else if (this._shootAcc <= -need && look > 0) {
+        e.preventDefault();
         this._shootAcc = 0;
         this._goLook(look - 1);
+      } else if ((look >= last && dy > 0) || (look <= 0 && dy < 0)) {
+        this._shootAcc = 0;
+      } else if (Math.abs(this._shootAcc) > 20) {
+        e.preventDefault();
       }
     };
     window.addEventListener('wheel', this._onShootWheel, { passive: false, capture: true });
+    this._syncShootLook();
+
+    /* Mob/tab: auto-cycle backgrounds every 5s while shoot section is on screen */
+    this._lookAutoPaused = false;
+    this._startLookAuto = () => {
+      clearInterval(this._lookAutoT);
+      this._lookAutoT = setInterval(() => {
+        if (this._lookAutoPaused) return;
+        if (document.hidden) return;
+        if (window.matchMedia('(min-width: 901px)').matches) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!this._shootInView) return;
+        if (this._lookLockUntil && Date.now() < this._lookLockUntil) return;
+        const n = (this.lookData && this.lookData.length) ? this.lookData.length : 3;
+        const next = ((this.state.look || 0) + 1) % n;
+        this._goLook(next);
+      }, 5000);
+    };
+    this._shootInView = false;
+    const shootEl = document.querySelector('.hiw-shoot');
+    if (shootEl && typeof IntersectionObserver !== 'undefined') {
+      this._shootObs = new IntersectionObserver((entries) => {
+        const e = entries[0];
+        this._shootInView = !!(e && e.isIntersecting && e.intersectionRatio > 0.2);
+      }, { threshold: [0, 0.2, 0.4] });
+      this._shootObs.observe(shootEl);
+    } else {
+      this._shootInView = true;
+    }
+    this._startLookAuto();
 
     /* Reliable open for option B — parent used to steal the click; lock scroll so it stays open */
     this._pickBranch = (which) => {
@@ -4294,7 +4576,10 @@ class Component extends DCLogic {
     if (this._raf) cancelAnimationFrame(this._raf);
     clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT);
     clearTimeout(this._chapterSyncT);
+    clearTimeout(this._lookAutoResumeT);
+    clearInterval(this._lookAutoT);
     if (this._demoObs) this._demoObs.disconnect();
+    if (this._shootObs) this._shootObs.disconnect();
   }
 
   screens = [
