@@ -4927,6 +4927,10 @@ class Component extends DCLogic {
         var active = s.step < 0 ? 0 : s.step;
         if (active === 2) active = 1;
         var activeIdx = active >= 3 ? 2 : (active <= 0 ? 0 : 1);
+        /* Prefer live DOM index so Softgen remounts (other setStates) don't snap step back */
+        if (typeof this._walkChapterIdx === 'number' && this._walkChapterIdx >= 0 && this._walkChapterIdx <= 2) {
+          activeIdx = this._walkChapterIdx;
+        }
         var ctaBase = 'width: 100%; border: 0; text-align: center; font-size: 13.5px; font-weight: 700; color: #fff; padding: 12px 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); font-family: inherit; opacity: .92;';
         var mkVisual = function (sc) {
           return 'flex: 1; min-height: 0; border-radius: 18px; overflow: hidden; border: 1px solid #EFE7E0; display: flex; align-items: center; justify-content: center; background: ' +
