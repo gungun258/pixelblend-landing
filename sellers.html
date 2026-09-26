@@ -52,6 +52,40 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes chatBubbleIn {
+    from { opacity: 0; transform: translateY(18px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  #chat-feed [data-g] {
+    display: none;
+    opacity: 0;
+    margin: 0 0 12px;
+    transform: translateY(14px) scale(.98);
+    transform-origin: 50% 100%;
+  }
+  #chat-feed [data-g].is-on {
+    display: block;
+    opacity: 1;
+  }
+  #chat-feed [data-g].is-on.is-anim {
+    animation: chatBubbleIn .58s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  #chat-feed [data-g].is-on.is-anim.is-settled {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  #chat-feed [data-g="1"].is-on.is-anim {
+    animation-duration: .65s;
+    animation-timing-function: cubic-bezier(.2, .85, .25, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #chat-feed [data-g].is-on.is-anim {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
   @keyframes softFloat {
     0%, 100% { transform: translate(-50%, 0); }
     50% { transform: translate(-50%, 12px); }
@@ -93,6 +127,56 @@
   }
   .hero-anim-tri > .tri-op:nth-child(2) { animation-delay: .3s; }
   .hero-anim-tri > .tri-op:nth-child(4) { animation-delay: .38s; }
+  .tri-op {
+    flex: none !important;
+    box-sizing: border-box;
+    border-radius: 50%;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 30px;
+    height: 30px;
+    padding: 0 !important;
+    margin: 0;
+    line-height: 0;
+    font-size: 0;
+    font-weight: 800;
+    color: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tri-op--plus {
+    background: #fff;
+    border: 1.5px solid #F0E6F2;
+    box-shadow: 0 8px 18px -6px rgba(168, 85, 247, .55);
+  }
+  .tri-op--plus::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background:
+      linear-gradient(#EC4899, #EC4899) center / 100% 2.2px no-repeat,
+      linear-gradient(#EC4899, #EC4899) center / 2.2px 100% no-repeat;
+  }
+  .tri-op--eq {
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    border: 0;
+    box-shadow: 0 8px 18px -6px rgba(236, 72, 153, .55);
+  }
+  .tri-op--eq::before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 8px;
+    background:
+      linear-gradient(#fff, #fff) 50% 0 / 100% 2.2px no-repeat,
+      linear-gradient(#fff, #fff) 50% 100% / 100% 2.2px no-repeat;
+  }
+  .tri-op.is-blank,
+  .tri > .tri-op:last-child {
+    display: none !important;
+  }
   .hero-glow {
     animation: softFloat 7s ease-in-out infinite;
   }
@@ -110,10 +194,6 @@
   }
   .cat-card {
     transition: transform .3s ease, box-shadow .3s ease;
-  }
-  .cat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 44px -28px rgba(30,20,34,.75) !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -154,31 +234,25 @@
     .hero-h1 { font-size: 42px !important; }
     .proof-row { grid-template-columns: 1fr 1fr !important; gap: 14px !important; justify-items: start; }
     .proof-row > span { justify-content: flex-start !important; text-align: left; }
-    .cat-grid {
-      display: flex !important;
-      flex-wrap: nowrap !important;
-      gap: 12px !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      overscroll-behavior-x: contain;
-      padding-bottom: 4px;
+    .cat-filters {
+      padding-right: 40px !important;
+      scroll-snap-type: x mandatory !important;
     }
-    .cat-grid::-webkit-scrollbar { display: none; }
-    .cat-card {
-      flex: 0 0 42% !important;
-      width: 42% !important;
-      max-width: 180px;
-      min-width: 140px;
-      position: relative !important;
-      transform: none !important;
-      animation: none !important;
-      margin: 0 !important;
-    }
+    /* cat-grid 2×2 handled in #list .cat-grid rules */
     .stepper-tabs { flex-wrap: wrap !important; }
     .stepper-tabs button { min-width: 0 !important; flex: 1 1 45% !important; padding: 16px 14px !important; }
-    .stepper-body { grid-template-columns: 1fr !important; padding: 28px 22px !important; }
+    .stepper-body {
+      grid-template-columns: 1fr !important;
+      padding: 22px 20px 28px !important;
+      gap: 20px !important;
+    }
+    /* Photo first so step change is obvious */
+    .stepper-visual {
+      order: -1;
+      min-height: 0 !important;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+    }
     .disco { grid-template-columns: 1fr !important; gap: 34px !important; }
     .disco-stats { grid-template-columns: 1fr 1fr !important; }
     .zero-rule { display: none !important; }
@@ -197,10 +271,17 @@
       width: auto !important;
     }
     .tri-op {
-      display: flex !important;
-      font-size: 18px !important;
-      padding-top: 22px !important;
+      display: inline-flex !important;
+      width: 28px !important;
+      height: 28px !important;
+      padding: 0 !important;
       align-self: center !important;
+    }
+    .tri-op--plus::before { width: 10px; height: 10px; }
+    .tri-op--eq::before { width: 10px; height: 7px; }
+    .tri-op.is-blank,
+    .tri > .tri-op:last-child {
+      display: none !important;
     }
     .tri-frame {
       aspect-ratio: 3 / 4 !important;
@@ -208,8 +289,29 @@
     }
     .tri-label { font-size: 8.5px !important; letter-spacing: .1em !important; }
     .tri > div > p { font-size: 11.5px !important; line-height: 1.4 !important; margin-top: 8px !important; }
-    body.sellers-page header.pad { padding-top: 88px !important; }
+    body.sellers-page header.pad { padding-top: 100px !important; }
     body.sellers-page header.pad .split { padding-bottom: 28px !important; }
+    body.sellers-page header.pad .hero-anim-copy {
+      text-align: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      width: 100% !important;
+      max-width: 640px;
+    }
+    body.sellers-page header.pad .hero-h1 {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    body.sellers-page header.pad .hero-lead {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      max-width: 520px !important;
+    }
     .hero-proofs { padding-top: 16px !important; }
     #discover .hiw-mkt-phone-wrap,
     #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto; }
@@ -232,7 +334,20 @@
       min-width: 0 !important;
       width: auto !important;
     }
-    .tri-op { display: none !important; }
+    .tri-op {
+      display: inline-flex !important;
+      width: 26px !important;
+      height: 26px !important;
+      padding: 0 !important;
+      align-self: center !important;
+      margin-top: 18px;
+    }
+    .tri-op--plus::before { width: 10px; height: 10px; }
+    .tri-op--eq::before { width: 10px; height: 7px; }
+    .tri-op.is-blank,
+    .tri > .tri-op:last-child {
+      display: none !important;
+    }
     .tri > div > p { display: none !important; }
     .tri-frame {
       aspect-ratio: 3 / 4 !important;
@@ -251,22 +366,54 @@
     #discover .hiw-mkt-phone-screen { height: 500px !important; }
     #cost .cost-zero { font-size: 72px !important; }
     #cost .cost-forever { font-size: 24px !important; }
-    #cost .cost-foot { align-items: flex-start !important; }
-    .stepper-tabs button { flex: 1 1 100% !important; }
+    #cost .cost-foot {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 20px !important;
+    }
+    .stepper-tabs {
+      flex-wrap: wrap !important;
+      overflow: visible !important;
+    }
+    .stepper-tabs button {
+      flex: 1 1 50% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      width: 50% !important;
+      box-sizing: border-box !important;
+      padding: 12px 12px 14px !important;
+      text-align: left !important;
+    }
+    #journey .stepper-tab > span:nth-child(2) > span:first-child {
+      font-size: 22px !important;
+    }
+    #journey .stepper-tab > span:last-child {
+      font-size: 12.5px !important;
+      line-height: 1.25 !important;
+    }
     .stepper-nav {
       flex-direction: column !important;
-      align-items: stretch !important;
+      align-items: center !important;
       gap: 10px !important;
     }
     .stepper-next {
-      width: 100%;
+      width: fit-content !important;
+      max-width: 100%;
+      flex: 0 0 auto !important;
       text-align: center;
       white-space: nowrap !important;
-      padding: 14px 18px !important;
+      padding: 14px 22px !important;
+      margin-left: auto;
+      margin-right: auto;
     }
     .stepper-count {
       white-space: nowrap !important;
       font-size: 13px !important;
+    }
+    .stepper-visual {
+      aspect-ratio: 5 / 4;
+      border-radius: 16px !important;
     }
     .sellers-cta-panel { padding: 36px 22px !important; }
     .sellers-cta-panel .sellers-cta-h2 { font-size: 30px !important; }
@@ -307,12 +454,6 @@
     #faq.sec { padding-bottom: 24px !important; }
     #sellers-cta.sec { padding-top: 20px !important; padding-bottom: 52px !important; }
     .benefit-grid { grid-template-columns: 1fr !important; }
-    .cat-card {
-      flex: 0 0 58% !important;
-      width: 58% !important;
-      max-width: 220px;
-      min-width: 160px;
-    }
     .tri {
       flex-direction: row !important;
       flex-wrap: nowrap !important;
@@ -324,12 +465,21 @@
       width: auto !important;
       min-width: 0 !important;
     }
-    .tri-op { display: none !important; }
-    .tri > div > p { display: none !important; }
-    .tri-label {
-      font-size: 7px !important;
-      letter-spacing: .06em !important;
+    .tri-op {
+      display: inline-flex !important;
+      width: 24px !important;
+      height: 24px !important;
+      padding: 0 !important;
+      align-self: center !important;
+      margin-top: 14px;
     }
+    .tri-op--plus::before { width: 8px; height: 8px; }
+    .tri-op--eq::before { width: 8px; height: 5px; }
+    .tri-op.is-blank,
+    .tri > .tri-op:last-child {
+      display: none !important;
+    }
+    .tri > div > p { display: none !important; }
     .tri > div > div:first-child {
       margin-bottom: 6px !important;
     }
@@ -346,9 +496,39 @@
     #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto !important; }
     #discover .hiw-mkt-phone-screen { height: 520px !important; }
     #cost .cost-zero { font-size: 64px !important; }
-    #cost .cost-cta { width: 100%; justify-content: center; }
+    #cost .cost-cta {
+      width: fit-content !important;
+      max-width: 100%;
+      flex: 0 0 auto !important;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-flex !important;
+    }
+    #cost .cost-foot {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+    }
     #lost-sale .lost-tag { white-space: nowrap; justify-self: center; }
-    .sellers-cta-panel a { width: 100%; justify-content: center; text-align: center; white-space: normal !important; box-sizing: border-box; }
+    .sellers-cta-panel a {
+      width: fit-content !important;
+      max-width: 100%;
+      flex: 0 0 auto !important;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap !important;
+      box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-flex !important;
+    }
+    .sellers-cta-panel {
+      text-align: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+    }
     body.sellers-page header.pad .split { padding-bottom: 20px !important; }
     .hero-proofs { padding-top: 14px !important; }
     .hero-proofs .proof-row { padding-bottom: 16px !important; gap: 10px !important; }
@@ -366,7 +546,20 @@
       width: 100% !important;
       min-width: 0 !important;
     }
-    .tri-op { display: none !important; }
+    .tri-op {
+      display: inline-flex !important;
+      width: 30px !important;
+      height: 30px !important;
+      padding: 0 !important;
+      align-self: center !important;
+      margin: 2px auto 0 !important;
+    }
+    .tri-op--plus::before { width: 12px; height: 12px; }
+    .tri-op--eq::before { width: 12px; height: 8px; }
+    .tri-op.is-blank,
+    .tri > .tri-op:last-child {
+      display: none !important;
+    }
     .tri > div > p {
       display: block !important;
       font-size: 13px !important;
@@ -395,16 +588,73 @@
     .hero-h1 { font-size: 28px !important; }
     .hero-zero { font-size: 38px !important; }
     body.sellers-page section.pad,
-    body.sellers-page section.sec.pad,
-    body.sellers-page #story > .pad {
+    body.sellers-page section.sec.pad {
       padding-left: 32px !important;
       padding-right: 32px !important;
+    }
+    body.sellers-page #story > .pad {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
     #cost .cost-zero { font-size: 56px !important; }
     #story .phone-body { height: 420px !important; }
     #story .story-phone-shell { max-width: 240px !important; }
     .sellers-cta-panel .sellers-cta-h2 { font-size: 26px !important; }
     .sellers-cta-panel .sellers-cta-sub { font-size: 18px !important; }
+  }
+
+  /* How it works: edge-to-edge under ~600px */
+  @media (max-width: 599px) {
+    #story {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    body.sellers-page #story > .pad,
+    #story > .pad {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      box-sizing: border-box !important;
+    }
+    #story > .pad > [data-reveal]:first-of-type {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      box-sizing: border-box;
+    }
+    #story .story-pin-wrap,
+    #story .story-pin-sticky,
+    #story .story-pin-sticky.story-grid {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    /* Steps + phone share the same left edge */
+    #story .story-points-slot,
+    #story .story-phone,
+    #story .story-phone-shell {
+      width: 100% !important;
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      box-sizing: border-box !important;
+    }
+    #story .story-points-slot {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    #story .story-phone {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    #story .story-points-slot .story-block.is-on .story-block-row {
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+    }
   }
 
   body.sellers-page { background: #FAF4FB; }
@@ -424,7 +674,42 @@
   body.sellers-page #dc-root { position: relative; z-index: 1; background: #FAF4FB; }
   body.sellers-page #pb-chrome-footer { position: relative; z-index: 2; }
   body.sellers-page:not(.sellers-ready) #pb-chrome-footer { display: none !important; }
-  body.sellers-page header.pad { padding-top: 72px !important; }
+  body.sellers-page header.pad { padding-top: 84px !important; }
+  @media (max-width: 1040px) {
+    body.sellers-page header.pad {
+      padding-top: 100px !important;
+    }
+  }
+  @media (max-width: 768px) {
+    body.sellers-page header.pad {
+      padding-top: 108px !important;
+    }
+    body.sellers-page header.pad .hero-anim-copy {
+      text-align: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      width: 100% !important;
+    }
+    body.sellers-page header.pad .hero-h1,
+    body.sellers-page header.pad .hero-lead {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    body.sellers-page header.pad .hero-ctas,
+    body.sellers-page header.pad #start {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
+  @media (max-width: 640px) {
+    body.sellers-page header.pad {
+      padding-top: 104px !important;
+    }
+  }
   body.sellers-page .lp-crumb-bar,
   body.sellers-page .lp-crumbs {
     display: none !important;
@@ -437,6 +722,40 @@
     align-self: start;
   }
   .hero-pay-pills { align-content: flex-start; }
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .hero-ctas .hero-cta-primary,
+  .hero-ctas .hero-cta-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 52px;
+    padding: 15px 24px !important;
+  }
+  @media (max-width: 1040px) {
+    .hero-ctas {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-ctas .hero-cta-primary,
+    .hero-ctas .hero-cta-secondary {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      flex: none !important;
+      align-self: stretch !important;
+    }
+  }
   .cat-filters {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -446,30 +765,153 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    padding-right: 48px;
   }
   .cat-filters::-webkit-scrollbar { display: none; }
   .cat-filter {
     flex: none !important;
     white-space: nowrap !important;
+    scroll-snap-align: start;
   }
-  .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    align-items: stretch;
-    isolation: isolate;
+  #list .cat-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: auto !important;
+    gap: 16px !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    justify-items: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    min-height: 0;
+    margin-bottom: 8px;
   }
-  .cat-card {
+  #list .cat-grid > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    justify-self: stretch !important;
+    box-sizing: border-box !important;
+  }
+  #list .cat-card {
     position: relative !important;
-    z-index: 0;
-    min-width: 0;
+    inset: auto !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #EDE4F0;
+    box-shadow: 0 20px 40px -36px rgba(30,20,34,.65);
     transform: none !important;
     animation: none !important;
-    margin: 0 !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+    flex: none !important;
+    box-sizing: border-box !important;
   }
-  .cat-card img {
-    object-fit: cover !important;
-    object-position: center !important;
+  #list .cat-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  #list .cat-card-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 52%, rgba(30,20,34,.72));
+    pointer-events: none;
+  }
+  #list .cat-card-badge {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    color: #fff;
+    background: linear-gradient(113.667deg,#A855F7,#F43F5E);
+    padding: 5px 9px;
+    border-radius: 999px;
+  }
+  #list .cat-card-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff;
+    animation: blink 1.6s infinite;
+  }
+  #list .cat-card-meta {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+  #list .cat-card-label {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+  }
+  #list .cat-card-price {
+    font-size: 12px;
+    color: rgba(255,255,255,.72);
+    margin-top: 2px;
+  }
+  @media (hover: hover) {
+    #list .cat-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 24px 44px -28px rgba(30,20,34,.75) !important;
+    }
+  }
+  @media (max-width: 1040px) {
+    #list.sec.pad {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding-left: 32px !important;
+      padding-right: 32px !important;
+    }
+    #list .cat-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      grid-template-rows: auto auto !important;
+      gap: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    #list .cat-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    #list .cat-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+    #list .cat-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+    #list .cat-card:nth-child(4) { grid-column: 2; grid-row: 2; }
+  }
+  @media (max-width: 640px) {
+    #list.sec.pad {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+    #list .cat-grid {
+      gap: 10px !important;
+    }
   }
 
   /* Where the sale is lost — polish */
@@ -606,6 +1048,7 @@
   }
   #story > .pad {
     padding-top: 40px !important;
+    padding-bottom: 56px !important;
   }
   @media (max-width: 1040px) {
     #lost-sale {
@@ -613,6 +1056,7 @@
     }
     #story > .pad {
       padding-top: 32px !important;
+      padding-bottom: 48px !important;
     }
   }
   @media (max-width: 640px) {
@@ -625,6 +1069,7 @@
     }
     #story > .pad {
       padding-top: 24px !important;
+      padding-bottom: 40px !important;
     }
   }
   #story .story-grid {
@@ -687,11 +1132,6 @@
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-  }
-  #story .story-cost-wrap {
-    grid-column: 1;
-    grid-row: 2;
-    padding: 8px 0 24px 58px;
   }
   #story .story-phone {
     grid-column: 2;
@@ -867,19 +1307,6 @@
     #story .phone-body {
       height: 520px !important;
     }
-    #story .story-cost-wrap {
-      grid-column: 1 !important;
-      grid-row: 2 !important;
-      order: unset !important;
-      padding: 8px 0 24px 58px !important;
-      justify-content: flex-start !important;
-      display: block !important;
-    }
-    #story .story-cost {
-      max-width: 440px !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
     #story .story-rail {
       display: block !important;
     }
@@ -901,9 +1328,9 @@
       grid-template-columns: none !important;
       grid-template-rows: none !important;
       max-height: none !important;
-      gap: 8px !important;
+      gap: 4px !important;
       align-items: stretch !important;
-      padding: 14px 4px 10px !important;
+      padding: 10px 0 28px !important;
       overflow: visible !important;
       background: transparent !important;
     }
@@ -912,12 +1339,16 @@
       position: relative !important;
       order: 1;
       /* Lock height so swapping 2↔3 doesn't retarget scroll progress (blink) */
-      min-height: 168px;
-      height: 168px;
+      min-height: 156px;
+      height: 156px;
       width: 100%;
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
       overflow: visible !important;
-      padding: 4px 2px 6px;
+      padding: 2px 0 0 !important;
       margin-top: 0;
+      margin-bottom: 0 !important;
       box-sizing: border-box;
     }
     #story .story-steps-rest {
@@ -1019,7 +1450,7 @@
       max-width: 100% !important;
       background: transparent !important;
       box-shadow: none !important;
-      padding: 2px 0 6px !important;
+      padding: 0 0 4px !important;
       display: flex !important;
       justify-content: center !important;
     }
@@ -1031,73 +1462,53 @@
     #story .phone-body {
       height: 500px !important;
     }
-    #story .story-cost-wrap {
-      order: 3;
-      grid-column: auto !important;
-      grid-row: auto !important;
-      padding: 8px 0 16px !important;
-      margin-top: 4px;
-      width: 100%;
-      display: flex !important;
-      justify-content: center !important;
-    }
-    #story .story-cost {
-      margin-left: auto !important;
-      margin-right: auto !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
   }
-  #story .story-cost {
-    margin-top: 12px;
-    width: 100%;
-    max-width: 440px !important;
-    padding: 16px 18px !important;
-    border-radius: 16px !important;
-    box-sizing: border-box;
+  /* Cost note under How it works heading — plain text, no card */
+  #story .story-cost-note {
+    margin: 0;
+    max-width: 560px;
   }
   #story .story-cost-kicker {
-    font-size: 9.5px !important;
+    font-size: 11px;
     font-weight: 800;
     letter-spacing: .16em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.45);
-    margin-bottom: 10px !important;
+    color: #C42E8B;
+    margin: 0 0 8px;
   }
-  #story .story-cost-row {
+  #story .story-cost-line {
     display: flex;
     align-items: center;
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin: 0;
   }
   #story .story-cost-zero {
     flex: none;
     font-family: 'Instrument Serif', serif;
-    font-size: 36px;
+    font-size: 32px;
     line-height: 1;
     letter-spacing: -.02em;
-    color: #F9A8D4;
-    padding: 0 4px 0 0;
+    color: #C42E8B;
   }
   #story .story-cost-copy {
     flex: 1;
     min-width: 0;
-    font-size: 12.5px;
-    line-height: 1.4;
-    color: rgba(255,255,255,.68);
+    font-size: 15px;
+    line-height: 1.5;
+    color: #5b5060;
   }
   @media (max-width: 1040px) {
-    #story .story-cost-wrap {
-      padding-left: 0 !important;
-      display: flex !important;
-      justify-content: center !important;
+    #story .story-cost-note {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
     }
-    #story .story-cost {
-      margin-left: auto !important;
-      margin-right: auto !important;
+    #story .story-cost-line {
+      justify-content: center;
     }
-    #story .story-cost-zero { font-size: 32px !important; }
-    #story .story-cost-copy { font-size: 12px !important; }
-    #story .story-cost-kicker { font-size: 9px !important; letter-spacing: .14em !important; }
+    #story .story-cost-zero { font-size: 28px !important; }
+    #story .story-cost-copy { font-size: 14px !important; }
   }
   #discover {
     padding-top: 72px !important;
@@ -1200,7 +1611,8 @@
     font-weight: 800;
     letter-spacing: -.03em;
     line-height: 1.25;
-    max-width: 520px;
+    max-width: none;
+    width: 100%;
   }
   @media (max-width: 768px) {
     #discover .disco-side-title {
@@ -1269,6 +1681,68 @@
     min-width: 0;
     max-width: 100%;
     position: relative;
+  }
+  #discover .hiw-mkt-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 36px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(0, 10px, 0) scale(.985);
+    transition:
+      opacity .45s cubic-bezier(.22, 1, .36, 1),
+      transform .5s cubic-bezier(.22, 1, .36, 1),
+      visibility 0s linear .45s;
+    z-index: 1;
+  }
+  #discover .hiw-mkt-panel.is-on {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition:
+      opacity .45s cubic-bezier(.22, 1, .36, 1),
+      transform .5s cubic-bezier(.22, 1, .36, 1),
+      visibility 0s linear 0s;
+    z-index: 2;
+  }
+  #discover .hiw-mkt-blend-stage {
+    flex: 1;
+    position: relative;
+    border-radius: 18px;
+    border: 1.5px solid #F3D9EA;
+    background: #FAF4FB;
+    overflow: hidden;
+    min-height: 0;
+  }
+  @keyframes hiwMktPulse {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+  #discover .hiw-mkt-blend-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 72px;
+    height: 72px;
+    margin: -36px 0 0 -36px;
+    border-radius: 50%;
+    border: 2px solid rgba(236, 72, 153, .45);
+    box-shadow: 0 0 0 10px rgba(236, 72, 153, .08);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #discover .hiw-mkt-blend-ring.is-on {
+    opacity: 1;
+    animation: hiwMktPulse 1.1s ease-in-out infinite;
   }
   #discover .hiw-mkt-act {
     display: flex;
@@ -1413,6 +1887,7 @@
   }
   #discover .hiw-mkt-phone-status {
     position: relative;
+    z-index: 3;
     padding: 12px 12px 0;
     display: flex;
     align-items: center;
@@ -1423,6 +1898,7 @@
     color: #8D8296;
     min-width: 0;
     min-height: 30px;
+    flex: none;
   }
   #discover .hiw-mkt-phone-status > span:first-child {
     position: relative;
@@ -1774,7 +2250,7 @@
     }
     #faq .faq-h2 {
       font-size: 28px !important;
-      text-align: left !important;
+      text-align: center !important;
       margin-bottom: 18px !important;
     }
     #faq .faq-q {
@@ -1802,8 +2278,265 @@
     }
     #faq .faq-h2 { font-size: 26px !important; }
   }
+  /* Section heads centered on all breakpoints (incl. desktop) */
+  #story .story-head {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  #story .story-kicker {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #story .story-h2,
+  #story .story-lead,
+  #story .story-cost-kicker {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #story .story-cost-line {
+    justify-content: center;
+  }
+  #discover .disco-head {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+  #discover .disco-kicker,
+  #discover .disco-h2,
+  #discover .disco-lead {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #cost .cost-head {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+  }
+  #cost .cost-kicker-top,
+  #cost .cost-h2,
+  #cost .cost-lead {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #journey [data-reveal]:first-of-type {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+  #journey [data-reveal]:first-of-type > div:first-child {
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #journey .journey-kicker,
+  #journey .journey-h2,
+  #journey .journey-lead {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #list .list-head {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  #list .list-head > div:first-child {
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 720px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #list .list-kicker,
+  #list .list-h2 {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #list .list-meta {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    max-width: 100%;
+    white-space: nowrap !important;
+  }
+  #list .list-meta-count {
+    font-size: 14.5px;
+    color: #6b6072;
+    white-space: nowrap !important;
+    flex: none;
+  }
+  #list .list-meta-idx {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: #C42E8B;
+    white-space: nowrap !important;
+    flex: none;
+  }
+  @media (max-width: 640px) {
+    #list .list-meta-count { font-size: 12.5px !important; }
+    #list .list-meta-idx { font-size: 11px !important; letter-spacing: .06em !important; }
+  }
+  #same-catalogue .same-head {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 660px;
+  }
+  #same-catalogue .same-h2,
+  #same-catalogue .same-lead {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #benefits .benefit-head {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  #benefits .benefit-head > div {
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 660px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  #benefits .benefit-kicker,
+  #benefits .benefit-h2 {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   @media (max-width: 1040px) {
     #journey .journey-h2 { font-size: 32px !important; }
+    /* Remaining heads + layout polish on tablet/mobile */
+    #lost-sale .lost-kicker,
+    #lost-sale .lost-h2,
+    #lost-sale .lost-lead,
+    #drag-compare .cmp-kicker,
+    #drag-compare .cmp-h2,
+    #drag-compare .cmp-lead,
+    #faq .faq-h2,
+    #sellers-cta .sellers-cta-h2,
+    #sellers-cta .sellers-cta-sub,
+    #discover .disco-side-title {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #lost-sale .lost-lead,
+    #discover .disco-lead,
+    #cost .cost-lead,
+    #journey .journey-lead,
+    #discover .disco-head,
+    #cost .cost-head,
+    #lost-sale > .split > div:first-child {
+      max-width: 640px;
+    }
+    #lost-sale .split > div:first-child {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #drag-compare .cmp-head {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #drag-compare .split > div:first-child {
+      text-align: center !important;
+    }
+    /* Benefits CTA row center on smaller screens */
+    #benefits .benefit-panel > div > div:last-child {
+      justify-content: center !important;
+      text-align: center !important;
+    }
+    /* CTAs: content-sized pills, never full-bleed stretch */
+    #cost .cost-cta,
+    #cost .cost-foot a,
+    a.pb-grad-btn:not(.hero-cta-primary):not(.cta-pair-primary),
+    .sellers-cta-panel a,
+    .disco-cta-card a,
+    #benefits a.pb-grad-btn,
+    #journey .stepper-next {
+      width: fit-content !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+      align-self: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: inline-flex !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+    }
+    .hero-ctas,
+    .cta-pair {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: 100% !important;
+      max-width: 420px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .hero-ctas .hero-cta-primary,
+    .hero-ctas .hero-cta-secondary,
+    .cta-pair .cta-pair-primary,
+    .cta-pair .cta-pair-secondary {
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 52px !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      align-self: stretch !important;
+      justify-content: center !important;
+      padding: 15px 24px !important;
+      box-sizing: border-box !important;
+    }
+    #cost .cost-foot {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      gap: 20px !important;
+    }
+    #cost .cost-foot > div {
+      text-align: center !important;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .disco-cta-card > div:last-child {
+      justify-content: center !important;
+    }
   }
 
   /* Compare rows — clear before/after differentiation */
@@ -1900,42 +2633,81 @@
     #drag-compare .cmp-visual { margin-top: 8px !important; }
   }
   @media (max-width: 768px) {
-    #drag-compare .cmp-cols { display: none !important; }
-    #drag-compare .cmp-list { gap: 12px; }
-    #drag-compare .cmp-row {
-      grid-template-columns: 1fr !important;
-      gap: 6px !important;
-      padding: 10px;
+    #drag-compare .cmp-list {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0 !important;
       border: 1px solid #EFE2F0;
       border-radius: 16px;
+      overflow: hidden;
       background: #fff;
     }
+    #drag-compare .cmp-cols {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0 !important;
+      margin: 0 0 0 !important;
+      padding: 0 !important;
+      border: 1px solid #EFE2F0;
+      border-bottom: 0;
+      border-radius: 16px 16px 0 0;
+      overflow: hidden;
+    }
+    #drag-compare .cmp-cols > span:nth-child(2) {
+      display: none !important;
+    }
+    #drag-compare .cmp-col-label {
+      display: block !important;
+      padding: 11px 8px !important;
+      text-align: center !important;
+      font-size: 9.5px !important;
+      letter-spacing: .08em !important;
+      line-height: 1.3 !important;
+      background: #F7F2F8;
+    }
+    #drag-compare .cmp-col-label.is-before {
+      background: #F1EDF2;
+      border-right: 1px solid #EFE2F0;
+    }
+    #drag-compare .cmp-col-label.is-after {
+      background: #FCE7F0;
+    }
+    #drag-compare .cmp-cols + .cmp-list {
+      border-radius: 0 0 16px 16px;
+    }
+    #drag-compare .cmp-row {
+      display: contents !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      border-radius: 0 !important;
+    }
     #drag-compare .cmp-arrow {
-      display: flex !important;
-      height: 18px;
-      font-size: 14px;
-      transform: rotate(90deg);
+      display: none !important;
+    }
+    #drag-compare .cmp-cell {
+      font-size: 12.5px !important;
+      line-height: 1.4 !important;
+      padding: 12px 10px !important;
+      border-radius: 0 !important;
+      border-top: 1px solid #EFE2F0;
+      text-align: left !important;
+    }
+    #drag-compare .cmp-cell.is-before {
+      border-right: 1px solid #EFE2F0;
+      background: #FAF7FB !important;
+      color: #6b6072 !important;
+      font-weight: 500 !important;
+    }
+    #drag-compare .cmp-cell.is-after {
+      background: #FFF5F9 !important;
+      color: #1E1422 !important;
+      font-weight: 700 !important;
     }
     #drag-compare .cmp-cell.is-before::before,
     #drag-compare .cmp-cell.is-after::before {
-      display: block;
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    #drag-compare .cmp-cell.is-before::before {
-      content: 'Without PixelBlend';
-      color: #8A7E92;
-    }
-    #drag-compare .cmp-cell.is-after::before {
-      content: 'With PixelBlend';
-      color: #C42E8B;
-    }
-    #drag-compare .cmp-cell {
-      font-size: 13.5px !important;
-      padding: 12px 12px !important;
+      display: none !important;
+      content: none !important;
     }
   }
   @media (max-width: 640px) {
@@ -1956,7 +2728,7 @@
     <div class="split" style="display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: start; padding-bottom: 52px;">
       <div class="hero-anim-copy">
         <h1 class="hero-h1" style="font-size: 52px; line-height: 1.08; letter-spacing: -.035em; font-weight: 800; margin: 0 0 22px;">Show your scene with <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 6px;">their</span> product in it.</h1>
-        <p style="font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.72); margin: 0; max-width: 480px;">List your backgrounds on PixelBlend and share your link. The brand uploads one product photo and sees it blended into your scene — so they stop asking “will this match my product?” and start asking for your invoice.</p>
+        <p class="hero-lead" style="font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.72); margin: 0; max-width: 480px;">List your backgrounds on PixelBlend and share your link. The brand uploads one product photo and sees it blended into your scene — so they stop asking “will this match my product?” and start asking for your invoice.</p>
         </div>
       <div id="start" class="hero-anim-card" style="display: flex; flex-direction: column; gap: 16px; align-items: stretch; align-self: start; height: auto;">
         <div class="hero-pay" style="position: relative; width: 100%; height: fit-content; overflow: hidden; border-radius: 22px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07); padding: 18px 20px 16px;">
@@ -1974,9 +2746,9 @@
             </div>
           </div>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <a class="pb-grad-btn" href="#journey" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 24px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
-          <a href="#story" style="font-size: 15.5px; font-weight: 600; color: #fff; text-decoration: none; padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22);" style-hover="border-color:rgba(255,255,255,.5);">See how it works</a>
+        <div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 10px;">
+          <a class="pb-grad-btn hero-cta-primary" href="#journey" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 24px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
+          <a class="hero-cta-secondary" href="#story" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; color: #fff; text-decoration: none; padding: 15px 24px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); box-sizing: border-box;" style-hover="border-color:rgba(255,255,255,.5);">See how it works</a>
         </div>
       </div>
     </div>
@@ -2004,7 +2776,7 @@
             </div>
             <p style="font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.55); margin: 12px 0 0;">{{ t.note }}</p>
           </div>
-          <span class="tri-op" style="flex: none; align-self: center; font-size: 30px; font-weight: 300; color: {{ t.opFg }}; padding-top: 14px;">{{ t.op }}</span>
+          <span class="{{ t.opClass }}" aria-hidden="true"></span>
         </sc-for>
       </div>
     </div>
@@ -2049,10 +2821,14 @@
   <div style="position: absolute; right: -180px; top: -160px; width: 620px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.13), transparent 66%); pointer-events: none;"></div>
   <div style="position: absolute; left: -200px; top: 240px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,.10), transparent 68%); pointer-events: none;"></div>
   <div class="pad" style="position: relative; max-width: 1160px; margin: 0 auto; padding: 40px 32px 0;">
-  <div data-reveal="" style="padding-bottom: 30px;">
+  <div data-reveal="" class="story-head" style="padding-bottom: 30px;">
     <span class="story-kicker" style="display: inline-block; max-width: 100%; box-sizing: border-box; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
-    <h2 class="h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
-    <p style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
+    <h2 class="h2 story-h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
+    <p class="story-lead" style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0 0 18px; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
+    <div class="story-cost-note">
+      <p class="story-cost-kicker">Cost to the seller for this entire chat</p>
+      <p class="story-cost-line"><span class="story-cost-zero">₹0</span> <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span></p>
+    </div>
   </div>
 
   <div id="story-track" class="story-pin-wrap" data-reveal="" data-delay="1">
@@ -2107,9 +2883,9 @@
           </div>
 
           <div id="chat-view" style="flex: 1; overflow: hidden; position: relative;">
-            <div id="chat-feed" style="position: absolute; left: 0; right: 0; top: 0; min-height: 100%; padding: 18px 16px 20px; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; transition: transform .55s cubic-bezier(.16,1,.3,1);">
+            <div id="chat-feed" style="position: absolute; left: 0; right: 0; top: 0; width: 100%; min-height: 100%; padding: 18px 16px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; box-sizing: border-box; transition: transform .55s cubic-bezier(.16,1,.3,1); will-change: transform;">
             <!-- 1 they hesitate -->
-            <div data-g="0" style="{{ b1 }}">
+            <div data-g="0" class="chat-g">
               <div style="display: flex; align-items: flex-end; gap: 8px;">
                 <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
                 <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
@@ -2119,7 +2895,7 @@
             </div>
 
             <!-- 2 you send your link -->
-            <div data-g="1" style="{{ b2 }}">
+            <div data-g="1" class="chat-g">
               <div style="display: flex; justify-content: flex-end;">
                 <div style="max-width: 82%; background: linear-gradient(113.667deg, #A855F7, #EC4899); border-radius: 20px 20px 6px 20px; padding: 12px 14px; box-shadow: 0 12px 26px -14px rgba(236,72,153,.7);">
                   <div style="font-size: 14.5px; line-height: 1.45; color: #fff; margin-bottom: 10px;">Even better — drop your product into it 💗 Tap here and upload any product shot:</div>
@@ -2132,7 +2908,7 @@
             </div>
 
             <!-- 3 they blend their product in + AI result -->
-            <div data-g="2" style="{{ b3 }}">
+            <div data-g="2" class="chat-g">
               <div style="display: flex; align-items: flex-end; gap: 8px;">
                 <span style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
                 <div style="max-width: 88%; background: #fff; border: 1px solid #EFE2F0; border-radius: 18px 18px 18px 6px; padding: 8px 8px 10px;">
@@ -2171,7 +2947,7 @@
             </div>
 
             <!-- 4 they license it -->
-            <div data-g="3" style="{{ b4 }}">
+            <div data-g="3" class="chat-g">
               <div style="display: flex; align-items: flex-end; gap: 8px;">
                 <span style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FDA4AF,#C42E8B); flex: none;"></span>
                 <div style="max-width: 78%; background: #fff; border: 1px solid #EFE2F0; border-radius: 20px 20px 20px 6px; padding: 11px 14px;">
@@ -2201,15 +2977,6 @@
       </div>
     </div>
 
-    <div class="story-cost-wrap">
-      <div class="story-cost" style="background: #1E1422; color: #fff;">
-        <div class="story-cost-kicker">Cost to the seller for this entire chat</div>
-        <div class="story-cost-row">
-          <span class="story-cost-zero">₹0</span>
-          <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   </div>
@@ -2236,7 +3003,7 @@
               <span>Marketplace</span>
             </div>
 
-            <sc-if value="{{ shop.storeView }}" hint-placeholder-val="{{ true }}">
+            <div class="{{ shop.storePanelClass }}">
               <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0">
                 <div class="hiw-mkt-store-head">
                   <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
@@ -2289,16 +3056,16 @@
                   </sc-for>
                 </div>
               </div>
-            </sc-if>
+            </div>
 
-            <sc-if value="{{ shop.tryView }}" hint-placeholder-val="{{ false }}">
+            <div class="{{ shop.tryPanelClass }}">
               <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
                 <div style="padding: 14px 18px 10px; display: flex; align-items: center; gap: 10px">
                   <span sc-camel-on-click="{{ shop.back }}" style="font-size: 13px; font-weight: 700; color: #C42E8B; cursor: pointer">← Store</span>
                   <span style="font-size: 12.5px; color: #8D8296">Studio Noir</span>
                 </div>
                 <div style="padding: 0 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
-                  <div style="flex: 1; position: relative; border-radius: 18px; border: 1.5px solid #F3D9EA; background: #FAF4FB; overflow: hidden; min-height: 0">
+                  <div class="hiw-mkt-blend-stage">
                     <img src="{{ shop.sceneSrc }}" alt="Scene" style="{{ shop.sceneImg }}">
                     <img src="{{ shop.productSrc }}" alt="Your product in the scene" style="{{ shop.productStyle }}">
                     <div style="{{ shop.idle }}">
@@ -2308,6 +3075,7 @@
                     </div>
                     <div style="{{ shop.veil }}"></div>
                     <div style="{{ shop.scan }}"></div>
+                    <div class="{{ shop.ringClass }}" aria-hidden="true"></div>
                     <div style="{{ shop.chip }}">{{ shop.chipText }}</div>
                   </div>
                   <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
@@ -2323,7 +3091,7 @@
                   <div style="text-align: center; font-size: 14.5px; font-weight: 700; color: #fff; padding: 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)">Message the creator</div>
                 </div>
               </div>
-            </sc-if>
+            </div>
 
             <div class="{{ shop.contactClass }}">
               <button type="button" class="hiw-mkt-contact-scrim" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close contact"></button>
@@ -2470,7 +3238,7 @@
       </sc-for>
     </div>
     <div class="stepper-body" style="display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; padding: 40px 44px; align-items: center;">
-      <div>
+      <div class="stepper-copy">
         <span style="display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: {{ activeStep.badgeFg }}; background: {{ activeStep.badgeBg }}; padding: 5px 11px; border-radius: 999px; margin-bottom: 14px;">{{ activeStep.badge }}</span>
         <div style="font-size: 27px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15; margin-bottom: 12px;">{{ activeStep.title }}</div>
         <p style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0 0 20px;">{{ activeStep.body }}</p>
@@ -2486,7 +3254,7 @@
           <span class="stepper-count" style="font-size: 13.5px; color: #8A7E92; white-space: nowrap;">{{ stepCounter }}</span>
         </div>
       </div>
-      <div style="position: relative; min-height: 320px; border-radius: 20px; overflow: hidden; background: #F3E7F4;">
+      <div class="stepper-visual" style="position: relative; min-height: 320px; border-radius: 20px; overflow: hidden; background: #F3E7F4;">
         <img src="{{ activeStep.img }}" alt="{{ activeStep.title }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
         <span style="position: absolute; left: 14px; bottom: 14px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; color: #1E1422; background: rgba(255,255,255,.93); padding: 7px 13px; border-radius: 999px; white-space: nowrap;">{{ activeStep.caption }}</span>
       </div>
@@ -2496,41 +3264,66 @@
 
 <!-- WHAT YOU CAN LIST (auto-shifting) -->
 <section id="list" class="sec pad" style="padding: 0 32px 40px; max-width: 1160px; margin: 0 auto;">
-  <div data-reveal="" style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 22px;">
+  <div data-reveal="" class="list-head" style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 22px;">
     <div>
-      <p style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #C42E8B; margin: 0 0 16px;">What you can list</p>
-      <h2 class="h2" style="font-size: 36px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0;">Every category, as a blend-ready listing.</h2>
+      <p class="list-kicker" style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #C42E8B; margin: 0 0 16px;">What you can list</p>
+      <h2 class="h2 list-h2" style="font-size: 36px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0;">Every category, as a blend-ready listing.</h2>
     </div>
-    <div style="display: flex; align-items: baseline; gap: 14px;">
-      <span style="font-size: 14.5px; color: #6b6072;">{{ activeCat.count }}</span>
-      <span style="font-size: 12px; font-weight: 800; letter-spacing: .14em; color: #C42E8B;">{{ catIndexLabel }}</span>
+    <div class="list-meta" style="display: flex; align-items: baseline; gap: 12px; flex-wrap: nowrap;">
+      <span class="list-meta-count">{{ activeCat.count }}</span>
+      <span class="list-meta-idx">{{ catIndexLabel }}</span>
     </div>
   </div>
   <div data-reveal="" class="cat-filters" style="display: flex; flex-wrap: nowrap; gap: 9px; margin-bottom: 24px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 2px;">
     <sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
-      <button class="cat-filter" sc-camel-on-click="{{ c.pick }}" style="{{ c.style }}"><span style="position: relative; z-index: 1;">{{ c.name }}</span><span style="{{ c.barStyle }}"></span></button>
+      <button class="cat-filter {{ c.activeClass }}" sc-camel-on-click="{{ c.pick }}" style="{{ c.style }}"><span style="position: relative; z-index: 1;">{{ c.name }}</span><span style="{{ c.barStyle }}"></span></button>
     </sc-for>
   </div>
-  <div data-reveal="" class="cat-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
-    <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="4">
-      <div class="cat-card" style="position: relative; aspect-ratio: 3 / 4; border-radius: 18px; overflow: hidden; box-shadow: 0 20px 40px -36px rgba(30,20,34,.65); background: #EDE4F0;">
-        <img src="{{ c.img }}" alt="{{ c.label }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(30,20,34,.72)); pointer-events: none;"></div>
-        <span style="position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-weight: 800; letter-spacing: .1em; color: #fff; background: linear-gradient(113.667deg,#A855F7,#F43F5E); padding: 5px 9px; border-radius: 999px;"><span style="width:4px;height:4px;border-radius:50%;background:#fff;animation:blink 1.6s infinite;"></span>BLEND READY</span>
-        <div style="position: absolute; left: 12px; right: 12px; bottom: 12px;">
-          <div style="font-size: 13.5px; font-weight: 800; color: #fff; line-height: 1.2;">{{ c.label }}</div>
-          <div style="font-size: 12px; color: rgba(255,255,255,.72); margin-top: 2px;">{{ c.price }}</div>
-        </div>
+  <div class="cat-grid">
+    <div class="cat-card">
+      <img src="{{ card0.img }}" alt="{{ card0.label }}">
+      <div class="cat-card-shade" aria-hidden="true"></div>
+      <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
+      <div class="cat-card-meta">
+        <div class="cat-card-label">{{ card0.label }}</div>
+        <div class="cat-card-price">{{ card0.price }}</div>
       </div>
-    </sc-for>
+    </div>
+    <div class="cat-card">
+      <img src="{{ card1.img }}" alt="{{ card1.label }}">
+      <div class="cat-card-shade" aria-hidden="true"></div>
+      <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
+      <div class="cat-card-meta">
+        <div class="cat-card-label">{{ card1.label }}</div>
+        <div class="cat-card-price">{{ card1.price }}</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="{{ card2.img }}" alt="{{ card2.label }}">
+      <div class="cat-card-shade" aria-hidden="true"></div>
+      <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
+      <div class="cat-card-meta">
+        <div class="cat-card-label">{{ card2.label }}</div>
+        <div class="cat-card-price">{{ card2.price }}</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="{{ card3.img }}" alt="{{ card3.label }}">
+      <div class="cat-card-shade" aria-hidden="true"></div>
+      <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
+      <div class="cat-card-meta">
+        <div class="cat-card-label">{{ card3.label }}</div>
+        <div class="cat-card-price">{{ card3.price }}</div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- SAME CATALOGUE -->
 <section id="same-catalogue" class="sec pad" style="padding: 40px 32px 86px; max-width: 1160px; margin: 0 auto;">
-  <div data-reveal="" style="max-width: 660px; margin: 0 0 34px;">
-    <h2 class="h2" style="font-size: 38px; line-height: 1.1; letter-spacing: -.032em; font-weight: 800; margin: 0 0 12px;">Same catalogue. Different conversation.</h2>
-    <p style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0;">Nothing about your studio changes except what the brand can see.</p>
+  <div data-reveal="" class="same-head" style="max-width: 660px; margin: 0 0 34px;">
+    <h2 class="h2 same-h2" style="font-size: 38px; line-height: 1.1; letter-spacing: -.032em; font-weight: 800; margin: 0 0 12px;">Same catalogue. Different conversation.</h2>
+    <p class="same-lead" style="font-size: 16.5px; line-height: 1.6; color: #5b5060; margin: 0;">Nothing about your studio changes except what the brand can see.</p>
   </div>
   <div class="compare-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
     <div data-reveal="" data-delay="1" style="background: #fff; border: 1px solid #F0E6F2; border-radius: 26px; padding: 32px 30px;">
@@ -2559,9 +3352,9 @@
     </div>
   </div>
 
-  <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px;">
-    <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
-    <a href="#cost" style="font-size: 15.5px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 14px 24px; border-radius: 999px; border: 1px solid #EADDEC; background: #fff;" style-hover="border-color:#C42E8B;">What it costs you</a>
+  <div class="cta-pair" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px;">
+    <a class="pb-grad-btn cta-pair-primary" href="#start" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
+    <a class="cta-pair-secondary" href="#cost" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 15px 26px; border-radius: 999px; border: 1px solid #EADDEC; background: #fff; box-sizing: border-box;" style-hover="border-color:#C42E8B;">What it costs you</a>
   </div>
 </section>
 
@@ -2575,9 +3368,9 @@
         <p class="cmp-lead">On the left, your scene with a sample product. On the right, the same scene with theirs. Only one of them answers their question.</p>
       </div>
       <div class="cmp-cols">
-        <span class="cmp-col-label is-before">Without PixelBlend</span>
+        <span class="cmp-col-label is-before">What they see today</span>
         <span></span>
-        <span class="cmp-col-label is-after">With PixelBlend</span>
+        <span class="cmp-col-label is-after">What they could see instead</span>
       </div>
       <div class="cmp-list">
         <sc-for list="{{ compareRows }}" as="r" hint-placeholder-count="4">
@@ -2610,10 +3403,10 @@
   <div data-reveal="" class="benefit-panel" style="background: #1E1422; color: #fff; border-radius: 30px; padding: 44px 44px 34px; overflow: hidden; position: relative;">
     <div style="position: absolute; right: -120px; top: -140px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,.22), transparent 66%); pointer-events: none;"></div>
     <div style="position: relative;">
-      <div style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 34px;">
+      <div class="benefit-head" style="display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 34px;">
         <div>
-          <p style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #F9A8D4; margin: 0 0 16px;">Beyond the licence count</p>
-          <h2 class="h2" style="font-size: 38px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0; max-width: 660px;">Selling gets calmer, not just <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;">bigger.</span></h2>
+          <p class="benefit-kicker" style="font-size: 11.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #F9A8D4; margin: 0 0 16px;">Beyond the licence count</p>
+          <h2 class="h2 benefit-h2" style="font-size: 38px; line-height: 1.07; letter-spacing: -.035em; font-weight: 800; margin: 0; max-width: 660px;">Selling gets calmer, not just <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic;">bigger.</span></h2>
         </div>
       </div>
       <div class="benefit-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;">
@@ -2710,11 +3503,27 @@ class Component extends DCLogic {
     if (document.body.style.overflow !== want) document.body.style.overflow = want;
     /* Softgen remounts wipe is-in — re-apply without killing scroll motion */
     if (this._revealCheck) this._revealCheck();
-    const vs = (typeof this._storyVisualStep === 'number')
+    const vs = (typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0)
       ? this._storyVisualStep
       : this.state.storyStep;
     this._syncStoryBlocks(vs);
     this._positionFeed();
+    requestAnimationFrame(() => this._positionFeed());
+    this._syncCatSlider();
+  }
+  _syncCatSlider() {
+    if (this._lastCatSynced === this.state.cat) return;
+    this._lastCatSynced = this.state.cat;
+    requestAnimationFrame(() => {
+      const filters = document.querySelector('#list .cat-filters');
+      const on = filters && filters.querySelector('.cat-filter.is-on');
+      if (filters && on) {
+        const mid = on.offsetLeft - (filters.clientWidth - on.offsetWidth) / 2;
+        filters.scrollTo({ left: Math.max(0, mid), behavior: 'smooth' });
+      }
+      const grid = document.querySelector('#list .cat-grid');
+      if (grid) grid.scrollTo({ left: 0 });
+    });
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
@@ -2728,7 +3537,7 @@ class Component extends DCLogic {
   runShopBlend(i) {
     clearTimeout(this._shopBlendT);
     this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
-    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1150);
+    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
   }
   backShop() {
     clearTimeout(this._shopBlendT);
@@ -2772,6 +3581,52 @@ class Component extends DCLogic {
       /* Step 0 rail stays lit once engaged — no flicker off/on */
       rail.classList.toggle('is-on', !last && step >= 0 && i <= step);
     });
+    this._syncChatBubbles(step);
+  }
+  _syncChatBubbles(step) {
+    const feed = document.getElementById('chat-feed');
+    if (!feed) return;
+    if (!this._chatShown) this._chatShown = new Set();
+    const s = (typeof step === 'number' && step >= 0) ? step : 0;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    feed.querySelectorAll('[data-g]').forEach((el) => {
+      const n = parseInt(el.getAttribute('data-g'), 10);
+      const on = n <= s;
+      if (on) {
+        el.classList.add('is-on');
+        if (!this._chatShown.has(n)) {
+          this._chatShown.add(n);
+          if (reduce) {
+            el.classList.add('is-anim', 'is-settled');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          } else {
+            el.classList.remove('is-anim', 'is-settled');
+            el.style.opacity = '';
+            el.style.transform = '';
+            void el.offsetWidth;
+            el.classList.add('is-anim');
+            const settle = () => {
+              el.classList.add('is-settled');
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+            };
+            el.addEventListener('animationend', settle, { once: true });
+            setTimeout(settle, 700);
+          }
+        } else {
+          /* Already revealed — Softgen remount: stay visible, no replay */
+          el.classList.add('is-anim', 'is-settled');
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+      } else {
+        this._chatShown.delete(n);
+        el.classList.remove('is-on', 'is-anim', 'is-settled');
+        el.style.opacity = '';
+        el.style.transform = '';
+      }
+    });
   }
   _isStoryMobile() {
     return window.matchMedia('(max-width: 768px)').matches;
@@ -2798,31 +3653,29 @@ class Component extends DCLogic {
       return;
     }
     this._storyEngaged = true;
-    /* Freeze travel once engaged — point title height must not retarget progress */
-    if (this._storyTravelLock == null) this._storyTravelLock = liveTravel;
+    /* Refresh travel on big layout changes; otherwise keep lock so title height can't retarget */
+    if (this._storyTravelLock == null || Math.abs(liveTravel - this._storyTravelLock) > 120) {
+      this._storyTravelLock = liveTravel;
+    }
     const travel = this._storyTravelLock;
     const scrolled = Math.max(0, Math.min(travel, raw));
     const p = scrolled / travel;
     const cur = (typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0)
       ? this._storyVisualStep
       : (this.state.storyStep || 0);
-    /* Equal quarters — need clear scroll into next band; only ±1 step so 1→2→3→4 */
-    const cuts = [0.25, 0.50, 0.75];
-    const h = 0.06;
-    let best = Math.min(3, Math.max(0, cur));
-    if (best < 3 && p >= cuts[best] + h) best += 1;
-    else if (best > 0 && p < cuts[best - 1] - h) best -= 1;
+    /* 4 equal bands — only move ±1 so 1 → 2 → 3 → 4 never skips */
+    const band = Math.min(3, Math.max(0, Math.floor(p * 4)));
+    let best = cur;
+    if (band > cur) best = cur + 1;
+    else if (band < cur) best = cur - 1;
+    best = Math.min(3, Math.max(0, best));
     this._storyVisualStep = best;
-    /* DOM first so Softgen remount can't flash the previous step */
     this._syncStoryBlocks(best);
     this._positionFeed();
+    /* Keep Softgen chat in sync every step (no debounce — debounce skipped step 2) */
     if (best !== this.state.storyStep) {
       if (this._storyStateT) clearTimeout(this._storyStateT);
-      this._storyStateT = setTimeout(() => {
-        if (this._storyVisualStep !== this.state.storyStep) {
-          this.setState({ storyStep: this._storyVisualStep });
-        }
-      }, 40);
+      this.setState({ storyStep: best });
     }
   }
   _gotoStory(i) {
@@ -2854,34 +3707,33 @@ class Component extends DCLogic {
     const vr = view.getBoundingClientRect();
     const vh = window.innerHeight || 800;
     if (vr.bottom < -vh || vr.top > vh * 2) return;
-    const step = (typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0)
-      ? this._storyVisualStep
-      : this.state.storyStep;
-    const g = feed.querySelector('[data-g="' + step + '"]');
-    if (!g) return;
-    const topPad = 10;
-    const bottomPad = 14;
+    const step = (typeof this.state.storyStep === 'number')
+      ? this.state.storyStep
+      : ((typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0) ? this._storyVisualStep : 0);
+    /* Re-apply bubble visibility before measuring (Softgen remount can wipe classes) */
+    this._syncChatBubbles(step);
+    const current = feed.querySelector('[data-g="' + step + '"].is-on') || feed.querySelector('[data-g="' + step + '"]');
+    if (!current) return;
+    const first = feed.querySelector('[data-g].is-on') || feed.querySelector('[data-g="0"]') || current;
+    const topPad = 12;
+    const bottomPad = 18;
     const viewH = view.clientHeight;
-    const groupTop = g.offsetTop;
-    const groupH = g.offsetHeight;
-    const groupBottom = groupTop + groupH;
     const usable = viewH - topPad - bottomPad;
+    const startTop = first.offsetTop;
+    const endBottom = current.offsetTop + current.offsetHeight;
+    const stackH = Math.max(0, endBottom - startTop);
 
     let y;
-    if (groupH <= usable) {
-      /* Fits fully — show from top so no bubble is clipped */
-      y = Math.min(0, topPad - groupTop);
-      if (groupBottom + y > viewH - bottomPad) {
-        y = Math.min(0, viewH - groupBottom - bottomPad);
-      }
-    } else if (step === 2) {
-      /* Step 3 tall — keep full group as visible as possible from top */
-      y = Math.min(0, topPad - groupTop);
+    if (step <= 1 && stackH <= usable) {
+      /* Early steps: start from the top */
+      y = topPad - startTop;
     } else {
-      /* Other tall steps — keep start visible */
-      y = Math.min(0, topPad - groupTop);
+      /*
+        Later / tall thread: pin the latest message to the bottom.
+        Older messages fill the space above (as many as fit).
+      */
+      y = viewH - bottomPad - endBottom;
     }
-    if (groupTop + y > topPad) y = Math.min(0, y);
     const t = 'translateY(' + Math.round(y) + 'px)';
     if (feed.style.transform !== t) feed.style.transform = t;
   }
@@ -2976,9 +3828,9 @@ class Component extends DCLogic {
     const handle = this.props.sellerHandle ?? 'studionoir';
 
     const triptych = [
-      { label: 'Your background scene', labelFg: 'rgba(255,255,255,.55)', img: U('1517842645767-c639042777db', 520), note: 'The same scene you already shot. No new brief, no client call, no re-shoot.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', op: '+', opFg: 'rgba(255,255,255,.35)' },
-      { label: 'Their product', labelFg: 'rgba(255,255,255,.55)', img: U('1542291026-7eec264c27ff', 520), note: 'They upload one clear packshot, straight from their own catalogue.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', op: '=', opFg: '#EC4899' },
-      { label: 'Their product, in your scene', labelFg: '#F9A8D4', img: U('1600185365483-26d7a4cc7519', 720), note: 'Blended in seconds, at no cost to you. This is the image that closes the licence.', flex: '1.32', radius: '20px', frame: 'linear-gradient(150deg,#A855F7,#EC4899,#F43F5E)', pad: '5px', sheen: 'linear-gradient(115deg, transparent 35%, rgba(255,255,255,.38) 50%, transparent 65%)', anim: 'shimmer 3.6s ease-in-out infinite', op: '', opFg: 'transparent' },
+      { label: 'Your background scene', labelFg: 'rgba(255,255,255,.55)', img: U('1517842645767-c639042777db', 520), note: 'The same scene you already shot. No new brief, no client call, no re-shoot.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', opClass: 'tri-op tri-op--plus' },
+      { label: 'Their product', labelFg: 'rgba(255,255,255,.55)', img: U('1542291026-7eec264c27ff', 520), note: 'They upload one clear packshot, straight from their own catalogue.', flex: '1', radius: '18px', frame: 'rgba(255,255,255,.08)', pad: '4px', sheen: 'none', anim: 'none', opClass: 'tri-op tri-op--eq' },
+      { label: 'Their product, in your scene', labelFg: '#F9A8D4', img: U('1600185365483-26d7a4cc7519', 720), note: 'Blended in seconds, at no cost to you. This is the image that closes the licence.', flex: '1.32', radius: '20px', frame: 'linear-gradient(150deg,#A855F7,#EC4899,#F43F5E)', pad: '5px', sheen: 'linear-gradient(115deg, transparent 35%, rgba(255,255,255,.38) 50%, transparent 65%)', anim: 'shimmer 3.6s ease-in-out infinite', opClass: 'tri-op is-blank' },
     ];
     const ticker = ['Free to list', '₹0 for brand blends', 'They generate 20 visuals — still ₹0', 'No subscription', 'No re-shoots', 'New brands find you', 'You keep the client'];
     const tickerLoop = ticker.concat(ticker);
@@ -3008,12 +3860,6 @@ class Component extends DCLogic {
     });
     const storyStep0 = storySteps[0];
     const storyStepsRest = storySteps.slice(1);
-    const bubble = (n) => ({
-      opacity: st >= n ? 1 : 0,
-      transform: st >= n ? 'none' : 'translateY(14px)',
-      transition: 'opacity .45s ease, transform .45s ease',
-      pointerEvents: st >= n ? 'auto' : 'none',
-    });
     const pips = [0, 1, 2, 3].map((i) => ({ bg: st >= i ? 'linear-gradient(90deg,#A855F7,#F43F5E)' : '#EADDEC' }));
     const stepBadge = 'STEP ' + (st + 1) + '/4';
 
@@ -3057,7 +3903,7 @@ class Component extends DCLogic {
         { label: 'Soft gradient set', price: '₹1,499', img: U('1517842645767-c639042777db', 520) },
         { label: 'Colour-block studio', price: '₹1,890', img: U('1495616811223-4d98c6e9c869', 520) },
         { label: 'Shadow-play backdrop', price: '₹1,350', img: U('1600185365483-26d7a4cc7519', 520) }] },
-      { name: 'Marble & stone', count: 'Marble & stone · tabletop surfaces', cards: [
+      { name: 'Marble & stone', count: 'Marble & stone · tabletops', cards: [
         { label: 'Sunlit marble tabletop', price: '₹1,499', img: U('1519681393784-d120267933ba', 520) },
         { label: 'Travertine ledge', price: '₹2,290', img: U('1594035910387-fea47794261f', 520) },
         { label: 'Dark granite slab', price: '₹1,950', img: U('1513694203232-719a280e022f', 520) },
@@ -3067,22 +3913,22 @@ class Component extends DCLogic {
         { label: 'Golden-hour beach', price: '₹2,290', img: U('1507525428034-b723cf961d3e', 520) },
         { label: 'Desert dune light', price: '₹2,650', img: U('1434056886845-dac89ffe9b56', 520) },
         { label: 'Mountain haze', price: '₹2,150', img: U('1460353581641-37baddab0fa2', 520) }] },
-      { name: 'Lifestyle interiors', count: 'Lifestyle interiors · homes and cafés', cards: [
+      { name: 'Lifestyle interiors', count: 'Lifestyle interiors · homes & cafés', cards: [
         { label: 'Sunlit kitchen counter', price: '₹2,450', img: U('1513694203232-719a280e022f', 520) },
         { label: 'Café tabletop', price: '₹1,890', img: U('1509042239860-f550ce710b93', 520) },
         { label: 'Linen bedside', price: '₹2,100', img: U('1556228578-8c89e6adf883', 520) },
         { label: 'Living-room shelf', price: '₹2,890', img: U('1550226891-ef816aed4a98', 520) }] },
-      { name: 'Seasonal & festive', count: 'Seasonal & festive · campaign-ready sets', cards: [
+      { name: 'Seasonal & festive', count: 'Seasonal & festive · campaign sets', cards: [
         { label: 'Diwali warm-light set', price: '₹3,150', img: U('1594035910387-fea47794261f', 520) },
         { label: 'Holiday pine table', price: '₹2,790', img: U('1441974231531-c6227db76b6e', 520) },
         { label: 'Summer poolside', price: '₹2,490', img: U('1507525428034-b723cf961d3e', 520) },
         { label: 'Monsoon window', price: '₹1,990', img: U('1495616811223-4d98c6e9c869', 520) }] },
-      { name: 'Luxury & editorial', count: 'Luxury & editorial · dark and moody', cards: [
+      { name: 'Luxury & editorial', count: 'Luxury & editorial · dark & moody', cards: [
         { label: 'Black glass plinth', price: '₹6,900', img: U('1522335789203-aabd1fc54bc9', 520) },
         { label: 'Velvet drape set', price: '₹5,400', img: U('1618366712010-f4ae9c647dcb', 520) },
         { label: 'Smoke & spotlight', price: '₹4,800', img: U('1595950653106-6c9ebd614d3a', 520) },
         { label: 'Mirror pedestal', price: '₹7,200', img: U('1523275335684-37898b6baf30', 520) }] },
-      { name: 'Urban & street', count: 'Urban & street · concrete and neon', cards: [
+      { name: 'Urban & street', count: 'Urban & street · concrete & neon', cards: [
         { label: 'Concrete wall', price: '₹1,690', img: U('1516035069371-29a1b244cc32', 520) },
         { label: 'Neon alley', price: '₹2,890', img: U('1595950653106-6c9ebd614d3a', 520) },
         { label: 'Rooftop skyline', price: '₹3,200', img: U('1505740420928-5e560c06d30e', 520) },
@@ -3097,6 +3943,7 @@ class Component extends DCLogic {
       const on = S.cat === i;
       return {
         name: c.name,
+        activeClass: on ? 'is-on' : '',
         pick: () => this.setState({ cat: i, catProg: 0 }),
         style: {
           position: 'relative', overflow: 'hidden',
@@ -3114,7 +3961,7 @@ class Component extends DCLogic {
         },
       };
     });
-    const catIndexLabel = (S.cat + 1) + ' / ' + catData.length;
+    const catIndexLabel = (S.cat + 1) + '\u00a0/\u00a0' + catData.length;
 
     const heroProofs = ['Listing is free, forever', 'Brand blends cost you ₹0', 'Zero commission on your licences', 'No new brief, no client call, no re-shoot'];
     const benefits = [
@@ -3220,6 +4067,8 @@ class Component extends DCLogic {
     const shop = {
       storeView: S.shopStep === 0,
       tryView: S.shopStep === 1,
+      storePanelClass: 'hiw-mkt-panel' + (S.shopStep === 0 ? ' is-on' : ''),
+      tryPanelClass: 'hiw-mkt-panel hiw-mkt-panel--try' + (S.shopStep === 1 ? ' is-on' : ''),
       back: () => this.backShop(),
       picked: { name: pickedListing.name },
       sceneSrc: pickedListing.src,
@@ -3227,35 +4076,39 @@ class Component extends DCLogic {
       sceneImg: {
         position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
         objectPosition: 'center center', display: 'block',
-        opacity: shopDone || shopWorking ? 1 : 0,
-        transform: shopDone ? 'scale(1)' : 'scale(1.05)',
-        filter: shopDone ? 'blur(0px)' : (shopWorking ? 'blur(6px)' : 'blur(12px)'),
-        transition: 'opacity .65s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .65s ease'
+        opacity: 1,
+        transform: shopDone ? 'scale(1)' : (shopWorking ? 'scale(1.06)' : 'scale(1.02)'),
+        filter: shopDone ? 'blur(0px) saturate(1.05)' : (shopWorking ? 'blur(5px) saturate(1.15)' : 'blur(0px)'),
+        transition: 'transform 1.1s cubic-bezier(.2,.8,.2,1), filter .7s ease'
       },
       productStyle: {
         position: 'absolute', left: '50%', top: '50%', width: '52%', aspectRatio: '1 / 1',
-        transform: shopDone ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
+        transform: shopDone
+          ? 'translate(-50%, -50%) scale(1)'
+          : (shopWorking ? 'translate(-50%, -42%) scale(.72)' : 'translate(-50%, -50%) scale(.85)'),
         borderRadius: '10px', overflow: 'hidden', objectFit: 'cover', objectPosition: 'center center',
         boxShadow: '0 22px 36px -20px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
-        opacity: shopDone ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
+        opacity: shopDone ? 1 : (shopWorking ? .35 : 0),
+        transition: 'opacity .55s ease .12s, transform .95s cubic-bezier(.2,.8,.2,1) .12s'
       },
       idle: {
         position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         gap: '9px', padding: '20px', textAlign: 'center',
-        opacity: sb === 'idle' ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+        opacity: 0, transition: 'opacity .35s ease', pointerEvents: 'none'
       },
       veil: {
-        position: 'absolute', inset: 0, background: 'rgba(26,20,32,.14)',
+        position: 'absolute', inset: 0, background: 'rgba(26,20,32,.16)',
         opacity: shopWorking ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
       },
       scan: {
         position: 'absolute', left: 0, right: 0, height: '46%',
-        background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.34) 50%, rgba(236,72,153,0) 100%)',
+        background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.38) 50%, rgba(236,72,153,0) 100%)',
         boxShadow: '0 0 24px rgba(236,72,153,.5)',
         opacity: shopWorking ? 1 : 0,
-        animation: shopWorking ? 'v4Scan 1.15s linear infinite' : 'none',
+        animation: shopWorking ? 'v4Scan 1.05s linear infinite' : 'none',
         pointerEvents: 'none'
       },
+      ringClass: 'hiw-mkt-blend-ring' + (shopWorking ? ' is-on' : ''),
       chip: {
         position: 'absolute', left: '10px', right: '10px', bottom: '10px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -3263,7 +4116,7 @@ class Component extends DCLogic {
         border: '1px solid rgba(230,222,214,.9)', boxShadow: '0 8px 22px -14px rgba(74,52,40,.9)',
         fontSize: '10.5px', fontWeight: 800, letterSpacing: '.04em', whiteSpace: 'nowrap',
         color: shopWorking ? '#8D8296' : '#C42E8B',
-        opacity: sb === 'idle' ? 0 : 1, transform: sb === 'idle' ? 'translateY(6px)' : 'translateY(0)',
+        opacity: shopWorking || shopDone ? 1 : 0, transform: shopWorking || shopDone ? 'translateY(0)' : 'translateY(6px)',
         transition: 'opacity .35s ease, transform .35s ease', pointerEvents: 'none'
       },
       chipText: shopWorking ? 'BLENDING…' : (shopDone ? pickedListing.name.toUpperCase() : ''),
@@ -3375,7 +4228,6 @@ class Component extends DCLogic {
       burgerBd: sc ? '#EFE2F0' : 'rgba(255,255,255,.22)',
       heroBg, handle, triptych, tickerLoop, heroProofs, benefits,
       storySteps, storyStep0, storyStepsRest, pips, stepBadge,
-      b1: bubble(0), b2: bubble(1), b3: bubble(2), b4: bubble(3),
       compareRows, dragStart, dragMove, dragEnd,
       splitPct: S.split.toFixed(1) + '%',
       compareLeft: U('1557683316-973673baf926', 900),
@@ -3384,7 +4236,12 @@ class Component extends DCLogic {
       hesitations, steps, activeStep, nextStep, nextLabel, stepCounter, shop, discoveryFacts, discoStats,
       pauseSteps: () => { if (!this.state.stepPaused) this.setState({ stepPaused: true }); },
       resumeSteps: () => { if (this.state.stepPaused) this.setState({ stepPaused: false }); },
-      cats, activeCat: { count: catData[S.cat].count }, catCards: catData[S.cat].cards, catIndexLabel,
+      cats, activeCat: { count: catData[S.cat].count },
+      card0: catData[S.cat].cards[0],
+      card1: catData[S.cat].cards[1],
+      card2: catData[S.cat].cards[2],
+      card3: catData[S.cat].cards[3],
+      catIndexLabel,
       promises, without, withUs,
       discoFeed, discoveryPoints,
       faqs, footerCols,

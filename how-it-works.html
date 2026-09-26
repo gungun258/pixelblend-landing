@@ -513,6 +513,68 @@
       max-width: 100%;
       position: relative;
     }
+    .hiw-mkt-panel {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 36px; /* below status bar */
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate3d(0, 10px, 0) scale(.985);
+      transition:
+        opacity .45s cubic-bezier(.22, 1, .36, 1),
+        transform .5s cubic-bezier(.22, 1, .36, 1),
+        visibility 0s linear .45s;
+      z-index: 1;
+    }
+    .hiw-mkt-panel.is-on {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition:
+        opacity .45s cubic-bezier(.22, 1, .36, 1),
+        transform .5s cubic-bezier(.22, 1, .36, 1),
+        visibility 0s linear 0s;
+      z-index: 2;
+    }
+    .hiw-mkt-blend-stage {
+      flex: 1;
+      position: relative;
+      border-radius: 18px;
+      border: 1.5px solid #F3D9EA;
+      background: #FAF4FB;
+      overflow: hidden;
+      min-height: 0;
+    }
+    @keyframes hiwMktPulse {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+    .hiw-mkt-blend-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 72px;
+      height: 72px;
+      margin: -36px 0 0 -36px;
+      border-radius: 50%;
+      border: 2px solid rgba(236, 72, 153, .45);
+      box-shadow: 0 0 0 10px rgba(236, 72, 153, .08);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .hiw-mkt-blend-ring.is-on {
+      opacity: 1;
+      animation: hiwMktPulse 1.1s ease-in-out infinite;
+    }
     .hiw-mkt-act {
       display: flex;
       align-items: center;
@@ -3839,7 +3901,7 @@
                 <span>Marketplace</span>
               </div>
 
-              <sc-if value="{{ shop.storeView }}" hint-placeholder-val="{{ true }}">
+              <div class="{{ shop.storePanelClass }}">
                 <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0">
                   <div class="hiw-mkt-store-head">
                     <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
@@ -3892,16 +3954,16 @@
                     </sc-for>
                   </div>
                 </div>
-              </sc-if>
+              </div>
 
-              <sc-if value="{{ shop.tryView }}" hint-placeholder-val="{{ false }}">
+              <div class="{{ shop.tryPanelClass }}">
                 <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden">
                   <div style="padding: 14px 18px 10px; display: flex; align-items: center; gap: 10px">
                     <span sc-camel-on-click="{{ shop.back }}" style="font-size: 13px; font-weight: 700; color: #C42E8B; cursor: pointer">← Store</span>
                     <span style="font-size: 12.5px; color: #8D8296">Studio Noir</span>
                   </div>
                   <div style="padding: 0 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden">
-                    <div style="flex: 1; position: relative; border-radius: 18px; border: 1.5px solid #F3D9EA; background: #FAF4FB; overflow: hidden; min-height: 0">
+                    <div class="hiw-mkt-blend-stage">
                       <img src="{{ shop.sceneSrc }}" alt="Scene" style="{{ shop.sceneImg }}">
                       <img src="{{ shop.productSrc }}" alt="Your product in the scene" style="{{ shop.productStyle }}">
                       <div style="{{ shop.idle }}">
@@ -3911,6 +3973,7 @@
                       </div>
                       <div style="{{ shop.veil }}"></div>
                       <div style="{{ shop.scan }}"></div>
+                      <div class="{{ shop.ringClass }}" aria-hidden="true"></div>
                       <div style="{{ shop.chip }}">{{ shop.chipText }}</div>
                     </div>
                     <div style="background: #fff; border: 1px solid #EFE7E0; border-radius: 14px; padding: 12px 14px">
@@ -3926,7 +3989,7 @@
                     <div style="text-align: center; font-size: 14.5px; font-weight: 700; color: #fff; padding: 14px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E)">Message the creator</div>
                   </div>
                 </div>
-              </sc-if>
+              </div>
 
               <div class="{{ shop.contactClass }}">
                 <button type="button" class="hiw-mkt-contact-scrim" sc-camel-on-click="{{ shop.closeContact }}" aria-label="Close contact"></button>
@@ -4227,8 +4290,9 @@ class Component extends DCLogic {
 
   runShopBlend = (i) => {
     clearTimeout(this._shopBlendT);
+    /* Crossfade to result panel while blending — no Softgen unmount jump */
     this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
-    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1150);
+    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
   };
 
   backShop = () => {
@@ -5050,6 +5114,8 @@ class Component extends DCLogic {
         return {
         storeView: s.shopStep === 0,
         tryView: s.shopStep === 1,
+        storePanelClass: 'hiw-mkt-panel' + (s.shopStep === 0 ? ' is-on' : ''),
+        tryPanelClass: 'hiw-mkt-panel hiw-mkt-panel--try' + (s.shopStep === 1 ? ' is-on' : ''),
         back: () => this.backShop(),
         picked: { name: picked.name },
         sceneSrc: picked.src,
@@ -5057,35 +5123,39 @@ class Component extends DCLogic {
         sceneImg: {
           position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
           objectPosition: 'center center', display: 'block',
-          opacity: shopDone || shopWorking ? 1 : 0,
-          transform: shopDone ? 'scale(1)' : 'scale(1.05)',
-          filter: shopDone ? 'blur(0px)' : (shopWorking ? 'blur(6px)' : 'blur(12px)'),
-          transition: 'opacity .65s ease, transform .9s cubic-bezier(.2,.8,.2,1), filter .65s ease'
+          opacity: 1,
+          transform: shopDone ? 'scale(1)' : (shopWorking ? 'scale(1.06)' : 'scale(1.02)'),
+          filter: shopDone ? 'blur(0px) saturate(1.05)' : (shopWorking ? 'blur(5px) saturate(1.15)' : 'blur(0px)'),
+          transition: 'transform 1.1s cubic-bezier(.2,.8,.2,1), filter .7s ease'
         },
         productStyle: {
           position: 'absolute', left: '50%', top: '50%', width: '52%', aspectRatio: '1 / 1',
-          transform: shopDone ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(.9)',
+          transform: shopDone
+            ? 'translate(-50%, -50%) scale(1)'
+            : (shopWorking ? 'translate(-50%, -42%) scale(.72)' : 'translate(-50%, -50%) scale(.85)'),
           borderRadius: '10px', overflow: 'hidden', objectFit: 'cover', objectPosition: 'center center',
           boxShadow: '0 22px 36px -20px rgba(26,20,32,.65), 0 4px 10px -6px rgba(26,20,32,.5)',
-          opacity: shopDone ? 1 : 0, transition: 'opacity .5s ease .18s, transform .8s cubic-bezier(.2,.8,.2,1) .18s'
+          opacity: shopDone ? 1 : (shopWorking ? .35 : 0),
+          transition: 'opacity .55s ease .12s, transform .95s cubic-bezier(.2,.8,.2,1) .12s'
         },
         idle: {
           position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: '9px', padding: '20px', textAlign: 'center',
-          opacity: sb === 'idle' ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
+          opacity: 0, transition: 'opacity .35s ease', pointerEvents: 'none'
         },
         veil: {
-          position: 'absolute', inset: 0, background: 'rgba(26,20,32,.14)',
+          position: 'absolute', inset: 0, background: 'rgba(26,20,32,.16)',
           opacity: shopWorking ? 1 : 0, transition: 'opacity .35s ease', pointerEvents: 'none'
         },
         scan: {
           position: 'absolute', left: 0, right: 0, height: '46%',
-          background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.34) 50%, rgba(236,72,153,0) 100%)',
+          background: 'linear-gradient(180deg, rgba(236,72,153,0) 0%, rgba(236,72,153,.38) 50%, rgba(236,72,153,0) 100%)',
           boxShadow: '0 0 24px rgba(236,72,153,.5)',
           opacity: shopWorking ? 1 : 0,
-          animation: shopWorking ? 'v4Scan 1.15s linear infinite' : 'none',
+          animation: shopWorking ? 'v4Scan 1.05s linear infinite' : 'none',
           pointerEvents: 'none'
         },
+        ringClass: 'hiw-mkt-blend-ring' + (shopWorking ? ' is-on' : ''),
         chip: {
           position: 'absolute', left: '10px', right: '10px', bottom: '10px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -5093,7 +5163,7 @@ class Component extends DCLogic {
           border: '1px solid rgba(230,222,214,.9)', boxShadow: '0 8px 22px -14px rgba(74,52,40,.9)',
           fontSize: '10.5px', fontWeight: 800, letterSpacing: '.04em', whiteSpace: 'nowrap',
           color: shopWorking ? '#8D8296' : '#C42E8B',
-          opacity: sb === 'idle' ? 0 : 1, transform: sb === 'idle' ? 'translateY(6px)' : 'translateY(0)',
+          opacity: shopWorking || shopDone ? 1 : 0, transform: shopWorking || shopDone ? 'translateY(0)' : 'translateY(6px)',
           transition: 'opacity .35s ease, transform .35s ease', pointerEvents: 'none'
         },
         chipText: shopWorking ? 'BLENDING…' : (shopDone ? picked.name.toUpperCase() : ''),
