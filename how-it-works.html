@@ -1590,8 +1590,9 @@
       .hiw-walk-chapters {
         display: block !important;
         position: relative !important;
-        height: 520vh !important;
-        min-height: 520vh !important;
+        /* Shorter runway = less scrub / jump feel on phone */
+        height: 280vh !important;
+        min-height: 280vh !important;
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
@@ -1603,9 +1604,9 @@
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
-        /* Locked visual viewport — 100dvh jumps with mobile chrome and shakes the panel */
-        height: calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px)) !important;
-        max-height: calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px)) !important;
+        /* svh only — never resize from JS while scrolling (was the big shake) */
+        height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
+        max-height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -1613,16 +1614,25 @@
         flex-direction: column !important;
         justify-content: flex-start !important;
         align-items: stretch !important;
-        padding: 4px 14px 8px !important;
+        padding: 8px 14px 12px !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
         background: #FAF4FB !important;
         box-shadow: none !important;
         border-radius: 0 !important;
         z-index: 2;
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
       .hiw-walk-chapters-progress {
         display: none !important;
+      }
+      .hiw-walk-chapters-stage {
+        position: relative !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
       }
       .hiw-chapter {
         position: absolute !important;
@@ -1631,27 +1641,26 @@
         top: 0 !important;
         bottom: 0 !important;
         margin: 0 !important;
-        padding: 12px 0 8px !important;
+        padding: 8px 0 !important;
         border: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
         opacity: 0 !important;
-        transform: translate3d(0, 6px, 0);
-        transition:
-          opacity 1.05s cubic-bezier(.22, 1, .36, 1),
-          transform 1.05s cubic-bezier(.22, 1, .36, 1) !important;
+        visibility: hidden !important;
+        /* No transform animation — opacity only = much less jank */
+        transform: none !important;
+        transition: opacity .28s ease !important;
         pointer-events: none !important;
         z-index: 1;
         box-sizing: border-box !important;
         will-change: auto;
-        backface-visibility: hidden;
-        -webkit-font-smoothing: antialiased;
       }
       .hiw-chapter.is-on {
         opacity: 1 !important;
-        transform: translate3d(0, 0, 0) !important;
+        visibility: visible !important;
+        transform: none !important;
         pointer-events: auto !important;
         z-index: 2;
       }
@@ -1706,7 +1715,7 @@
         max-width: min(252px, 78vw) !important;
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
-        max-height: min(540px, calc(var(--hiw-vvh, 100svh) - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        max-height: min(540px, calc(100svh - var(--hiw-sticky-top, 64px) - 148px)) !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -1714,6 +1723,7 @@
         box-sizing: border-box !important;
         margin-left: auto !important;
         margin-right: auto !important;
+        box-shadow: 0 18px 36px -28px rgba(26,20,32,.45) !important;
       }
       .hiw-chapter-phone .hiw-phone-screen {
         flex: 1 1 auto !important;
@@ -4239,13 +4249,17 @@ class Component extends DCLogic {
     this._syncWalkViewport = () => {
       const header = document.getElementById('pb-chrome-header');
       const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
-      const top = Math.max(64, headerH + 8);
+      const top = Math.max(64, headerH);
       if (this._lastStickyTop !== top) {
         this._lastStickyTop = top;
         document.documentElement.style.setProperty('--hiw-sticky-top', top + 'px');
       }
+      /* On mobile chapters, never rewrite --hiw-vvh (sticky used to shake) */
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        if (this._lastVvh == null) this._lastVvh = window.innerHeight;
+        return;
+      }
       const vvh = window.innerHeight;
-      /* Freeze visual height while scrolling — mobile chrome show/hide used to shake sticky */
       if (this._scrollSettling) return;
       if (this._lastVvh == null) {
         this._lastVvh = vvh;
@@ -4259,11 +4273,11 @@ class Component extends DCLogic {
     this._syncWalkViewport();
     this._tick = () => {
       this._raf = 0;
-      if (typeof this._syncShootLook === 'function') this._syncShootLook();
+      const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
+      if (!chaptersMode && typeof this._syncShootLook === 'function') this._syncShootLook();
       const next = {};
       const vh = this._lastVvh || window.innerHeight;
       const pinIds = [0, 1, 2, 3].map((i) => document.getElementById('hiw-pin-' + i));
-      const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
       const narrow = chaptersMode;
       const scrolled = window.scrollY > 16;
       /* Skip scrolled flag while walk active — Softgen remount thrash / hang feel */
@@ -4276,57 +4290,36 @@ class Component extends DCLogic {
       const cur = this.state.step;
 
       if (chaptersMode) {
-        /* Mob + tablet: sticky vertical carousel — DOM fade first, Softgen sync delayed */
+        /* DOM-only chapter switch — Softgen setState remount was the jump */
         const wrap = document.querySelector('#walkthrough .hiw-walk-chapters');
         if (wrap) {
           const rect = wrap.getBoundingClientRect();
           const total = Math.max(1, wrap.offsetHeight - vh);
           const scrolledInto = Math.min(total, Math.max(0, -rect.top));
           const p = scrolledInto / total;
-          const inView = rect.bottom > 80 && rect.top < vh - 40;
+          const inView = rect.bottom > 40 && rect.top < vh - 20;
           let curIdx = this._walkChapterIdx;
           if (curIdx == null || curIdx < 0 || curIdx > 2) {
-            curIdx = cur <= 0 ? 0 : (cur >= 3 ? 2 : 1);
-            this._walkChapterIdx = curIdx;
+            curIdx = 0;
+            this._walkChapterIdx = 0;
           }
           const locked = this._chapterLockUntil && Date.now() < this._chapterLockUntil;
           let idx = curIdx;
           if (inView && !locked) {
-            /* Wider hysteresis = fewer mid-scroll flips / jump feel */
-            if (curIdx <= 0) {
-              if (p >= 0.46) idx = 1;
-            } else if (curIdx === 1) {
-              if (p >= 0.82) idx = 2;
-              else if (p < 0.14) idx = 0;
-            } else {
-              if (p < 0.32) idx = 1;
-            }
+            if (p < 0.33) idx = 0;
+            else if (p < 0.66) idx = 1;
+            else idx = 2;
           }
           if (idx !== curIdx) {
             this._walkChapterIdx = idx;
-            this._chapterLockUntil = Date.now() + (idx === 2 ? 1400 : 1100);
+            this._chapterLockUntil = Date.now() + 700;
             const step = idx === 2 ? 3 : idx;
-
-            /* Play CSS fade on current DOM before Softgen remounts phone content */
             wrap.setAttribute('data-chapter', String(idx + 1));
             wrap.querySelectorAll('.hiw-chapter').forEach(function (el, i) {
               el.classList.toggle('is-on', i === idx);
             });
-            wrap.querySelectorAll('.hiw-walk-chapters-progress span').forEach(function (el, i) {
-              el.classList.toggle('is-on', i === idx);
-            });
-
             this._hiwWalkStep = step;
-            clearTimeout(this._chapterSyncT);
-            this._chapterSyncT = setTimeout(() => {
-              if (this.state.step === step) return;
-              const y = window.scrollY || window.pageYOffset || 0;
-              this.setState({ step: step, branchB: false });
-              requestAnimationFrame(() => {
-                const jumped = Math.abs((window.scrollY || 0) - y);
-                if (jumped > 16) window.scrollTo(0, y);
-              });
-            }, 420);
+            /* Intentionally no setState here — Softgen remount jumps the sticky panel */
           } else {
             this._hiwWalkStep = curIdx === 2 ? 3 : curIdx;
           }
@@ -4407,9 +4400,10 @@ class Component extends DCLogic {
       clearTimeout(this._scrollSettleT);
       this._scrollSettleT = setTimeout(() => {
         this._scrollSettling = false;
-        this._syncWalkViewport();
-      }, 180);
-      this._syncShootLook();
+        if (!window.matchMedia('(max-width: 900px)').matches) {
+          this._syncWalkViewport();
+        }
+      }, 220);
       if (!this._raf) this._raf = requestAnimationFrame(this._tick);
     };
     this._onResize = () => {
