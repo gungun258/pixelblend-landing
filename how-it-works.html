@@ -1659,7 +1659,7 @@
         pointer-events: none !important;
         z-index: 1;
         box-sizing: border-box !important;
-        will-change: opacity, transform;
+        will-change: auto;
         backface-visibility: hidden;
         -webkit-font-smoothing: antialiased;
       }
@@ -1669,32 +1669,26 @@
         pointer-events: auto !important;
         z-index: 2;
       }
-      /* Same gradient border frame as desktop step card — only the point, not the section */
+      /* Same step frame — soft fill only on mob (no gradient border = smoother scroll) */
       .hiw-chapter-copy {
         width: 100% !important;
         max-width: 280px !important;
         box-sizing: border-box !important;
         border-radius: 18px !important;
-        border: 1.5px solid transparent !important;
+        border: none !important;
         background: transparent !important;
         box-shadow: none !important;
         padding: 0 !important;
         flex: none !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        transition:
-          background .4s ease,
-          box-shadow .4s ease,
-          padding .4s ease,
-          border-color .4s ease !important;
+        transition: background .3s ease, padding .3s ease !important;
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
         padding: 14px 16px !important;
-        border: 1.5px solid transparent !important;
-        background:
-          linear-gradient(#FFF8FC, #FFF8FC) padding-box,
-          linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) border-box !important;
-        box-shadow: 0 16px 36px -22px rgba(196,46,139,.45) !important;
+        border: none !important;
+        background: #FFF8FC !important;
+        box-shadow: none !important;
       }
       .hiw-chapter-label { margin-bottom: 6px !important; flex: none !important; }
       .hiw-chapter-title { font-size: 17px !important; flex: none !important; }
@@ -1808,6 +1802,9 @@
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
         padding: 18px 22px !important;
+        border: none !important;
+        background: #FFF8FC !important;
+        box-shadow: none !important;
       }
       .hiw-chapter-label {
         margin-bottom: 14px !important;
