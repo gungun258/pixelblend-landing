@@ -1,4 +1,62 @@
 /* PixelBlend site — boot reveal + interactions */
+
+/* Soft in-site hops — register ASAP (before DOMContentLoaded) so drawer clicks never miss */
+(function bindSmoothPageNav() {
+  var going = false;
+  function isInternal(href) {
+    if (!href) return false;
+    if (href.charAt(0) === '#' || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return false;
+    if (/^https?:\/\//i.test(href)) {
+      try { return href.indexOf(location.origin) === 0 && /\.html($|[?#])/.test(href); } catch (e) { return false; }
+    }
+    return /\.html($|[?#])/.test(href);
+  }
+  function sameDoc(url) {
+    try {
+      var a = document.createElement('a');
+      a.href = url;
+      return a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '');
+    } catch (e) { return false; }
+  }
+  function leave(on) {
+    var ov = document.getElementById('pb-nav-leave');
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'pb-nav-leave';
+      ov.setAttribute('aria-hidden', 'true');
+      (document.body || document.documentElement).appendChild(ov);
+    }
+    if (on) ov.classList.add('is-on');
+    else ov.classList.remove('is-on');
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var href = a.getAttribute('href') || '';
+    if (!isInternal(href)) return;
+    if (sameDoc(a.href)) return;
+    if (going) { e.preventDefault(); return; }
+    e.preventDefault();
+    e.stopPropagation();
+    going = true;
+    try { sessionStorage.setItem('pb-nav', '1'); } catch (err) {}
+    try {
+      document.body.style.overflow = '';
+      var backdrop = document.querySelector('.pb-drawer-backdrop');
+      var drawer = document.querySelector('.pb-drawer');
+      if (backdrop) backdrop.style.opacity = '0';
+      if (drawer) {
+        drawer.style.transform = 'translateX(105%)';
+        drawer.style.visibility = 'hidden';
+      }
+    } catch (err2) {}
+    leave(true);
+    var delay = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 40 : 220;
+    var url = a.href;
+    setTimeout(function () { location.href = url; }, delay);
+  }, true);
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
   var cssLink = document.getElementById('pb-responsive-fixes');
   var cssReady = !cssLink;
@@ -16,6 +74,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100);
   }
 
+  var navEnter = document.documentElement.classList.contains('pb-nav-enter');
+  function clearNavEnter() {
+    if (typeof window.__pbNavReady === 'function') {
+      window.__pbNavReady();
+      return;
+    }
+    try { sessionStorage.removeItem('pb-nav'); } catch (e) {}
+    document.documentElement.classList.remove('pb-nav-enter');
+    var ns = document.getElementById('pb-nav-enter-css');
+    if (ns && ns.parentNode) ns.parentNode.removeChild(ns);
+    var cover = document.getElementById('pb-nav-enter-cover');
+    if (cover && cover.parentNode) cover.parentNode.removeChild(cover);
+    var leave = document.getElementById('pb-nav-leave');
+    if (leave) leave.classList.remove('is-on');
+  }
+
   function pbReveal() {
     document.documentElement.classList.remove('pb-booting');
     var c = document.getElementById('pb-boot-cover');
@@ -29,7 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.documentElement.style.overflowY = '';
     document.body.style.overflowX = '';
     document.body.style.overflowY = '';
+    if (navEnter) clearNavEnter();
   }
+
   /* Mobile chrome hide/show: keep fixed UI on visible viewport (Flipkart-like) */
   (function bindVisualViewport() {
     function syncVV() {
@@ -806,20 +882,21 @@ function bindBaSlider() {
       }, 250);
     })();
   var waitMs = 0;
+  var maxWait = navEnter ? 500 : 4000;
   var hid = setInterval(function () {
     waitMs += 50;
-    if ((cssReady && pbHydrated()) || waitMs > 4000) {
+    if ((cssReady && pbHydrated()) || waitMs > maxWait) {
       clearInterval(hid);
       if (cssReady && pbHydrated()) {
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             pbReveal();
-            setTimeout(bindPbMotion, 80);
+            setTimeout(bindPbMotion, navEnter ? 20 : 80);
           });
         });
       } else {
         pbReveal();
-        setTimeout(bindPbMotion, 80);
+        setTimeout(bindPbMotion, navEnter ? 20 : 80);
       }
     }
   }, 50);

@@ -1,0 +1,86 @@
+/* Early head boot — soft in-site hops: skip splash, cover hydrate blank */
+(function () {
+  try {
+    if (sessionStorage.getItem('pb-nav') !== '1') return;
+    document.documentElement.classList.add('pb-nav-enter');
+
+    var s = document.createElement('style');
+    s.id = 'pb-nav-enter-css';
+    s.textContent =
+      /* Skip homepage boot splash (logo tile) */
+      'html.pb-nav-enter.pb-booting,html.pb-nav-enter.pb-booting body{overflow:auto!important;background:#FAF4FB!important}' +
+      'html.pb-nav-enter.pb-booting body{visibility:visible!important}' +
+      'html.pb-nav-enter #pb-boot-cover{opacity:0!important;visibility:hidden!important;pointer-events:none!important;display:none!important}' +
+      /* Force reveals / hero entrances visible (no delayed fade-in glitch) */
+      'html.pb-nav-enter [data-reveal],html.pb-nav-enter .pb-reveal,html.pb-nav-enter .pb-reveal-scroll,html.pb-nav-enter .pb-pop,' +
+      'html.pb-nav-enter .hiw-soft,html.pb-nav-enter .hiw-hero-enter,' +
+      'html.pb-nav-enter .hero-anim-copy,html.pb-nav-enter .hero-anim-card,html.pb-nav-enter .hero-anim-proofs,html.pb-nav-enter .hero-anim-tri > div,html.pb-nav-enter .hero-anim-tri > .tri-op{' +
+      'opacity:1!important;transform:none!important;transition:none!important;animation:none!important}' +
+      /* Continuous pink veil until page signals ready (hides Softgen empty #dc-root + chrome-only flash) */
+      '#pb-nav-enter-cover{position:fixed;inset:0;z-index:2147483646;background:#FAF4FB;opacity:1;pointer-events:auto;' +
+      'transition:opacity .18s ease;-webkit-transition:opacity .18s ease}' +
+      '#pb-nav-enter-cover.is-off{opacity:0;pointer-events:none}';
+    (document.head || document.documentElement).appendChild(s);
+
+    function ensureCover() {
+      if (document.getElementById('pb-nav-enter-cover')) return;
+      var el = document.createElement('div');
+      el.id = 'pb-nav-enter-cover';
+      el.setAttribute('aria-hidden', 'true');
+      (document.body || document.documentElement).appendChild(el);
+    }
+    if (document.body) ensureCover();
+    else document.addEventListener('DOMContentLoaded', ensureCover);
+
+    function settleEntrances() {
+      /* Inline locks so removing pb-nav-enter CSS does not restart fadeUp from opacity 0 */
+      var heroSel =
+        '.hero-anim-copy,.hero-anim-card,.hero-anim-proofs,.hero-anim-tri > div,.hero-anim-tri > .tri-op,' +
+        '.hiw-hero-enter,.hiw-soft';
+      Array.prototype.forEach.call(document.querySelectorAll(heroSel), function (el) {
+        el.style.setProperty('animation', 'none', 'important');
+        el.style.setProperty('opacity', '1', 'important');
+        el.style.setProperty('transform', 'none', 'important');
+        el.style.setProperty('transition', 'none', 'important');
+        el.classList.add('is-in');
+      });
+      var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      Array.prototype.forEach.call(document.querySelectorAll('[data-reveal],.pb-reveal,.pb-reveal-scroll,.pb-pop'), function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < vh * 0.98) el.classList.add('is-in');
+      });
+    }
+
+    var done = false;
+    window.__pbNavReady = function () {
+      if (done) return;
+      done = true;
+      try { sessionStorage.removeItem('pb-nav'); } catch (e) {}
+      document.documentElement.classList.add('pb-nav-settled');
+      try { settleEntrances(); } catch (e2) {}
+
+      var cover = document.getElementById('pb-nav-enter-cover');
+      if (cover) {
+        cover.classList.add('is-off');
+        setTimeout(function () {
+          if (cover.parentNode) cover.parentNode.removeChild(cover);
+        }, 220);
+      }
+      document.documentElement.classList.remove('pb-nav-enter');
+      var css = document.getElementById('pb-nav-enter-css');
+      if (css && css.parentNode) css.parentNode.removeChild(css);
+      var leave = document.getElementById('pb-nav-leave');
+      if (leave) {
+        leave.classList.remove('is-on');
+        leave.style.pointerEvents = 'none';
+      }
+    };
+
+    /* Safety — never leave the veil forever */
+    setTimeout(function () {
+      if (document.documentElement.classList.contains('pb-nav-enter') && window.__pbNavReady) {
+        window.__pbNavReady();
+      }
+    }, 2800);
+  } catch (e) {}
+})();

@@ -1896,6 +1896,21 @@ h1, h2, p { overflow-wrap: break-word; word-wrap: break-word; }
 }
 #pb-to-top:hover { filter: brightness(1.05); }
 
+/* Soft leave overlay for in-site page hops (menu → Sellers / HIW / etc.) */
+#pb-nav-leave {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: #FAF4FB;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+#pb-nav-leave.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 #pb-dl-bar { display: none; }
 @media (max-width: 1024px) {
   #pb-dl-bar {

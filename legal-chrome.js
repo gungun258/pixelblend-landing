@@ -1,4 +1,89 @@
 (function () {
+  /* In-site page hops: close drawer, soft fade, then navigate (kills boot splash flash) */
+  var pbNavGoing = false;
+  function pbIsInternalPage(href) {
+    if (!href) return false;
+    if (href.charAt(0) === '#' || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0 || href.indexOf('javascript:') === 0) return false;
+    if (/^https?:\/\//i.test(href)) {
+      try { return href.indexOf(location.origin) === 0 && /\.html($|[?#])/.test(href); } catch (e) { return false; }
+    }
+    return /\.html($|[?#])/.test(href) || href === '/' || href === './';
+  }
+  function pbSameDocument(url) {
+    try {
+      var a = document.createElement('a');
+      a.href = url;
+      return a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '');
+    } catch (e) { return false; }
+  }
+  function pbLeaveOverlay(on) {
+    var ov = document.getElementById('pb-nav-leave');
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'pb-nav-leave';
+      ov.setAttribute('aria-hidden', 'true');
+      (document.body || document.documentElement).appendChild(ov);
+    }
+    if (on) {
+      ov.classList.add('is-on');
+      ov.style.pointerEvents = 'auto';
+    } else {
+      ov.classList.remove('is-on');
+      ov.style.pointerEvents = 'none';
+    }
+  }
+  function pbGoInternal(url) {
+    if (pbNavGoing) return;
+    pbNavGoing = true;
+    try { sessionStorage.setItem('pb-nav', '1'); } catch (e) {}
+    setMenu(false);
+    pbLeaveOverlay(true);
+    var delay = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 40 : 220;
+    setTimeout(function () { location.href = url; }, delay);
+  }
+  function pbClearNavEnter() {
+    if (typeof window.__pbNavReady === 'function') {
+      window.__pbNavReady();
+      return;
+    }
+    try { sessionStorage.removeItem('pb-nav'); } catch (e) {}
+    document.documentElement.classList.remove('pb-nav-enter');
+    var s = document.getElementById('pb-nav-enter-css');
+    if (s && s.parentNode) s.parentNode.removeChild(s);
+    var cover = document.getElementById('pb-nav-enter-cover');
+    if (cover && cover.parentNode) cover.parentNode.removeChild(cover);
+    pbLeaveOverlay(false);
+  }
+  /* Softgen pages (sellers/HIW/gallery) clear the veil when their ready class fires.
+     Legal / static chrome pages clear after paint. */
+  (function scheduleNavReady() {
+    if (!document.documentElement.classList.contains('pb-nav-enter')) return;
+    var softgen = document.body && (
+      document.body.classList.contains('sellers-page') ||
+      document.body.classList.contains('hiw-page') ||
+      document.body.classList.contains('gal-page')
+    );
+    if (softgen) {
+      var tries = 0;
+      var t = setInterval(function () {
+        tries += 1;
+        var ready =
+          document.body.classList.contains('sellers-ready') ||
+          document.body.classList.contains('hiw-ready') ||
+          document.body.classList.contains('gal-ready') ||
+          tries > 40;
+        if (ready) {
+          clearInterval(t);
+          pbClearNavEnter();
+        }
+      }, 50);
+      return;
+    }
+    requestAnimationFrame(function () {
+      requestAnimationFrame(pbClearNavEnter);
+    });
+  })();
+
   function ix(href) {
     if (href.charAt(0) === '#') return 'index.html' + href;
     if (/\.html$/.test(href)) return href;
@@ -256,6 +341,20 @@
     var drawer = document.querySelector('.pb-drawer');
     if (backdrop) backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
     if (drawer) drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    /* Prefetch cross-page targets when menu opens */
+    if (open) {
+      drawerLinks.forEach(function (l) {
+        var href = ix(l.href);
+        if (!pbIsInternalPage(href) || pbSameDocument(href)) return;
+        try {
+          var link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = href.split('#')[0];
+          link.as = 'document';
+          document.head.appendChild(link);
+        } catch (err) {}
+      });
+    }
   }
 
   document.addEventListener('click', function (e) {
@@ -264,10 +363,23 @@
       setMenu(true);
       return;
     }
+    var a = e.target.closest('a[href]');
+    if (a && !a.target && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+      var href = a.getAttribute('href') || '';
+      if (pbIsInternalPage(href)) {
+        var abs = a.href;
+        if (!pbSameDocument(abs)) {
+          e.preventDefault();
+          e.stopPropagation();
+          pbGoInternal(abs);
+          return;
+        }
+      }
+    }
     if (e.target.closest('[data-pb-menu-close]') || e.target.closest('[data-pb-close]')) {
       setMenu(false);
     }
-  });
+  }, true);
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') setMenu(false);
