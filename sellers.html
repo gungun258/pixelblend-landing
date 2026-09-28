@@ -56,6 +56,11 @@
     from { opacity: 0; transform: translateY(18px) scale(.97); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
+  @keyframes chatBubbleInRight {
+    0% { opacity: 0; transform: translateX(28px) translateY(16px) scale(.92); }
+    60% { opacity: 1; transform: translateX(-4px) translateY(0) scale(1.02); }
+    100% { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+  }
   #chat-feed [data-g] {
     display: none;
     opacity: 0;
@@ -65,19 +70,22 @@
   }
   #chat-feed [data-g].is-on {
     display: block;
-    opacity: 1;
   }
-  #chat-feed [data-g].is-on.is-anim {
+  #chat-feed [data-g].is-on.is-anim:not(.is-settled) {
     animation: chatBubbleIn .58s cubic-bezier(.16, 1, .3, 1) both;
   }
-  #chat-feed [data-g].is-on.is-anim.is-settled {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  #chat-feed [data-g].is-on.is-settled {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
-  #chat-feed [data-g="1"].is-on.is-anim {
-    animation-duration: .65s;
-    animation-timing-function: cubic-bezier(.2, .85, .25, 1);
+  /* 2nd message — obvious slide-in from the right (delay set in JS for remount resume) */
+  #chat-feed [data-g="1"].is-on.is-anim:not(.is-settled) {
+    animation-name: chatBubbleInRight;
+    animation-duration: .9s;
+    animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+    animation-fill-mode: both;
+    transform-origin: 100% 100%;
   }
   @media (prefers-reduced-motion: reduce) {
     #chat-feed [data-g].is-on.is-anim {
@@ -211,6 +219,15 @@
   body.sellers-page {
     --pb-gutter: 32px;
   }
+  /* Below-hero sections: full page width (HIW pattern) — not a 1160px band */
+  body.sellers-page section.sec.pad,
+  body.sellers-page #story {
+    max-width: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
   body.sellers-page section.pad,
   body.sellers-page section.sec.pad,
   body.sellers-page #story > .pad {
@@ -218,14 +235,35 @@
     padding-right: var(--pb-gutter) !important;
     box-sizing: border-box;
   }
+  /* Readable content column centered inside full-bleed section */
+  body.sellers-page section.sec.pad > *,
+  body.sellers-page #story > .pad {
+    max-width: 1160px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+  body.sellers-page #faq.sec.pad > * {
+    max-width: 760px !important;
+  }
+  body.sellers-page #sellers-cta.sec.pad > * {
+    max-width: 1000px !important;
+  }
+
+  @media (max-width: 640px) {
+    body.sellers-page {
+      --pb-gutter: 16px;
+    }
+  }
 
   /* —— Sellers responsive system —— */
   @media (max-width: 1040px) {
     body.sellers-page section.pad,
     body.sellers-page section.sec.pad,
     body.sellers-page #story > .pad {
-      padding-left: 32px !important;
-      padding-right: 32px !important;
+      padding-left: var(--pb-gutter) !important;
+      padding-right: var(--pb-gutter) !important;
     }
     .split { grid-template-columns: 1fr !important; gap: 34px !important; }
     .free-grid { grid-template-columns: 1fr !important; gap: 34px !important; }
@@ -239,22 +277,84 @@
       scroll-snap-type: x mandatory !important;
     }
     /* cat-grid 2×2 handled in #list .cat-grid rules */
-    .stepper-tabs { flex-wrap: wrap !important; }
-    .stepper-tabs button { min-width: 0 !important; flex: 1 1 45% !important; padding: 16px 14px !important; }
-    .stepper-body {
-      grid-template-columns: 1fr !important;
-      padding: 22px 20px 28px !important;
-      gap: 20px !important;
+    /* Four steps — tablet: 2×2 tabs, keep copy|visual side-by-side */
+    #journey .stepper-tabs {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      flex-wrap: unset !important;
     }
-    /* Photo first so step change is obvious */
-    .stepper-visual {
-      order: -1;
+    #journey .stepper-tabs button,
+    #journey .stepper-tab {
+      min-width: 0 !important;
+      width: auto !important;
+      flex: unset !important;
+      padding: 16px 16px 18px !important;
+      box-sizing: border-box !important;
+      text-align: left !important;
+    }
+    #journey .stepper-tab:nth-child(odd) {
+      border-right: 1px solid #EFE2F0 !important;
+    }
+    #journey .stepper-tab:nth-child(-n + 2) {
+      border-bottom: 1px solid #EFE2F0 !important;
+    }
+    #journey .stepper-tab > span:last-child {
+      font-size: 13px !important;
+      line-height: 1.3 !important;
+    }
+    #journey .stepper-body {
+      display: grid !important;
+      grid-template-columns: 1.05fr .95fr !important;
+      padding: 28px 24px !important;
+      gap: 24px !important;
+      align-items: center !important;
+    }
+    #journey .stepper-visual {
+      order: 0 !important;
       min-height: 0 !important;
       aspect-ratio: 4 / 3;
       width: 100%;
+      border-radius: 16px !important;
     }
-    .disco { grid-template-columns: 1fr !important; gap: 34px !important; }
+    #journey .stepper-copy > div:first-of-type {
+      font-size: 22px !important;
+      line-height: 1.2 !important;
+    }
+    #journey .stepper-copy > p {
+      font-size: 15px !important;
+      margin-bottom: 16px !important;
+    }
+    #journey .stepper-nav {
+      flex-wrap: wrap !important;
+      gap: 12px !important;
+    }
+    .disco { grid-template-columns: 1fr !important; gap: 34px !important; justify-items: stretch !important; }
     .disco-stats { grid-template-columns: 1fr 1fr !important; }
+    #discover .hiw-mkt-phone-col {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    #discover .hiw-mkt-phone-wrap {
+      width: min(280px, 100%) !important;
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+    #discover .hiw-mkt-phone {
+      width: 100% !important;
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
     .zero-rule { display: none !important; }
     .benefit-grid { grid-template-columns: 1fr 1fr !important; }
     .compare-grid { grid-template-columns: 1fr !important; }
@@ -314,7 +414,11 @@
     }
     .hero-proofs { padding-top: 16px !important; }
     #discover .hiw-mkt-phone-wrap,
-    #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto; }
+    #discover .hiw-mkt-phone {
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
     #discover .hiw-mkt-phone-screen { height: 540px !important; }
     .benefit-panel { padding: 32px 26px !important; }
     .sellers-cta-panel { padding: 40px 28px !important; }
@@ -385,12 +489,56 @@
       padding: 12px 12px 14px !important;
       text-align: left !important;
     }
+    /* Four steps — phone: stack body, photo first */
+    #journey .stepper-tabs {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+    }
+    #journey .stepper-tabs button,
+    #journey .stepper-tab {
+      width: auto !important;
+      flex: unset !important;
+      max-width: none !important;
+      padding: 12px 12px 14px !important;
+    }
     #journey .stepper-tab > span:nth-child(2) > span:first-child {
       font-size: 22px !important;
     }
     #journey .stepper-tab > span:last-child {
       font-size: 12.5px !important;
       line-height: 1.25 !important;
+    }
+    #journey .stepper-body {
+      grid-template-columns: 1fr !important;
+      padding: 20px 16px 24px !important;
+      gap: 18px !important;
+    }
+    #journey .stepper-visual {
+      order: -1 !important;
+      aspect-ratio: 5 / 4;
+      border-radius: 16px !important;
+    }
+    #journey .stepper-copy > div:first-of-type {
+      font-size: 20px !important;
+    }
+    #journey .stepper-nav {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+    #journey .stepper-next {
+      width: fit-content !important;
+      max-width: 100%;
+      flex: 0 0 auto !important;
+      text-align: center;
+      white-space: nowrap !important;
+      padding: 14px 22px !important;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #journey .stepper-count {
+      white-space: nowrap !important;
+      font-size: 13px !important;
     }
     .stepper-nav {
       flex-direction: column !important;
@@ -493,7 +641,11 @@
     #story .story-phone { top: 52px !important; }
     #story .phone-body { height: 440px !important; }
     #discover .hiw-mkt-phone-wrap,
-    #discover .hiw-mkt-phone { max-width: 280px !important; margin: 0 auto !important; }
+    #discover .hiw-mkt-phone {
+      max-width: 280px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
     #discover .hiw-mkt-phone-screen { height: 520px !important; }
     #cost .cost-zero { font-size: 64px !important; }
     #cost .cost-cta {
@@ -589,8 +741,8 @@
     .hero-zero { font-size: 38px !important; }
     body.sellers-page section.pad,
     body.sellers-page section.sec.pad {
-      padding-left: 32px !important;
-      padding-right: 32px !important;
+      padding-left: var(--pb-gutter) !important;
+      padding-right: var(--pb-gutter) !important;
     }
     body.sellers-page #story > .pad {
       padding-left: 0 !important;
@@ -714,14 +866,130 @@
   body.sellers-page .lp-crumbs {
     display: none !important;
   }
-  #start { align-self: start; height: auto; flex: none; }
+  #start { align-self: start; height: auto; flex: none; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
   .hero-pay {
     height: fit-content !important;
     min-height: 0 !important;
     flex: none !important;
     align-self: start;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
-  .hero-pay-pills { align-content: flex-start; }
+  .hero-pay-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .hero-pay-row > span:last-child {
+    min-width: 0;
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0;
+  }
+  .hero-pay-pills {
+    align-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .hero-pay-pills > span {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .hero-zero {
+    flex: none;
+    line-height: .85 !important;
+    margin: 0 !important;
+    padding: 0 4px 0 0 !important;
+  }
+  @media (max-width: 1040px) {
+    #start {
+      max-width: 420px !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .hero-pay {
+      padding: 16px 18px 14px !important;
+      border-radius: 18px !important;
+    }
+    .hero-zero { font-size: 52px !important; line-height: .85 !important; }
+    .hero-pay-row {
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+    .hero-pay-row > span:last-child {
+      font-size: 13.5px !important;
+      line-height: 1.25 !important;
+      flex: 1 1 auto !important;
+    }
+  }
+  @media (max-width: 640px) {
+    #start { max-width: 100% !important; }
+    .hero-pay {
+      padding: 14px 14px 12px !important;
+      border-radius: 16px !important;
+    }
+    .hero-pay > div > div:first-child {
+      font-size: 9.5px !important;
+      letter-spacing: .14em !important;
+      line-height: 1.3 !important;
+      white-space: normal !important;
+      margin-bottom: 0 !important;
+    }
+    .hero-pay-row {
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-top: 2px !important;
+    }
+    .hero-zero {
+      font-size: 44px !important;
+      line-height: .85 !important;
+      padding: 0 2px 0 0 !important;
+    }
+    .hero-pay-row > span:last-child {
+      flex: 1 1 auto !important;
+      flex-basis: auto !important;
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      margin: 0 !important;
+    }
+    .hero-pay-pills {
+      gap: 5px !important;
+      margin-top: 10px !important;
+    }
+    .hero-pay-pills > span {
+      font-size: 9px !important;
+      letter-spacing: .05em !important;
+      padding: 5px 8px !important;
+    }
+  }
+  @media (max-width: 400px) {
+    .hero-pay { padding: 12px 12px 10px !important; }
+    .hero-zero { font-size: 36px !important; line-height: .85 !important; }
+    .hero-pay-row {
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    .hero-pay-row > span:last-child {
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+      flex-basis: auto !important;
+    }
+    .hero-pay-pills > span {
+      font-size: 8.5px !important;
+      padding: 5px 7px !important;
+    }
+  }
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
@@ -872,11 +1140,6 @@
     font-weight: 800;
     color: #fff;
     line-height: 1.2;
-  }
-  #list .cat-card-price {
-    font-size: 12px;
-    color: rgba(255,255,255,.72);
-    margin-top: 2px;
   }
   @media (hover: hover) {
     #list .cat-card:hover {
@@ -1176,12 +1439,29 @@
   }
   #story .story-block-row {
     display: grid !important;
-    grid-template-columns: 44px 1fr;
+    grid-template-columns: 72px 1fr;
     gap: 14px;
     align-items: stretch;
     flex: none;
     min-height: 0;
     transition: opacity .35s ease;
+  }
+  #story .story-step-num {
+    width: auto !important;
+    min-width: 58px;
+    height: 28px;
+    padding: 0 10px;
+    flex: none;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: background .35s ease, color .35s ease, box-shadow .35s ease;
   }
   #story .story-block:last-of-type {
     padding-bottom: 8px !important;
@@ -1385,8 +1665,8 @@
     }
     #story .story-points-slot .story-block.is-on .story-block-row {
       opacity: 1 !important;
-      grid-template-columns: 32px 1fr !important;
-      gap: 10px !important;
+      grid-template-columns: 62px 1fr !important;
+      gap: 8px !important;
       align-items: start !important;
     }
     #story .story-rail {
@@ -1398,11 +1678,16 @@
       padding-top: 8px !important;
       align-self: start !important;
     }
+    #story .story-points-slot .story-step-num,
     #story .story-points-slot .story-dot-col > span:first-child {
-      width: 28px !important;
-      height: 28px !important;
-      font-size: 12px !important;
+      width: auto !important;
+      min-width: 52px !important;
+      height: 24px !important;
+      padding: 0 8px !important;
+      font-size: 10px !important;
+      border-radius: 999px !important;
       flex: none !important;
+      white-space: nowrap !important;
     }
     #story .story-points-slot .story-block-inner {
       padding: 10px 12px !important;
@@ -1467,6 +1752,7 @@
   #story .story-cost-note {
     margin: 0;
     max-width: 560px;
+    overflow: visible;
   }
   #story .story-cost-kicker {
     font-size: 11px;
@@ -1477,38 +1763,75 @@
     margin: 0 0 8px;
   }
   #story .story-cost-line {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px 14px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
     margin: 0;
+    white-space: normal;
+    overflow: visible;
   }
   #story .story-cost-zero {
-    flex: none;
+    flex: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: center !important;
     font-family: 'Instrument Serif', serif;
-    font-size: 32px;
-    line-height: 1;
+    font-size: 18px;
+    line-height: 1.45 !important;
     letter-spacing: -.02em;
     color: #C42E8B;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    white-space: nowrap;
+  }
+  #story .story-cost-rs,
+  #story .story-cost-num {
+    display: inline-block;
+    line-height: inherit;
+    font: inherit;
+    color: inherit;
+    transform: none !important;
+    position: static;
+  }
+  #story .story-cost-rs {
+    font-size: 0.92em;
   }
   #story .story-cost-copy {
-    flex: 1;
+    flex: 1 1 auto !important;
     min-width: 0;
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.45;
     color: #5b5060;
+    margin: 0 !important;
+    align-self: center !important;
+    white-space: normal !important;
   }
   @media (max-width: 1040px) {
     #story .story-cost-note {
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      max-width: 100%;
+      overflow: visible;
     }
     #story .story-cost-line {
-      justify-content: center;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: normal;
     }
-    #story .story-cost-zero { font-size: 28px !important; }
-    #story .story-cost-copy { font-size: 14px !important; }
+    #story .story-cost-zero { font-size: 16px !important; line-height: 1.45 !important; }
+    #story .story-cost-copy {
+      font-size: 13px !important;
+      white-space: normal !important;
+      text-align: left;
+    }
   }
   #discover {
     padding-top: 72px !important;
@@ -1646,23 +1969,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-width: 0;
     max-width: 100%;
     width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
   }
   #discover .hiw-mkt-phone-wrap {
     width: 300px;
     max-width: 100%;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
     display: flex;
     justify-content: center;
+    align-items: center;
     min-width: 0;
     box-sizing: border-box;
   }
   #discover .hiw-mkt-phone {
     width: 100%;
     max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 40px;
     background: #1A1420;
     padding: 10px;
@@ -2297,7 +2628,8 @@
     margin-right: auto !important;
   }
   #story .story-cost-line {
-    justify-content: center;
+    justify-content: center !important;
+    align-items: center !important;
   }
   #discover .disco-head {
     text-align: center !important;
@@ -2825,10 +3157,6 @@
     <span class="story-kicker" style="display: inline-block; max-width: 100%; box-sizing: border-box; font-size: 10.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #fff; background: linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E); padding: 7px 14px; border-radius: 999px; margin-bottom: 20px; white-space: nowrap;">One conversation, start to sale</span>
     <h2 class="h2 story-h2" style="font-size: 40px; line-height: 1.12; letter-spacing: -.035em; font-weight: 800; color: #1E1422; margin: 0 0 14px; max-width: 760px;">How it <span style="font-family: 'Instrument Serif', serif; font-weight: 400; font-style: italic; letter-spacing: -.01em; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: 4px;">works.</span></h2>
     <p class="story-lead" style="font-size: 17px; line-height: 1.6; color: #5b5060; margin: 0 0 18px; max-width: 560px;">Four steps in a single DM. Scroll, or tap a step to jump to it.</p>
-    <div class="story-cost-note">
-      <p class="story-cost-kicker">Cost to the seller for this entire chat</p>
-      <p class="story-cost-line"><span class="story-cost-zero">₹0</span> <span class="story-cost-copy">They generated four blends. None of them were charged to Studio Noir.</span></p>
-    </div>
   </div>
 
   <div id="story-track" class="story-pin-wrap" data-reveal="" data-delay="1">
@@ -2838,7 +3166,7 @@
     <div class="story-block story-b0 {{ storyStep0.blockClass }}" sc-camel-on-click="{{ storyStep0.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
       <div class="story-block-row" style="opacity: {{ storyStep0.opacity }};">
         <div class="story-dot-col">
-          <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ storyStep0.dotBg }}; color: {{ storyStep0.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ storyStep0.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ storyStep0.n }}</span>
+          <span class="story-step-num" style="background: {{ storyStep0.dotBg }}; color: {{ storyStep0.dotFg }}; box-shadow: {{ storyStep0.dotShadow }};">{{ storyStep0.n }}</span>
           <span class="story-rail"></span>
             </div>
         <div class="story-block-inner">
@@ -2855,7 +3183,7 @@
         <div class="story-block {{ s.blockClass }}" sc-camel-on-click="{{ s.goto }}" style="display: flex; flex-direction: column; cursor: pointer;">
           <div class="story-block-row" style="opacity: {{ s.opacity }};">
             <div class="story-dot-col">
-              <span style="width: 38px; height: 38px; flex: none; border-radius: 50%; background: {{ s.dotBg }}; color: {{ s.dotFg }}; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: {{ s.dotShadow }}; transition: background .35s ease, color .35s ease, box-shadow .35s ease;">{{ s.n }}</span>
+              <span class="story-step-num" style="background: {{ s.dotBg }}; color: {{ s.dotFg }}; box-shadow: {{ s.dotShadow }};">{{ s.n }}</span>
               <span class="story-rail"></span>
           </div>
             <div class="story-block-inner">
@@ -3286,7 +3614,6 @@
       <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
       <div class="cat-card-meta">
         <div class="cat-card-label">{{ card0.label }}</div>
-        <div class="cat-card-price">{{ card0.price }}</div>
       </div>
     </div>
     <div class="cat-card">
@@ -3295,7 +3622,6 @@
       <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
       <div class="cat-card-meta">
         <div class="cat-card-label">{{ card1.label }}</div>
-        <div class="cat-card-price">{{ card1.price }}</div>
       </div>
     </div>
     <div class="cat-card">
@@ -3304,7 +3630,6 @@
       <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
       <div class="cat-card-meta">
         <div class="cat-card-label">{{ card2.label }}</div>
-        <div class="cat-card-price">{{ card2.price }}</div>
       </div>
     </div>
     <div class="cat-card">
@@ -3313,7 +3638,6 @@
       <span class="cat-card-badge"><span class="cat-card-dot"></span>BLEND READY</span>
       <div class="cat-card-meta">
         <div class="cat-card-label">{{ card3.label }}</div>
-        <div class="cat-card-price">{{ card3.price }}</div>
       </div>
     </div>
   </div>
@@ -3586,46 +3910,74 @@ class Component extends DCLogic {
   _syncChatBubbles(step) {
     const feed = document.getElementById('chat-feed');
     if (!feed) return;
-    if (!this._chatShown) this._chatShown = new Set();
+    if (!this._chatSettled) this._chatSettled = new Set();
+    if (!this._chatAnimStart) this._chatAnimStart = {};
+    if (!this._chatSettleTimers) this._chatSettleTimers = {};
     const s = (typeof step === 'number' && step >= 0) ? step : 0;
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
     feed.querySelectorAll('[data-g]').forEach((el) => {
       const n = parseInt(el.getAttribute('data-g'), 10);
       const on = n <= s;
-      if (on) {
-        el.classList.add('is-on');
-        if (!this._chatShown.has(n)) {
-          this._chatShown.add(n);
-          if (reduce) {
-            el.classList.add('is-anim', 'is-settled');
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-          } else {
-            el.classList.remove('is-anim', 'is-settled');
-            el.style.opacity = '';
-            el.style.transform = '';
-            void el.offsetWidth;
-            el.classList.add('is-anim');
-            const settle = () => {
-              el.classList.add('is-settled');
-              el.style.opacity = '1';
-              el.style.transform = 'none';
-            };
-            el.addEventListener('animationend', settle, { once: true });
-            setTimeout(settle, 700);
-          }
-        } else {
-          /* Already revealed — Softgen remount: stay visible, no replay */
-          el.classList.add('is-anim', 'is-settled');
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        }
-      } else {
-        this._chatShown.delete(n);
+      if (!on) {
+        this._chatSettled.delete(n);
+        delete this._chatAnimStart[n];
+        clearTimeout(this._chatSettleTimers[n]);
+        delete this._chatSettleTimers[n];
         el.classList.remove('is-on', 'is-anim', 'is-settled');
         el.style.opacity = '';
         el.style.transform = '';
+        el.style.animationDelay = '';
+        return;
       }
+      el.classList.add('is-on');
+      const settleMs = n === 1 ? 950 : 650;
+      /* Finished — keep final state across Softgen remounts */
+      if (this._chatSettled.has(n)) {
+        el.classList.add('is-anim', 'is-settled');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animationDelay = '';
+        return;
+      }
+      if (reduce) {
+        this._chatSettled.add(n);
+        el.classList.add('is-anim', 'is-settled');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        return;
+      }
+      /* Already playing on this DOM node — do NOT restart (was killing the anim) */
+      if (el.classList.contains('is-anim') && !el.classList.contains('is-settled')) {
+        return;
+      }
+      /* Wall-clock start survives remount; negative delay resumes mid-flight */
+      if (!this._chatAnimStart[n]) this._chatAnimStart[n] = now;
+      const elapsed = Math.max(0, now - this._chatAnimStart[n]);
+      if (elapsed >= settleMs) {
+        this._chatSettled.add(n);
+        el.classList.add('is-anim', 'is-settled');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animationDelay = '';
+        return;
+      }
+      el.classList.remove('is-settled');
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.animationDelay = (-elapsed) + 'ms';
+      void el.offsetWidth;
+      el.classList.add('is-anim');
+      clearTimeout(this._chatSettleTimers[n]);
+      this._chatSettleTimers[n] = setTimeout(() => {
+        this._chatSettled.add(n);
+        const live = document.querySelector('#chat-feed [data-g="' + n + '"]');
+        if (!live || !live.classList.contains('is-on')) return;
+        live.classList.add('is-settled');
+        live.style.opacity = '1';
+        live.style.transform = 'none';
+        live.style.animationDelay = '';
+      }, settleMs - elapsed);
     });
   }
   _isStoryMobile() {
@@ -3707,9 +4059,10 @@ class Component extends DCLogic {
     const vr = view.getBoundingClientRect();
     const vh = window.innerHeight || 800;
     if (vr.bottom < -vh || vr.top > vh * 2) return;
-    const step = (typeof this.state.storyStep === 'number')
-      ? this.state.storyStep
-      : ((typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0) ? this._storyVisualStep : 0);
+    /* Prefer scroll-driven visual step so chat anim starts before Softgen setState remount */
+    const step = (typeof this._storyVisualStep === 'number' && this._storyVisualStep >= 0)
+      ? this._storyVisualStep
+      : ((typeof this.state.storyStep === 'number') ? this.state.storyStep : 0);
     /* Re-apply bubble visibility before measuring (Softgen remount can wipe classes) */
     this._syncChatBubbles(step);
     const current = feed.querySelector('[data-g="' + step + '"].is-on') || feed.querySelector('[data-g="' + step + '"]');
@@ -3847,7 +4200,7 @@ class Component extends DCLogic {
       const on = st === i, past = st > i;
       const last = i === stepData.length - 1;
       return {
-        n: String(i + 1), who: s.who, title: s.title, body: s.body, goto: () => this._gotoStory(i),
+        n: 'Step ' + (i + 1), who: s.who, title: s.title, body: s.body, goto: () => this._gotoStory(i),
         blockClass: on ? 'is-on' : (past ? 'is-past' : ''),
         opacity: on ? 1 : 0.7,
         dotBg: on ? (s.who === 'You' ? '#1E1422' : 'linear-gradient(113.667deg,#A855F7,#F43F5E)') : '#FCE8F4',
@@ -3899,45 +4252,45 @@ class Component extends DCLogic {
     // ---- categories, auto-shifting
     const catData = [
       { name: 'Studio backdrops', count: 'Studio backdrops · seamless to gradient', cards: [
-        { label: 'Seamless white sweep', price: '₹1,190', img: U('1557683316-973673baf926', 520) },
-        { label: 'Soft gradient set', price: '₹1,499', img: U('1517842645767-c639042777db', 520) },
-        { label: 'Colour-block studio', price: '₹1,890', img: U('1495616811223-4d98c6e9c869', 520) },
-        { label: 'Shadow-play backdrop', price: '₹1,350', img: U('1600185365483-26d7a4cc7519', 520) }] },
+        { label: 'Seamless white sweep', img: U('1557683316-973673baf926', 520) },
+        { label: 'Soft gradient set', img: U('1517842645767-c639042777db', 520) },
+        { label: 'Colour-block studio', img: U('1495616811223-4d98c6e9c869', 520) },
+        { label: 'Shadow-play backdrop', img: U('1600185365483-26d7a4cc7519', 520) }] },
       { name: 'Marble & stone', count: 'Marble & stone · tabletops', cards: [
-        { label: 'Sunlit marble tabletop', price: '₹1,499', img: U('1519681393784-d120267933ba', 520) },
-        { label: 'Travertine ledge', price: '₹2,290', img: U('1594035910387-fea47794261f', 520) },
-        { label: 'Dark granite slab', price: '₹1,950', img: U('1513694203232-719a280e022f', 520) },
-        { label: 'Terrazzo surface', price: '₹1,690', img: U('1550226891-ef816aed4a98', 520) }] },
+        { label: 'Sunlit marble tabletop', img: U('1519681393784-d120267933ba', 520) },
+        { label: 'Travertine ledge', img: U('1594035910387-fea47794261f', 520) },
+        { label: 'Dark granite slab', img: U('1513694203232-719a280e022f', 520) },
+        { label: 'Terrazzo surface', img: U('1550226891-ef816aed4a98', 520) }] },
       { name: 'Nature & outdoor', count: 'Nature & outdoor · forest to coast', cards: [
-        { label: 'Lush forest backdrop', price: '₹3,750', img: U('1441974231531-c6227db76b6e', 520) },
-        { label: 'Golden-hour beach', price: '₹2,290', img: U('1507525428034-b723cf961d3e', 520) },
-        { label: 'Desert dune light', price: '₹2,650', img: U('1434056886845-dac89ffe9b56', 520) },
-        { label: 'Mountain haze', price: '₹2,150', img: U('1460353581641-37baddab0fa2', 520) }] },
+        { label: 'Lush forest backdrop', img: U('1441974231531-c6227db76b6e', 520) },
+        { label: 'Golden-hour beach', img: U('1507525428034-b723cf961d3e', 520) },
+        { label: 'Desert dune light', img: U('1434056886845-dac89ffe9b56', 520) },
+        { label: 'Mountain haze', img: U('1460353581641-37baddab0fa2', 520) }] },
       { name: 'Lifestyle interiors', count: 'Lifestyle interiors · homes & cafés', cards: [
-        { label: 'Sunlit kitchen counter', price: '₹2,450', img: U('1513694203232-719a280e022f', 520) },
-        { label: 'Café tabletop', price: '₹1,890', img: U('1509042239860-f550ce710b93', 520) },
-        { label: 'Linen bedside', price: '₹2,100', img: U('1556228578-8c89e6adf883', 520) },
-        { label: 'Living-room shelf', price: '₹2,890', img: U('1550226891-ef816aed4a98', 520) }] },
+        { label: 'Sunlit kitchen counter', img: U('1513694203232-719a280e022f', 520) },
+        { label: 'Café tabletop', img: U('1509042239860-f550ce710b93', 520) },
+        { label: 'Linen bedside', img: U('1556228578-8c89e6adf883', 520) },
+        { label: 'Living-room shelf', img: U('1550226891-ef816aed4a98', 520) }] },
       { name: 'Seasonal & festive', count: 'Seasonal & festive · campaign sets', cards: [
-        { label: 'Diwali warm-light set', price: '₹3,150', img: U('1594035910387-fea47794261f', 520) },
-        { label: 'Holiday pine table', price: '₹2,790', img: U('1441974231531-c6227db76b6e', 520) },
-        { label: 'Summer poolside', price: '₹2,490', img: U('1507525428034-b723cf961d3e', 520) },
-        { label: 'Monsoon window', price: '₹1,990', img: U('1495616811223-4d98c6e9c869', 520) }] },
+        { label: 'Diwali warm-light set', img: U('1594035910387-fea47794261f', 520) },
+        { label: 'Holiday pine table', img: U('1441974231531-c6227db76b6e', 520) },
+        { label: 'Summer poolside', img: U('1507525428034-b723cf961d3e', 520) },
+        { label: 'Monsoon window', img: U('1495616811223-4d98c6e9c869', 520) }] },
       { name: 'Luxury & editorial', count: 'Luxury & editorial · dark & moody', cards: [
-        { label: 'Black glass plinth', price: '₹6,900', img: U('1522335789203-aabd1fc54bc9', 520) },
-        { label: 'Velvet drape set', price: '₹5,400', img: U('1618366712010-f4ae9c647dcb', 520) },
-        { label: 'Smoke & spotlight', price: '₹4,800', img: U('1595950653106-6c9ebd614d3a', 520) },
-        { label: 'Mirror pedestal', price: '₹7,200', img: U('1523275335684-37898b6baf30', 520) }] },
+        { label: 'Black glass plinth', img: U('1522335789203-aabd1fc54bc9', 520) },
+        { label: 'Velvet drape set', img: U('1618366712010-f4ae9c647dcb', 520) },
+        { label: 'Smoke & spotlight', img: U('1595950653106-6c9ebd614d3a', 520) },
+        { label: 'Mirror pedestal', img: U('1523275335684-37898b6baf30', 520) }] },
       { name: 'Urban & street', count: 'Urban & street · concrete & neon', cards: [
-        { label: 'Concrete wall', price: '₹1,690', img: U('1516035069371-29a1b244cc32', 520) },
-        { label: 'Neon alley', price: '₹2,890', img: U('1595950653106-6c9ebd614d3a', 520) },
-        { label: 'Rooftop skyline', price: '₹3,200', img: U('1505740420928-5e560c06d30e', 520) },
-        { label: 'Rain-slick pavement', price: '₹2,450', img: U('1618366712010-f4ae9c647dcb', 520) }] },
+        { label: 'Concrete wall', img: U('1516035069371-29a1b244cc32', 520) },
+        { label: 'Neon alley', img: U('1595950653106-6c9ebd614d3a', 520) },
+        { label: 'Rooftop skyline', img: U('1505740420928-5e560c06d30e', 520) },
+        { label: 'Rain-slick pavement', img: U('1618366712010-f4ae9c647dcb', 520) }] },
       { name: '3D & abstract', count: '3D & abstract · rendered sets', cards: [
-        { label: 'Floating plinth render', price: '₹4,200', img: U('1557683316-973673baf926', 520) },
-        { label: 'Liquid chrome set', price: '₹5,100', img: U('1584917865442-de89df76afd3', 520) },
-        { label: 'Pastel geometry', price: '₹3,400', img: U('1586495777744-4413f21062fa', 520) },
-        { label: 'Soft-cloud abstract', price: '₹2,950', img: U('1493934558415-9d19f0b2b4d2', 520) }] },
+        { label: 'Floating plinth render', img: U('1557683316-973673baf926', 520) },
+        { label: 'Liquid chrome set', img: U('1584917865442-de89df76afd3', 520) },
+        { label: 'Pastel geometry', img: U('1586495777744-4413f21062fa', 520) },
+        { label: 'Soft-cloud abstract', img: U('1493934558415-9d19f0b2b4d2', 520) }] },
     ];
     const cats = catData.map((c, i) => {
       const on = S.cat === i;

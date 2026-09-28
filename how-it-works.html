@@ -343,22 +343,22 @@
       .hiw-rail-mask { padding-bottom: 22px !important; }
     }
     .hiw-shoot { background: #1A1420; color: #F7F2F6; padding: 0; }
-    .hiw-shoot-runway { position: relative; }
-    .hiw-shoot-pin { box-sizing: border-box; }
-    .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; padding: 80px 32px 72px; }
+    .hiw-shoot-runway { position: relative; height: 220vh; }
+    .hiw-shoot-pin {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      background: #1A1420;
+      color: #F7F2F6;
+    }
+    .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; padding: 80px 32px 72px; width: 100%; }
     @media (min-width: 901px) {
-      /* Sticky runway: scroll progress drives look 0→1→2 (replaces fragile wheel-pin) */
       .hiw-shoot-runway { height: 260vh; }
-      .hiw-shoot-pin {
-        position: sticky;
-        top: 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        background: #1A1420;
-        color: #F7F2F6;
-      }
-      .hiw-shoot-inner { padding: 64px 32px; width: 100%; }
+      .hiw-shoot-inner { padding: 64px 32px; }
     }
     @media (min-width: 1101px) {
       .hiw-shoot-inner { padding: 72px 32px 64px; }
@@ -384,9 +384,14 @@
       margin: 8px 0 0; font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.68);
     }
     @media (max-width: 900px) {
-      .hiw-shoot-runway { height: auto; }
-      .hiw-shoot-pin { position: static; min-height: 0; display: block; }
-      .hiw-shoot-inner { padding: 48px 16px; }
+      .hiw-shoot-runway { height: 200vh; }
+      .hiw-shoot-pin {
+        min-height: 100svh;
+        min-height: 100dvh;
+        align-items: flex-start;
+        padding-top: 12px;
+      }
+      .hiw-shoot-inner { padding: 36px 16px 40px; }
       .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; text-align: center; }
       .hiw-shoot-head h2 { font-size: 30px; }
       .hiw-shoot-head p {
@@ -395,7 +400,7 @@
       }
     }
     @media (max-width: 800px) {
-      .hiw-shoot-inner { padding: 48px 16px; }
+      .hiw-shoot-inner { padding: 32px 16px 36px; }
       .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; text-align: center; }
       .hiw-shoot-head h2 { font-size: 28px; }
     }
@@ -1027,10 +1032,13 @@
       border-radius: 999px;
     }
     .hiw-mkt-card a { text-decoration: none; }
-    #devices { padding: 72px 32px 0; }
+    #devices { padding: 72px 32px 0; box-sizing: border-box; width: 100%; }
     .hiw-dev {
       max-width: 1160px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      min-width: 0;
     }
     .hiw-dev h2 {
       margin: 12px 0 0; font-family: 'Hanken Grotesk', sans-serif;
@@ -1041,9 +1049,17 @@
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
+    .hiw-dev-copy { min-width: 0; max-width: 100%; }
     .hiw-dev-copy p { margin: 14px 0 0; font-size: 16.5px; line-height: 1.65; color: #5b5060; max-width: 480px; }
     .hiw-dev-ctas { margin-top: 24px; }
-    .hiw-dev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .hiw-dev-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
     .hiw-dev-card {
       background: #fff; border: 1px solid #F0E6F2; border-radius: 16px; padding: 18px 16px;
       transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
@@ -1051,6 +1067,8 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      min-width: 0;
+      box-sizing: border-box;
     }
     .hiw-dev-card:hover {
       border-color: #E8C4DE;
@@ -1087,26 +1105,51 @@
       color: #6B6070;
     }
     @media (max-width: 900px) {
-      .hiw-dev { grid-template-columns: 1fr; gap: 28px; }
-      .hiw-dev h2 { font-size: 30px; }
+      #devices { padding: 48px 22px 0; }
+      .hiw-dev { grid-template-columns: 1fr; gap: 24px; }
+      .hiw-dev h2 { font-size: clamp(26px, 6.5vw, 30px); line-height: 1.18; }
       .hiw-dev-copy {
         text-align: center;
+        width: 100%;
       }
       .hiw-dev-copy p {
         margin-left: auto;
         margin-right: auto;
+        max-width: 36em;
+        font-size: 15.5px;
+        padding: 0 4px;
       }
       .hiw-dev-ctas {
         margin-left: auto;
         margin-right: auto;
       }
+      /* 2×3 on tablet/phone — fits without sideways squeeze */
+      .hiw-dev-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
       .hiw-dev-card {
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 16px 12px;
       }
       .hiw-dev-ico { margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 640px) {
+      #devices { padding: 40px 16px 0; }
+      .hiw-dev { gap: 20px; }
+      .hiw-dev h2 { font-size: 26px; }
+      .hiw-dev-copy p { font-size: 15px; line-height: 1.55; }
+      .hiw-dev-grid { gap: 8px; }
+      .hiw-dev-card { padding: 14px 10px; border-radius: 14px; }
+      .hiw-dev-ico { width: 36px; height: 36px; border-radius: 10px; margin-bottom: 8px; }
+      .hiw-dev-ico svg { width: 18px; height: 18px; }
+      .hiw-dev-card strong { font-size: 14px; }
+      .hiw-dev-card > span:not(.hiw-dev-ico) { font-size: 12.5px; line-height: 1.4; }
+    }
+    @media (max-width: 380px) {
+      .hiw-dev-card { padding: 12px 8px; }
+      .hiw-dev-card strong { font-size: 13px; }
+      .hiw-dev-card > span:not(.hiw-dev-ico) { font-size: 11.5px; }
     }
     #faq { padding: 72px 32px 0; }
     .hiw-faq { max-width: 760px; margin: 0 auto; }
@@ -1652,9 +1695,9 @@
       .hiw-walk-chapters {
         display: block !important;
         position: relative !important;
-        /* Shorter runway = less scrub / jump feel on phone */
-        height: 280vh !important;
-        min-height: 280vh !important;
+        /* Shorter runway + earlier step-3 band = less late trigger */
+        height: 210vh !important;
+        min-height: 210vh !important;
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
@@ -1666,9 +1709,11 @@
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
-        /* svh only — never resize from JS while scrolling (was the big shake) */
+        /* Prefer dvh on supporting browsers; svh fallback — less iOS chrome jitter */
         height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
+        height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
         max-height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
+        max-height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -1686,6 +1731,8 @@
         transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        contain: layout paint;
       }
       .hiw-walk-chapters-progress {
         display: none !important;
@@ -1709,11 +1756,11 @@
         flex-direction: column !important;
         justify-content: center !important;
         align-items: center !important;
+        /* Instant swap — opacity fade left a blank frame (blink) */
         opacity: 0 !important;
         visibility: hidden !important;
-        /* No transform animation — opacity only = much less jank */
         transform: none !important;
-        transition: opacity .28s ease !important;
+        transition: none !important;
         pointer-events: none !important;
         z-index: 1;
         box-sizing: border-box !important;
@@ -1739,7 +1786,7 @@
         flex: none !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        transition: background .3s ease, padding .3s ease !important;
+        transition: none !important;
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
         padding: 14px 16px !important;
@@ -1778,6 +1825,7 @@
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
         max-height: min(540px, calc(100svh - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        max-height: min(540px, calc(100dvh - var(--hiw-sticky-top, 64px) - 148px)) !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -1970,7 +2018,7 @@
         letter-spacing: 0;
       }
       .hiw-shoot-rail-label::after {
-        content: 'TAP A BACKGROUND';
+        content: 'SCROLL OR TAP A BACKGROUND';
         font-size: 12.5px;
         font-weight: 700;
         letter-spacing: .12em;
@@ -2041,11 +2089,11 @@
 
     @media (max-width: 1024px) {
       .hiw-walk-phone-frame { width: 100% !important; max-width: 380px; }
-      .hiw-dev-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .hiw-dev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     }
-    /* Mobile: 1 card per row. From 500px up: 3 per row */
-    @media (max-width: 499px) {
-      .hiw-dev-grid { grid-template-columns: 1fr !important; gap: 10px; }
+    /* Phone/tablet portrait: 2×3 device cards (not 1-col stack) */
+    @media (max-width: 900px) {
+      .hiw-dev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px; }
     }
     @media (max-width: 900px) {
       .hiw-shoot-body, .hiw-refund-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -2824,11 +2872,6 @@
         line-height: 1.45 !important;
       }
       .hiw-demo { margin-top: 28px !important; border-radius: 18px !important; }
-      .hiw-dev-card { padding: 14px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-      .hiw-dev-ico { width: 36px; height: 36px; border-radius: 10px; margin-bottom: 8px; }
-      .hiw-dev-ico svg { width: 18px; height: 18px; }
-      .hiw-dev-card strong { font-size: 14px; }
-      .hiw-dev-card > span:not(.hiw-dev-ico) { font-size: 12.5px; line-height: 1.4; }
       .hiw-mkt-phone-wrap, .hiw-mkt-phone { width: 100%; max-width: 300px; }
       .hiw-step-grid { grid-template-columns: 72px 1fr; gap: 12px; }
       .hiw-step-grid h3 { font-size: 22px !important; }
@@ -4250,9 +4293,8 @@ class Component extends DCLogic {
 
   /** When user taps a chip, scroll runway so sticky progress matches that look */
   _scrollShootToLook = (i) => {
-    if (!window.matchMedia('(min-width: 901px)').matches) return;
     const runway = document.querySelector('.hiw-shoot-runway');
-    if (!runway) return;
+    if (!runway || runway.offsetHeight < window.innerHeight * 1.4) return;
     const vh = window.innerHeight || 1;
     const total = Math.max(1, runway.offsetHeight - vh);
     const centers = [0.14, 0.45, 0.78];
@@ -4279,6 +4321,18 @@ class Component extends DCLogic {
     this._genderT = setTimeout(() => this.runTry(0), 320);
   };
 
+  _scrollDemoResult = () => {
+    /* Mob/tab: stacked demo — bring step 3 into view after Blend */
+    if (!window.matchMedia('(max-width: 1100px)').matches) return;
+    const el = document.querySelector('.hiw-demo-result');
+    if (!el) return;
+    clearTimeout(this._demoScrollT);
+    this._demoScrollT = setTimeout(() => {
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 72;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }, 80);
+  };
+
   runTry = (i, manual) => {
     if (manual && !this.state.tryTouched) this.setState({ tryTouched: true });
     if (this.state.tryPick === i && this.state.tryPhase !== 'idle') return;
@@ -4286,6 +4340,7 @@ class Component extends DCLogic {
     this.setState({ tryPick: i, tryPhase: 'working', tryRipple: i });
     this._rippleT = setTimeout(() => this.setState({ tryRipple: null }), 620);
     this._tryT = setTimeout(() => this.setState({ tryShown: i, tryPhase: 'done' }), 1150);
+    if (manual) this._scrollDemoResult();
   };
 
   runShopBlend = (i) => {
@@ -4338,7 +4393,7 @@ class Component extends DCLogic {
     this._tick = () => {
       this._raf = 0;
       const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
-      if (!chaptersMode && typeof this._syncShootLook === 'function') this._syncShootLook();
+      if (typeof this._syncShootLook === 'function') this._syncShootLook();
       const next = {};
       const vh = this._lastVvh || window.innerHeight;
       const pinIds = [0, 1, 2, 3].map((i) => document.getElementById('hiw-pin-' + i));
@@ -4370,13 +4425,14 @@ class Component extends DCLogic {
           const locked = this._chapterLockUntil && Date.now() < this._chapterLockUntil;
           let idx = curIdx;
           if (inView && !locked) {
-            if (p < 0.33) idx = 0;
-            else if (p < 0.66) idx = 1;
+            /* Step 3 earlier (~48%) — was 66% thirds and felt late */
+            if (p < 0.24) idx = 0;
+            else if (p < 0.48) idx = 1;
             else idx = 2;
           }
           if (idx !== curIdx) {
             this._walkChapterIdx = idx;
-            this._chapterLockUntil = Date.now() + 700;
+            this._chapterLockUntil = Date.now() + 380;
             const step = idx === 2 ? 3 : idx;
             wrap.setAttribute('data-chapter', String(idx + 1));
             wrap.querySelectorAll('.hiw-chapter').forEach(function (el, i) {
@@ -4408,7 +4464,7 @@ class Component extends DCLogic {
           }
         } else if (!deskLocked) {
           /* Use only main pins 0,1,3 for scroll (2B is tap-only) — less thrash */
-          const activateAt = vh * 0.34;
+          const activateAt = vh * 0.48;
           const pins = [0, 1, 3];
           let best = 0;
           pins.forEach((idx) => {
@@ -4425,10 +4481,10 @@ class Component extends DCLogic {
             const curTop = elCur ? elCur.getBoundingClientRect().top : 0;
             /* Only switch when new pin is clearly past threshold and current has left */
             if (best > (cur === 2 ? 1 : cur)) {
-              if (bestTop < activateAt - 24) step = best;
+              if (bestTop < activateAt - 12) step = best;
             } else if (best < (cur === 2 ? 1 : cur)) {
               /* Leaving step 3 needs a clearer exit */
-              const leavePad = cur === 3 ? 64 : 40;
+              const leavePad = cur === 3 ? 48 : 32;
               if (curTop > activateAt + leavePad) step = best;
             }
           }
@@ -4437,7 +4493,7 @@ class Component extends DCLogic {
           if (step !== cur) {
             next.step = step;
             /* Longer lock = fewer Softgen remounts while user is still scrolling */
-            this._deskStepLockUntil = Date.now() + (step === 3 ? 1200 : 780);
+            this._deskStepLockUntil = Date.now() + (step === 3 ? 720 : 520);
           }
           if (this.state.branchB && step !== 2) next.branchB = false;
           if (narrow && this.state.branchB) next.branchB = false;
@@ -4478,14 +4534,17 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
     this._tick();
 
-    /* Shoot section: sticky runway scroll → look 0/1/2 (desktop/tablet). Chips still tap. */
+    /* Shoot section: sticky runway scroll → look 0/1/2 (all breakpoints). Chips still tap. */
     this._syncShootLook = () => {
-      if (!window.matchMedia('(min-width: 901px)').matches) return;
       if (this._lookLockUntil && Date.now() < this._lookLockUntil) return;
       const runway = document.querySelector('.hiw-shoot-runway');
       if (!runway) return;
+      /* No sticky runway (collapsed) — skip */
+      if (runway.offsetHeight < window.innerHeight * 1.4) return;
       const vh = window.innerHeight || 1;
       const r = runway.getBoundingClientRect();
+      /* Only drive looks while the sticky pin is engaged */
+      if (r.bottom <= 0 || r.top >= vh) return;
       const total = Math.max(1, r.height - vh);
       const scrolled = Math.min(total, Math.max(0, -r.top));
       const progress = scrolled / total;
@@ -4535,14 +4594,15 @@ class Component extends DCLogic {
     window.addEventListener('wheel', this._onShootWheel, { passive: false, capture: true });
     this._syncShootLook();
 
-    /* Mob/tab: auto-cycle backgrounds every 5s while shoot section is on screen */
+    /* Auto-cycle only if sticky runway somehow unavailable (legacy fallback) */
     this._lookAutoPaused = false;
     this._startLookAuto = () => {
       clearInterval(this._lookAutoT);
       this._lookAutoT = setInterval(() => {
         if (this._lookAutoPaused) return;
         if (document.hidden) return;
-        if (window.matchMedia('(min-width: 901px)').matches) return;
+        const runway = document.querySelector('.hiw-shoot-runway');
+        if (runway && runway.offsetHeight >= window.innerHeight * 1.4) return; /* scroll owns it */
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         if (!this._shootInView) return;
         if (this._lookLockUntil && Date.now() < this._lookLockUntil) return;
@@ -4617,7 +4677,7 @@ class Component extends DCLogic {
     if (this._onBranchClick) document.removeEventListener('click', this._onBranchClick, true);
     if (this._onShootWheel) window.removeEventListener('wheel', this._onShootWheel, true);
     if (this._raf) cancelAnimationFrame(this._raf);
-    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT);
+    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT); clearTimeout(this._demoScrollT);
     clearTimeout(this._chapterSyncT);
     clearTimeout(this._lookAutoResumeT);
     clearInterval(this._lookAutoT);
@@ -5027,19 +5087,27 @@ class Component extends DCLogic {
       }.bind(this))(),
 
       chapterDots: (function () {
-        var active = s.step < 0 ? 0 : s.step;
-        if (active === 2) active = 1;
-        var activeIdx = active >= 3 ? 2 : (active <= 0 ? 0 : 1);
+        var activeIdx = 0;
+        if (typeof this._walkChapterIdx === 'number' && this._walkChapterIdx >= 0 && this._walkChapterIdx <= 2) {
+          activeIdx = this._walkChapterIdx;
+        } else {
+          var active = s.step < 0 ? 0 : s.step;
+          if (active === 2) active = 1;
+          activeIdx = active >= 3 ? 2 : (active <= 0 ? 0 : 1);
+        }
         return [0, 1, 2].map(function (i) {
           return { className: activeIdx === i ? 'is-on' : '' };
         });
-      })(),
+      }.bind(this))(),
 
       walkChapter: (function () {
+        if (typeof this._walkChapterIdx === 'number' && this._walkChapterIdx >= 0 && this._walkChapterIdx <= 2) {
+          return String(this._walkChapterIdx + 1);
+        }
         var active = s.step < 0 ? 0 : s.step;
         if (active === 2) active = 1;
         return active >= 3 ? '3' : (active <= 0 ? '1' : '2');
-      })(),
+      }.bind(this))(),
 
       screen: {
         kicker: sc.kicker, title: sc.title, cta: sc.cta, rows: sc.rows,
