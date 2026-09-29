@@ -41,6 +41,8 @@
   button { font-family: inherit; }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
   @keyframes v4Scan { 0% { transform: translateY(-115%); } 100% { transform: translateY(115%); } }
+  @keyframes v4Ring { 0% { box-shadow: 0 0 0 0 rgba(236,72,153,.55); } 70% { box-shadow: 0 0 0 12px rgba(236,72,153,0); } 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); } }
+  @keyframes v4Ripple { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(2.4); opacity: 0; } }
   @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
   @keyframes dots { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
   @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -237,7 +239,7 @@
     box-sizing: border-box;
   }
   /* Readable content column centered inside full-bleed section */
-  body.sellers-page section.sec.pad > *,
+  body.sellers-page section.sec.pad > *:not(.cta-pair),
   body.sellers-page #story > .pad {
     max-width: 1160px !important;
     width: 100% !important;
@@ -245,11 +247,75 @@
     margin-right: auto !important;
     box-sizing: border-box !important;
   }
+  /* CTA pair: hug label width — never full-bleed stretch */
+  body.sellers-page #same-catalogue.sec.pad > .cta-pair,
+  body.sellers-page .cta-pair {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+  body.sellers-page .cta-pair .cta-pair-primary,
+  body.sellers-page .cta-pair .cta-pair-secondary {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+  }
   body.sellers-page #faq.sec.pad > * {
     max-width: 760px !important;
   }
   body.sellers-page #sellers-cta.sec.pad > * {
     max-width: 1000px !important;
+  }
+  #sellers-cta .sellers-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    width: max-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #sellers-cta .sellers-cta-actions a {
+    margin: 0 !important;
+    flex: 0 0 auto;
+  }
+  #sellers-cta .sellers-cta-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+  #sellers-cta .sellers-cta-note {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255,255,255,.5);
+    text-align: center;
+  }
+  #benefits .benefit-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  #benefits .benefit-cta-btn {
+    margin: 0 !important;
+  }
+  #benefits .benefit-cta-note {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: rgba(255,255,255,.55);
   }
 
   @media (max-width: 640px) {
@@ -357,8 +423,7 @@
       margin-right: auto !important;
     }
     .zero-rule { display: none !important; }
-    .benefit-grid { grid-template-columns: 1fr 1fr !important; }
-    .compare-grid { grid-template-columns: 1fr !important; }
+    .compare-grid { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
     .pay-grid { grid-template-columns: 1fr 1fr !important; }
     .tri {
       display: flex !important;
@@ -463,8 +528,15 @@
     .tri-label { font-size: 7.5px !important; letter-spacing: .08em !important; }
     .tri > div > div:first-child { margin-bottom: 8px !important; }
     .pay-grid { grid-template-columns: 1fr !important; }
+    .compare-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+    .benefit-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
     .disco-stats { grid-template-columns: 1fr !important; }
     #drag-compare .cmp-visual { margin-top: 12px !important; }
+    #drag-compare .cmp-visual > div {
+      max-width: 520px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
     #story .story-phone { top: 56px !important; }
     #story .story-phone-shell { max-width: 260px !important; }
     #story .phone-body { height: 460px !important; }
@@ -602,7 +674,22 @@
     #same-catalogue.sec { padding-top: 28px !important; padding-bottom: 52px !important; }
     #faq.sec { padding-bottom: 24px !important; }
     #sellers-cta.sec { padding-top: 20px !important; padding-bottom: 52px !important; }
-    .benefit-grid { grid-template-columns: 1fr !important; }
+    .benefit-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+    .benefit-panel { padding: 28px 20px !important; }
+    #benefits .benefit-grid > div {
+      padding: 16px 16px 18px !important;
+    }
+    #same-catalogue .compare-grid > div[data-delay="1"] {
+      padding: 22px 20px !important;
+    }
+    #same-catalogue .same-card--yes,
+    #same-catalogue .compare-grid > div[data-delay="2"] {
+      padding: 2px !important;
+    }
+    #same-catalogue .same-card--yes > .same-card-inner,
+    #same-catalogue .compare-grid > div[data-delay="2"] > div {
+      padding: 22px 20px !important;
+    }
     .tri {
       flex-direction: row !important;
       flex-wrap: nowrap !important;
@@ -664,7 +751,20 @@
       text-align: center !important;
     }
     #lost-sale .lost-tag { white-space: nowrap; justify-self: center; }
-    .sellers-cta-panel a {
+    #sellers-cta .sellers-cta-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 14px !important;
+      width: max-content !important;
+      max-width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #sellers-cta .sellers-cta-actions a,
+    #sellers-cta .sellers-cta-panel a {
       width: fit-content !important;
       max-width: 100%;
       flex: 0 0 auto !important;
@@ -672,8 +772,8 @@
       text-align: center;
       white-space: nowrap !important;
       box-sizing: border-box;
-      margin-left: auto;
-      margin-right: auto;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
       display: inline-flex !important;
     }
     .sellers-cta-panel {
@@ -681,6 +781,30 @@
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
+    }
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair,
+    body.sellers-page .cta-pair {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: max-content !important;
+      max-width: min(420px, 100%) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      gap: 12px !important;
+    }
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair .cta-pair-primary,
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair .cta-pair-secondary,
+    body.sellers-page .cta-pair .cta-pair-primary,
+    body.sellers-page .cta-pair .cta-pair-secondary {
+      width: 100% !important;
+      max-width: none !important;
+      align-self: stretch !important;
+      white-space: nowrap !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
     }
     body.sellers-page header.pad .split { padding-bottom: 20px !important; }
     .hero-proofs { padding-top: 14px !important; }
@@ -1010,8 +1134,8 @@
     .hero-ctas {
       flex-direction: column !important;
       align-items: stretch !important;
-      width: 100%;
-      max-width: 420px;
+      width: max-content !important;
+      max-width: min(420px, 100%) !important;
       margin-left: auto;
       margin-right: auto;
     }
@@ -1021,8 +1145,11 @@
       max-width: none !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
-      flex: none !important;
+      flex: 0 0 auto !important;
       align-self: stretch !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
     }
   }
   .cat-filters {
@@ -1157,16 +1284,22 @@
       padding-right: 32px !important;
     }
     #list .cat-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-      grid-template-rows: auto auto !important;
-      gap: 12px !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      grid-template-rows: auto !important;
+      gap: 10px !important;
       width: 100% !important;
       max-width: 100% !important;
     }
+    #list .cat-card {
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 14px !important;
+    }
+    #list .cat-card-label { font-size: 12px !important; }
+    #list .cat-card-badge { font-size: 8px !important; padding: 4px 7px !important; }
     #list .cat-card:nth-child(1) { grid-column: 1; grid-row: 1; }
     #list .cat-card:nth-child(2) { grid-column: 2; grid-row: 1; }
-    #list .cat-card:nth-child(3) { grid-column: 1; grid-row: 2; }
-    #list .cat-card:nth-child(4) { grid-column: 2; grid-row: 2; }
+    #list .cat-card:nth-child(3) { grid-column: 3; grid-row: 1; }
+    #list .cat-card:nth-child(4) { grid-column: 4; grid-row: 1; }
   }
   @media (max-width: 640px) {
     #list.sec.pad {
@@ -1174,8 +1307,18 @@
       padding-right: 20px !important;
     }
     #list .cat-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      grid-template-rows: auto auto !important;
       gap: 10px !important;
     }
+    #list .cat-card {
+      aspect-ratio: 3 / 4 !important;
+      border-radius: 14px !important;
+    }
+    #list .cat-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+    #list .cat-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+    #list .cat-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+    #list .cat-card:nth-child(4) { grid-column: 2; grid-row: 2; }
   }
 
   /* Where the sale is lost — polish */
@@ -2747,6 +2890,26 @@
     margin-left: auto !important;
     margin-right: auto !important;
   }
+  /* Gradient frame: keep 2px ring even when grid stretches cards equal-height */
+  #same-catalogue .compare-grid {
+    align-items: stretch;
+  }
+  #same-catalogue .same-card--yes {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 2px !important;
+    box-sizing: border-box !important;
+    min-height: 100%;
+    height: 100%;
+  }
+  #same-catalogue .same-card--yes > .same-card-inner {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
   #benefits .benefit-head {
     display: flex !important;
     flex-direction: column !important;
@@ -2808,16 +2971,31 @@
     #drag-compare .split > div:first-child {
       text-align: center !important;
     }
-    /* Benefits CTA row center on smaller screens */
-    #benefits .benefit-panel > div > div:last-child {
-      justify-content: center !important;
-      text-align: center !important;
+    /* Benefits CTA — note directly under button */
+    #benefits .benefit-cta {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
+      gap: 12px !important;
+      margin-top: 30px !important;
     }
-    /* CTAs: content-sized pills, never full-bleed stretch */
+    #benefits .benefit-cta-btn,
+    #benefits a.pb-grad-btn {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      align-self: flex-start !important;
+    }
+    #benefits .benefit-cta-note {
+      display: block !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+    /* CTAs: content-sized pills — not full-bleed */
     #cost .cost-cta,
     #cost .cost-foot a,
-    a.pb-grad-btn:not(.hero-cta-primary):not(.cta-pair-primary),
-    .sellers-cta-panel a,
+    a.pb-grad-btn:not(.hero-cta-primary):not(.cta-pair-primary):not(.sellers-cta-btn),
     .disco-cta-card a,
     #benefits a.pb-grad-btn,
     #journey .stepper-next {
@@ -2831,27 +3009,67 @@
       justify-content: center !important;
       box-sizing: border-box !important;
     }
-    .hero-ctas,
-    .cta-pair {
-      flex-direction: column !important;
-      align-items: stretch !important;
-      width: 100% !important;
-      max-width: 420px;
+    #sellers-cta .sellers-cta-actions {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 14px !important;
+      width: max-content !important;
+      max-width: 100% !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
+    #sellers-cta .sellers-cta-actions a,
+    #sellers-cta .sellers-cta-panel a {
+      width: fit-content !important;
+      max-width: 100% !important;
+      flex: 0 0 auto !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      display: inline-flex !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+    }
+    .sellers-cta-panel {
+      text-align: center !important;
+    }
+    .hero-ctas {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: max-content !important;
+      max-width: min(420px, 100%) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      gap: 12px !important;
+    }
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair,
+    body.sellers-page .cta-pair {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: max-content !important;
+      max-width: min(420px, 100%) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      gap: 12px !important;
+    }
     .hero-ctas .hero-cta-primary,
     .hero-ctas .hero-cta-secondary,
-    .cta-pair .cta-pair-primary,
-    .cta-pair .cta-pair-secondary {
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair .cta-pair-primary,
+    body.sellers-page #same-catalogue.sec.pad > .cta-pair .cta-pair-secondary,
+    body.sellers-page .cta-pair .cta-pair-primary,
+    body.sellers-page .cta-pair .cta-pair-secondary {
       width: 100% !important;
       max-width: none !important;
       min-height: 52px !important;
+      padding: 15px 26px !important;
+      white-space: nowrap !important;
+      align-self: stretch !important;
       margin-left: 0 !important;
       margin-right: 0 !important;
-      align-self: stretch !important;
       justify-content: center !important;
-      padding: 15px 24px !important;
       box-sizing: border-box !important;
     }
     #cost .cost-foot {
@@ -2868,7 +3086,12 @@
       margin-right: auto;
     }
     .disco-cta-card > div:last-child {
-      justify-content: center !important;
+      justify-content: flex-start !important;
+    }
+    .disco-cta-card a {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      align-self: flex-start !important;
     }
   }
 
@@ -2964,6 +3187,17 @@
   @media (max-width: 1040px) {
     #drag-compare .cmp-h2 { font-size: 32px !important; }
     #drag-compare .cmp-visual { margin-top: 8px !important; }
+    #drag-compare .cmp-visual > div {
+      max-width: 560px !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    #benefits .benefit-h2 { font-size: 30px !important; }
+    #benefits .benefit-grid > div {
+      padding: 16px 16px 18px !important;
+    }
+    #same-catalogue .same-h2 { font-size: 30px !important; }
   }
   @media (max-width: 768px) {
     #drag-compare .cmp-list {
@@ -3379,7 +3613,10 @@
                       </div>
                       <div class="hiw-mkt-listing-body">
                         <div>{{ p.name }}</div>
-                        <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
+                        <div sc-camel-on-click="{{ p.tryOn }}" class="hiw-mkt-blend-btn" style="{{ p.btnStyle }}">
+                          <span style="{{ p.ripple }}" aria-hidden="true"></span>
+                          {{ p.btnLabel }}
+                        </div>
                       </div>
                     </div>
                   </sc-for>
@@ -3662,8 +3899,8 @@
         </sc-for>
       </div>
     </div>
-    <div data-reveal="" data-delay="2" style="position: relative; border-radius: 26px; padding: 2px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 34px 70px -50px rgba(196,46,139,.9);">
-      <div style="background: #fff; border-radius: 24px; padding: 30px 28px;">
+    <div class="same-card same-card--yes" data-reveal="" data-delay="2" style="position: relative; border-radius: 26px; padding: 2px; background: linear-gradient(150deg,#A855F7,#EC4899,#F43F5E); box-shadow: 0 34px 70px -50px rgba(196,46,139,.9); display: flex; flex-direction: column; min-height: 100%; box-sizing: border-box;">
+      <div class="same-card-inner" style="background: #fff; border-radius: 24px; padding: 30px 28px; flex: 1 1 auto; display: flex; flex-direction: column; box-sizing: border-box; width: 100%;">
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 22px;">
           <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113.667deg,#A855F7,#F43F5E); color: #fff; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">✓</span>
           <span style="font-size: 15px; font-weight: 800; letter-spacing: -.01em; color: #1E1422;">Selling with a PixelBlend blend link</span>
@@ -3677,9 +3914,9 @@
     </div>
   </div>
 
-  <div class="cta-pair" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px;">
-    <a class="pb-grad-btn cta-pair-primary" href="#start" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
-    <a class="cta-pair-secondary" href="#cost" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 15px 26px; border-radius: 999px; border: 1px solid #EADDEC; background: #fff; box-sizing: border-box;" style-hover="border-color:#C42E8B;">What it costs you</a>
+  <div class="cta-pair" style="display: flex; flex-direction: column; align-items: stretch; gap: 12px; width: max-content; max-width: 100%; margin: 26px auto 0; box-sizing: border-box;">
+    <a class="pb-grad-btn cta-pair-primary" href="#start" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6); width: auto; min-width: 100%; box-sizing: border-box; white-space: nowrap;" style-hover="transform:translateY(-2px);">List your backgrounds — free</a>
+    <a class="cta-pair-secondary" href="#cost" style="display: inline-flex; align-items: center; justify-content: center; font-size: 15.5px; font-weight: 600; color: #1E1422; text-decoration: none; padding: 15px 26px; border-radius: 999px; border: 1px solid #EADDEC; background: #fff; box-sizing: border-box; width: auto; min-width: 100%; white-space: nowrap; box-shadow: none;" style-hover="border-color:#C42E8B;">What it costs you</a>
   </div>
 </section>
 
@@ -3743,9 +3980,9 @@
           </div>
         </sc-for>
       </div>
-      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 30px;">
-        <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
-        <span style="font-size: 14.5px; color: rgba(255,255,255,.55);">No listing fee · No subscription · No commission</span>
+      <div class="benefit-cta">
+        <a class="pb-grad-btn benefit-cta-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 15.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px 26px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 14px 34px -14px rgba(236,72,153,.6); margin: 0;" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
+        <p class="benefit-cta-note">No listing fee · No subscription · No commission</p>
       </div>
     </div>
   </div>
@@ -3775,11 +4012,13 @@
   <div data-reveal="" class="sellers-cta-panel" style="background: #1E1422; color: #fff; border-radius: 8px; padding: 60px 56px;">
     <h2 class="h2 sellers-cta-h2" style="font-size: 44px; line-height: 1.04; letter-spacing: -.04em; font-weight: 800; margin: 0 0 12px;">Let them see their product in it.</h2>
     <p class="sellers-cta-sub" style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 30px; line-height: 1.2; background: linear-gradient(100deg, #F9A8D4, #EC4899, #F43F5E); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 30px;">It costs you nothing to find out.</p>
-    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-      <a class="pb-grad-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; padding: 18px 34px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 16px 40px -14px rgba(236,72,153,.6);" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
-      <a href="#faq" style="display: inline-flex; font-size: 17px; font-weight: 700; color: #fff !important; text-decoration: none; padding: 17px 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,.24);" style-hover="border-color:rgba(255,255,255,.55);">Talk to our seller team</a>
+    <div class="sellers-cta-foot">
+      <div class="sellers-cta-actions">
+        <a class="pb-grad-btn sellers-cta-btn" href="#start" style="display: inline-flex; align-items: center; font-size: 17px; font-weight: 800; color: #fff; text-decoration: none; padding: 18px 34px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 16px 40px -14px rgba(236,72,153,.6); margin: 0;" style-hover="transform:translateY(-2px);">Start listing — it’s free</a>
+        <a class="sellers-cta-btn" href="#faq" style="display: inline-flex; font-size: 17px; font-weight: 700; color: #fff !important; text-decoration: none; padding: 17px 30px; border-radius: 999px; border: 1px solid rgba(255,255,255,.24); margin: 0;" style-hover="border-color:rgba(255,255,255,.55);">Talk to our seller team</a>
+      </div>
+      <p class="sellers-cta-note">No listing fee · No subscription · No charge for brand blends</p>
     </div>
-    <p style="font-size: 14px; color: rgba(255,255,255,.5); margin: 24px 0 0;">No listing fee · No subscription · No charge for brand blends</p>
   </div>
 </section>
   </x-dc>
@@ -3787,7 +4026,7 @@
 <script type="text/x-dc" data-dc-script="">
 
 class Component extends DCLogic {
-  state = { scrolled: false, menuOpen: false, openFaq: 0, storyStep: 0, split: 50, dragging: false, cat: 0, catProg: 0, catPaused: false, step: 0, stepProg: 0, stepPaused: false, shopStep: 0, shopBlend: 'idle', shopContact: false, following: false, picked: 0 };
+  state = { scrolled: false, menuOpen: false, openFaq: 0, storyStep: 0, split: 50, dragging: false, cat: 0, catProg: 0, catPaused: false, step: 0, stepProg: 0, stepPaused: false, shopStep: 0, shopBlend: 'idle', shopBlendBtn: null, shopRipple: null, shopContact: false, following: false, picked: 0 };
   componentDidMount() {
     this._onScroll = () => {
       const s = window.scrollY > 60;
@@ -3858,15 +4097,25 @@ class Component extends DCLogic {
     if (this._stepIv) clearInterval(this._stepIv);
     if (this._revealIO) this._revealIO.disconnect();
     clearTimeout(this._shopBlendT);
+    clearTimeout(this._shopRippleT);
   }
   runShopBlend(i) {
+    if (this.state.shopBlendBtn != null || this.state.shopStep === 1) return;
     clearTimeout(this._shopBlendT);
-    this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
-    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
+    clearTimeout(this._shopRippleT);
+    this.setState({ shopRipple: i, shopBlendBtn: i, shopContact: false });
+    this._shopRippleT = setTimeout(() => {
+      if (this.state.shopRipple === i) this.setState({ shopRipple: null });
+    }, 620);
+    this._shopBlendT = setTimeout(() => {
+      this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopBlendBtn: null });
+      this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
+    }, 480);
   }
   backShop() {
     clearTimeout(this._shopBlendT);
-    this.setState({ shopStep: 0, shopBlend: 'idle', shopContact: false });
+    clearTimeout(this._shopRippleT);
+    this.setState({ shopStep: 0, shopBlend: 'idle', shopBlendBtn: null, shopRipple: null, shopContact: false });
   }
   openShopContact() { this.setState({ shopContact: true }); }
   closeShopContact() { this.setState({ shopContact: false }); }
@@ -4492,9 +4741,30 @@ class Component extends DCLogic {
         style: 'font-size: 12.5px; font-weight: 700; padding: 7px 13px; border-radius: 999px; white-space: nowrap; ' +
           (i === 0 ? 'color: #fff; background: #1A1420;' : 'color: #6B6070; background: #fff; border: 1px solid #EFE7E0;'),
       })),
-      listings: shopListings.map((p, i) => Object.assign({}, p, {
-        tryOn: () => this.runShopBlend(i),
-      })),
+      listings: shopListings.map((p, i) => {
+        const busy = S.shopBlendBtn === i;
+        const rippling = S.shopRipple === i;
+        return Object.assign({}, p, {
+          btnLabel: busy ? 'Working…' : 'BLEND',
+          btnStyle:
+            'position: relative; overflow: hidden; margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; cursor: pointer; ' +
+            'background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); ' +
+            'box-shadow: 0 6px 14px -8px rgba(236,72,153,.9); ' +
+            'transition: opacity .25s, transform .2s, box-shadow .25s; ' +
+            (busy
+              ? 'opacity: .72; transform: scale(.97);'
+              : 'opacity: 1; transform: scale(1);') +
+            (rippling ? ' animation: v4Ring .62s ease-out;' : ''),
+          ripple: {
+            position: 'absolute', left: '50%', top: '50%', width: '72px', height: '72px',
+            marginLeft: '-36px', marginTop: '-36px', borderRadius: '50%',
+            border: '2px solid rgba(255,255,255,.95)', background: 'rgba(236,72,153,.28)',
+            pointerEvents: 'none', opacity: 0,
+            animation: rippling ? 'v4Ripple .62s ease-out' : 'none'
+          },
+          tryOn: () => this.runShopBlend(i),
+        });
+      }),
     };
     const discoveryFacts = [
       { title: 'They find you while browsing, not because they know you', body: 'Your scenes sit in the categories brands already search — studio backdrops, marble surfaces, festive sets — next to everyone else’s.' },

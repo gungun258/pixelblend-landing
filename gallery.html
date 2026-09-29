@@ -383,27 +383,32 @@
     }
     .gal-head-row h2 {
       margin: 0 auto;
-      max-width: 18ch;
+      max-width: none;
+      width: max-content;
+      max-width: 100%;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(30px, 3.5vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(18px, 4.4vw, 38px);
+      line-height: 1.12;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #1E1422;
       text-align: center;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
-    .gal-compare h2,
     .gal-end h2 {
       margin: 0;
-      max-width: 18ch;
+      max-width: none;
+      width: max-content;
+      max-width: 100%;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(30px, 3.5vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(18px, 4.4vw, 38px);
+      line-height: 1.12;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #1E1422;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
     .gal-em {
       font-family: 'Instrument Serif', serif;
@@ -446,14 +451,16 @@
     }
     .gal-compare h2 {
       margin: 14px 0 0;
-      max-width: 16ch;
+      max-width: 100%;
+      width: auto;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(30px, 3.5vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(26px, 3.4vw, 38px);
+      line-height: 1.14;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #fff;
-      text-wrap: balance;
+      white-space: normal;
+      text-wrap: pretty;
     }
     .gal-compare .gal-em {
       background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
@@ -727,7 +734,8 @@
     }
     .gal-keep-inner { max-width: 1180px; margin: 0 auto; }
     .gal-keep-head {
-      max-width: 20ch;
+      max-width: none;
+      width: 100%;
       margin: 0 auto 40px;
       text-align: center;
     }
@@ -743,14 +751,18 @@
       -webkit-text-fill-color: transparent;
     }
     .gal-keep-head h2 {
-      margin: 0;
+      margin: 0 auto;
+      max-width: none;
+      width: max-content;
+      max-width: 100%;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(30px, 3.5vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(18px, 4.4vw, 38px);
+      line-height: 1.12;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #1A1420;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
     .gal-keep-head h2 .gal-em {
       font-family: 'Instrument Serif', serif;
@@ -812,20 +824,25 @@
     }
     .gal-voices-inner { max-width: 1180px; margin: 0 auto; }
     .gal-voices-head {
-      max-width: 16ch;
+      max-width: none;
+      width: 100%;
       margin: 0 auto 32px;
       text-align: center;
     }
     .gal-voices-head h2 {
       margin: 0 auto;
+      max-width: none;
+      width: max-content;
+      max-width: 100%;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(30px, 3.5vw, 38px);
-      line-height: 1.09;
+      font-size: clamp(18px, 4.4vw, 38px);
+      line-height: 1.12;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #1E1422;
       text-align: center;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
     .gal-voice-grid {
       display: grid;
@@ -887,14 +904,17 @@
     }
     .gal-end h2 {
       margin: 0;
-      max-width: 16ch;
+      max-width: none;
+      width: max-content;
+      max-width: 100%;
       font-family: 'Hanken Grotesk', sans-serif;
-      font-size: clamp(28px, 3.4vw, 37px);
-      line-height: 1.09;
+      font-size: clamp(18px, 4.4vw, 37px);
+      line-height: 1.12;
       font-weight: 800;
       letter-spacing: -.03em;
       color: #1E1422;
-      text-wrap: balance;
+      white-space: nowrap;
+      text-wrap: nowrap;
     }
     .gal-end p {
       margin: 12px 0 0; font-size: 16px; line-height: 1.55; color: #5b5060;
@@ -1112,8 +1132,9 @@
         margin-left: 0;
         margin-right: 0;
         text-align: left;
-        max-width: 16ch;
-        font-size: clamp(26px, 3.2vw, 34px);
+        max-width: 100%;
+        font-size: clamp(24px, 3.2vw, 34px);
+        white-space: normal;
       }
       .gal-compare p {
         margin-left: 0;
@@ -1150,7 +1171,8 @@
         margin: 0;
       }
       .gal-keep-head {
-        max-width: 20ch;
+        max-width: none;
+        width: 100%;
         margin: 0 auto 32px;
         text-align: center;
       }
@@ -1254,8 +1276,9 @@
         margin-left: 0;
         margin-right: 0;
         text-align: left;
-        font-size: clamp(24px, 3.4vw, 30px);
-        max-width: 16ch;
+        font-size: clamp(22px, 3.8vw, 30px);
+        max-width: 100%;
+        white-space: normal;
       }
       .gal-compare p {
         margin-left: 0;
@@ -1305,31 +1328,45 @@
       }
       .gal-mood:nth-child(1) { grid-row: 1; grid-column: 1 / -1; }
       .gal-head-row { grid-template-columns: 1fr; margin-bottom: 22px; }
+      /* Long section titles: up to 2 lines on tab/mob — never clip */
       .gal-head-row h2 {
-        max-width: 18ch;
+        max-width: 100%;
+        width: auto;
+        white-space: normal;
+        text-wrap: pretty;
+        font-size: clamp(22px, 4.2vw, 34px);
       }
       .gal-compare h2 {
-        max-width: 16ch;
+        max-width: 100%;
+        width: auto;
+        white-space: normal;
+        text-wrap: pretty;
       }
-      .gal-keep-head h2,
+      .gal-keep-head h2 {
+        max-width: 100%;
+        width: auto;
+        white-space: normal;
+        text-wrap: pretty;
+        font-size: clamp(22px, 4.2vw, 34px);
+        line-height: 1.14;
+        text-align: center;
+      }
       .gal-voices-head h2,
       .gal-end h2 {
-        max-width: 18ch;
+        max-width: 100%;
+        white-space: nowrap;
+        font-size: clamp(17px, 4.2vw, 34px);
       }
       .gal-head-row p { text-align: center; max-width: none; }
       .gal-keep { padding: 52px 22px; margin-top: 56px; }
       .gal-keep-head {
-        max-width: 20ch;
+        max-width: none;
+        width: 100%;
         margin: 0 auto 28px;
         text-align: center;
       }
       .gal-keep-kicker {
         display: inline-block;
-      }
-      .gal-keep-head h2 {
-        font-size: clamp(28px, 5vw, 34px);
-        line-height: 1.12;
-        text-align: center;
       }
       /* Tablet: keep 01|02|03 in one row (not stacked — avoids empty sides) */
       .gal-keep-grid {
@@ -1683,7 +1720,33 @@
       .gal-compare { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
       .gal-keep { padding-top: 44px; padding-bottom: 44px; margin-top: 44px; }
       .gal-keep-head { margin-bottom: 22px; }
-      .gal-keep-head h2 { font-size: 28px; }
+      .gal-keep-head h2 {
+        font-size: clamp(22px, 5.2vw, 28px);
+        white-space: normal;
+        text-wrap: pretty;
+        max-width: 100%;
+        width: auto;
+      }
+      .gal-head-row h2 {
+        font-size: clamp(22px, 5.2vw, 28px);
+        white-space: normal;
+        text-wrap: pretty;
+        max-width: 100%;
+        width: auto;
+      }
+      .gal-voices-head h2,
+      .gal-end h2 {
+        font-size: clamp(16px, 4.6vw, 28px);
+        white-space: nowrap;
+        max-width: 100%;
+      }
+      .gal-compare h2 {
+        font-size: clamp(22px, 5.2vw, 28px);
+        white-space: normal;
+        text-wrap: pretty;
+        max-width: 100%;
+        width: auto;
+      }
       .gal-keep-cta { margin-top: 24px; }
       .gal-voices { padding-top: 44px; padding-bottom: 4px; }
       .gal-end { padding-top: 16px; padding-bottom: 48px; margin-top: 0; }

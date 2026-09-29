@@ -385,10 +385,10 @@
       margin: 8px 0 0; font-size: 16.5px; line-height: 1.65; color: rgba(255,255,255,.68);
     }
     @media (max-width: 900px) {
-      .hiw-shoot-runway { height: 200vh; }
+      /* Longer runway = more scroll distance per look (2nd holds before 3rd) */
+      .hiw-shoot-runway { height: 280vh; }
       .hiw-shoot-pin {
         min-height: 100svh;
-        min-height: 100dvh;
         align-items: flex-start;
         padding-top: 12px;
       }
@@ -1124,9 +1124,9 @@
         margin-left: auto;
         margin-right: auto;
       }
-      /* 2×3 on tablet/phone — fits without sideways squeeze */
+      /* 3 per row on tablet — 2-col looked stretched; small phones use 2×3 below */
       .hiw-dev-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
       }
       .hiw-dev-card {
@@ -1134,6 +1134,12 @@
         padding: 16px 12px;
       }
       .hiw-dev-ico { margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 560px) {
+      .hiw-dev-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
     }
     @media (max-width: 640px) {
       #devices { padding: 40px 16px 0; }
@@ -1710,11 +1716,9 @@
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
-        /* Prefer dvh on supporting browsers; svh fallback — less iOS chrome jitter */
+        /* svh only — dvh resized with iOS chrome and caused sticky jitter */
         height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
-        height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
         max-height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
-        max-height: calc(100dvh - var(--hiw-sticky-top, 64px)) !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -1826,7 +1830,6 @@
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
         max-height: min(540px, calc(100svh - var(--hiw-sticky-top, 64px) - 148px)) !important;
-        max-height: min(540px, calc(100dvh - var(--hiw-sticky-top, 64px) - 148px)) !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -2088,13 +2091,18 @@
     .hiw-mkt-ctas { margin-top: 26px; }
     .hiw-uc-visual { min-width: 0; }
 
+    /* Tablet / large mid screens: 3 cards per row (2-col looked stretched) */
     @media (max-width: 1024px) {
       .hiw-walk-phone-frame { width: 100% !important; max-width: 380px; }
       .hiw-dev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     }
-    /* Phone/tablet portrait: 2×3 device cards (not 1-col stack) */
     @media (max-width: 900px) {
-      .hiw-dev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px; }
+      .hiw-dev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 10px; }
+      .hiw-dev-card { padding: 16px 12px; }
+    }
+    /* Small phones only: 2×3 */
+    @media (max-width: 560px) {
+      .hiw-dev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px; }
     }
     @media (max-width: 900px) {
       .hiw-shoot-body, .hiw-refund-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -3992,7 +4000,10 @@
                         </div>
                         <div class="hiw-mkt-listing-body">
                           <div>{{ p.name }}</div>
-                          <div sc-camel-on-click="{{ p.tryOn }}" style="margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); cursor: pointer">BLEND</div>
+                          <div sc-camel-on-click="{{ p.tryOn }}" class="hiw-mkt-blend-btn" style="{{ p.btnStyle }}">
+                            <span style="{{ p.ripple }}" aria-hidden="true"></span>
+                            {{ p.btnLabel }}
+                          </div>
                         </div>
                       </div>
                     </sc-for>
@@ -4227,7 +4238,7 @@
 const U = (id, w) => (window.__resources && window.__resources['u_' + id]) || ('https://images.unsplash.com/photo-' + id + '?w=' + (w || 600) + '&q=80&auto=format&fit=crop');
 
 class Component extends DCLogic {
-  state = { scrolled: false, step: -1, look: 0, openFaq: 0, moment: 0, shopStep: 0, shopBlend: 'idle', shopContact: false, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0, branchB: false };
+  state = { scrolled: false, step: -1, look: 0, openFaq: 0, moment: 0, shopStep: 0, shopBlend: 'idle', shopBlendBtn: null, shopRipple: null, shopContact: false, following: false, picked: 0, tryPick: null, tryShown: null, tryPhase: 'idle', tryTouched: false, tryRipple: null, demoSeen: false, prod: 0, branchB: false };
 
   backgrounds = [
     { name: 'Desk & notebook', id: '1517842645767-c639042777db' },
@@ -4254,10 +4265,16 @@ class Component extends DCLogic {
     var chaptersMode = window.matchMedia('(max-width: 900px)').matches;
     var narrow = chaptersMode;
     if (narrow && n === 2) n = 1; /* no 2B on mob/tab */
-    this._branchLockUntil = Date.now() + 2200;
+    /* Short lock — long lock blocked Step 3 after picking 2B */
+    this._branchLockUntil = Date.now() + 520;
     window.__hiwBranchLockUntil = this._branchLockUntil;
     var keepY = window.scrollY || window.pageYOffset || 0;
     this.setState({ step: n, branchB: narrow ? false : n === 2 });
+    clearTimeout(this._branchLockTick);
+    this._branchLockTick = setTimeout(() => {
+      this._branchLockUntil = 0;
+      if (this._tick) this._tick();
+    }, 540);
     if (chaptersMode) {
       this._hiwWalkStep = n;
       return;
@@ -4279,16 +4296,44 @@ class Component extends DCLogic {
   };
 
   _goLook = (i) => {
-    if (i === this.state.look) return;
-    this._lookLockUntil = Date.now() + 420;
-    this.setState({ look: i });
-    requestAnimationFrame(() => {
-      const shots = document.querySelectorAll('.hiw-shoot-shots img');
-      shots.forEach((img, n) => {
-        img.style.animation = 'none';
-        void img.offsetWidth;
-        img.style.animation = 'hiwShootFade .5s cubic-bezier(.22,.61,.36,1) ' + (n * 0.06) + 's both';
-      });
+    const cur = typeof this._lookLive === 'number' ? this._lookLive : this.state.look;
+    if (i === cur) return;
+    this._lookLive = i;
+    const hold = Date.now() + 480;
+    if (!this._lookLockUntil || this._lookLockUntil < hold) this._lookLockUntil = hold;
+    /* DOM first — Softgen setState remount mid-scroll = blink/jitter */
+    this._applyLookDom(i);
+    clearTimeout(this._lookStateT);
+    this._lookStateT = setTimeout(() => {
+      if (this.state.look !== i) this.setState({ look: i });
+    }, this._scrollSettling ? 420 : 220);
+  };
+
+  _applyLookDom = (i) => {
+    const ld = this.lookData && this.lookData[i];
+    if (!ld) return;
+    document.querySelectorAll('.hiw-look-pin').forEach((el, n) => {
+      const on = n === i;
+      el.classList.toggle('is-on', on);
+      el.style.background = on ? '#fff' : 'rgba(255,255,255,.07)';
+      el.style.color = on ? '#1A1420' : 'rgba(255,255,255,.72)';
+      el.style.opacity = on ? '1' : '.78';
+      el.style.boxShadow = on ? '0 16px 36px -22px rgba(0,0,0,.55)' : 'none';
+    });
+    document.querySelectorAll('.hiw-shoot-shots .hiw-shoot-caption').forEach((cap, n) => {
+      const img = cap.querySelector('img');
+      const shotId = ld.shots && ld.shots[n];
+      if (img && shotId) {
+        const next = U(shotId, 560);
+        if (img.getAttribute('src') !== next) {
+          img.style.animation = 'none';
+          void img.offsetWidth;
+          img.src = next;
+          img.style.animation = 'hiwShootFade .5s cubic-bezier(.22,.61,.36,1) ' + (n * 0.06) + 's both';
+        }
+      }
+      const noteEl = cap.lastElementChild;
+      if (noteEl && ld.notes && ld.notes[n]) noteEl.textContent = ld.notes[n];
     });
   };
 
@@ -4298,10 +4343,11 @@ class Component extends DCLogic {
     if (!runway || runway.offsetHeight < window.innerHeight * 1.4) return;
     const vh = window.innerHeight || 1;
     const total = Math.max(1, runway.offsetHeight - vh);
-    const centers = [0.14, 0.45, 0.78];
+    /* Match wider look bands so middle look is easy to land on */
+    const centers = [0.14, 0.48, 0.88];
     const t = centers[Math.max(0, Math.min(2, i))] || 0.14;
     const top = runway.getBoundingClientRect().top + window.scrollY + t * total;
-    this._lookLockUntil = Date.now() + 600;
+    this._lookLockUntil = Date.now() + 900;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
   };
 
@@ -4323,37 +4369,91 @@ class Component extends DCLogic {
   };
 
   _scrollDemoResult = () => {
-    /* Mob/tab: stacked demo — bring step 3 into view after Blend */
+    /* Mob/tab: scroll WHILE result is Generating… (not after Done) */
     if (!window.matchMedia('(max-width: 1100px)').matches) return;
-    const el = document.querySelector('.hiw-demo-result');
+    const el =
+      document.querySelector('.hiw-demo-label-out') ||
+      document.querySelector('.hiw-demo-result');
     if (!el) return;
     clearTimeout(this._demoScrollT);
-    this._demoScrollT = setTimeout(() => {
-      const y = el.getBoundingClientRect().top + window.pageYOffset - 72;
-      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-    }, 80);
+    if (this._demoScrollRaf) {
+      cancelAnimationFrame(this._demoScrollRaf);
+      this._demoScrollRaf = 0;
+    }
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const run = () => {
+      const header = document.getElementById('pb-chrome-header');
+      const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 72;
+      const start = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const result = document.querySelector('.hiw-demo-result') || el;
+      const rect = result.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      const viewMid = headerH + (vh - headerH) / 2;
+      const elMid = rect.top + rect.height / 2;
+      let target = start + (elMid - viewMid);
+      const maxScroll = start + rect.top - headerH - 28;
+      if (target > maxScroll) target = maxScroll;
+      target = Math.max(0, target);
+      const dist = target - start;
+      if (Math.abs(dist) < 10) return;
+      if (reduce) {
+        window.scrollTo(0, target);
+        return;
+      }
+      /* Land mid-generate; Done fires after (~1.4s) */
+      const dur = 680;
+      const t0 = performance.now();
+      const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        window.scrollTo(0, start + dist * easeInOut(p));
+        if (p < 1) this._demoScrollRaf = requestAnimationFrame(tick);
+        else this._demoScrollRaf = 0;
+      };
+      this._demoScrollRaf = requestAnimationFrame(tick);
+    };
+
+    run();
   };
 
   runTry = (i, manual) => {
     if (manual && !this.state.tryTouched) this.setState({ tryTouched: true });
     if (this.state.tryPick === i && this.state.tryPhase !== 'idle') return;
     clearTimeout(this._tryT); clearTimeout(this._rippleT);
+    /* Generating starts immediately — scroll rides with it */
     this.setState({ tryPick: i, tryPhase: 'working', tryRipple: i });
     this._rippleT = setTimeout(() => this.setState({ tryRipple: null }), 620);
-    this._tryT = setTimeout(() => this.setState({ tryShown: i, tryPhase: 'done' }), 1150);
-    if (manual) this._scrollDemoResult();
+    /* Done after scroll has landed so user sees Generating… on the way */
+    this._tryT = setTimeout(() => this.setState({ tryShown: i, tryPhase: 'done' }), 1400);
+    if (manual) {
+      this._scrollDemoResult();
+      /* Softgen remount can kill the first scroll — kick once more after paint */
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => this._scrollDemoResult());
+      });
+    }
   };
 
   runShopBlend = (i) => {
+    if (this.state.shopBlendBtn != null || this.state.shopStep === 1) return;
     clearTimeout(this._shopBlendT);
-    /* Crossfade to result panel while blending — no Softgen unmount jump */
-    this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopContact: false });
-    this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
+    clearTimeout(this._shopRippleT);
+    /* Same button feedback as Live Demo Blend — ripple + Working… then result panel */
+    this.setState({ shopRipple: i, shopBlendBtn: i, shopContact: false });
+    this._shopRippleT = setTimeout(() => {
+      if (this.state.shopRipple === i) this.setState({ shopRipple: null });
+    }, 620);
+    this._shopBlendT = setTimeout(() => {
+      this.setState({ shopStep: 1, picked: i, shopBlend: 'working', shopBlendBtn: null });
+      this._shopBlendT = setTimeout(() => this.setState({ shopBlend: 'done' }), 1300);
+    }, 480);
   };
 
   backShop = () => {
     clearTimeout(this._shopBlendT);
-    this.setState({ shopStep: 0, shopBlend: 'idle', shopContact: false });
+    clearTimeout(this._shopRippleT);
+    this.setState({ shopStep: 0, shopBlend: 'idle', shopBlendBtn: null, shopRipple: null, shopContact: false });
   };
 
   openShopContact = () => this.setState({ shopContact: true });
@@ -4366,18 +4466,26 @@ class Component extends DCLogic {
     }
     this._walkStepStable = this.state.step < 0 ? 0 : this.state.step;
     this._walkChapterIdx = this.state.step <= 0 ? 0 : (this.state.step >= 3 ? 2 : 1);
+    this._lookLive = this.state.look || 0;
+    this._stickyTopFrozen = false;
     this._syncWalkViewport = () => {
       const header = document.getElementById('pb-chrome-header');
       const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
       const top = Math.max(64, headerH);
+      const mobile = window.matchMedia('(max-width: 900px)').matches;
+      /* Freeze sticky offset after first paint — iOS chrome resize was shaking the panel */
+      if (mobile) {
+        if (!this._stickyTopFrozen) {
+          this._lastStickyTop = top;
+          document.documentElement.style.setProperty('--hiw-sticky-top', top + 'px');
+          this._stickyTopFrozen = true;
+        }
+        if (this._lastVvh == null) this._lastVvh = window.innerHeight;
+        return;
+      }
       if (this._lastStickyTop !== top) {
         this._lastStickyTop = top;
         document.documentElement.style.setProperty('--hiw-sticky-top', top + 'px');
-      }
-      /* On mobile chapters, never rewrite --hiw-vvh (sticky used to shake) */
-      if (window.matchMedia('(max-width: 900px)').matches) {
-        if (this._lastVvh == null) this._lastVvh = window.innerHeight;
-        return;
       }
       const vvh = window.innerHeight;
       if (this._scrollSettling) return;
@@ -4394,7 +4502,16 @@ class Component extends DCLogic {
     this._tick = () => {
       this._raf = 0;
       const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
-      if (typeof this._syncShootLook === 'function') this._syncShootLook();
+      /* Don't drive shoot look while on walk chapters — setState remount blinks the sticky phone */
+      if (!chaptersMode && typeof this._syncShootLook === 'function') this._syncShootLook();
+      else if (chaptersMode && typeof this._syncShootLook === 'function') {
+        const shoot = document.querySelector('.hiw-shoot-runway');
+        if (shoot) {
+          const sr = shoot.getBoundingClientRect();
+          const vhNow = window.innerHeight || 0;
+          if (sr.top < vhNow && sr.bottom > 0) this._syncShootLook();
+        }
+      }
       const next = {};
       const vh = this._lastVvh || window.innerHeight;
       const pinIds = [0, 1, 2, 3].map((i) => document.getElementById('hiw-pin-' + i));
@@ -4426,17 +4543,25 @@ class Component extends DCLogic {
           const locked = this._chapterLockUntil && Date.now() < this._chapterLockUntil;
           let idx = curIdx;
           if (inView && !locked) {
-            /* Step 3 earlier (~48%) — was 66% thirds and felt late */
-            if (p < 0.24) idx = 0;
-            else if (p < 0.48) idx = 1;
-            else idx = 2;
+            /* Hysteresis bands — less flip/blink at boundaries */
+            if (curIdx === 0) {
+              if (p >= 0.28) idx = 1;
+            } else if (curIdx === 1) {
+              if (p < 0.20) idx = 0;
+              else if (p >= 0.50) idx = 2;
+            } else {
+              if (p < 0.42) idx = 1;
+            }
           }
           if (idx !== curIdx) {
             this._walkChapterIdx = idx;
-            this._chapterLockUntil = Date.now() + 380;
+            this._chapterLockUntil = Date.now() + 420;
             const step = idx === 2 ? 3 : idx;
             wrap.setAttribute('data-chapter', String(idx + 1));
             wrap.querySelectorAll('.hiw-chapter').forEach(function (el, i) {
+              el.classList.toggle('is-on', i === idx);
+            });
+            wrap.querySelectorAll('.hiw-walk-chapters-progress span').forEach(function (el, i) {
               el.classList.toggle('is-on', i === idx);
             });
             this._hiwWalkStep = step;
@@ -4447,7 +4572,7 @@ class Component extends DCLogic {
         } else if (cur < 0) {
           next.step = 0;
         }
-      } else if (pinIds[0] && !branchLocked) {
+      } else if (pinIds[0]) {
         const head = document.querySelector('#walkthrough .hiw-walk-head');
         const headBottom = head ? head.getBoundingClientRect().bottom : 0;
         const pin0Top = pinIds[0].getBoundingClientRect().top;
@@ -4455,7 +4580,19 @@ class Component extends DCLogic {
         const pin3Bottom = pin3 ? pin3.getBoundingClientRect().bottom : 0;
         const walkEngaged = pin0Top < vh * 0.42 && headBottom < vh * 0.32;
         const deskLocked = this._deskStepLockUntil && Date.now() < this._deskStepLockUntil;
-        if (!walkEngaged) {
+        const from2b = !!(this.state.branchB || cur === 2);
+
+        /* While 2B is selected: allow Step 3 early; never snap back to 2A */
+        if (from2b && pin3 && !deskLocked) {
+          const earlyAt = vh * 0.62;
+          if (pin3.getBoundingClientRect().top < earlyAt) {
+            next.step = 3;
+            next.branchB = false;
+            this._branchLockUntil = 0;
+            this._deskStepLockUntil = Date.now() + 480;
+          }
+          /* else stay on step 2 / branchB — do not run spy that maps 2→1 */
+        } else if (!walkEngaged && !branchLocked) {
           /* Hysteresis: only idle after clearly leaving (desktop); never idle while still on step 3 runway */
           if (!narrow && cur >= 0 && pin0Top > vh * 0.55 && !(cur === 3 && pin3Bottom > 80)) {
             if (cur !== -1) next.step = -1;
@@ -4463,7 +4600,7 @@ class Component extends DCLogic {
           } else if (narrow && cur < 0) {
             next.step = 0;
           }
-        } else if (!deskLocked) {
+        } else if (!deskLocked && !branchLocked && !from2b) {
           /* Use only main pins 0,1,3 for scroll (2B is tap-only) — less thrash */
           const activateAt = vh * 0.48;
           const pins = [0, 1, 3];
@@ -4477,27 +4614,21 @@ class Component extends DCLogic {
           if (cur < 0) step = best;
           else if (best !== cur) {
             const elBest = pinIds[best];
-            const elCur = pinIds[cur === 2 ? 1 : cur];
+            const elCur = pinIds[cur];
             const bestTop = elBest ? elBest.getBoundingClientRect().top : 0;
             const curTop = elCur ? elCur.getBoundingClientRect().top : 0;
-            /* Only switch when new pin is clearly past threshold and current has left */
-            if (best > (cur === 2 ? 1 : cur)) {
+            if (best > cur) {
               if (bestTop < activateAt - 12) step = best;
-            } else if (best < (cur === 2 ? 1 : cur)) {
-              /* Leaving step 3 needs a clearer exit */
+            } else if (best < cur) {
               const leavePad = cur === 3 ? 48 : 32;
               if (curTop > activateAt + leavePad) step = best;
             }
           }
-          if (narrow && step === 2) step = 1;
-          if (!narrow && step === 2) step = 1; /* scroll spy never opens 2B */
+          if (step === 2) step = 1; /* scroll spy never opens 2B */
           if (step !== cur) {
             next.step = step;
-            /* Longer lock = fewer Softgen remounts while user is still scrolling */
-            this._deskStepLockUntil = Date.now() + (step === 3 ? 720 : 520);
+            this._deskStepLockUntil = Date.now() + (step === 3 ? 520 : 480);
           }
-          if (this.state.branchB && step !== 2) next.branchB = false;
-          if (narrow && this.state.branchB) next.branchB = false;
         }
         this._hiwWalkStep = (next.step != null ? next.step : cur);
       }
@@ -4509,7 +4640,7 @@ class Component extends DCLogic {
           this.setState(next);
           requestAnimationFrame(() => {
             const jumped = Math.abs((window.scrollY || 0) - y);
-            if (jumped > 12) window.scrollTo(0, y);
+            if (jumped > 48) window.scrollTo(0, y);
           });
         } else {
           this.setState(next);
@@ -4528,6 +4659,8 @@ class Component extends DCLogic {
       if (!this._raf) this._raf = requestAnimationFrame(this._tick);
     };
     this._onResize = () => {
+      /* Ignore tiny iOS chrome resizes while finger is scrolling */
+      if (window.matchMedia('(max-width: 900px)').matches && this._scrollSettling) return;
       this._syncWalkViewport();
       this._onScroll();
     };
@@ -4549,10 +4682,27 @@ class Component extends DCLogic {
       const total = Math.max(1, r.height - vh);
       const scrolled = Math.min(total, Math.max(0, -r.top));
       const progress = scrolled / total;
-      var look = 0;
-      if (progress >= 0.62) look = 2;
-      else if (progress >= 0.28) look = 1;
-      if (look !== this.state.look) this._goLook(look);
+      const cur = typeof this._lookLive === 'number' ? this._lookLive : (this.state.look || 0);
+      /*
+        Long middle hold — client: 2nd pe rukna, 3rd pe mat jump.
+        Enter: 0→1 @0.30, 1→2 @0.82
+        Leave: 2→1 @0.72, 1→0 @0.22
+      */
+      var look = cur;
+      if (cur === 0) {
+        if (progress >= 0.30) look = 1;
+      } else if (cur === 1) {
+        if (progress < 0.22) look = 0;
+        else if (progress >= 0.82) look = 2;
+      } else {
+        if (progress < 0.72) look = 1;
+      }
+      if (look !== cur) {
+        this._goLook(look);
+        /* Apply hold after _goLook so middle lock isn't shortened */
+        if (look === 1 || cur === 1) this._lookLockUntil = Date.now() + 720;
+        else this._lookLockUntil = Date.now() + 400;
+      }
     };
     this._shootAcc = 0;
     this._shootActive = false;
@@ -4625,10 +4775,15 @@ class Component extends DCLogic {
     }
     this._startLookAuto();
 
-    /* Reliable open for option B — parent used to steal the click; lock scroll so it stays open */
+    /* Reliable open for option B — keep open briefly, but never block Step 3 on scroll-down */
     this._pickBranch = (which) => {
-      this._branchLockUntil = Date.now() + 2200;
+      this._branchLockUntil = Date.now() + 520;
       window.__hiwBranchLockUntil = this._branchLockUntil;
+      clearTimeout(this._branchLockTick);
+      this._branchLockTick = setTimeout(() => {
+        this._branchLockUntil = 0;
+        if (this._tick) this._tick();
+      }, 540);
       if (window.matchMedia('(max-width: 900px)').matches) {
         this.setState({ step: 1, branchB: false });
         return;
@@ -4679,9 +4834,12 @@ class Component extends DCLogic {
     if (this._onBranchClick) document.removeEventListener('click', this._onBranchClick, true);
     if (this._onShootWheel) window.removeEventListener('wheel', this._onShootWheel, true);
     if (this._raf) cancelAnimationFrame(this._raf);
-    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT); clearTimeout(this._demoScrollT);
+    clearTimeout(this._tryT); clearTimeout(this._tryAuto); clearTimeout(this._rippleT); clearTimeout(this._genderT); clearTimeout(this._shopBlendT); clearTimeout(this._shopRippleT); clearTimeout(this._demoScrollT);
+    if (this._demoScrollRaf) cancelAnimationFrame(this._demoScrollRaf);
     clearTimeout(this._chapterSyncT);
     clearTimeout(this._lookAutoResumeT);
+    clearTimeout(this._branchLockTick);
+    clearTimeout(this._lookStateT);
     clearInterval(this._lookAutoT);
     if (this._demoObs) this._demoObs.disconnect();
     if (this._shootObs) this._shootObs.disconnect();
@@ -4805,7 +4963,8 @@ class Component extends DCLogic {
     };
     const sc = s.step < 0 ? idleScreen : (this.screens[s.step] || this.screens[0]);
     const idleOn = !!sc.idle;
-    const look = this.lookData[s.look];
+    const lookIdx = (typeof this._lookLive === 'number') ? this._lookLive : s.look;
+    const look = this.lookData[lookIdx] || this.lookData[s.look];
     const picked = this.listings[s.picked];
 
     const tp = s.tryPhase;
@@ -5138,13 +5297,13 @@ class Component extends DCLogic {
 
       looks: this.lookData.map((l, i) => ({
         name: l.name, sub: l.sub,
-        active: s.look === i,
+        active: lookIdx === i,
         blurb: 'Same three product shots each time — ' + (l.notes && l.notes[0] ? l.notes[0] : l.sub),
         pinId: 'hiw-look-' + i,
-        pinClass: 'hiw-look-pin hiw-look-pin-' + i + (s.look === i ? ' is-on' : ''),
+        pinClass: 'hiw-look-pin hiw-look-pin-' + i + (lookIdx === i ? ' is-on' : ''),
         pick: () => this.pickLook(i),
         chip: 'display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 3px 22px 3px 3px; cursor: pointer; ' +
-          (s.look === i
+          (lookIdx === i
             ? 'background: #fff; color: #1A1420; box-shadow: 0 16px 36px -22px rgba(0,0,0,.55);'
             : 'background: rgba(255,255,255,.07); color: rgba(255,255,255,.72); opacity: .78;')
       })),
@@ -5253,9 +5412,30 @@ class Component extends DCLogic {
           style: 'font-size: 12.5px; font-weight: 700; padding: 7px 13px; border-radius: 999px; white-space: nowrap; ' +
             (i === 0 ? 'color: #fff; background: #1A1420;' : 'color: #6B6070; background: #fff; border: 1px solid #EFE7E0;')
         })),
-        listings: this.listings.map((p, i) => Object.assign({}, p, {
-          tryOn: () => this.runShopBlend(i)
-        }))
+        listings: this.listings.map((p, i) => {
+          const busy = s.shopBlendBtn === i;
+          const rippling = s.shopRipple === i;
+          return Object.assign({}, p, {
+            btnLabel: busy ? 'Working…' : 'BLEND',
+            btnStyle:
+              'position: relative; overflow: hidden; margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; cursor: pointer; ' +
+              'background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); ' +
+              'box-shadow: 0 6px 14px -8px rgba(236,72,153,.9); ' +
+              'transition: opacity .25s, transform .2s, box-shadow .25s; ' +
+              (busy
+                ? 'opacity: .72; transform: scale(.97);'
+                : 'opacity: 1; transform: scale(1);') +
+              (rippling ? ' animation: v4Ring .62s ease-out;' : ''),
+            ripple: {
+              position: 'absolute', left: '50%', top: '50%', width: '72px', height: '72px',
+              marginLeft: '-36px', marginTop: '-36px', borderRadius: '50%',
+              border: '2px solid rgba(255,255,255,.95)', background: 'rgba(236,72,153,.28)',
+              pointerEvents: 'none', opacity: 0,
+              animation: rippling ? 'v4Ripple .62s ease-out' : 'none'
+            },
+            tryOn: () => this.runShopBlend(i)
+          });
+        })
       };
       })(),
 
