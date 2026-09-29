@@ -355,6 +355,9 @@
       box-sizing: border-box;
       background: #1A1420;
       color: #F7F2F6;
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
     .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; padding: 80px 32px 72px; width: 100%; }
     @media (min-width: 901px) {
@@ -1738,6 +1741,9 @@
         backface-visibility: hidden;
         -webkit-transform: translateZ(0);
         contain: layout paint;
+        /* Lock compositor layer — less iOS sticky shake while scrolling */
+        -webkit-perspective: 1000;
+        perspective: 1000;
       }
       .hiw-walk-chapters-progress {
         display: none !important;
@@ -2062,11 +2068,17 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      will-change: opacity, transform;
+      background: #2A2030;
     }
     @keyframes hiwShootFade {
       from { opacity: 0; transform: scale(1.035); }
       to { opacity: 1; transform: scale(1); }
+    }
+    /* Mob: never fade-from-0 on shoot swaps (blank flash reads as jitter) */
+    @media (max-width: 900px) {
+      .hiw-shoot-shots img {
+        animation: none !important;
+      }
     }
     .hiw-shoot-note {
       margin-top: 22px;
@@ -4304,9 +4316,17 @@ class Component extends DCLogic {
     /* DOM first — Softgen setState remount mid-scroll = blink/jitter */
     this._applyLookDom(i);
     clearTimeout(this._lookStateT);
+    /* Sync Softgen state only after idle — remount during swap blanks images */
     this._lookStateT = setTimeout(() => {
+      if (this._lookLive !== i) return;
+      if (this._scrollSettling) {
+        this._lookStateT = setTimeout(() => {
+          if (this._lookLive === i && this.state.look !== i) this.setState({ look: i });
+        }, 500);
+        return;
+      }
       if (this.state.look !== i) this.setState({ look: i });
-    }, this._scrollSettling ? 420 : 220);
+    }, 900);
   };
 
   _applyLookDom = (i) => {
@@ -4325,11 +4345,21 @@ class Component extends DCLogic {
       const shotId = ld.shots && ld.shots[n];
       if (img && shotId) {
         const next = U(shotId, 560);
-        if (img.getAttribute('src') !== next) {
-          img.style.animation = 'none';
-          void img.offsetWidth;
-          img.src = next;
-          img.style.animation = 'hiwShootFade .5s cubic-bezier(.22,.61,.36,1) ' + (n * 0.06) + 's both';
+        if (img.getAttribute('src') === next) {
+          /* already showing */
+        } else {
+          /* Keep old frame visible until next is decoded — no opacity-0 fade (blank flash) */
+          const token = (this._lookSwapToken = (this._lookSwapToken || 0) + 1);
+          const apply = () => {
+            if (this._lookLive !== i || this._lookSwapToken !== token) return;
+            img.style.animation = 'none';
+            img.src = next;
+          };
+          const pre = new Image();
+          pre.onload = apply;
+          pre.onerror = apply;
+          pre.src = next;
+          if (pre.complete && pre.naturalWidth) apply();
         }
       }
       const noteEl = cap.lastElementChild;
@@ -4652,15 +4682,26 @@ class Component extends DCLogic {
       clearTimeout(this._scrollSettleT);
       this._scrollSettleT = setTimeout(() => {
         this._scrollSettling = false;
+        /* Soft sync look into Softgen only when finger stopped — avoids remount mid-swap */
+        if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
+          clearTimeout(this._lookStateT);
+          this._lookStateT = setTimeout(() => {
+            if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
+              this.setState({ look: this._lookLive });
+            }
+          }, 120);
+        }
         if (!window.matchMedia('(max-width: 900px)').matches) {
           this._syncWalkViewport();
         }
-      }, 220);
+      }, 280);
       if (!this._raf) this._raf = requestAnimationFrame(this._tick);
     };
     this._onResize = () => {
-      /* Ignore tiny iOS chrome resizes while finger is scrolling */
-      if (window.matchMedia('(max-width: 900px)').matches && this._scrollSettling) return;
+      /* Ignore iOS chrome / tiny resizes — sticky height already frozen on mobile */
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        if (this._scrollSettling || this._stickyTopFrozen) return;
+      }
       this._syncWalkViewport();
       this._onScroll();
     };
@@ -4809,6 +4850,15 @@ class Component extends DCLogic {
       }
     };
     document.addEventListener('click', this._onBranchClick, true);
+    /* Preload shoot look frames so swaps never blank */
+    try {
+      (this.lookData || []).forEach((ld) => {
+        (ld.shots || []).forEach((id) => {
+          const im = new Image();
+          im.src = U(id, 560);
+        });
+      });
+    } catch (e) {}
     /* Reveal footer only after hero is in the DOM (stops refresh flash). */
     requestAnimationFrame(() => {
       document.body.classList.add('hiw-ready');
