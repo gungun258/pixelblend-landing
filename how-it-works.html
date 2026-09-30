@@ -394,7 +394,7 @@
       .hiw-shoot-pin {
         /* Content height, not the screen. A screen-tall sticky box shakes
            when the iPhone address bar moves. */
-        min-height: 0;
+        min-height: 0 !important;
         height: auto;
         max-height: none;
         align-items: flex-start;
@@ -4539,7 +4539,13 @@ class Component extends DCLogic {
           this._stickyTopFrozen = true;
         }
         if (this._lastVvh == null) {
+          /* Layout viewport, once. innerHeight/vh follow the Safari bar and
+             would resize these runways while the section is on screen. */
           this._lastVvh = document.documentElement.clientHeight || 700;
+          const walkRun = document.querySelector('.hiw-walk-chapters');
+          const shootRun = document.querySelector('.hiw-shoot-runway');
+          if (walkRun) walkRun.style.setProperty('height', Math.round(this._lastVvh * 2.6) + 'px', 'important');
+          if (shootRun) shootRun.style.setProperty('height', Math.round(this._lastVvh * 2.8) + 'px', 'important');
         }
         return;
       }
@@ -4559,8 +4565,82 @@ class Component extends DCLogic {
       document.documentElement.style.setProperty('--hiw-vvh', vvh + 'px');
     };
     this._syncWalkViewport();
+    /* iPhone: position:sticky on these two blocks is what shakes when the
+       address bar moves. Hold them with fixed/absolute at the same spot.
+       Sizes stay whatever CSS already computed. */
+    this._holdPins = () => {
+      if (!window.matchMedia('(max-width: 900px)').matches) return;
+      const vv = window.visualViewport;
+      const offset = vv ? Math.round(vv.offsetTop || 0) : 0;
+      const pairs = [
+        [document.querySelector('.hiw-walk-chapters-sticky'), document.querySelector('.hiw-walk-chapters'), this._lastStickyTop || 64],
+        [document.querySelector('.hiw-shoot-pin'), document.querySelector('.hiw-shoot-runway'), 0]
+      ];
+      pairs.forEach((pair) => {
+        const sticky = pair[0];
+        const runway = pair[1];
+        if (!sticky || !runway) return;
+        const top = pair[2] + offset;
+        if (!sticky._pinPx && sticky.offsetHeight > 200) {
+          const r0 = runway.getBoundingClientRect();
+          const viewH = window.innerHeight || 800;
+          if (r0.top < viewH && r0.bottom > 0) {
+            sticky._pinPx = sticky.offsetHeight;
+            const px = sticky._pinPx + 'px';
+            sticky.style.setProperty('height', px, 'important');
+            sticky.style.setProperty('min-height', px, 'important');
+            sticky.style.setProperty('max-height', px, 'important');
+          }
+        }
+        const h = sticky._pinPx || sticky.offsetHeight || 1;
+        const r = runway.getBoundingClientRect();
+        const prev = sticky.dataset.pin || 'flow';
+        let mode = 'flow';
+        if (prev === 'fixed') {
+          if (r.top > top + 16) mode = 'flow';
+          else if (r.bottom < top + h + 8) mode = 'end';
+          else mode = 'fixed';
+        } else if (prev === 'end') {
+          if (r.top > top + 16) mode = 'flow';
+          else if (r.bottom > top + h + 24) mode = 'fixed';
+          else mode = 'end';
+        } else if (r.top <= top && r.bottom > top + h) {
+          mode = 'fixed';
+        } else if (r.top <= top) {
+          mode = 'end';
+        }
+        const key = mode + ':' + (mode === 'fixed' ? top : 0);
+        if (sticky.dataset.pinKey === key) return;
+        sticky.dataset.pin = mode;
+        sticky.dataset.pinKey = key;
+        const set = (prop, value) => sticky.style.setProperty(prop, value, 'important');
+        if (mode === 'fixed') {
+          set('position', 'fixed');
+          set('top', top + 'px');
+          set('left', '0');
+          set('right', '0');
+          set('bottom', 'auto');
+          set('width', '100%');
+        } else if (mode === 'end') {
+          set('position', 'absolute');
+          set('top', 'auto');
+          set('bottom', '0');
+          set('left', '0');
+          set('right', '0');
+          set('width', '100%');
+        } else {
+          set('position', 'relative');
+          set('top', 'auto');
+          set('bottom', 'auto');
+          set('left', '0');
+          set('right', '0');
+          set('width', '100%');
+        }
+      });
+    };
     this._tick = () => {
       this._raf = 0;
+      if (typeof this._holdPins === 'function') this._holdPins();
       const chaptersMode = window.matchMedia('(max-width: 900px)').matches;
       /* Don't drive shoot look while on walk chapters — setState remount blinks the sticky phone */
       if (!chaptersMode && typeof this._syncShootLook === 'function') this._syncShootLook();
@@ -4737,6 +4817,14 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onResize);
+    this._onVV = () => {
+      if (!window.matchMedia('(max-width: 900px)').matches) return;
+      if (!this._raf) this._raf = requestAnimationFrame(this._tick);
+    };
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', this._onVV);
+      window.visualViewport.addEventListener('scroll', this._onVV);
+    }
     this._tick();
 
     /* Shoot section: sticky runway scroll → look 0/1/2 (all breakpoints). Chips still tap. */
@@ -4912,6 +5000,10 @@ class Component extends DCLogic {
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResize);
+    if (this._onVV && window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', this._onVV);
+      window.visualViewport.removeEventListener('scroll', this._onVV);
+    }
     if (this._onBranchClick) document.removeEventListener('click', this._onBranchClick, true);
     if (this._onShootWheel) window.removeEventListener('wheel', this._onShootWheel, true);
     if (this._raf) cancelAnimationFrame(this._raf);
