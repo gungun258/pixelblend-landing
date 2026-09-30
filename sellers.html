@@ -910,12 +910,12 @@
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
-    /* Steps + phone share the same left edge */
+    /* Steps + phone share the same left edge — wider for client (was 280) */
     #story .story-points-slot,
     #story .story-phone,
     #story .story-phone-shell {
       width: 100% !important;
-      max-width: 280px !important;
+      max-width: min(360px, 100%) !important;
       margin-left: auto !important;
       margin-right: auto !important;
       box-sizing: border-box !important;
@@ -1766,7 +1766,7 @@
       min-height: 156px;
       height: 156px;
       width: 100%;
-      max-width: 280px !important;
+      max-width: min(360px, 100%) !important;
       margin-left: auto !important;
       margin-right: auto !important;
       overflow: visible !important;
@@ -1884,7 +1884,7 @@
       justify-content: center !important;
     }
     #story .story-phone-shell {
-      max-width: 280px !important;
+      max-width: min(360px, 100%) !important;
       background: #1E1422 !important;
       box-shadow: 0 24px 56px -32px rgba(30,20,34,.52) !important;
     }

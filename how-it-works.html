@@ -349,15 +349,11 @@
       position: sticky;
       top: 0;
       min-height: 100vh;
-      min-height: 100svh;
       display: flex;
       align-items: center;
       box-sizing: border-box;
       background: #1A1420;
       color: #F7F2F6;
-      transform: translateZ(0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
     }
     .hiw-shoot-inner { max-width: 1160px; margin: 0 auto; padding: 80px 32px 72px; width: 100%; }
     @media (min-width: 901px) {
@@ -389,11 +385,15 @@
     }
     @media (max-width: 900px) {
       /* Longer runway = more scroll distance per look (2nd holds before 3rd) */
-      .hiw-shoot-runway { height: 280vh; }
+      /* Prefer frozen px from JS — classic vh still thrashing on iOS chrome */
+      .hiw-shoot-runway { height: var(--hiw-vvh, 100vh); height: calc(var(--hiw-vvh, 100vh) * 2.8); }
       .hiw-shoot-pin {
-        min-height: 100svh;
+        min-height: var(--hiw-vvh, 100vh);
         align-items: flex-start;
         padding-top: 12px;
+        transform: none;
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
       }
       .hiw-shoot-inner { padding: 36px 16px 40px; }
       .hiw-shoot-head { grid-template-columns: 1fr; gap: 16px; text-align: center; }
@@ -1705,9 +1705,9 @@
       .hiw-walk-chapters {
         display: block !important;
         position: relative !important;
-        /* Shorter runway + earlier step-3 band = less late trigger */
-        height: 210vh !important;
-        min-height: 210vh !important;
+        /* Prefer frozen px from JS — classic vh still thrashing on iOS chrome */
+        height: calc(var(--hiw-vvh, 100vh) * 2.1) !important;
+        min-height: calc(var(--hiw-vvh, 100vh) * 2.1) !important;
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
@@ -1719,9 +1719,9 @@
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
-        /* svh only — dvh resized with iOS chrome and caused sticky jitter */
-        height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
-        max-height: calc(100svh - var(--hiw-sticky-top, 64px)) !important;
+        /* Frozen px height — svh/dvh resized with iOS chrome and shook sticky */
+        height: var(--hiw-sticky-h, calc(100vh - var(--hiw-sticky-top, 64px))) !important;
+        max-height: var(--hiw-sticky-h, calc(100vh - var(--hiw-sticky-top, 64px))) !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -1736,14 +1736,14 @@
         box-shadow: none !important;
         border-radius: 0 !important;
         z-index: 2;
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-transform: translateZ(0);
-        contain: layout paint;
-        /* Lock compositor layer — less iOS sticky shake while scrolling */
-        -webkit-perspective: 1000;
-        perspective: 1000;
+        /* No compositor hacks — translateZ/contain/perspective were amplifying iOS sticky shake */
+        transform: none;
+        -webkit-transform: none;
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+        contain: none;
+        -webkit-perspective: none;
+        perspective: none;
       }
       .hiw-walk-chapters-progress {
         display: none !important;
@@ -1784,7 +1784,7 @@
         pointer-events: auto !important;
         z-index: 2;
       }
-      /* Same step frame — soft fill only on mob (no gradient border = smoother scroll) */
+      /* Same step frame — equal padding always (is-on padding thrash = layout jump) */
       .hiw-chapter-copy {
         width: 100% !important;
         max-width: 280px !important;
@@ -1793,7 +1793,7 @@
         border: none !important;
         background: transparent !important;
         box-shadow: none !important;
-        padding: 0 !important;
+        padding: 14px 16px !important;
         flex: none !important;
         margin-left: auto !important;
         margin-right: auto !important;
@@ -1835,7 +1835,7 @@
         max-width: min(252px, 78vw) !important;
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
-        max-height: min(540px, calc(100svh - var(--hiw-sticky-top, 64px) - 148px)) !important;
+        max-height: min(540px, calc(var(--hiw-sticky-h, 100vh) - 148px)) !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -1916,6 +1916,7 @@
         align-self: center !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
+        padding: 18px 22px !important;
       }
       .hiw-chapter.is-on .hiw-chapter-copy {
         padding: 18px 22px !important;
@@ -2137,6 +2138,8 @@
         border-radius: 14px !important;
         transform: none !important;
         box-sizing: border-box !important;
+        /* No pin transitions on mob — paint thrash during look swaps */
+        transition: none !important;
       }
       .hiw-look-pin.is-on { transform: none !important; }
       .hiw-look-pin > span:first-child {
@@ -4316,7 +4319,8 @@ class Component extends DCLogic {
     /* DOM first — Softgen setState remount mid-scroll = blink/jitter */
     this._applyLookDom(i);
     clearTimeout(this._lookStateT);
-    /* Sync Softgen state only after idle — remount during swap blanks images */
+    /* Mobile: never Softgen-sync look — remount rewrites imgs and shakes sticky */
+    if (window.matchMedia('(max-width: 900px)').matches) return;
     this._lookStateT = setTimeout(() => {
       if (this._lookLive !== i) return;
       if (this._scrollSettling) {
@@ -4370,8 +4374,8 @@ class Component extends DCLogic {
   /** When user taps a chip, scroll runway so sticky progress matches that look */
   _scrollShootToLook = (i) => {
     const runway = document.querySelector('.hiw-shoot-runway');
-    if (!runway || runway.offsetHeight < window.innerHeight * 1.4) return;
-    const vh = window.innerHeight || 1;
+    const vh = this._lastVvh || window.innerHeight || 1;
+    if (!runway || runway.offsetHeight < vh * 1.4) return;
     const total = Math.max(1, runway.offsetHeight - vh);
     /* Match wider look bands so middle look is easy to land on */
     const centers = [0.14, 0.48, 0.88];
@@ -4503,14 +4507,26 @@ class Component extends DCLogic {
       const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
       const top = Math.max(64, headerH);
       const mobile = window.matchMedia('(max-width: 900px)').matches;
-      /* Freeze sticky offset after first paint — iOS chrome resize was shaking the panel */
+      /* Freeze sticky offset + viewport px after first paint — iOS chrome was shaking */
       if (mobile) {
         if (!this._stickyTopFrozen) {
           this._lastStickyTop = top;
           document.documentElement.style.setProperty('--hiw-sticky-top', top + 'px');
           this._stickyTopFrozen = true;
         }
-        if (this._lastVvh == null) this._lastVvh = window.innerHeight;
+        if (this._lastVvh == null) {
+          this._lastVvh = window.innerHeight || 700;
+          document.documentElement.style.setProperty('--hiw-vvh', this._lastVvh + 'px');
+          document.documentElement.style.setProperty(
+            '--hiw-sticky-h',
+            Math.max(320, this._lastVvh - (this._lastStickyTop || top)) + 'px'
+          );
+          /* Lock runway heights in px so classic vh chrome thrash can't slip sticky */
+          const walkRun = document.querySelector('.hiw-walk-chapters');
+          if (walkRun) walkRun.style.height = (this._lastVvh * 2.1) + 'px';
+          const shootRun = document.querySelector('.hiw-shoot-runway');
+          if (shootRun) shootRun.style.height = (this._lastVvh * 2.8) + 'px';
+        }
         return;
       }
       if (this._lastStickyTop !== top) {
@@ -4538,7 +4554,7 @@ class Component extends DCLogic {
         const shoot = document.querySelector('.hiw-shoot-runway');
         if (shoot) {
           const sr = shoot.getBoundingClientRect();
-          const vhNow = window.innerHeight || 0;
+          const vhNow = this._lastVvh || window.innerHeight || 0;
           if (sr.top < vhNow && sr.bottom > 0) this._syncShootLook();
         }
       }
@@ -4682,16 +4698,16 @@ class Component extends DCLogic {
       clearTimeout(this._scrollSettleT);
       this._scrollSettleT = setTimeout(() => {
         this._scrollSettling = false;
-        /* Soft sync look into Softgen only when finger stopped — avoids remount mid-swap */
-        if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
-          clearTimeout(this._lookStateT);
-          this._lookStateT = setTimeout(() => {
-            if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
-              this.setState({ look: this._lookLive });
-            }
-          }, 120);
-        }
+        /* Mobile: do NOT Softgen-sync look — remount blanks shoot imgs / shakes sticky */
         if (!window.matchMedia('(max-width: 900px)').matches) {
+          if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
+            clearTimeout(this._lookStateT);
+            this._lookStateT = setTimeout(() => {
+              if (typeof this._lookLive === 'number' && this.state.look !== this._lookLive) {
+                this.setState({ look: this._lookLive });
+              }
+            }, 120);
+          }
           this._syncWalkViewport();
         }
       }, 280);
@@ -4715,8 +4731,9 @@ class Component extends DCLogic {
       const runway = document.querySelector('.hiw-shoot-runway');
       if (!runway) return;
       /* No sticky runway (collapsed) — skip */
-      if (runway.offsetHeight < window.innerHeight * 1.4) return;
-      const vh = window.innerHeight || 1;
+      if (runway.offsetHeight < (this._lastVvh || window.innerHeight) * 1.4) return;
+      /* Freeze vh for progress — live innerHeight chrome thrash flips looks */
+      const vh = this._lastVvh || window.innerHeight || 1;
       const r = runway.getBoundingClientRect();
       /* Only drive looks while the sticky pin is engaged */
       if (r.bottom <= 0 || r.top >= vh) return;
@@ -5564,8 +5581,7 @@ class Component extends DCLogic {
       /* Do NOT reveal-animate walk pins/opt cards — causes blink on step change */
       push(document.querySelector('.hiw-rail-head'));
       push(document.querySelector('.hiw-rail-mask'));
-      push(document.querySelector('.hiw-shoot-head'));
-      push(document.querySelector('.hiw-shoot-body'));
+      /* Shoot excluded — soft-reveal opacity/transform fights sticky + look swaps on iPhone */
       push(document.querySelector('.hiw-uc-head'));
       Array.prototype.forEach.call(document.querySelectorAll('.hiw-uc-row'), push);
       var refund = document.getElementById('refund');
