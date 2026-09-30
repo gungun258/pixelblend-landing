@@ -385,25 +385,21 @@
     }
     @media (max-width: 900px) {
       /* Longer runway = more scroll distance per look (2nd holds before 3rd).
-         100svh is the small viewport (Safari bars open). It does not change
-         while the bars hide, so the pin never grows taller than the screen. */
+         Classic vh only — same as the Sellers pin. svh/innerHeight follow the
+         Safari bar and resize the section while it is stuck. */
       .hiw-shoot-runway {
-        height: calc(100vh * 2.8);
-        height: calc(100svh * 2.8);
+        height: 280vh;
         overflow-anchor: none;
       }
       .hiw-shoot-pin {
-        top: var(--hiw-sticky-top, 64px);
-        /* Content height only, capped under the small viewport. A 100vh pin
-           is taller than the visible iPhone screen while the Safari bar is
-           up, and WebKit shakes it on engage and again on the next step. */
+        /* Content height, not the screen. A screen-tall sticky box shakes
+           when the iPhone address bar moves. */
         min-height: 0;
         height: auto;
-        max-height: calc(100vh - var(--hiw-sticky-top, 64px) - 160px);
-        max-height: calc(100svh - var(--hiw-sticky-top, 64px) - 28px);
+        max-height: none;
         align-items: flex-start;
-        padding-top: 8px;
-        overflow: hidden;
+        padding-top: 12px;
+        overflow: visible;
         overflow-anchor: none;
         transform: none;
         -webkit-backface-visibility: visible;
@@ -1723,9 +1719,8 @@
       .hiw-walk-chapters {
         display: block !important;
         position: relative !important;
-        /* svh, not a live innerHeight — runway stays put while Safari chrome moves */
-        height: calc(100vh * 2.1) !important;
-        height: calc(100svh * 2.1) !important;
+        /* Classic vh, like the Sellers pin wrap. Do not use svh here. */
+        height: 260vh !important;
         min-height: 0 !important;
         padding: 0 !important;
         margin: 0 !important;
@@ -1739,12 +1734,9 @@
       .hiw-walk-chapters-sticky {
         position: sticky !important;
         top: var(--hiw-sticky-top, 64px) !important;
-        /* Always shorter than the small viewport, so the pin never overflows
-           the visible screen when the Safari bar is open (that overflow is the shake). */
-        height: calc(100vh - var(--hiw-sticky-top, 64px) - 160px) !important;
-        height: calc(100svh - var(--hiw-sticky-top, 64px) - 28px) !important;
-        max-height: calc(100vh - var(--hiw-sticky-top, 64px) - 160px) !important;
-        max-height: calc(100svh - var(--hiw-sticky-top, 64px) - 28px) !important;
+        /* As tall as the phone and the step text. Not the screen. */
+        height: auto !important;
+        max-height: none !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
@@ -1754,7 +1746,7 @@
         align-items: stretch !important;
         padding: 8px 14px 12px !important;
         box-sizing: border-box !important;
-        overflow: hidden !important;
+        overflow: visible !important;
         overflow-anchor: none !important;
         background: #FAF4FB !important;
         box-shadow: none !important;
@@ -1774,7 +1766,8 @@
       }
       .hiw-walk-chapters-stage {
         position: relative !important;
-        flex: 1 1 auto !important;
+        flex: none !important;
+        height: auto !important;
         min-height: 0 !important;
         width: 100% !important;
       }
@@ -1802,6 +1795,12 @@
         will-change: auto;
       }
       .hiw-chapter.is-on {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        height: auto !important;
         opacity: 1 !important;
         visibility: visible !important;
         transform: none !important;
@@ -1859,7 +1858,7 @@
         max-width: min(252px, 78vw) !important;
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
-        max-height: min(500px, calc(100svh - var(--hiw-sticky-top, 64px) - 210px)) !important;
+        max-height: 540px !important;
         padding: 10px !important;
         border-radius: 36px !important;
         display: flex !important;
@@ -1989,7 +1988,7 @@
         max-width: min(280px, 38vw) !important;
         height: auto !important;
         aspect-ratio: 9 / 19.2 !important;
-        max-height: min(540px, calc(100svh - var(--hiw-sticky-top, 64px) - 150px)) !important;
+        max-height: 580px !important;
         padding: 11px !important;
         border-radius: 38px !important;
         display: flex !important;
@@ -2926,18 +2925,8 @@
       .hiw-hero-inner { padding: 44px 16px 34px !important; }
       .hiw-end { padding: 48px 16px 64px; }
       .hiw-thumbs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
-      .hiw-shoot-inner { padding: 8px 16px 14px !important; }
-      .hiw-shoot-head { padding-bottom: 12px !important; gap: 10px !important; }
-      .hiw-shoot-head p {
-        font-size: 13.5px !important;
-        line-height: 1.45 !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden !important;
-      }
-      .hiw-shoot-body { margin-top: 12px !important; gap: 12px !important; }
-      .hiw-shoot-note { margin-top: 8px !important; }
+      .hiw-shoot-inner { padding: 48px 16px !important; }
+      .hiw-shoot-head p { font-size: 14.5px !important; }
       .hiw-shoot-chips { gap: 6px !important; }
       .hiw-look-pin { padding: 9px 8px !important; border-radius: 12px !important; }
       .hiw-look-pin > span:first-child { font-size: 11.5px !important; }
@@ -4541,9 +4530,8 @@ class Component extends DCLogic {
       const headerH = header ? Math.ceil(header.getBoundingClientRect().height) : 64;
       const top = Math.max(64, headerH);
       const mobile = window.matchMedia('(max-width: 900px)').matches;
-      /* Mobile: header offset only. Never write innerHeight onto the pin —
-         that value is taller than the visible iPhone screen while Safari
-         chrome is open, and the sticky box shakes until the bar finishes. */
+      /* Mobile: header offset only. Never size the pin from the screen —
+         innerHeight and svh follow the Safari bar and shake the section. */
       if (mobile) {
         if (!this._stickyTopFrozen) {
           this._lastStickyTop = top;
@@ -4551,11 +4539,7 @@ class Component extends DCLogic {
           this._stickyTopFrozen = true;
         }
         if (this._lastVvh == null) {
-          const probe = document.createElement('div');
-          probe.style.cssText = 'position:absolute;height:100svh;width:0;visibility:hidden;pointer-events:none;';
-          document.body.appendChild(probe);
-          this._lastVvh = probe.offsetHeight || window.innerHeight || 700;
-          probe.remove();
+          this._lastVvh = document.documentElement.clientHeight || 700;
         }
         return;
       }
