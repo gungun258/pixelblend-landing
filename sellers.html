@@ -2454,7 +2454,7 @@
     background: #fff;
     border: 1px solid #EFE7E0;
     border-radius: 14px;
-    overflow: hidden;
+    overflow: visible;
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -2464,9 +2464,11 @@
     aspect-ratio: 4 / 5;
     background: #EFE7E0;
     flex: none;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
   }
   #discover .hiw-mkt-listing-body {
-    padding: 7px 8px 9px;
+    padding: 7px 8px 14px;
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -4744,17 +4746,21 @@ class Component extends DCLogic {
       listings: shopListings.map((p, i) => {
         const busy = S.shopBlendBtn === i;
         const rippling = S.shopRipple === i;
+        /* Same idle pulse as HIW Live Demo Blend — draw the eye to tap */
+        const pulse = S.shopStep === 0 && S.shopBlendBtn == null && i === 0;
         return Object.assign({}, p, {
           btnLabel: busy ? 'Working…' : 'BLEND',
           btnStyle:
-            'position: relative; overflow: hidden; margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; cursor: pointer; ' +
+            'position: relative; overflow: visible; margin-top: auto; align-self: center; width: fit-content; max-width: 100%; display: inline-flex; align-items: center; justify-content: center; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px 16px; border-radius: 999px; cursor: pointer; ' +
             'background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); ' +
             'box-shadow: 0 6px 14px -8px rgba(236,72,153,.9); ' +
-            'transition: opacity .25s, transform .2s, box-shadow .25s; ' +
+            'transition: opacity .25s, transform .2s; ' +
             (busy
               ? 'opacity: .72; transform: scale(.97);'
               : 'opacity: 1; transform: scale(1);') +
-            (rippling ? ' animation: v4Ring .62s ease-out;' : ''),
+            (rippling
+              ? ' animation: v4Ring .62s ease-out;'
+              : (pulse ? ' animation: v4Ring 2s infinite;' : '')),
           ripple: {
             position: 'absolute', left: '50%', top: '50%', width: '72px', height: '72px',
             marginLeft: '-36px', marginTop: '-36px', borderRadius: '50%',

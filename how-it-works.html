@@ -846,7 +846,7 @@
       border-radius: 14px 14px 0 0;
     }
     .hiw-mkt-listing-body {
-      padding: 7px 8px 9px;
+      padding: 7px 8px 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -5593,10 +5593,10 @@ class Component extends DCLogic {
           return Object.assign({}, p, {
             btnLabel: busy ? 'Working…' : 'BLEND',
             btnStyle:
-              'position: relative; overflow: visible; margin-top: auto; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px; border-radius: 999px; cursor: pointer; ' +
+              'position: relative; overflow: visible; margin-top: auto; align-self: center; width: fit-content; max-width: 100%; display: inline-flex; align-items: center; justify-content: center; text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: #fff; padding: 8px 16px; border-radius: 999px; cursor: pointer; ' +
               'background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); ' +
               'box-shadow: 0 6px 14px -8px rgba(236,72,153,.9); ' +
-              'transition: opacity .25s, transform .2s, box-shadow .25s; ' +
+              'transition: opacity .25s, transform .2s; ' +
               (busy
                 ? 'opacity: .72; transform: scale(.97);'
                 : 'opacity: 1; transform: scale(1);') +
