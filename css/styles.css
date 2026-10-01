@@ -2813,8 +2813,23 @@ body.pb-menu-open .pb-drawer {
   .sw-phone-stat span { display: block; margin-top: 1px; font-size: 8.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296; }
   .sw-phone-actions { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .sw-phone-follow, .sw-phone-contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     text-align: center; font-size: 12.5px; font-weight: 700;
     padding: 8px; border-radius: 999px; line-height: 1; cursor: pointer;
+  }
+  .sw-phone-act-ico {
+    width: 13px;
+    height: 13px;
+    flex: none;
+    display: block;
+  }
+  .sw-phone-follow > span,
+  .sw-phone-contact > span {
+    display: block;
+    line-height: 1;
   }
   .sw-phone-follow {
     color: #fff;
