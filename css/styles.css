@@ -2718,6 +2718,354 @@ body.pb-menu-open .pb-drawer {
     .sw-mkt { max-width: 100% !important; }
   }
 
+  /* Way 1 phone — sellers marketplace mock, locked to the previous visual slot */
+  .sw-mkt { height: 466px; display: flex; align-items: center; justify-content: center; }
+  @media (max-width: 640px) {
+    .sw-mkt { height: 454px; }
+  }
+  .sw-phone {
+    width: min(268px, 100%);
+    height: 100%;
+    border-radius: 40px;
+    background: #1A1420;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 40px 80px -44px rgba(26,20,32,.7);
+  }
+  .sw-phone-screen {
+    height: 100%;
+    border-radius: 32px;
+    background: #FAF4FB;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 0;
+  }
+  .sw-phone-status {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    min-height: 30px;
+    padding: 10px 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8D8296;
+  }
+  .sw-phone-status > span:first-child,
+  .sw-phone-status > span:last-child { position: relative; z-index: 1; flex: 1; min-width: 0; }
+  .sw-phone-status > span:last-child { text-align: right; }
+  .sw-phone-notch {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    width: 62px;
+    height: 18px;
+    background: #1A1420;
+    border-radius: 999px;
+  }
+  .sw-phone-store {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sw-phone-head {
+    flex: none;
+    padding: 10px 12px 10px;
+    border-bottom: 1px solid #EFE7E0;
+  }
+  .sw-phone-profile { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .sw-phone-avatar {
+    width: 40px; height: 40px; flex: none; border-radius: 14px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 14px; font-weight: 800;
+  }
+  .sw-phone-copy { flex: 1; min-width: 0; }
+  .sw-phone-name {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 14px; font-weight: 800; letter-spacing: -.015em; color: #1A1420;
+  }
+  .sw-phone-check {
+    width: 14px; height: 14px; border-radius: 50%; background: #C42E8B; color: #fff;
+    font-size: 8px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sw-phone-loc {
+    margin-top: 1px; font-size: 11px; color: #8D8296;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sw-phone-stats {
+    margin-top: 8px;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;
+  }
+  .sw-phone-stat {
+    background: #fff; border: 1px solid #EFE7E0; border-radius: 12px;
+    padding: 6px 4px; text-align: center; min-width: 0;
+  }
+  .sw-phone-stat strong { display: block; font-size: 12.5px; font-weight: 800; color: #1A1420; }
+  .sw-phone-stat span { display: block; margin-top: 1px; font-size: 8.5px; font-weight: 700; letter-spacing: .06em; color: #8D8296; }
+  .sw-phone-actions { margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sw-phone-follow, .sw-phone-contact {
+    text-align: center; font-size: 12.5px; font-weight: 700;
+    padding: 8px; border-radius: 999px; line-height: 1; cursor: pointer;
+  }
+  .sw-phone-follow {
+    color: #fff;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  .sw-phone-contact { color: #1A1420; background: #fff; border: 1.5px solid #E6DED6; }
+  .sw-phone-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-auto-rows: max-content;
+    align-content: start;
+    gap: 8px;
+    padding: 8px 10px 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  .sw-phone-listing {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #EFE7E0;
+    border-radius: 12px;
+    overflow: visible;
+  }
+  .sw-phone-media {
+    flex: none;
+    height: 72px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    background: #EFE7E0;
+  }
+  .sw-phone-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sw-phone-body {
+    flex: none;
+    padding: 6px 6px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .sw-phone-body > div:first-child {
+    width: 100%;
+    font-size: 11.5px; font-weight: 700; line-height: 1.25; color: #1A1420; text-align: left;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .sw-phone-blend {
+    position: relative;
+    overflow: visible;
+    align-self: center;
+    width: fit-content;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    box-shadow: 0 6px 14px -8px rgba(236,72,153,.9);
+  }
+  @keyframes swBlendRing {
+    0% { box-shadow: 0 0 0 0 rgba(236,72,153,.55); }
+    70% { box-shadow: 0 0 0 10px rgba(236,72,153,0); }
+    100% { box-shadow: 0 0 0 0 rgba(236,72,153,0); }
+  }
+  .sw-phone-blend.is-pulse { animation: swBlendRing 2s infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .sw-phone-blend.is-pulse { animation: none; }
+    .sw-phone-ring.is-on { animation: none; }
+  }
+  .sw-phone-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 34px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background: #FAF4FB;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(0, 8px, 0);
+    transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .45s cubic-bezier(.22,1,.36,1), visibility 0s linear .4s;
+    z-index: 1;
+  }
+  .sw-phone-panel.is-on {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    transition: opacity .4s cubic-bezier(.22,1,.36,1), transform .45s cubic-bezier(.22,1,.36,1), visibility 0s linear 0s;
+    z-index: 2;
+  }
+  .sw-phone-try-bar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 6px;
+  }
+  .sw-phone-try-bar span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    color: #C42E8B;
+    cursor: pointer;
+  }
+  .sw-phone-try-bar span:last-child { font-size: 11.5px; color: #8D8296; }
+  .sw-phone-stage {
+    flex: 1;
+    min-height: 0;
+    margin: 0 10px;
+    position: relative;
+    border-radius: 14px;
+    border: 1.5px solid #F3D9EA;
+    background: #FAF4FB;
+    overflow: hidden;
+  }
+  .sw-phone-ring {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border-radius: 50%;
+    border: 2px solid rgba(236,72,153,.45);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .sw-phone-ring.is-on { opacity: 1; animation: swPhonePulse 1.1s ease-in-out infinite; }
+  @keyframes swPhonePulse {
+    0%, 100% { transform: scale(1); opacity: .55; }
+    50% { transform: scale(1.06); opacity: 1; }
+  }
+  @keyframes swScan { 0% { transform: translateY(-115%); } 100% { transform: translateY(115%); } }
+  @keyframes swRipple { 0% { transform: scale(.25); opacity: .85; } 100% { transform: scale(2.2); opacity: 0; } }
+  .sw-phone-try-name {
+    flex: none;
+    margin: 8px 10px 0;
+    background: #fff;
+    border: 1px solid #EFE7E0;
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #1A1420;
+  }
+  .sw-phone-try-msg {
+    flex: none;
+    margin: 8px 10px 12px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    padding: 11px;
+    border-radius: 999px;
+    background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  .sw-phone-drawer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .sw-phone-drawer.is-open { pointer-events: auto; opacity: 1; }
+  .sw-phone-scrim {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    padding: 0;
+    background: rgba(26,20,32,.42);
+    cursor: pointer;
+  }
+  .sw-phone-sheet {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 18px 18px 0 0;
+    padding: 12px 12px 14px;
+    transform: translateY(110%);
+    transition: transform .32s cubic-bezier(.2,.8,.2,1);
+  }
+  .sw-phone-drawer.is-open .sw-phone-sheet { transform: translateY(0); }
+  .sw-phone-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .sw-phone-sheet-head strong { font-size: 14px; font-weight: 800; color: #1A1420; }
+  .sw-phone-x {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 50%;
+    background: #F3EEF0;
+    color: #5b5060;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .sw-phone-rows { display: flex; flex-direction: column; gap: 6px; }
+  .sw-phone-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 12px;
+    background: #F7F2F4;
+    min-width: 0;
+  }
+  .sw-phone-ico {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .sw-phone-row strong { display: block; font-size: 12px; font-weight: 800; color: #1A1420; }
+  .sw-phone-row > div span {
+    display: block;
+    margin-top: 1px;
+    font-size: 10.5px;
+    color: #8D8296;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   /* Flow steps — Way 1 after toast; Way 2 after chat */
   .seller-way-grid .pb-in .sw-flow > .sw-beat:nth-child(1) { --sw-i: 0; }
   .seller-way-grid .pb-in .sw-flow > .sw-beat:nth-child(2) { --sw-i: 1; }

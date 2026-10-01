@@ -18,6 +18,7 @@
       return a.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '');
     } catch (e) { return false; }
   }
+  var navMark = pbLoaderMark();
   function leave(on) {
     var ov = document.getElementById('pb-nav-leave');
     if (!ov) {
@@ -26,6 +27,7 @@
       ov.setAttribute('aria-hidden', 'true');
       (document.body || document.documentElement).appendChild(ov);
     }
+    if (!ov.querySelector('[data-pb-nav-mark]')) ov.insertAdjacentHTML('beforeend', navMark);
     if (on) ov.classList.add('is-on');
     else ov.classList.remove('is-on');
   }

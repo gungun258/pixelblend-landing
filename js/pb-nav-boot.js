@@ -1,4 +1,21 @@
 /* Early head boot — soft in-site hops: skip splash, cover hydrate blank */
+function pbLoaderMark() {
+  return '<div data-pb-nav-mark style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:11px;">' +
+    '<span class="pb-logo-pulse" style="width:34px;height:34px;border-radius:11px;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(196,46,139,.32);flex:none;">' +
+      '<span style="width:13px;height:13px;border:2.5px solid #fff;border-radius:50%;box-sizing:border-box;"></span>' +
+    '</span>' +
+    '<span style="font-family:\'Hanken Grotesk\',sans-serif;font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1;background:linear-gradient(90deg,#9333EA,#DB2777);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#9333EA;">PixelBlend</span>' +
+  '</div>';
+}
+(function () {
+  if (document.getElementById('pb-load-line-css')) return;
+  var s = document.createElement('style');
+  s.id = 'pb-load-line-css';
+  s.textContent = '@keyframes pbLogoPulse{0%,100%{box-shadow:0 6px 16px rgba(196,46,139,.32)}50%{box-shadow:0 8px 22px rgba(236,72,153,.5)}}' +
+    '.pb-logo-pulse{animation:pbLogoPulse 1.4s ease-in-out infinite}' +
+    '@media (prefers-reduced-motion:reduce){.pb-logo-pulse{animation:none}}';
+  (document.head || document.documentElement).appendChild(s);
+})();
 (function () {
   try {
     if (sessionStorage.getItem('pb-nav') !== '1') return;
@@ -18,8 +35,11 @@
       'opacity:1!important;transform:none!important;transition:none!important;animation:none!important}' +
       /* Continuous pink veil until page signals ready (hides Softgen empty #dc-root + chrome-only flash) */
       '#pb-nav-enter-cover{position:fixed;inset:0;z-index:2147483646;background:#FAF4FB;opacity:1;pointer-events:auto;' +
-      'transition:opacity .18s ease;-webkit-transition:opacity .18s ease}' +
-      '#pb-nav-enter-cover.is-off{opacity:0;pointer-events:none}';
+      'transition:opacity .2s ease;-webkit-transition:opacity .2s ease}' +
+      '#pb-nav-enter-cover.is-off{opacity:0;pointer-events:none}' +
+      '@keyframes pbLogoPulse{0%,100%{box-shadow:0 6px 16px rgba(196,46,139,.32)}50%{box-shadow:0 8px 22px rgba(236,72,153,.5)}}' +
+      '.pb-logo-pulse{animation:pbLogoPulse 1.4s ease-in-out infinite}' +
+      '@media (prefers-reduced-motion:reduce){.pb-logo-pulse{animation:none}}';
     (document.head || document.documentElement).appendChild(s);
 
     function ensureCover() {
@@ -27,10 +47,10 @@
       var el = document.createElement('div');
       el.id = 'pb-nav-enter-cover';
       el.setAttribute('aria-hidden', 'true');
+      el.innerHTML = pbLoaderMark();
       (document.body || document.documentElement).appendChild(el);
     }
-    if (document.body) ensureCover();
-    else document.addEventListener('DOMContentLoaded', ensureCover);
+    ensureCover();
 
     function settleEntrances() {
       /* Inline locks so removing pb-nav-enter CSS does not restart fadeUp from opacity 0 */
@@ -60,12 +80,7 @@
       try { settleEntrances(); } catch (e2) {}
 
       var cover = document.getElementById('pb-nav-enter-cover');
-      if (cover) {
-        cover.classList.add('is-off');
-        setTimeout(function () {
-          if (cover.parentNode) cover.parentNode.removeChild(cover);
-        }, 220);
-      }
+      if (cover && cover.parentNode) cover.parentNode.removeChild(cover);
       document.documentElement.classList.remove('pb-nav-enter');
       var css = document.getElementById('pb-nav-enter-css');
       if (css && css.parentNode) css.parentNode.removeChild(css);
@@ -81,6 +96,6 @@
       if (document.documentElement.classList.contains('pb-nav-enter') && window.__pbNavReady) {
         window.__pbNavReady();
       }
-    }, 2800);
+    }, 2500);
   } catch (e) {}
 })();
