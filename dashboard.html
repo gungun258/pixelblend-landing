@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script>window.__resources={"img1":"assets/dashboard/images/img1.jpg","img2":"assets/dashboard/images/img2.jpg","img3":"assets/dashboard/images/img3.jpg","img4":"assets/dashboard/images/img4.jpg","img5":"assets/dashboard/images/img5.jpg","img7":"assets/dashboard/images/img7.jpg","img6":"assets/dashboard/images/img6.jpg","img8":"assets/dashboard/images/img8.jpg","img9":"assets/dashboard/images/img9.jpg","img10":"assets/dashboard/images/img10.jpg","img11":"assets/dashboard/images/img11.jpg","img12":"assets/dashboard/images/img12.jpg","img13":"assets/dashboard/images/img13.jpg","img14":"assets/dashboard/images/img14.jpg","img15":"assets/dashboard/images/img15.jpg","img16":"assets/dashboard/images/img16.jpg","img17":"assets/dashboard/images/img17.jpg","img18":"assets/dashboard/images/img18.jpg","img19":"assets/dashboard/images/img19.jpg","img20":"assets/dashboard/images/img20.jpg","img21":"assets/dashboard/images/img21.jpg","img23":"assets/dashboard/images/img23.jpg","img24":"assets/dashboard/images/img24.jpg","img27":"assets/dashboard/images/img27.jpg","img22":"assets/dashboard/images/img22.jpg","img25":"assets/dashboard/images/img25.jpg","img28":"assets/dashboard/images/img28.jpg","img26":"assets/dashboard/images/img26.jpg","img29":"assets/dashboard/images/img29.jpg","img30":"assets/dashboard/images/img30.jpg","img31":"assets/dashboard/images/img31.jpg","img32":"assets/dashboard/images/img32.jpg","img33":"assets/dashboard/images/img33.jpg"};</script>
+<script src="assets/dashboard/js/react.production.min.js"></script>
+<script src="assets/dashboard/js/react-dom.production.min.js"></script>
+<script src="assets/dashboard/js/dc-runtime.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/0c8365bb-e71a-4e49-bde3-cbaa955965ed.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/734a5050-a65a-46e0-a973-da5dc6ad235a.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/e9fa8fcf-214f-4188-b090-c86ef7d3329d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/7eac46e6-333b-4c75-9f01-83fce9d89cd8.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/172dfe74-7773-40a2-8d33-af2ca3ba9528.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/6c083271-1392-4d96-b442-25e5b0e7a061.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/2c734737-071d-4684-b864-4a1c5727db5d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/4cae11e6-ec51-4bdf-b750-1831965439c5.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/172dfe74-7773-40a2-8d33-af2ca3ba9528.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/6c083271-1392-4d96-b442-25e5b0e7a061.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/2c734737-071d-4684-b864-4a1c5727db5d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/4cae11e6-ec51-4bdf-b750-1831965439c5.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/172dfe74-7773-40a2-8d33-af2ca3ba9528.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/6c083271-1392-4d96-b442-25e5b0e7a061.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/2c734737-071d-4684-b864-4a1c5727db5d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/4cae11e6-ec51-4bdf-b750-1831965439c5.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/172dfe74-7773-40a2-8d33-af2ca3ba9528.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/6c083271-1392-4d96-b442-25e5b0e7a061.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/2c734737-071d-4684-b864-4a1c5727db5d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/4cae11e6-ec51-4bdf-b750-1831965439c5.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/172dfe74-7773-40a2-8d33-af2ca3ba9528.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/6c083271-1392-4d96-b442-25e5b0e7a061.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/2c734737-071d-4684-b864-4a1c5727db5d.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/4cae11e6-ec51-4bdf-b750-1831965439c5.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/dfc87b66-e2ff-4ff4-ae71-dc7fce450aad.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/268bc189-3bea-416f-ab55-693f9403fd15.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/32436409-260a-420e-96bb-e19a09b0f3df.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/dashboard/fonts/ce8d59dc-1c98-4140-ad24-6ef51421f8d2.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: #FAF4FB; color: #1E1422; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #FCE7F0; color: #C42E8B; }
+  img { max-width: 100%; display: block; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+  @keyframes floatA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9.6px); } }
+  @keyframes floatB { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12.8px); } }
+  @keyframes pbMarquee { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--mq-shift, 25%))); } }
+  .pb-scroll::-webkit-scrollbar { height: 0; width: 0; }
+  .pb-row::-webkit-scrollbar { height: 0; }
+  .pb-grid-recents::-webkit-scrollbar, .pb-grid-trending::-webkit-scrollbar, .pb-grid-sellers::-webkit-scrollbar, .pb-grid-byo::-webkit-scrollbar { height: 0; }
+
+  /* Trending + Top Sellers + BYO are always a single scrolling row */
+  .pb-grid-trending, .pb-grid-sellers, .pb-grid-byo {
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  }
+  .pb-grid-trending > div { flex: 0 0 188.8px; scroll-snap-align: start; }
+  .pb-grid-sellers > div  { flex: 0 0 288px; scroll-snap-align: start; }
+  .pb-grid-byo > div      { flex: 0 0 166.4px; scroll-snap-align: start; }
+
+  /* marquee brand strip — seamless infinite loop */
+  .pb-marquee { overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  .pb-marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: pbMarquee 18s linear infinite;
+  }
+  .pb-marquee-group { display: flex; align-items: center; gap: 9.6px; flex-shrink: 0; padding-right: 9.6px; }
+  .pb-marquee-group button {
+    display: inline-flex; align-items: center; white-space: nowrap;
+    padding: 8px 16px; border-radius: 799.2px; border: 1.2px solid #F0E6F2;
+    background: #fff; font-family: inherit; font-size: 11.2px; font-weight: 700;
+    color: #1E1422; cursor: default; pointer-events: none;
+  }
+
+  /* dual row: watch + refer side by side */
+  .pb-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 38.4px; align-items: stretch; }
+
+  /* sidebar expand/collapse toggle — only shown once the rail collapses */
+  .pb-toggle { display: none; }
+
+  /* sidebar polish */
+  .pb-sidebar { box-sizing: border-box; }
+  .pb-nav > a { transition: background .15s ease, color .15s ease; }
+  .pb-nav > a:hover { background: #FBF1FB !important; color: #C42E8B !important; }
+  .pb-credits-cta { transition: border-color .15s ease, color .15s ease, box-shadow .15s ease; }
+  .pb-credits-cta:hover { border-color: #C42E8B !important; color: #C42E8B !important; box-shadow: 0 6px 14px -8px rgba(196,46,139,.45); }
+
+  /* ===================== RESPONSIVE ===================== */
+  /* base = large desktop (>=1440). Overrides cascade down. */
+
+  /* Small desktop */
+  @media (max-width: 1439px) {
+    .pb-sidebar { width: 185.6px !important; flex-basis: 185.6px !important; }
+    .pb-content { padding: 24px 27.2px 48px !important; }
+    .pb-grid-recents { grid-template-columns: repeat(4, 1fr) !important; }
+    .pb-hero-title { font-size: 33.6px !important; }
+  }
+
+  /* Laptop */
+  @media (max-width: 1279px) {
+    .pb-sidebar { width: 172.8px !important; flex-basis: 172.8px !important; }
+    .pb-topbar { padding: 20.8px 22.4px 14.4px !important; }
+    .pb-content { padding: 22.4px 22.4px 44.8px !important; }
+    .pb-search { width: 176px !important; }
+    .pb-grid-trending { grid-template-columns: repeat(3, 1fr) !important; }
+    .pb-grid-sellers { grid-template-columns: repeat(2, 1fr) !important; }
+    .pb-hero-title { font-size: 32px !important; }
+  }
+
+  /* Large tablet — collapse sidebar to an icon rail */
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed !important; left: 0; top: 0; z-index: 50; height: 100vh !important; }
+    .pb-sidebar:not(.pb-open) { width: 60.8px !important; flex-basis: 60.8px !important; padding: 22px 9.6px 14px !important; align-items: center !important; gap: 0 !important; }
+    .pb-main { margin-left: 60.8px !important; }
+    .pb-brand { justify-content: center !important; padding: 3.2px !important; }
+    .pb-brand-text { display: none !important; }
+    .pb-newblend { padding: 10.4px !important; }
+    .pb-newblend .pb-label { display: none !important; }
+    .pb-nav { width: 100% !important; }
+    .pb-nav > a { justify-content: center !important; padding: 9.6px !important; position: relative; }
+    .pb-navlabel { display: none !important; }
+    .pb-navbadge { position: absolute !important; top: 4px; right: 6.4px; margin: 0 !important; padding: 0.8px 4.8px !important; font-size: 7.2px !important; }
+    .pb-credits { display: none !important; }
+    .pb-content { padding: 20.8px 22.4px 44.8px !important; }
+    /* horizontal-scroll strips feel native on tablets — one row, swipe for more */
+    .pb-grid-recents, .pb-grid-trending, .pb-grid-sellers {
+      display: flex !important; grid-template-columns: none !important;
+      overflow-x: auto; gap: 11.2px !important; padding-bottom: 4.8px;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    }
+    .pb-grid-recents > div  { flex: 0 0 129.6px !important; scroll-snap-align: start; }
+    .pb-grid-trending > div { flex: 0 0 164.8px !important; scroll-snap-align: start; }
+    .pb-grid-sellers > div  { flex: 0 0 272px !important; scroll-snap-align: start; }
+    .pb-grid-byo {
+      display: flex !important; grid-template-columns: none !important;
+      overflow-x: auto; gap: 11.2px !important; padding-bottom: 4.8px;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    }
+    .pb-grid-byo > div { flex: 0 0 148.8px !important; scroll-snap-align: start; }
+    .pb-video { min-height: 208px !important; padding: 25.6px 27.2px !important; }
+    .pb-hero-title { font-size: 30.4px !important; }
+
+    /* toggle appears; open state re-expands the rail as a drawer */
+    .pb-toggle { display: flex !important; }
+    .pb-sidebar.pb-open { width: 201.6px !important; flex-basis: 201.6px !important; padding: 28px 14.4px 16px !important; align-items: stretch !important; gap: 0 !important; z-index: 60; box-shadow: 14.4px 0 38.4px -22.4px rgba(30,20,34,.4); }
+    .pb-sidebar.pb-open .pb-toggle { align-self: flex-end !important; }
+    .pb-sidebar.pb-open .pb-brand { justify-content: flex-start !important; padding: 3.2px 4.8px !important; }
+    .pb-sidebar.pb-open .pb-brand-text { display: inline !important; }
+    .pb-sidebar.pb-open .pb-newblend { justify-content: center !important; }
+    .pb-sidebar.pb-open .pb-newblend .pb-label { display: inline !important; }
+    .pb-sidebar.pb-open .pb-nav > a { justify-content: flex-start !important; padding: 9.6px 11.2px !important; }
+    .pb-sidebar.pb-open .pb-navlabel { display: inline !important; }
+    .pb-sidebar.pb-open .pb-navbadge { position: static !important; top: auto; right: auto; margin-left: auto !important; padding: 1.6px 6.4px !important; font-size: 8.8px !important; }
+    .pb-sidebar.pb-open .pb-credits { display: block !important; }
+  }
+
+  /* Tablet landscape — stack the hero, drop step operators */
+  @media (max-width: 899px) {
+    .pb-topbar { padding: 17.6px 17.6px 12.8px !important; gap: 9.6px !important; }
+    .pb-search { width: 136px !important; }
+    .pb-content { padding: 19.2px 17.6px 41.6px !important; }
+    .pb-hero { grid-template-columns: 1fr !important; gap: 14.4px !important; }
+    .pb-hero-cta { padding: 27.2px !important; }
+    .pb-hero-title { font-size: 33.6px !important; }
+    .pb-hero-demo { min-height: 288px !important; }
+    .pb-step-op { display: none !important; }
+    .pb-steps { grid-template-columns: repeat(3, 1fr) !important; gap: 11.2px !important; }
+    .pb-step-img { height: 105.6px !important; }
+    .pb-how { padding: 20.8px 19.2px !important; }
+    .pb-lead-title { font-size: 20.8px !important; }
+    .pb-dual { grid-template-columns: 1fr !important; }
+    .pb-refer { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; padding: 22.4px !important; }
+    .pb-refer-side { width: 100% !important; min-width: 0 !important; max-width: 304px; }
+    .pb-refer h2 { font-size: 19.2px !important; }
+    .pb-refer p { font-size: 11.2px !important; }
+  }
+
+  /* Tablet portrait */
+  @media (max-width: 767px) {
+    .pb-welcome-sub { display: none !important; }
+    .pb-search { display: none !important; }
+    .pb-content { padding: 17.6px 14.4px 38.4px !important; }
+    .pb-hero-cta { padding: 22.4px !important; }
+    .pb-hero-title { font-size: 28.8px !important; }
+    .pb-grid-recents > div  { flex: 0 0 118.4px !important; }
+    .pb-grid-trending > div { flex: 0 0 150.4px !important; }
+    .pb-grid-sellers > div  { flex: 0 0 240px !important; }
+    .pb-grid-byo > div { flex: 0 0 134.4px !important; }
+    .pb-video { min-height: 176px !important; padding: 20.8px 19.2px !important; }
+    .pb-play { width: 49.6px !important; height: 49.6px !important; }
+    .pb-steps { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+    .pb-step-img { height: 88px !important; }
+    .pb-how { padding: 17.6px 14.4px !important; }
+    .pb-lead-title { font-size: 19.2px !important; }
+  }
+
+  /* Approaching mobile (existing mobile design takes over below this) */
+  @media (max-width: 599px) {
+    .pb-content { padding: 14.4px 11.2px 32px !important; }
+    .pb-hero-cta { padding: 19.2px !important; }
+    .pb-hero-title { font-size: 25.6px !important; }
+    .pb-welcome-title { font-size: 12.8px !important; }
+  }
+</style>
+</helmet>
+
+<div class="pb-shell" style="display: flex; min-height: 100vh; background: #FAF4FB;">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="pb-sidebar {{ sidebarOpenCls }}" style="width: 201.6px; flex: 0 0 201.6px; position: sticky; top: 0; height: 100vh; padding: 28px 14.4px 16px; display: flex; flex-direction: column; gap: 0; background: #fff; border-right: 0.8px solid #F0E6F2;">
+    <button class="pb-toggle" sc-camel-on-click="{{ toggleNav }}" aria-label="Toggle menu" style="width: 35.2px; height: 35.2px; border-radius: 9.6px; border: 0.8px solid #F0E6F2; background: #fff; cursor: pointer; align-items: center; justify-content: center; color: #1E1422; flex-shrink: 0; margin-bottom: 14px;" style-hover="border-color:#C42E8B; color:#C42E8B;">{{ toggleIconEl }}</button>
+
+    <a href="index.html" class="pb-brand" style="display: flex; align-items: center; gap: 10px; text-decoration: none; padding: 2px 4px; margin-bottom: 18px;">
+      <span class="pb-logo-mark" style="width: 32px; height: 32px; border-radius: 11px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;">
+        <span style="width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box;"></span>
+      </span>
+      <span class="pb-brand-text" style="font-size: 17px; font-weight: 600; letter-spacing: -.02em; line-height: 1; background: linear-gradient(90deg, #9333EA, #DB2777); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #9333EA;">PixelBlend</span>
+    </a>
+
+    <a href="#" class="pb-newblend" style="display: flex; align-items: center; justify-content: center; gap: 7.2px; text-decoration: none; padding: 11px 10px; border-radius: 12px; background: linear-gradient(113deg, #A855F7, #EC4899, #F43F5E); color: #fff; font-size: 11.6px; font-weight: 700; box-shadow: 0 9.6px 20.8px rgba(236,72,153,.34); margin-bottom: 18px;" style-hover="box-shadow:0 12.8px 25.6px rgba(236,72,153,.5); transform:translateY(-0.8px);">
+      <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+
+    <nav class="pb-nav" style="display: flex; flex-direction: column; gap: 3.2px;">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" style="{{ n.style }}">
+          {{ n.iconEl }}
+          <span class="pb-navlabel">{{ n.label }}</span>
+          <sc-if value="{{ n.badge }}" hint-placeholder-val="">
+            <span class="pb-navbadge" style="margin-left: auto; font-size: 8.8px; font-weight: 800; color: #C42E8B; background: #FCE7F0; padding: 1.6px 6.4px; border-radius: 799.2px;">{{ n.badge }}</span>
+          </sc-if>
+        </a>
+      </sc-for>
+    </nav>
+
+    <div class="pb-credits" style="margin-top: auto; border: 0.8px solid #F0E6F2; border-radius: 16px; padding: 14px; background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%); box-shadow: 0 10px 24px -18px rgba(168,85,247,.55);">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px;">
+        <span style="font-size: 10px; font-weight: 700; color: #8A7E92; letter-spacing: .02em;">Credits left</span>
+        <span style="font-size: 13.5px; font-weight: 800; color: #1E1422; letter-spacing: -.02em;">{{ credits }}</span>
+      </div>
+      <div style="height: 6px; border-radius: 799.2px; background: #F0E6F2; overflow: hidden; margin-bottom: 11px;">
+        <div style="{{ creditBarStyle }}"></div>
+      </div>
+      <a href="#" class="pb-credits-cta" style="display: flex; align-items: center; justify-content: center; gap: 5.5px; text-decoration: none; padding: 8px; border-radius: 10px; border: 1.2px solid #F0E6F2; background: #fff; font-size: 10.4px; font-weight: 700; color: #1E1422;">
+        <span style="font-size: 11px; line-height: 1;">⚡</span> Get more credits
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="pb-main" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;">
+
+    <!-- ===== TOPBAR ===== -->
+    <header class="pb-topbar" style="position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; padding: 24px 32px 16px; background: rgba(250,244,251,.82); backdrop-filter: blur(9.6px); border-bottom: 0.8px solid #F0E6F2;">
+      <div style="flex-shrink: 0;">
+        <div class="pb-welcome-title" style="font-size: 15.2px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap;">Welcome back, {{ userName }} 👋</div>
+        <div class="pb-welcome-sub" style="font-size: 10.8px; color: #8A7E92; margin-top: 0.8px;">Let's blend something stunning today.</div>
+      </div>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 11.2px;">
+        <div class="pb-search" style="display: flex; align-items: center; gap: 7.2px; width: 224px; padding: 8px 12px; border-radius: 799.2px; background: #fff; border: 0.8px solid #F0E6F2;">
+          <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8A7E92" stroke-width="2"></circle><path d="M20 20l-3.5-3.5" stroke="#8A7E92" stroke-width="2" stroke-linecap="round"></path></svg>
+          <input placeholder="Search scenes, sellers…" style="border: none; outline: none; background: transparent; font-family: inherit; font-size: 11.2px; color: #1E1422; width: 100%;">
+        </div>
+        <a href="#" style="display: inline-flex; align-items: center; gap: 6.4px; text-decoration: none; padding: 7.2px 12px; border-radius: 799.2px; background: #fff; border: 0.8px solid #F4E2B8; box-shadow: 0 1.6px 8px rgba(224,168,40,.12);">
+          <span style="display: inline-flex; width: 17.6px; height: 17.6px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); align-items: center; justify-content: center; color: #fff; font-size: 9.6px;">◆</span>
+          <span style="font-size: 11.6px; font-weight: 800; color: #B7791F;">{{ credits }}</span>
+        </a>
+        <button style="position: relative; width: 35.2px; height: 35.2px; border-radius: 50%; border: 0.8px solid #F0E6F2; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="border-color:#C42E8B;">
+          <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          <span style="position: absolute; top: 7.2px; right: 8.8px; width: 7.2px; height: 7.2px; border-radius: 50%; background: #F43F5E; border: 1.6px solid #fff;"></span>
+        </button>
+        <button style="display: flex; align-items: center; gap: 7.2px; padding: 4px 4px 4px 4px; border-radius: 799.2px; border: 0.8px solid #F0E6F2; background: #fff; cursor: pointer;" style-hover="border-color:#C42E8B;">
+          <img src="assets/dashboard/images/img1.jpg" style="width: 27.2px; height: 27.2px; border-radius: 50%; object-fit: cover;">
+          <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none" style="margin-right:4.8px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="pb-content" style="padding: 25.6px 32px 51.2px; width: 100%; max-width: none; box-sizing: border-box;">
+
+      <!-- ===== HERO ===== -->
+      <section class="pb-hero" style="display: grid; grid-template-columns: 1.05fr .95fr; gap: 22.4px; margin-bottom: 11.2px;">
+        <!-- left: blend CTA -->
+        <div class="pb-hero-cta" style="position: relative; overflow: hidden; border-radius: 22.4px; padding: 32px; background: linear-gradient(150deg, #DFF6EA 0%, #F3ECFB 55%, #FCEAF3 100%); border: 0.8px solid #F0E6F2;">
+          <div style="position: absolute; top: -48px; right: -40px; width: 208px; height: 208px; background: radial-gradient(circle, rgba(168,85,247,.18), transparent 70%); filter: blur(4.8px);"></div>
+          <div style="display: inline-flex; align-items: center; gap: 6.4px; padding: 4.8px 10.4px 4.8px 6.4px; border-radius: 799.2px; background: rgba(255,255,255,.8); border: 0.8px solid rgba(255,255,255,.9); margin-bottom: 17.6px;">
+            <span style="width: 20.8px; height: 20.8px; border-radius: 6.4px; background: linear-gradient(135deg,#34D399,#10B981); display: flex; align-items: center; justify-content: center;"><svg width="11" height="11" sc-camel-view-box="0 0 24 24" fill="none"><path d="M12 2l2.2 6.5L21 11l-6.8 2.5L12 20l-2.2-6.5L3 11l6.8-2.5z" fill="#fff"></path></svg></span>
+            <span style="font-size: 10px; font-weight: 700; color: #1E1422;">Generate stunning visuals</span>
+          </div>
+          <h1 class="pb-hero-title" style="font-size: 36.8px; line-height: 1.02; letter-spacing: -.035em; font-weight: 800; margin: 0 0 12.8px; max-width: 368px;">Blend it with a <span style="font-family:'Instrument Serif',serif; font-weight:400; font-style:italic; background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">new background</span></h1>
+          <p style="font-size: 13.6px; line-height: 1.5; color: #5b5060; margin: 0 0 22.4px; max-width: 336px;">Upload your product, pick any scene, and let AI blend it into studio-quality photos — in seconds.</p>
+          <div style="display: flex; align-items: center; gap: 12.8px; flex-wrap: wrap;">
+            <a href="#" style="display: inline-flex; align-items: center; gap: 7.2px; text-decoration: none; padding: 12.8px 20.8px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.8px; font-weight: 700; box-shadow: 0 12.8px 27.2px rgba(236,72,153,.4);" style-hover="transform:translateY(-1.6px); box-shadow:0 16px 33.6px rgba(236,72,153,.55);">✦ Create my first photo — free</a>
+            <div style="font-size: 10.8px; color: #5b5060;"><strong style="color:#1E1422;">50 free credits</strong> · ~5 generations</div>
+          </div>
+        </div>
+
+        <!-- right: featured carousel demo -->
+        <div class="pb-hero-demo" style="position: relative; border-radius: 22.4px; overflow: hidden; border: 0.8px solid #F0E6F2; background: #1E1422;">
+          {{ slideBgEl }}
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,20,34,.15) 0%, rgba(30,20,34,.72) 100%);"></div>
+
+          <!-- blend mini-chips -->
+          <div style="position: absolute; top: 14.4px; left: 14.4px; display: flex; align-items: center; gap: 6.4px;">
+            <span style="display: inline-flex; align-items: center; gap: 4.8px; padding: 4.8px 8.8px; border-radius: 799.2px; background: rgba(255,255,255,.92); backdrop-filter: blur(4.8px); font-size: 8.8px; font-weight: 800; color: #C42E8B;"><span style="width:5.6px;height:5.6px;border-radius:50%;background:#C42E8B;animation:blink 1.4s infinite;"></span>AI BLENDED</span>
+          </div>
+          <span style="position: absolute; top: 14.4px; right: 14.4px; padding: 4.8px 9.6px; border-radius: 799.2px; background: rgba(255,255,255,.16); border: 0.8px solid rgba(255,255,255,.3); backdrop-filter: blur(4.8px); font-size: 9.2px; font-weight: 700; color: #fff;">{{ slide.tag }}</span>
+
+          <!-- floating product + scene = result -->
+          <div style="position: absolute; left: 19.2px; bottom: 104px; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 51.2px; height: 51.2px; border-radius: 12.8px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatA 5s ease-in-out infinite;">
+              <img src="assets/dashboard/images/img2.jpg" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <span style="color: #fff; font-size: 16px; font-weight: 700; text-shadow: 0 1.6px 6.4px rgba(0,0,0,.4);">+</span>
+            <div style="width: 51.2px; height: 51.2px; border-radius: 12.8px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatB 5.6s ease-in-out infinite;">
+              {{ slideMiniEl }}
+            </div>
+          </div>
+
+          <div style="position: absolute; left: 19.2px; right: 19.2px; bottom: 19.2px; display: flex; align-items: flex-end; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; gap: 4.8px;">
+                <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
+                  <button sc-camel-on-click="{{ d.onClick }}" style="{{ d.style }}"></button>
+                </sc-for>
+              </div>
+              <div>
+                <div style="font-size: 9.6px; font-weight: 700; letter-spacing: .08em; color: rgba(255,255,255,.7); text-transform: uppercase; margin-bottom: 6.4px;">Featured scene</div>
+                <div style="font-size: 17.6px; font-weight: 800; color: #fff; letter-spacing: -.02em;">{{ slide.name }}</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6.4px;">
+              <button sc-camel-on-click="{{ prev }}" style="width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="background:#fff;"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E1422" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+              <button sc-camel-on-click="{{ next }}" style="width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="background:#fff;"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#1E1422" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CATEGORIES ===== -->
+      <section style="margin-top: 28.8px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12.8px;">
+          <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Use it for anything</h2>
+          <span style="color:#EC4899;">✦</span>
+        </div>
+        <div class="pb-row" style="display: flex; gap: 9.6px; overflow-x: auto; padding-bottom: 3.2px;">
+          <sc-for list="{{ categories }}" as="c" hint-placeholder-count="8">
+            <button sc-camel-on-click="{{ c.onClick }}" style="{{ c.style }}">
+              <span style="font-size: 14.4px;">{{ c.emoji }}</span>
+              <span>{{ c.name }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== RECENT CREATIONS (desktop enhancement) ===== -->
+      <section style="margin-top: 32px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12.8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Your recent creations</h2>
+          </div>
+          <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">Open gallery →</a>
+        </div>
+        <div class="pb-grid-recents" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12.8px;">
+          <sc-for list="{{ recents }}" as="r" hint-placeholder-count="5">
+            <div style="position: relative; border-radius: 14.4px; overflow: hidden; border: 0.8px solid #F0E6F2; aspect-ratio: 4/5; box-shadow: 0 11.2px 24px -17.6px rgba(168,85,247,.6);" style-hover="transform:translateY(-2.4px);">
+              {{ r.imgEl }}
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(30,20,34,.66));"></div>
+              <span style="position: absolute; top: 8px; right: 8px; padding: 2.4px 7.2px; border-radius: 799.2px; background: rgba(255,255,255,.9); font-size: 8px; font-weight: 800; color: #C42E8B;">{{ r.tag }}</span>
+              <div style="position: absolute; left: 9.6px; bottom: 8.8px; right: 9.6px;">
+                <div style="font-size: 10.4px; font-weight: 700; color: #fff;">{{ r.label }}</div>
+                <div style="font-size: 8.8px; color: rgba(255,255,255,.75);">{{ r.time }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== HOW IT WORKS ===== -->
+      <section class="pb-how" style="margin: 35.2px auto 0; max-width: 800px; background: #fff; border: 0.8px solid #F0E6F2; border-radius: 22.4px; padding: 28.8px 32px; box-shadow: 0 24px 48px -40px rgba(168,85,247,.6);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 19.2px; max-width: 720px; margin-left: auto; margin-right: auto;">
+          <div>
+            <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 3.2px;">How it works</h2>
+            <p style="font-size: 11.6px; color: #5b5060; margin: 0;">Upload → Pick a scene → AI blends it. That easy.</p>
+          </div>
+          <span style="padding: 5.6px 12px; border-radius: 799.2px; background: #F7ECF8; font-size: 10.4px; font-weight: 800; color: #C42E8B;">3 steps</span>
+        </div>
+        <div class="pb-steps" style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 17.6px; align-items: center; max-width: 720px; margin: 0 auto;">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <div style="text-align: left;">
+              <div class="pb-step-img" style="position: relative; border-radius: 16px; overflow: hidden; height: 160px; border: 0.8px solid #F0E6F2;">
+                {{ s.imgEl }}
+                <span style="position: absolute; left: 9.6px; top: 9.6px; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,.95); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #C42E8B; font-size: 11.2px;">{{ s.n }}</span>
+                <sc-if value="{{ s.ai }}" hint-placeholder-val="">
+                  <span style="position: absolute; right: 9.6px; top: 9.6px; padding: 4px 8px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#F43F5E); font-size: 8px; font-weight: 800; color: #fff;">AI</span>
+                </sc-if>
+              </div>
+              <h3 style="font-size: 13.6px; font-weight: 700; margin: 12.8px 0 4px; letter-spacing: -.01em;">{{ s.title }}</h3>
+              <p style="font-size: 11.2px; line-height: 1.5; color: #5b5060; margin: 0;">{{ s.desc }}</p>
+            </div>
+            <sc-if value="{{ s.op }}" hint-placeholder-val="">
+              <div class="pb-step-op" style="font-size: 24px; font-weight: 700; color: #EC4899; align-self: center; padding-bottom: 38.4px;">{{ s.op }}</div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== BRING YOUR OWN BACKGROUND ===== -->
+      <section class="pb-byo" style="margin-top: 38.4px;">
+        <div style="max-width: 512px; margin-bottom: 16px;">
+          <h2 class="pb-lead-title" style="font-size: 25.6px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 9.6px;">Bring your own <span style="background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">background</span></h2>
+          <p style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
+        </div>
+        <div class="pb-marquee" id="pb-brand-marquee" style="margin-bottom: 16px;" aria-hidden="true">
+          <div class="pb-marquee-track">
+            <div class="pb-marquee-group">
+              <button tabindex="-1" type="button">Luxury</button>
+              <button tabindex="-1" type="button">Pixels</button>
+              <button tabindex="-1" type="button">Premium</button>
+              <button tabindex="-1" type="button">Minimal</button>
+              <button tabindex="-1" type="button">Studio</button>
+              <button tabindex="-1" type="button">Cinematic</button>
+              <button tabindex="-1" type="button">Vibrant</button>
+              <button tabindex="-1" type="button">Pastel</button>
+              <button tabindex="-1" type="button">Editorial</button>
+            </div>
+            <div class="pb-marquee-group">
+              <button tabindex="-1" type="button">Luxury</button>
+              <button tabindex="-1" type="button">Pixels</button>
+              <button tabindex="-1" type="button">Premium</button>
+              <button tabindex="-1" type="button">Minimal</button>
+              <button tabindex="-1" type="button">Studio</button>
+              <button tabindex="-1" type="button">Cinematic</button>
+              <button tabindex="-1" type="button">Vibrant</button>
+              <button tabindex="-1" type="button">Pastel</button>
+              <button tabindex="-1" type="button">Editorial</button>
+            </div>
+            <div class="pb-marquee-group">
+              <button tabindex="-1" type="button">Luxury</button>
+              <button tabindex="-1" type="button">Pixels</button>
+              <button tabindex="-1" type="button">Premium</button>
+              <button tabindex="-1" type="button">Minimal</button>
+              <button tabindex="-1" type="button">Studio</button>
+              <button tabindex="-1" type="button">Cinematic</button>
+              <button tabindex="-1" type="button">Vibrant</button>
+              <button tabindex="-1" type="button">Pastel</button>
+              <button tabindex="-1" type="button">Editorial</button>
+            </div>
+            <div class="pb-marquee-group">
+              <button tabindex="-1" type="button">Luxury</button>
+              <button tabindex="-1" type="button">Pixels</button>
+              <button tabindex="-1" type="button">Premium</button>
+              <button tabindex="-1" type="button">Minimal</button>
+              <button tabindex="-1" type="button">Studio</button>
+              <button tabindex="-1" type="button">Cinematic</button>
+              <button tabindex="-1" type="button">Vibrant</button>
+              <button tabindex="-1" type="button">Pastel</button>
+              <button tabindex="-1" type="button">Editorial</button>
+            </div>
+          </div>
+        </div>
+        <div class="pb-grid-byo" style="display: flex; gap: 11.2px; overflow-x: auto; padding-bottom: 4.8px;">
+          <sc-for list="{{ byoCards }}" as="c" hint-placeholder-count="7">
+            <div style="position: relative; border-radius: 14.4px; overflow: hidden; border: 0.8px solid #F0E6F2; aspect-ratio: 4/5; box-shadow: 0 14.4px 30.4px -24px rgba(168,85,247,.6); cursor: pointer;" style-hover="transform:translateY(-3.2px);">
+              {{ c.imgEl }}
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(30,20,34,.74));"></div>
+              <div style="position: absolute; left: 10.4px; bottom: 9.6px;">
+                <div style="font-size: 12px; font-weight: 800; color: #fff; letter-spacing: -.02em;">{{ c.title }}</div>
+                <div style="font-size: 9.2px; color: rgba(255,255,255,.78); margin-top: 0.8px;">{{ c.count }} scenes</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== OR DIVIDER ===== -->
+      <div class="pb-or" style="display: flex; align-items: center; gap: 16px; margin: 38.4px 0 6.4px;">
+        <div style="flex: 1; height: 0.8px; background: linear-gradient(90deg, transparent, #E4D3E8);"></div>
+        <span style="flex-shrink: 0; width: 43.2px; height: 43.2px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #A855F7, #EC4899, #F43F5E); color: #fff; font-size: 11.2px; font-weight: 800; letter-spacing: .06em; box-shadow: 0 11.2px 24px -6.4px rgba(236,72,153,.6);">OR</span>
+        <div style="flex: 1; height: 0.8px; background: linear-gradient(90deg, #E4D3E8, transparent);"></div>
+      </div>
+
+      <!-- ===== SELLER LISTINGS LEAD-IN ===== -->
+      <section style="margin-top: 19.2px; max-width: 512px;">
+        <h2 class="pb-lead-title" style="font-size: 25.6px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 9.6px;">Choose from <span style="background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">our seller listings</span></h2>
+        <p style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
+      </section>
+
+      <!-- ===== TRENDING BACKGROUNDS ===== -->
+      <section style="margin-top: 22.4px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14.4px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color:#EC4899; font-size: 16px;">📈</span>
+            <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Trending Backgrounds</h2>
+          </div>
+          <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">View All →</a>
+        </div>
+        <div class="pb-grid-trending" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 4.8px;">
+          <sc-for list="{{ trending }}" as="t" hint-placeholder-count="4">
+            <div style="position: relative; border-radius: 17.6px; overflow: hidden; border: 0.8px solid #F0E6F2; aspect-ratio: 3/4; box-shadow: 0 17.6px 35.2px -24px rgba(168,85,247,.6); cursor: pointer;" style-hover="transform:translateY(-3.2px);">
+              {{ t.imgEl }}
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(30,20,34,.74));"></div>
+              <span style="position: absolute; top: 10.4px; left: 10.4px; padding: 4px 8.8px; border-radius: 799.2px; background: rgba(255,255,255,.92); backdrop-filter: blur(4.8px); font-size: 8.8px; font-weight: 800; color: #C42E8B;">🔥 {{ t.uses }}</span>
+              <div style="position: absolute; left: 12px; right: 12px; bottom: 12px;">
+                <div style="font-size: 14.4px; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: 6.4px;">{{ t.title }}</div>
+                <button style="display: inline-flex; align-items: center; gap: 4.8px; padding: 6.4px 11.2px; border-radius: 799.2px; border: none; background: rgba(255,255,255,.94); font-size: 10px; font-weight: 800; color: #1E1422; cursor: pointer; white-space: nowrap;" style-hover="background:#fff;">Use this scene →</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== TOP SELLERS ===== -->
+      <section style="margin-top: 38.4px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14.4px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color:#A855F7; font-size: 16px;">👥</span>
+            <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Top Sellers</h2>
+          </div>
+          <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">See All →</a>
+        </div>
+        <div class="pb-grid-sellers" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 4.8px;">
+          <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="3">
+            <div style="background: #fff; border: 0.8px solid #F0E6F2; border-radius: 19.2px; padding: 16px; box-shadow: 0 17.6px 40px -33.6px rgba(168,85,247,.7);">
+              <div style="display: flex; align-items: center; gap: 10.4px; margin-bottom: 12.8px;">
+                <div style="position: relative;">
+                  {{ s.avatarEl }}
+                  <span style="position: absolute; right: -1.6px; bottom: -1.6px; width: 17.6px; height: 17.6px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); border: 1.6px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 8.8px;">{{ s.badge }}</span>
+                </div>
+                <div style="min-width: 0;">
+                  <div style="font-size: 13.2px; font-weight: 800; letter-spacing: -.01em;">{{ s.name }}</div>
+                  <div style="font-size: 10.4px; color: #8A7E92;">{{ s.listings }} listings · {{ s.followers }} followers</div>
+                </div>
+                <button style="margin-left: auto; padding: 6.4px 12.8px; border-radius: 799.2px; border: none; background: linear-gradient(113deg,#A855F7,#EC4899); color: #fff; font-size: 10.4px; font-weight: 800; cursor: pointer;" style-hover="opacity:.9;">Follow</button>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6.4px;">
+                <sc-for list="{{ s.thumbs }}" as="th" hint-placeholder-count="4">
+                  <div style="border-radius: 9.6px; overflow: hidden; aspect-ratio: 1; border: 0.8px solid #F0E6F2;">
+                    {{ th }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- ===== WATCH + REFER (dual row) ===== -->
+      <div class="pb-dual">
+      <section style="margin-top: 0; display: flex; flex-direction: column;">
+        <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 14.4px;">Watch how it works</h2>
+        <div class="pb-video" style="position: relative; overflow: hidden; border-radius: 22.4px; flex: 1; min-height: 240px; padding: 32px 35.2px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(120deg, #7C3AED 0%, #A855F7 42%, #EC4899 100%); box-shadow: 0 24px 48px -30.4px rgba(124,58,237,.7);">
+          <div style="position: absolute; top: -64px; right: -32px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(255,255,255,.16), transparent 70%);"></div>
+          <div style="position: absolute; left: -48px; bottom: -64px; width: 208px; height: 208px; background: radial-gradient(circle, rgba(255,255,255,.12), transparent 70%);"></div>
+          <span style="position: absolute; top: 16px; right: 16px; display: inline-flex; align-items: center; gap: 4.8px; padding: 4.8px 10.4px; border-radius: 799.2px; background: rgba(30,20,34,.42); backdrop-filter: blur(4.8px); font-size: 10px; font-weight: 700; color: #fff;">
+            <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"></circle><path d="M12 7.5V12l3 2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            1:24
+          </span>
+          <button class="pb-play" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60.8px; height: 60.8px; border-radius: 50%; border: none; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 14.4px 32px rgba(0,0,0,.28);" style-hover="transform:translate(-50%,-50%) scale(1.06);">
+            <svg width="21" height="21" sc-camel-view-box="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5z" fill="#7C3AED"></path></svg>
+          </button>
+          <div style="position: relative;">
+            <div style="font-size: 17.6px; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: 3.2px;">See PixelBlend in action</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,.85);">From photo to studio shot in 90 seconds</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== REFER & EARN ===== -->
+      <section style="margin-top: 0; display: flex; flex-direction: column;">
+        <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 14.4px;">Refer &amp; earn</h2>
+        <div class="pb-refer" style="flex: 1; position: relative; overflow: hidden; border-radius: 22.4px; padding: 32px 35.2px; background: linear-gradient(135deg, #F5ECFF 0%, #FBE9F4 55%, #FDEFE8 100%); border: 0.8px solid #F0E6F2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 17.6px; box-shadow: 0 20.8px 43.2px -32px rgba(168,85,247,.5);">
+        <div style="position: absolute; top: -56px; right: 32px; width: 192px; height: 192px; background: radial-gradient(circle, rgba(168,85,247,.16), transparent 70%);"></div>
+        <div style="position: relative; max-width: 432px;">
+          <div style="display: inline-flex; align-items: center; gap: 6.4px; padding: 4.8px 10.4px; border-radius: 799.2px; background: #fff; border: 0.8px solid #F0E6F2; font-size: 9.6px; font-weight: 800; color: #C42E8B; letter-spacing: .04em; margin-bottom: 12.8px; white-space: nowrap;">🎁 REFER &amp; EARN</div>
+          <h2 style="font-size: 24px; line-height: 1.1; letter-spacing: -.02em; font-weight: 800; color: #1E1422; margin: 0 0 8px;">Get 50 free credits for every friend who joins</h2>
+          <p style="font-size: 12.4px; line-height: 1.5; color: #5b5060; margin: 0;">Share your link — they get 50 credits to start, you get 50 the moment they make their first blend.</p>
+        </div>
+        <div class="pb-refer-side" style="position: relative; width: 100%; display: flex; flex-direction: column; gap: 9.6px; align-items: stretch;">
+          <div style="display: flex; align-items: center; gap: 8px; padding: 9.6px 11.2px; border-radius: 11.2px; background: #fff; border: 0.8px dashed #E4B7D8;">
+            <span style="font-size: 10.8px; font-weight: 700; color: #1E1422; letter-spacing: .02em;">pixelblend.ai/r/sarah</span>
+            <span style="margin-left: auto; font-size: 9.6px; font-weight: 800; color: #C42E8B;">COPY</span>
+          </div>
+          <a href="#" style="text-align: center; text-decoration: none; padding: 12px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.4px; font-weight: 800; box-shadow: 0 11.2px 24px rgba(236,72,153,.4);" style-hover="transform:translateY(-0.8px);">Start Referring</a>
+        </div>
+        </div>
+      </section>
+      </div>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1120},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sarah&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;credits&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;min&quot;:0,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C42E8B&quot;,&quot;options&quot;:[&quot;#C42E8B&quot;,&quot;#A855F7&quot;,&quot;#EC4899&quot;,&quot;#F43F5E&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { activeCat: 'Mountains', slide: 0, navOpen: false };
+
+  navIcon(name) {
+    const I = {
+      home: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      discover: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>',
+      generate: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z" fill="currentColor"/></svg>',
+      gallery: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      account: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>'
+    };
+    return I[name];
+  }
+
+  img(src, extra) {
+    return React.createElement('img', { src, loading: 'lazy', style: Object.assign({ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }, extra || {}) });
+  }
+
+  renderVals() {
+    const accent = this.props.accent || '#C42E8B';
+    const navOpen = this.state.navOpen;
+    const toggleIcon = navOpen
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    const credits = this.props.credits ?? 150;
+    const nav = [
+      { key: 'home', label: 'Home', badge: '', href: 'dashboard.html' },
+      { key: 'discover', label: 'Discover', badge: '', href: 'discover.html' },
+      { key: 'generate', label: 'Generate', badge: '', href: '#' },
+      { key: 'gallery', label: 'Gallery', badge: '12', href: 'gallery.html' },
+      { key: 'account', label: 'Account', badge: '', href: '#' }
+    ];
+    const active = 'home';
+    const navItems = nav.map(n => {
+      const on = n.key === active;
+      return {
+        label: n.label,
+        badge: n.badge,
+        href: n.href,
+        iconEl: React.createElement('span', { style: { display: 'flex', width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }, dangerouslySetInnerHTML: { __html: this.navIcon(n.key) } }),
+        style: `display:flex; align-items:center; gap:10.4px; padding:10px 11.2px; border-radius:11px; text-decoration:none; font-size:12px; font-weight:${on ? 800 : 600}; color:${on ? accent : '#5b5060'}; background:${on ? '#FBEEF6' : 'transparent'};`
+      };
+    });
+
+    const catList = [
+      { name: 'Mountains', emoji: '🏔️' }, { name: 'Beach', emoji: '🏖️' },
+      { name: 'Night Sky', emoji: '🌌' }, { name: 'Desert', emoji: '🏜️' },
+      { name: 'Forest', emoji: '🌲' }, { name: 'City Lights', emoji: '🌆' },
+      { name: 'Tropical', emoji: '🌴' }, { name: 'Studio', emoji: '🎬' }
+    ];
+    const categories = catList.map(c => {
+      const on = c.name === this.state.activeCat;
+      return {
+        name: c.name, emoji: c.emoji,
+        onClick: () => this.setState({ activeCat: c.name }),
+        style: `display:inline-flex; align-items:center; gap:6.4px; white-space:nowrap; padding:8.8px 14.4px; border-radius:799.2px; border:1.2px solid ${on ? accent : '#F0E6F2'}; background:${on ? '#FBEEF6' : '#fff'}; color:${on ? accent : '#1E1422'}; font-size:11.2px; font-weight:700; cursor:pointer; font-family:inherit;`
+      };
+    });
+
+    const slidesData = [
+      { name: 'Mountain Sunset', tag: 'Outdoor', img: ((window.__resources||{}).img3 || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=80&auto=format&fit=crop') },
+      { name: 'Night Sky', tag: 'Dramatic', img: ((window.__resources||{}).img4 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=80&auto=format&fit=crop') },
+      { name: 'Beach Waves', tag: 'Lifestyle', img: ((window.__resources||{}).img5 || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80&auto=format&fit=crop') },
+      { name: 'Desert Dunes', tag: 'Minimal', img: ((window.__resources||{}).img6 || 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=80&auto=format&fit=crop') }
+    ];
+    const si = this.state.slide;
+    const dots = slidesData.map((s, i) => ({
+      onClick: () => this.setState({ slide: i }),
+      style: `width:${i === si ? 22 : 8}px; height:6.4px; border-radius:799.2px; border:none; cursor:pointer; padding:0; background:${i === si ? '#fff' : 'rgba(255,255,255,.5)'}; transition:width .2s;`
+    }));
+
+    const recents = [
+      { label: 'Alpine Glow', time: '2h ago', tag: 'HD', img: ((window.__resources||{}).img7 || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80&auto=format&fit=crop') },
+      { label: 'Midnight Drop', time: '5h ago', tag: 'HD', img: ((window.__resources||{}).img8 || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&q=80&auto=format&fit=crop') },
+      { label: 'Coastal Edit', time: 'Yesterday', tag: '4K', img: ((window.__resources||{}).img9 || 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80&auto=format&fit=crop') },
+      { label: 'Studio Mono', time: 'Yesterday', tag: 'HD', img: ((window.__resources||{}).img10 || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80&auto=format&fit=crop') },
+      { label: 'Neon Streets', time: '2d ago', tag: '4K', img: ((window.__resources||{}).img11 || 'https://images.unsplash.com/photo-1485518882345-15568b007407?w=400&q=80&auto=format&fit=crop') }
+    ].map(r => Object.assign({}, r, { imgEl: this.img(r.img) }));
+
+    const steps = [
+      { n: '1', op: '+', ai: false, img: ((window.__resources||{}).img12 || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80&auto=format&fit=crop'), title: 'Upload product', desc: 'Any photo, any item — we cut it out cleanly and automatically.' },
+      { n: '2', op: '=', ai: false, img: ((window.__resources||{}).img13 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=500&q=80&auto=format&fit=crop'), title: 'Pick a scene', desc: 'Browse thousands of scenes or upload your own background.' },
+      { n: '3', op: '', ai: true, img: ((window.__resources||{}).img14 || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80&auto=format&fit=crop'), title: 'AI blends it', desc: 'A pro-grade, studio-quality shot generated in seconds.' }
+    ].map(s => Object.assign({}, s, { imgEl: this.img(s.img) }));
+
+    const brands = [
+      { name: 'Luxury' }, { name: 'Pixels' }, { name: 'Premium' }, { name: 'Minimal' },
+      { name: 'Studio' }, { name: 'Cinematic' }, { name: 'Vibrant' }, { name: 'Pastel' }, { name: 'Editorial' }
+    ];
+
+    const byoCards = [
+      { title: 'Portraits', count: '1.2K', img: ((window.__resources||{}).img15 || 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Landscapes', count: '3.4K', img: ((window.__resources||{}).img16 || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Fashion', count: '2.1K', img: ((window.__resources||{}).img17 || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Urban', count: '1.8K', img: ((window.__resources||{}).img18 || 'https://images.unsplash.com/photo-1485518882345-15568b007407?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Nature', count: '4.0K', img: ((window.__resources||{}).img19 || 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Interiors', count: '960', img: ((window.__resources||{}).img20 || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Abstract', count: '1.4K', img: ((window.__resources||{}).img21 || 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=500&q=80&auto=format&fit=crop') },
+      { title: 'Studio', count: '2.7K', img: ((window.__resources||{}).img22 || 'https://images.unsplash.com/photo-1583225214464-9296029427aa?w=500&q=80&auto=format&fit=crop') }
+    ].map(c => Object.assign({}, c, { imgEl: this.img(c.img) }));
+
+    const trending = [
+      { title: 'Mountain Sunset', uses: '12.4K', img: ((window.__resources||{}).img23 || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop') },
+      { title: 'Night Sky', uses: '9.8K', img: ((window.__resources||{}).img24 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80&auto=format&fit=crop') },
+      { title: 'Beach Waves', uses: '8.1K', img: ((window.__resources||{}).img25 || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80&auto=format&fit=crop') },
+      { title: 'Forest Mist', uses: '6.5K', img: ((window.__resources||{}).img26 || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80&auto=format&fit=crop') }
+    ].map(t => Object.assign({}, t, { imgEl: this.img(t.img) }));
+
+    const sceneThumbs = [
+      ((window.__resources||{}).img27 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=200&q=80&auto=format&fit=crop'),
+      ((window.__resources||{}).img28 || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&q=80&auto=format&fit=crop'),
+      ((window.__resources||{}).img29 || 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=200&q=80&auto=format&fit=crop'),
+      ((window.__resources||{}).img30 || 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=200&q=80&auto=format&fit=crop')
+    ];
+    const avStyle = { width: '44.8px', height: '44.8px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff', boxShadow: '0 0 0 1.6px #EC4899' };
+    const sellers = [
+      { name: "Sarah's Studio", listings: 156, followers: '12.5K', badge: '⭐', avatar: ((window.__resources||{}).img31 || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop'), thumbs: sceneThumbs },
+      { name: 'Alex Visuals', listings: 234, followers: '18.2K', badge: '⭐', avatar: ((window.__resources||{}).img32 || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[2], sceneThumbs[0], sceneThumbs[3], sceneThumbs[1]] },
+      { name: 'Mira Scenes', listings: 98, followers: '7.4K', badge: '⭐', avatar: ((window.__resources||{}).img33 || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[3], sceneThumbs[1], sceneThumbs[0], sceneThumbs[2]] }
+    ].map(s => Object.assign({}, s, { avatarEl: this.img(s.avatar, avStyle), thumbs: s.thumbs.map(t => this.img(t)) }));
+
+    return {
+      userName: this.props.userName || 'Sarah',
+      sidebarOpenCls: this.state.navOpen ? 'pb-open' : '',
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      toggleIconEl: React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center' }, dangerouslySetInnerHTML: { __html: toggleIcon } }),
+      credits, navItems, categories, dots, recents, steps, trending, sellers, brands, byoCards,
+      slide: slidesData[si],
+      slideBgEl: this.img(slidesData[si].img, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }),
+      slideMiniEl: this.img(slidesData[si].img),
+      creditBarStyle: `height:100%; width:${Math.min(100, (credits / 200) * 100)}%; border-radius:799.2px; background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);`,
+      next: () => this.setState(s => ({ slide: (s.slide + 1) % slidesData.length })),
+      prev: () => this.setState(s => ({ slide: (s.slide - 1 + slidesData.length) % slidesData.length }))
+    };
+  }
+}
+</script>
+
+
+
+<script>
+(function () {
+  function ready() {
+    if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  }
+  function setupBrandMarquee() {
+    var root = document.getElementById('pb-brand-marquee') || document.querySelector('.pb-marquee');
+    if (!root) return;
+    var track = root.querySelector('.pb-marquee-track');
+    var group = track && track.querySelector('.pb-marquee-group');
+    if (!track || !group) return;
+    var shift = group.getBoundingClientRect().width;
+    if (!shift) return;
+    root.style.setProperty('--mq-shift', shift + 'px');
+  }
+  var tries = 0;
+  var t = setInterval(function () {
+    tries += 1;
+    var root = document.getElementById('dc-root') || document.querySelector('x-dc');
+    var has = root && (root.children && root.children.length > 0 || root.querySelector('*'));
+    if (has || tries > 40) {
+      clearInterval(t);
+      ready();
+      setupBrandMarquee();
+    }
+  }, 100);
+  window.addEventListener('load', function () { setTimeout(function () { ready(); setupBrandMarquee(); }, 0); });
+  window.addEventListener('resize', function () {
+    clearTimeout(window.__pbMqT);
+    window.__pbMqT = setTimeout(setupBrandMarquee, 120);
+  });
+})();
+</script>
+</body></html>
