@@ -156,7 +156,7 @@
         '<div style="display: flex; align-items: center; gap: 12px;" class="nav-cta">' +
           '<a href="' + ix('#hero-cta') + '" style="font-size: 14.5px; font-weight: 600; color: #1E1422; text-decoration: none;" class="nav-dl">Log in</a>' +
           '<a href="' + ix('#download') + '" style="font-size: 14.5px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 9px 16px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff; display: inline-flex; align-items: center; gap: 6px;">Download App</a>' +
-          '<a href="' + ix('#hero-cta') + '" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 20px rgba(236,72,153,.35);">Open Studio</a>' +
+          '<a href="' + ix('dashboard.html') + '" style="font-size: 14.5px; font-weight: 700; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 8px 20px rgba(236,72,153,.35);">Open Studio</a>' +
         '</div>' +
         '<button type="button" aria-label="Open menu" class="nav-burger" data-pb-menu-open style="width: 46px; height: 46px; border-radius: 14px; border: 1.5px solid #F0E6F2; background: #fff; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 14px -8px rgba(196,46,139,.5); padding: 0;">' +
           '<span style="display: flex; flex-direction: column; gap: 4px; align-items: center;">' +
@@ -179,7 +179,7 @@
       '<div class="pb-drawer-links" style="display: flex; flex-direction: column; margin-top: 14px;">' + drawerRow() + '</div>' +
       '<div class="pb-drawer-cta" style="display: flex; flex-direction: column; gap: 12px; margin-top: auto; padding-top: 24px;">' +
         '<a href="' + ix('#download') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #1E1422; text-decoration: none; padding: 14px; border-radius: 999px; border: 1.5px solid #F0E6F2; background: #fff;">Download App</a>' +
-        '<a href="' + ix('#hero-cta') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 26px rgba(236,72,153,.4);">Open Studio — Free</a>' +
+        '<a href="' + ix('dashboard.html') + '" data-pb-close style="text-align: center; font-size: 16px; font-weight: 700; color: #fff; text-decoration: none; padding: 15px; border-radius: 999px; background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E); box-shadow: 0 10px 26px rgba(236,72,153,.4);">Open Studio — Free</a>' +
         '<a href="' + ix('#hero-cta') + '" data-pb-close style="text-align: center; font-size: 14.5px; font-weight: 600; color: #5b5060; text-decoration: none; padding: 4px;">Log in</a>' +
       '</div>' +
     '</aside>';

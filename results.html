@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Real Results · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422;
+    --muted: #5b5060;
+    --soft: #8A7E92;
+    --line: #F0E6F2;
+    --bg: #FAF4FB;
+    --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #9333EA;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 10px 21px rgba(236,72,153,.34);
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-credits-cta {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px; border-radius: 10px; border: 1.2px solid var(--line); background: #fff;
+    font-size: 10.5px; font-weight: 700;
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    padding: 20px 32px 14px; background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .pb-back:hover { border-color: var(--accent); color: var(--accent); }
+  .pb-content { padding: 20px 32px 48px; width: 100%; }
+
+  .rr-intro {
+    margin: 0 0 22px;
+    max-width: 640px;
+  }
+  .rr-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    background: #FCE7F0; border: 1px solid #F9C6D8;
+    color: #C42E8B; font-size: 11px; font-weight: 800; letter-spacing: .06em;
+    margin-bottom: 14px;
+  }
+  .rr-badge svg { flex-shrink: 0; }
+  .rr-intro h1 {
+    margin: 0 0 10px;
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+    color: var(--ink);
+  }
+  .rr-intro h1 em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-weight: 400;
+    color: #EC4899;
+  }
+  .rr-intro p {
+    margin: 0;
+    font-size: 14px; line-height: 1.55; font-weight: 500;
+    color: var(--muted); max-width: 520px;
+  }
+
+  .rr-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .rr-card {
+    position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 1;
+    background: #1E1422; cursor: pointer;
+    box-shadow: 0 12px 28px -16px rgba(30,20,34,.35);
+    transition: transform .2s ease;
+  }
+  .rr-card:hover { transform: translateY(-2px); }
+  .rr-card img.main { width: 100%; height: 100%; object-fit: cover; }
+  .rr-ai {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px;
+    border-radius: 999px; background: rgba(30,20,34,.55); backdrop-filter: blur(6px);
+    color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .04em;
+  }
+  .rr-sources {
+    position: absolute; left: 12px; bottom: 12px; z-index: 2;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .rr-thumb {
+    position: relative; width: 48px; height: 48px; border-radius: 10px; overflow: hidden;
+    border: 2px solid #fff; box-shadow: 0 6px 14px rgba(0,0,0,.25); flex-shrink: 0;
+  }
+  .rr-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .rr-thumb span {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 0;
+    background: rgba(30,20,34,.72); color: #fff; font-size: 7px; font-weight: 800;
+    letter-spacing: .04em; text-align: center; line-height: 1.2;
+  }
+  .rr-sources .plus {
+    color: #fff; font-size: 14px; font-weight: 800; text-shadow: 0 1px 6px rgba(0,0,0,.4);
+  }
+
+  .rr-turn {
+    margin-top: 28px;
+    text-align: center;
+    padding: 4px 0 8px;
+  }
+  .rr-turn h2 {
+    margin: 0 0 6px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px; font-weight: 400; letter-spacing: -.02em; color: var(--ink);
+  }
+  .rr-turn p {
+    margin: 0 0 16px; font-size: 14px; color: var(--muted); font-weight: 500;
+  }
+  .rr-turn-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px; border: none;
+    background: var(--grad); color: #fff; font-size: 15px; font-weight: 800;
+    text-decoration: none; box-shadow: 0 12px 28px rgba(236,72,153,.35);
+  }
+  .rr-turn-cta:hover { transform: translateY(-1px); }
+  .rr-expand {
+    position: absolute; right: 10px; bottom: 10px; z-index: 2;
+    width: 32px; height: 32px; border-radius: 50%; border: none;
+    background: #fff; color: #111;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.22); padding: 0;
+  }
+  .rr-expand:hover { color: var(--accent); }
+  .rr-expand svg { display: block; width: 15px; height: 15px; }
+
+  /* Transform modal */
+  .tf-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(30,20,34,.45); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .tf-overlay.open { display: flex; }
+  body.tf-lock { overflow: hidden; }
+  .tf-stage {
+    position: relative;
+    width: min(380px, calc(100vw - 72px));
+  }
+  .tf-nav {
+    position: absolute; top: 50%; z-index: 4;
+    width: 42px; height: 42px; border-radius: 50%; border: none;
+    background: #fff; color: #1E1422; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    padding: 0;
+  }
+  .tf-nav:hover { color: var(--accent); }
+  .tf-nav.prev { left: 0; transform: translate(-50%, -50%); }
+  .tf-nav.next { right: 0; transform: translate(50%, -50%); }
+  .tf-nav svg { display: block; }
+  .tf-modal {
+    width: 100%;
+    max-height: min(92vh, 780px);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 28px 60px -20px rgba(30,20,34,.45);
+    position: relative;
+  }
+  .tf-head {
+    flex: 0 0 auto;
+    padding: 14px 14px 0;
+    background: #fff;
+  }
+  .tf-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 16px 0;
+    scrollbar-width: thin;
+  }
+  .tf-top {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tf-tag {
+    padding: 5px 12px; border-radius: 999px; background: var(--grad);
+    color: #fff; font-size: 12px; font-weight: 800;
+  }
+  .tf-likes {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700; color: var(--accent);
+  }
+  .tf-close {
+    margin-left: auto;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: #F3EDF4; color: var(--ink); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .tf-close:hover { background: #FCE7F0; color: var(--accent); }
+  .tf-title {
+    font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--soft);
+    margin: 10px 0 12px; text-align: center;
+  }
+  .tf-pair {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center;
+  }
+  .tf-shot {
+    position: relative; border-radius: 14px; overflow: hidden; aspect-ratio: 3/4;
+    background: #1E1422;
+  }
+  .tf-shot img { width: 100%; height: 100%; object-fit: cover; }
+  .tf-shot span {
+    position: absolute; left: 8px; bottom: 8px; padding: 4px 9px; border-radius: 999px;
+    background: rgba(30,20,34,.72); color: #fff; font-size: 10px; font-weight: 700;
+  }
+  .tf-plus {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--grad);
+    color: #fff; display: grid; place-items: center;
+    flex-shrink: 0; line-height: 0;
+  }
+  .tf-plus svg { display: block; }
+  .tf-divider {
+    display: flex; align-items: center; gap: 10px; margin: 14px 0 12px;
+  }
+  .tf-divider::before, .tf-divider::after {
+    content: ''; flex: 1; height: 1px; background: #EDE4EF;
+  }
+  .tf-divider span {
+    display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+    border-radius: 999px; background: var(--grad); color: #fff;
+    font-size: 11px; font-weight: 800; white-space: nowrap;
+  }
+  .tf-result {
+    position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 3/4;
+    background: #1E1422; width: 100%;
+  }
+  .tf-result img { width: 100%; height: 100%; object-fit: cover; }
+  .tf-result-tag {
+    position: absolute; top: 12px; left: 12px;
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border-radius: 999px; background: rgba(30,20,34,.65); backdrop-filter: blur(6px);
+    color: #fff; font-size: 10px; font-weight: 800;
+  }
+  .tf-result-tag i {
+    width: 7px; height: 7px; border-radius: 50%; background: #22C55E;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.25);
+  }
+  .tf-foot {
+    flex: 0 0 auto;
+    padding: 12px 16px 16px;
+    background: #fff;
+    border-top: 1px solid #F3ECF4;
+  }
+  .tf-author {
+    display: flex; align-items: center; gap: 10px;
+    margin: 0 0 12px;
+  }
+  .tf-author img {
+    width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+    border: 1.5px solid #fff; box-shadow: 0 0 0 1px #F0E6F2;
+  }
+  .tf-author strong {
+    display: block; font-size: 13px; font-weight: 800; color: var(--ink); letter-spacing: -.01em;
+  }
+  .tf-author span {
+    display: block; font-size: 11px; font-weight: 500; color: var(--soft); margin-top: 1px;
+  }
+  .tf-cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px 22px; border-radius: 999px; border: none;
+    background: var(--grad); color: #fff; font-size: 14px; font-weight: 800;
+    text-decoration: none; box-shadow: 0 12px 28px rgba(236,72,153,.32);
+  }
+  .tf-cta:hover { transform: translateY(-1px); }
+
+  .pb-toggle { display: none; }
+
+  @media (max-width: 1279px) {
+    .rr-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-newblend .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-newblend .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: initial; }
+    .pb-nav a { justify-content: center; padding: 10px; }
+    .pb-sidebar.open .pb-nav a { justify-content: flex-start; padding: 10px 11px; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; cursor: pointer; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-sidebar.open .pb-toggle { align-self: flex-end; }
+    .pb-content { padding: 22px; }
+    .rr-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 767px) {
+    .rr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .rr-turn h2 { font-size: 34px; }
+    .pb-topbar { padding: 16px; }
+    .pb-content { padding: 16px; }
+    .tf-modal { border-radius: 24px; max-height: 92vh; }
+    .tf-nav { width: 36px; height: 36px; }
+    .tf-stage { width: min(340px, calc(100vw - 64px)); }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="dashboard.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html" class="active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z" fill="currentColor"/></svg>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge">12</span>
+      </a>
+      <a href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13.5px;font-weight:800;">150</span>
+      </div>
+      <div style="height:6px;border-radius:999px;background:#F0E6F2;overflow:hidden;margin-bottom:11px;">
+        <div style="height:100%;width:75%;border-radius:999px;background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);"></div>
+      </div>
+      <a href="#" class="pb-credits-cta">⚡ Get more credits</a>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a class="pb-back" href="discover.html" aria-label="Back to Discover">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.02em;">Real Results</div>
+        <div style="font-size:11px;color:#8A7E92;margin-top:2px;">Community AI blends</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+        <button aria-label="Notifications" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6zM10 19a2 2 0 004 0" stroke="#1E1422" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff;"></span>
+        </button>
+        <img src="assets/dashboard/images/img31.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 0 1px #F0E6F2;">
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <header class="rr-intro">
+        <span class="rr-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.6 6.4 6.9.6-5.2 4.5 1.6 6.7L12 17.2 6.1 20.7l1.6-6.7L2.5 9.5l6.9-.6z"/></svg>
+          REAL RESULTS
+        </span>
+        <h1>See how it looks from our <em>real</em> results</h1>
+        <p>Every result below is one real photo plus one background, rendered by our AI. Tap any card to see the full transformation.</p>
+      </header>
+
+      <div class="rr-grid" id="rr-grid"></div>
+
+      <section class="rr-turn">
+        <h2>Your turn.</h2>
+        <p>Two photos. One tap. Studio grade results.</p>
+        <a class="rr-turn-cta" href="dashboard.html">★ Create your own photo</a>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="tf-overlay" id="tf-overlay" aria-hidden="true">
+  <div class="tf-stage">
+    <button class="tf-nav prev" id="tf-prev" type="button" aria-label="Previous">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="tf-nav next" id="tf-next" type="button" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="tf-modal" role="dialog" aria-modal="true" aria-label="The Transform">
+      <div class="tf-head">
+        <div class="tf-top">
+          <span class="tf-tag" id="tf-tag">Raw</span>
+          <span class="tf-likes" id="tf-likes">♡ 1.9k</span>
+          <button class="tf-close" id="tf-close" type="button" aria-label="Close">✕</button>
+        </div>
+        <p class="tf-title">THE TRANSFORM</p>
+      </div>
+      <div class="tf-scroll">
+        <div class="tf-pair">
+          <div class="tf-shot">
+            <img id="tf-source" src="assets/dashboard/images/img2.jpg" alt="Source">
+            <span>Source</span>
+          </div>
+          <div class="tf-plus" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5v9M1.5 6h9" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tf-shot">
+            <img id="tf-bg" src="assets/dashboard/images/img16.jpg" alt="Background">
+            <span>Background</span>
+          </div>
+        </div>
+        <div class="tf-divider"><span>✦ AI Blend = Result</span></div>
+        <div class="tf-result">
+          <img id="tf-result" src="assets/dashboard/images/img5.jpg" alt="AI Blend Result">
+          <span class="tf-result-tag"><i></i> AI Blend Result</span>
+        </div>
+      </div>
+      <div class="tf-foot">
+        <div class="tf-author">
+          <img id="tf-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+          <div>
+            <strong id="tf-name">Aisha K.</strong>
+            <span>Created with PixelBlend AI</span>
+          </div>
+        </div>
+        <a class="tf-cta" href="dashboard.html">✦ Create your own photo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var side = document.getElementById('pb-sidebar');
+  var btn = document.getElementById('pb-toggle');
+  if (btn && side) btn.addEventListener('click', function () { side.classList.toggle('open'); });
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+
+  var names = ['Aisha K.', 'Maya R.', 'Leo P.', 'Nora S.', 'Kai M.', 'Zara L.', 'Omar H.', 'Elena V.', 'Riya T.'];
+  var avatars = [
+    'assets/dashboard/images/img31.jpg',
+    'assets/dashboard/images/img30.jpg',
+    'assets/dashboard/images/img29.jpg',
+    'assets/dashboard/images/img28.jpg',
+    'assets/dashboard/images/img27.jpg',
+    'assets/dashboard/images/img26.jpg',
+    'assets/dashboard/images/img25.jpg',
+    'assets/dashboard/images/img24.jpg',
+    'assets/dashboard/images/img23.jpg'
+  ];
+  var items = [
+    { tag: 'Raw', likes: '1.9k', source: 'assets/dashboard/images/img2.jpg', bg: 'assets/dashboard/images/img16.jpg', result: 'assets/dashboard/images/img3.jpg' },
+    { tag: 'Sunset', likes: '3.2k', source: 'assets/dashboard/images/img12.jpg', bg: 'assets/dashboard/images/img5.jpg', result: 'assets/dashboard/images/img5.jpg' },
+    { tag: 'Forest', likes: '2.4k', source: 'assets/dashboard/images/img15.jpg', bg: 'assets/dashboard/images/img16.jpg', result: 'assets/dashboard/images/img16.jpg' },
+    { tag: 'Mountain', likes: '4.1k', source: 'assets/dashboard/images/img2.jpg', bg: 'assets/dashboard/images/img23.jpg', result: 'assets/dashboard/images/img23.jpg' },
+    { tag: 'Night', likes: '1.1k', source: 'assets/dashboard/images/img17.jpg', bg: 'assets/dashboard/images/img4.jpg', result: 'assets/dashboard/images/img4.jpg' },
+    { tag: 'Beach', likes: '5.6k', source: 'assets/dashboard/images/img12.jpg', bg: 'assets/dashboard/images/img25.jpg', result: 'assets/dashboard/images/img25.jpg' },
+    { tag: 'Luxury', likes: '2.8k', source: 'assets/dashboard/images/img15.jpg', bg: 'assets/dashboard/images/img19.jpg', result: 'assets/dashboard/images/img19.jpg' },
+    { tag: 'Scenery', likes: '3.7k', source: 'assets/dashboard/images/img2.jpg', bg: 'assets/dashboard/images/img26.jpg', result: 'assets/dashboard/images/img26.jpg' },
+    { tag: 'Urban', likes: '1.5k', source: 'assets/dashboard/images/img17.jpg', bg: 'assets/dashboard/images/img18.jpg', result: 'assets/dashboard/images/img18.jpg' }
+  ];
+
+  var grid = document.getElementById('rr-grid');
+  items.forEach(function (item, i) {
+    var el = document.createElement('article');
+    el.className = 'rr-card';
+    el.setAttribute('data-index', String(i));
+    el.innerHTML =
+      '<img class="main" src="' + item.result + '" alt="">' +
+      '<span class="rr-ai">★ AI RESULT</span>' +
+      '<div class="rr-sources">' +
+        '<div class="rr-thumb"><img src="' + item.source + '" alt=""><span>SOURCE</span></div>' +
+        '<span class="plus">+</span>' +
+        '<div class="rr-thumb"><img src="' + item.bg + '" alt=""><span>BACKGROUND</span></div>' +
+      '</div>' +
+      '<button class="rr-expand" type="button" aria-label="Expand">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M5 19L19 5"/>' +
+          '<path d="M14 5h5v5"/>' +
+          '<path d="M10 19H5v-5"/>' +
+        '</svg>' +
+      '</button>';
+    grid.appendChild(el);
+  });
+
+  var overlay = document.getElementById('tf-overlay');
+  var idx = 0;
+
+  function renderModal(i) {
+    idx = (i + items.length) % items.length;
+    var item = items[idx];
+    document.getElementById('tf-tag').textContent = item.tag;
+    document.getElementById('tf-likes').textContent = '♡ ' + item.likes;
+    document.getElementById('tf-source').src = item.source;
+    document.getElementById('tf-bg').src = item.bg;
+    document.getElementById('tf-result').src = item.result;
+    document.getElementById('tf-name').textContent = names[idx % names.length];
+    document.getElementById('tf-avatar').src = avatars[idx % avatars.length];
+  }
+
+  function openModal(i) {
+    renderModal(i);
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('tf-lock');
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('tf-lock');
+  }
+
+  grid.addEventListener('click', function (e) {
+    var card = e.target.closest('.rr-card');
+    if (!card) return;
+    openModal(parseInt(card.getAttribute('data-index'), 10) || 0);
+  });
+
+  document.getElementById('tf-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.getElementById('tf-prev').addEventListener('click', function (e) {
+    e.stopPropagation();
+    renderModal(idx - 1);
+  });
+  document.getElementById('tf-next').addEventListener('click', function (e) {
+    e.stopPropagation();
+    renderModal(idx + 1);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') renderModal(idx - 1);
+    if (e.key === 'ArrowRight') renderModal(idx + 1);
+  });
+})();
+</script>
+</body>
+</html>

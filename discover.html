@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Discover · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422;
+    --muted: #5b5060;
+    --soft: #8A7E92;
+    --line: #F0E6F2;
+    --bg: #FAF4FB;
+    --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  ::selection { background: #FCE7F0; color: var(--accent); }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line); box-sizing: border-box;
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em; line-height: 1;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #9333EA;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    text-decoration: none; padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 10px 21px rgba(236,72,153,.34);
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    text-decoration: none; font-size: 12px; font-weight: 600; color: var(--muted);
+    transition: background .15s ease, color .15s ease;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a svg { flex-shrink: 0; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+    box-shadow: 0 10px 24px -18px rgba(168,85,247,.55);
+  }
+  .pb-credits-cta {
+    display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+    padding: 8px; border-radius: 10px; border: 1.2px solid var(--line); background: #fff;
+    font-size: 10.5px; font-weight: 700; color: var(--ink);
+  }
+  .pb-credits-cta:hover { border-color: var(--accent); color: var(--accent); }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    padding: 24px 32px 16px; background: rgba(250,244,251,.82); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pb-content { padding: 28px 32px 56px; width: 100%; box-sizing: border-box; }
+
+  .dc-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 7px;
+    border-radius: 999px; background: transparent; border: none;
+    font-size: 10px; font-weight: 800; letter-spacing: .06em; color: var(--accent); text-transform: uppercase;
+  }
+  .dc-stat { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink); font-weight: 700; }
+  .dc-stat .dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 0 3px rgba(34,197,94,.18); }
+  .dc-stat span { color: var(--soft); font-weight: 600; margin-left: 2px; }
+
+  .dc-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 16px 0 18px; }
+  .dc-head h1 { margin: 0; font-size: 28px; line-height: 1.05; letter-spacing: -.035em; font-weight: 800; max-width: 480px; }
+  .dc-head p { margin: 4px 0 0; font-size: 13px; color: var(--soft); }
+  .dc-link { font-size: 12.5px; font-weight: 700; color: var(--accent); text-decoration: none; white-space: nowrap; }
+  .dc-link:hover { text-decoration: underline; }
+
+  /* image tiles — 2-row strip, scroll right for more */
+  .dc-community {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 158px;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .dc-community::-webkit-scrollbar { height: 0; }
+  .dc-card {
+    position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/4;
+    background: #1E1422;
+    width: 158px;
+    scroll-snap-align: start;
+    display: block; text-decoration: none; color: inherit; cursor: pointer;
+  }
+  .dc-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .dc-card:hover img { transform: scale(1.03); }
+  .dc-card .label {
+    position: absolute; left: 10px; bottom: 10px;
+    font-size: 11px; font-weight: 800; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.55);
+  }
+
+  .dc-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 22px; padding: 12px 22px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--grad); color: #fff; font-size: 13px; font-weight: 800;
+    box-shadow: 0 10px 22px rgba(236,72,153,.3); text-decoration: none;
+  }
+  .dc-cta:hover { transform: translateY(-1px); }
+
+  .dc-divider {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    margin: 44px 0 28px;
+  }
+  .dc-divider-row {
+    display: flex; align-items: center; width: 100%; gap: 14px;
+  }
+  .dc-divider-row::before,
+  .dc-divider-row::after {
+    content: ''; flex: 1; height: 1px; background: #E8D8EC;
+  }
+  .dc-divider .star {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--grad); display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 13px; box-shadow: 0 6px 14px rgba(196,46,139,.28);
+  }
+  .dc-divider > span {
+    font-size: 11px; font-weight: 800; letter-spacing: .16em; color: #A855F7;
+  }
+
+  .dc-market {
+    position: relative; overflow: hidden; border-radius: 20px; padding: 28px 32px;
+    background: linear-gradient(125deg, #A855F7 0%, #EC4899 55%, #F43F5E 100%);
+    color: #fff;
+  }
+  .dc-market::after {
+    content: ''; position: absolute; right: -80px; top: -40px; width: 240px; height: 240px;
+    border-radius: 50%; background: rgba(255,255,255,.12);
+  }
+  .dc-market-inner { position: relative; z-index: 1; max-width: 680px; }
+  .dc-market .pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,.16);
+    font-size: 10px; font-weight: 800; letter-spacing: .08em; margin-bottom: 12px;
+  }
+  .dc-market h2 { margin: 0 0 8px; font-size: 28px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; }
+  .dc-market p { margin: 0 0 16px; font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.9); max-width: 500px; }
+  .dc-steps { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .dc-step {
+    display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
+    background: rgba(255,255,255,.14);
+    font-size: 12px; font-weight: 700; color: #fff;
+  }
+  .dc-step.on { background: #fff; color: var(--accent); }
+  .dc-step-arrow { opacity: .7; font-size: 13px; }
+  .dc-note {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; line-height: 1.4; color: rgba(255,255,255,.92); max-width: 540px;
+  }
+  .dc-note .mark {
+    width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,.22); color: #fff;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px;
+  }
+
+  .dc-section { margin-top: 40px; }
+  .dc-section-h {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px;
+  }
+  .dc-section-h h2 { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+
+  /* sellers = separated tiles, light surface (not heavy cards) */
+  .dc-follow {
+    display: flex; gap: 14px; overflow-x: auto; padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .dc-follow::-webkit-scrollbar { height: 0; }
+  .dc-seller {
+    flex: 0 0 248px;
+    background: #fff;
+    border: 1px solid rgba(240,230,242,.95);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: none;
+  }
+  .dc-seller-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .dc-avatar {
+    width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: none;
+    box-shadow: none; flex-shrink: 0; background: #F7ECF8;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent); font-size: 12px;
+  }
+  .dc-seller-top strong { display: block; font-size: 12.5px; letter-spacing: -.01em; }
+  .dc-seller-top small { display: block; font-size: 10.5px; color: var(--soft); margin-top: 1px; }
+  .dc-follow-btn {
+    margin-left: auto; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer;
+    background: #FBEEF6; color: var(--accent); font-size: 10.5px; font-weight: 800;
+  }
+  .dc-follow-btn:hover { border-color: var(--accent); }
+  .dc-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  .dc-thumbs img, .dc-thumbs span {
+    aspect-ratio: 1; border-radius: 8px; object-fit: cover; width: 100%; height: 100%;
+    border: none; background: #F7ECF8; display: block;
+  }
+
+  /* trending = app layout: fixed-width cards, horizontal row */
+  .dc-trend {
+    display: flex; gap: 14px; overflow-x: auto; padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .dc-trend::-webkit-scrollbar { height: 0; }
+  .dc-trend-card {
+    flex: 0 0 260px;
+    max-width: 260px;
+    background: #fff;
+    border: 1px solid rgba(240,230,242,.95);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  .dc-trend-media {
+    position: relative; aspect-ratio: 4/3; overflow: hidden;
+  }
+  .dc-trend-media img { width: 100%; height: 100%; object-fit: cover; }
+  .dc-trend-badge {
+    position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--grad); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; z-index: 2;
+    box-shadow: 0 6px 14px rgba(196,46,139,.3);
+  }
+  .dc-trend-body { padding: 12px 12px 14px; }
+  .dc-trend-body .dc-seller-top { margin-bottom: 10px; }
+  .dc-trend-body strong { color: var(--ink); font-size: 13px; }
+  .dc-trend-body small { color: var(--soft); }
+  .dc-trend-body .dc-follow-btn {
+    background: var(--grad); border: none; color: #fff; padding: 6px 12px;
+  }
+  .dc-trend-thumbs {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+  }
+  .dc-trend-thumbs img {
+    aspect-ratio: 1; border-radius: 10px; object-fit: cover; width: 100%;
+    display: block; background: #F7ECF8;
+  }
+
+  .dc-new {
+    display: flex; gap: 12px; overflow-x: auto; padding: 2px 2px 8px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .dc-new::-webkit-scrollbar { height: 0; }
+  .dc-bg {
+    position: relative; flex: 0 0 168px; width: 168px;
+    border-radius: 16px; overflow: hidden; aspect-ratio: 3/4;
+    background: #1E1422; scroll-snap-align: start;
+  }
+  .dc-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .dc-bg .tl, .dc-bg .tr {
+    position: absolute; top: 10px; width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 2;
+  }
+  .dc-bg .tl {
+    left: 10px; background: var(--grad); color: #fff;
+    box-shadow: 0 6px 12px rgba(196,46,139,.35);
+  }
+  .dc-bg .tr { right: 10px; background: rgba(255,255,255,.95); color: #EC4899; }
+  .dc-blend {
+    position: absolute; left: 10px; right: 10px; bottom: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    padding: 10px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 800;
+    text-decoration: none; box-shadow: 0 8px 16px rgba(30,20,34,.28);
+  }
+  .dc-blend:hover { filter: brightness(1.05); }
+
+  .dc-explore {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 28px; padding: 12px 22px; border-radius: 999px; border: none;
+    background: transparent; color: var(--accent); font-size: 13px; font-weight: 800; cursor: pointer;
+    text-decoration: none; border: 1.5px solid #F0C4DF;
+  }
+  .dc-explore:hover { background: #FBEEF6; }
+
+  .dc-forsellers {
+    margin-top: 36px; border-radius: 0; padding: 28px 0 0;
+    background: transparent; border: none; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .dc-forsellers .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .12em; color: var(--accent); margin: 0 0 6px; }
+  .dc-forsellers h2 { margin: 0 0 6px; font-size: 20px; letter-spacing: -.03em; font-weight: 800; color: #2A1339; }
+  .dc-forsellers p { margin: 0 0 12px; font-size: 13px; color: var(--muted); line-height: 1.45; max-width: 420px; }
+  .dc-forsellers .list-btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px;
+    background: var(--grad); border: none; color: #fff; font-size: 12.5px; font-weight: 800;
+    text-decoration: none;
+  }
+  .dc-join { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; color: #2A1339; }
+  .dc-avatars { display: flex; }
+  .dc-avatars i {
+    width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -6px;
+    display: block;
+  }
+  .dc-avatars i:first-child { margin-left: 0; background: #F97316; }
+  .dc-avatars i:nth-child(2) { background: #14B8A6; }
+  .dc-avatars i:nth-child(3) { background: #EC4899; }
+
+  .dc-end {
+    text-align: center; margin-top: 28px; font-size: 12px; color: var(--soft); font-weight: 600;
+  }
+
+  .pb-toggle { display: none; }
+
+  @media (max-width: 1279px) {
+    .dc-trend-card { flex-basis: 240px; max-width: 240px; }
+    .dc-bg { flex-basis: 156px; width: 156px; }
+    .dc-head h1 { font-size: 24px; }
+    .dc-market h2 { font-size: 24px; }
+  }
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-newblend .pb-label, .pb-navlabel, .pb-credits, .pb-navbadge-text { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-newblend .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: initial; }
+    .pb-sidebar.open .pb-navbadge { display: inline-block; }
+    .pb-nav a { justify-content: center; padding: 10px; }
+    .pb-sidebar.open .pb-nav a { justify-content: flex-start; padding: 10px 11px; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; cursor: pointer; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-sidebar.open .pb-toggle { align-self: flex-end; }
+    .dc-community { grid-auto-columns: 148px; }
+    .dc-card { width: 148px; }
+    .pb-content { padding: 20px; }
+  }
+  @media (max-width: 767px) {
+    .dc-community { grid-auto-columns: 132px; }
+    .dc-card { width: 132px; }
+    .dc-bg { flex-basis: 148px; width: 148px; }
+    .dc-trend-card { flex-basis: 220px; max-width: 220px; }
+    .dc-head { flex-direction: column; align-items: flex-start; }
+    .dc-market { padding: 20px; }
+    .dc-market h2 { font-size: 22px; }
+    .pb-topbar { padding: 18px 16px 12px; }
+    .pb-content { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="dashboard.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html" class="active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z" fill="currentColor"/></svg>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge">12</span>
+      </a>
+      <a href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13.5px;font-weight:800;">150</span>
+      </div>
+      <div style="height:6px;border-radius:999px;background:#F0E6F2;overflow:hidden;margin-bottom:11px;">
+        <div style="height:100%;width:75%;border-radius:999px;background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);"></div>
+      </div>
+      <a href="#" class="pb-credits-cta">⚡ Get more credits</a>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.02em;">Discover</div>
+        <div style="font-size:11px;color:#8A7E92;margin-top:2px;">Community blends &amp; seller marketplace</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+        <div class="dc-stat"><i class="dot"></i>12.4k <span>blends today</span></div>
+        <button aria-label="Notifications" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6zM10 19a2 2 0 004 0" stroke="#1E1422" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff;"></span>
+        </button>
+        <img src="assets/dashboard/images/img31.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 0 1px #F0E6F2;">
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div class="dc-badge">✦ Made with PixelBlend AI</div>
+        <div class="dc-stat"><i class="dot"></i>12.4k <span>blends today</span></div>
+      </div>
+
+      <div class="dc-head">
+        <div>
+          <h1>What our users have created</h1>
+          <p>Fresh from the community</p>
+        </div>
+        <a class="dc-link" href="results.html">View All →</a>
+      </div>
+
+      <div class="dc-community">
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img3.jpg" alt=""><span class="label">Minimalism</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img16.jpg" alt=""><span class="label">Raw</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img19.jpg" alt=""><span class="label">Luxury</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img23.jpg" alt=""><span class="label">Nature's Love</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img5.jpg" alt=""><span class="label">Sunset</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img26.jpg" alt=""><span class="label">Scenery</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img4.jpg" alt=""><span class="label">Night</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img25.jpg" alt=""><span class="label">Beach</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img6.jpg" alt=""><span class="label">Desert</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img17.jpg" alt=""><span class="label">Fashion</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img18.jpg" alt=""><span class="label">Urban</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img20.jpg" alt=""><span class="label">Interior</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img21.jpg" alt=""><span class="label">Abstract</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img22.jpg" alt=""><span class="label">Studio</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img24.jpg" alt=""><span class="label">Cosmic</span></a>
+        <a class="dc-card" href="results.html"><img src="assets/dashboard/images/img15.jpg" alt=""><span class="label">Portrait</span></a>
+      </div>
+
+      <div style="display:flex;justify-content:center;">
+        <a class="dc-cta" href="dashboard.html">✦ Create your own try-on →</a>
+      </div>
+
+      <div class="dc-divider">
+        <div class="dc-divider-row">
+          <div class="star">✦</div>
+        </div>
+        <span>THE MARKETPLACE</span>
+      </div>
+
+      <section class="dc-market">
+        <div class="dc-market-inner">
+          <div class="pill"><span style="width:6px;height:6px;border-radius:50%;background:#fff;"></span> SELLER MARKETPLACE</div>
+          <h2>Sellers list it.<br>AI blends it for you.</h2>
+          <p>Add your product photo, pick a backdrop from a seller, and our AI blends them into a studio-grade shot.</p>
+          <div class="dc-steps">
+            <div class="dc-step">▦ Browse</div>
+            <span class="dc-step-arrow">→</span>
+            <div class="dc-step">+ Blend it</div>
+            <span class="dc-step-arrow">→</span>
+            <div class="dc-step on">💬 Connect</div>
+          </div>
+          <div class="dc-note">
+            <span class="mark">✦</span>
+            <span>Sellers are creators who publish the backgrounds you blend into. Follow them for fresh drops.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dc-section">
+        <div class="dc-section-h">
+          <h2>Sellers to follow</h2>
+          <a class="dc-link" href="#">View All →</a>
+        </div>
+        <div class="dc-follow">
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+              <div><strong>Visual Vibes</strong><small>3 listings · 11.2k followers</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img3.jpg" alt="">
+              <img src="assets/dashboard/images/img4.jpg" alt="">
+              <img src="assets/dashboard/images/img5.jpg" alt="">
+              <img src="assets/dashboard/images/img6.jpg" alt="">
+            </div>
+          </article>
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <span class="dc-avatar">RS</span>
+              <div><strong>R store</strong><small>6 listings · 3 followers</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img25.jpg" alt="">
+              <img src="assets/dashboard/images/img20.jpg" alt="">
+              <img src="assets/dashboard/images/img21.jpg" alt="">
+              <img src="assets/dashboard/images/img18.jpg" alt="">
+            </div>
+          </article>
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
+              <div><strong>Digital Dreams</strong><small>2 listings · 5.6k followers</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img16.jpg" alt="">
+              <img src="assets/dashboard/images/img17.jpg" alt="">
+              <img src="assets/dashboard/images/img19.jpg" alt="">
+              <img src="assets/dashboard/images/img23.jpg" alt="">
+            </div>
+          </article>
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <img class="dc-avatar" src="assets/dashboard/images/img33.jpg" alt="">
+              <div><strong>Emma White</strong><small>1 listing · 19.4k followers</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img7.jpg" alt="">
+              <img src="assets/dashboard/images/img8.jpg" alt="">
+              <img src="assets/dashboard/images/img9.jpg" alt="">
+              <img src="assets/dashboard/images/img10.jpg" alt="">
+            </div>
+          </article>
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <span class="dc-avatar">G</span>
+              <div><strong>Gungun</strong><small>1 listing · 1 follower</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img11.jpg" alt="">
+              <img src="assets/dashboard/images/img12.jpg" alt="">
+              <img src="assets/dashboard/images/img13.jpg" alt="">
+              <img src="assets/dashboard/images/img14.jpg" alt="">
+            </div>
+          </article>
+          <article class="dc-seller">
+            <div class="dc-seller-top">
+              <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+              <div><strong>Sarah's Studio</strong><small>3 listings · 12.5k followers</small></div>
+              <button class="dc-follow-btn" type="button">Follow</button>
+            </div>
+            <div class="dc-thumbs">
+              <img src="assets/dashboard/images/img27.jpg" alt="">
+              <img src="assets/dashboard/images/img28.jpg" alt="">
+              <img src="assets/dashboard/images/img29.jpg" alt="">
+              <img src="assets/dashboard/images/img30.jpg" alt="">
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="dc-section">
+        <div class="dc-section-h">
+          <h2>📈 Top Trending Sellers</h2>
+          <a class="dc-link" href="#">View All →</a>
+        </div>
+        <div class="dc-trend">
+          <article class="dc-trend-card">
+            <div class="dc-trend-media">
+              <img src="assets/dashboard/images/img20.jpg" alt="">
+              <span class="dc-trend-badge">↗</span>
+            </div>
+            <div class="dc-trend-body">
+              <div class="dc-seller-top">
+                <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                <div><strong>Visual Vibes</strong><small>3 backgrounds</small></div>
+                <button class="dc-follow-btn" type="button">Follow</button>
+              </div>
+              <div class="dc-trend-thumbs">
+                <img src="assets/dashboard/images/img3.jpg" alt="">
+                <img src="assets/dashboard/images/img4.jpg" alt="">
+                <img src="assets/dashboard/images/img5.jpg" alt="">
+              </div>
+            </div>
+          </article>
+          <article class="dc-trend-card">
+            <div class="dc-trend-media">
+              <img src="assets/dashboard/images/img23.jpg" alt="">
+              <span class="dc-trend-badge">↗</span>
+            </div>
+            <div class="dc-trend-body">
+              <div class="dc-seller-top">
+                <span class="dc-avatar">RS</span>
+                <div><strong>R store</strong><small>6 backgrounds</small></div>
+                <button class="dc-follow-btn" type="button">Follow</button>
+              </div>
+              <div class="dc-trend-thumbs">
+                <img src="assets/dashboard/images/img16.jpg" alt="">
+                <img src="assets/dashboard/images/img25.jpg" alt="">
+                <img src="assets/dashboard/images/img26.jpg" alt="">
+              </div>
+            </div>
+          </article>
+          <article class="dc-trend-card">
+            <div class="dc-trend-media">
+              <img src="assets/dashboard/images/img18.jpg" alt="">
+              <span class="dc-trend-badge">↗</span>
+            </div>
+            <div class="dc-trend-body">
+              <div class="dc-seller-top">
+                <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
+                <div><strong>Digital Dreams</strong><small>2 backgrounds</small></div>
+                <button class="dc-follow-btn" type="button">Follow</button>
+              </div>
+              <div class="dc-trend-thumbs">
+                <img src="assets/dashboard/images/img17.jpg" alt="">
+                <img src="assets/dashboard/images/img19.jpg" alt="">
+                <img src="assets/dashboard/images/img24.jpg" alt="">
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="dc-section">
+        <div class="dc-section-h">
+          <h2>↗ Newly Added Backgrounds</h2>
+          <a class="dc-link" href="#">View All →</a>
+        </div>
+        <div class="dc-new">
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img20.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img16.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img26.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img5.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img4.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img23.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img18.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+          <div class="dc-bg">
+            <img src="assets/dashboard/images/img3.jpg" alt="">
+            <span class="tl">↗</span><span class="tr">♡</span>
+            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+          </div>
+        </div>
+      </section>
+
+      <div style="display:flex;justify-content:center;">
+        <a class="dc-explore" href="#">✨ Explore All Sellers →</a>
+      </div>
+
+      <section class="dc-forsellers">
+        <div>
+          <p class="eyebrow">FOR SELLERS</p>
+          <h2>List your catalogue on PixelBlend</h2>
+          <p>Upload your backgrounds and earn from your creations.</p>
+          <a class="list-btn" href="sellers.html">List your products for free →</a>
+        </div>
+        <div class="dc-join">
+          <div class="dc-avatars"><i></i><i></i><i></i></div>
+          Join 2,400+ sellers already growing
+        </div>
+      </section>
+
+      <p class="dc-end">You're all caught up ✨</p>
+    </div>
+  </main>
+</div>
+<script>
+(function () {
+  var side = document.getElementById('pb-sidebar');
+  var btn = document.getElementById('pb-toggle');
+  if (btn && side) btn.addEventListener('click', function () { side.classList.toggle('open'); });
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+})();
+</script>
+</body>
+</html>
