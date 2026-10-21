@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Generate · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422;
+    --muted: #5b5060;
+    --soft: #8A7E92;
+    --line: #F0E6F2;
+    --bg: #FAF4FB;
+    --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --grad-blue: linear-gradient(113deg, #3B82F6, #22D3EE);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line); box-sizing: border-box;
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em; line-height: 1;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #9333EA;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 10px 21px rgba(236,72,153,.34);
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico {
+    width: 22px; height: 22px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+    box-shadow: 0 10px 24px -18px rgba(168,85,247,.55);
+  }
+  .pb-credits-cta {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px; border-radius: 10px; border: 1.2px solid var(--line); background: #fff;
+    font-size: 10.5px; font-weight: 700;
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    padding: 20px 32px 14px; background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pb-content { padding: 24px 32px 48px; width: 100%; display: flex; justify-content: center; }
+  .pb-toggle { display: none; }
+
+  .gn-flow { width: min(780px, 100%); }
+  .gn-stepper {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    margin-bottom: 22px;
+  }
+  .gn-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: #fff; color: var(--soft); font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: .15s ease;
+  }
+  .gn-pill .num {
+    width: 22px; height: 22px; border-radius: 50%; background: #F3ECF4;
+    color: var(--soft); font-size: 11px; font-weight: 800;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .gn-pill.on {
+    border-color: transparent; color: #fff; background: var(--grad);
+    box-shadow: 0 10px 22px rgba(236,72,153,.28);
+  }
+  .gn-pill.on .num { background: rgba(255,255,255,.25); color: #fff; }
+  .gn-pill.done { border-color: #F9C6D8; color: var(--accent); background: #FDF2F8; }
+  .gn-pill.done .num { background: #FCE7F0; color: var(--accent); }
+  .gn-pill:disabled { opacity: .45; cursor: not-allowed; }
+  .gn-line { width: 36px; height: 2px; background: #EDE4EF; flex-shrink: 0; margin: 0 6px; }
+  .gn-line.on { background: linear-gradient(90deg, #A855F7, #EC4899); }
+
+  .gn-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 24px;
+    padding: 26px 28px 24px; box-shadow: 0 14px 32px -26px rgba(30,20,34,.32);
+    min-height: 420px;
+  }
+  .gn-pane { display: none; }
+  .gn-pane.on { display: block; animation: gnIn .22s ease; }
+  @keyframes gnIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  .gn-card h1, .gn-card h2 {
+    margin: 0 0 6px; font-size: 24px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+  }
+  .gn-card .sub { margin: 0 0 18px; font-size: 13px; color: var(--soft); font-weight: 500; }
+  .gn-block { scroll-margin-top: 24px; }
+  .gn-block + .gn-block { margin-top: 28px; padding-top: 22px; }
+
+  .gn-drop {
+    position: relative; border: 2px dashed #D8A8E8; border-radius: 22px;
+    background: linear-gradient(160deg, #FCEAF5 0%, #F3ECFB 45%, #EAF4FF 100%);
+    width: min(400px, 100%); aspect-ratio: 4 / 5; min-height: 400px;
+    margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; padding: 24px; cursor: pointer; overflow: hidden;
+  }
+  .gn-drop:hover { border-color: var(--accent); }
+  .gn-drop.has-img { border-style: solid; border-color: #E8D4EE; padding: 0; }
+  .gn-drop.has-img img.preview { width: 100%; height: 100%; min-height: 0; object-fit: cover; }
+  .gn-drop-ico {
+    width: 56px; height: 56px; border-radius: 50%; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 20px rgba(168,85,247,.18); color: #A855F7;
+  }
+  .gn-drop strong { font-size: 15px; font-weight: 800; color: #9333EA; }
+  .gn-drop span.hint { font-size: 12px; color: #A78BBA; font-weight: 600; }
+  .gn-change {
+    position: absolute; right: 12px; bottom: 12px; z-index: 2;
+    display: none; align-items: center; gap: 5px;
+    padding: 7px 12px; border-radius: 999px; border: none;
+    background: rgba(255,255,255,.95); color: var(--ink);
+    font-size: 11px; font-weight: 800; box-shadow: 0 6px 14px rgba(0,0,0,.15);
+  }
+  .gn-drop.has-img .gn-change { display: inline-flex; }
+
+  .gn-actions {
+    display: flex; align-items: stretch; gap: 12px; margin: 14px auto 0;
+    width: min(400px, 100%);
+  }
+  .gn-actions button {
+    flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 10px; border-radius: 999px;
+    border: 2px solid rgba(99, 102, 241, 0.1);
+    background: #fff; color: #0F172A; font-size: 13px; font-weight: 500;
+    box-shadow: none; transition: border-color .2s ease, background .2s ease;
+  }
+  .gn-actions button svg { flex-shrink: 0; color: #1E293B; }
+  .gn-actions button:hover {
+    border-color: #C084FC;
+    background: #FAF5FF;
+    color: #0F172A;
+  }
+
+  .gn-or-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+  .gn-cat-row { display: flex; align-items: center; gap: 12px; width: 100%; }
+  .gn-triple { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .gn-or { font-size: 13px; font-weight: 600; color: #94A3B8; }
+  .gn-choice {
+    padding: 18px 14px; border-radius: 16px; border: 1.5px solid var(--line);
+    background: #fff; text-align: center; font-size: 15px; font-weight: 800; color: var(--ink);
+  }
+  .gn-choice:hover { border-color: #E8B4D4; }
+  .gn-choice.on {
+    border-color: transparent; color: #fff; background: var(--grad);
+    box-shadow: 0 10px 22px rgba(236,72,153,.28);
+  }
+  .gn-choice.on.blue { background: var(--grad-blue); box-shadow: 0 10px 22px rgba(59,130,246,.28); }
+  .gn-choice small { display: block; margin-top: 3px; font-size: 11px; font-weight: 600; opacity: .85; }
+
+  /* Category X / Y — match Amplify generate cards */
+  .gn-cat {
+    flex: 1; width: 100%;
+    padding: 24px 16px; border-radius: 16px;
+    border: 2px solid rgba(99, 102, 241, 0.1);
+    background: #fff; color: #0F172A;
+    font-size: 16px; font-weight: 700; text-align: center;
+    transition: border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  }
+  .gn-cat:hover { border-color: #D8B4FE; background: #fff; color: #0F172A; }
+  .gn-cat.on {
+    border-color: transparent; border-width: 0; padding: 26px 16px;
+    color: #fff; background: linear-gradient(113deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 22px rgba(236,72,153,.28);
+  }
+  /* Category Y — blue → cyan (Amplify) */
+  .gn-cat[data-cat="2"].on {
+    background: linear-gradient(113deg, #3B82F6, #22D3EE);
+    box-shadow: 0 10px 22px rgba(59,130,246,.32);
+  }
+  #block-background h2 {
+    margin: 0 0 8px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: #0F172A;
+  }
+  #block-background > .sub {
+    margin: 0 0 16px; font-size: 14px; font-weight: 400; color: #64748B;
+  }
+
+  /* X1 / X2 type cards */
+  .gn-sub-row { display: flex; gap: 16px; width: 100%; }
+  .gn-sub {
+    flex: 1; width: 100%;
+    padding: 20px 14px; border-radius: 20px;
+    border: 2px solid rgba(99, 102, 241, 0.1);
+    background: #fff; text-align: center;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .gn-sub:hover { border-color: #D8B4FE; }
+  .gn-sub .t { display: block; font-size: 16px; font-weight: 600; color: #0F172A; margin-bottom: 4px; }
+  .gn-sub .h { display: block; font-size: 12px; font-weight: 400; color: #71717A; }
+  .gn-sub.on {
+    border-color: transparent; border-width: 0; padding: 22px 14px;
+    background: linear-gradient(113deg, #A855F7, #EC4899);
+    box-shadow: 0 8px 20px rgba(168,85,247,.28);
+  }
+  .gn-sub.on .t { color: #fff; }
+  .gn-sub.on .h { color: rgba(255,255,255,.9); }
+  /* Category Y options — blue / teal selected states */
+  #path-y .gn-sub.on {
+    background: linear-gradient(113deg, #3B82F6, #22D3EE);
+    box-shadow: 0 8px 20px rgba(59,130,246,.3);
+  }
+  #path-y .gn-sub[data-yopt^="B"].on {
+    background: linear-gradient(113deg, #14B8A6, #2DD4BF);
+    box-shadow: 0 8px 20px rgba(20,184,166,.28);
+  }
+
+  .gn-branch-row { display: flex; align-items: center; justify-content: center; gap: 40px; margin: 4px 0 8px; }
+  .gn-branch {
+    width: 72px; height: 72px; border-radius: 50%; border: 3px solid #7DD3FC;
+    background: #fff; color: #0F172A; font-size: 22px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease, color .2s ease;
+  }
+  .gn-branch:hover { border-color: #38BDF8; }
+  .gn-branch.on {
+    border-color: transparent; color: #fff;
+    background: linear-gradient(135deg, #3B82F6, #22D3EE);
+    box-shadow: 0 10px 22px rgba(59,130,246,.35);
+  }
+
+  .gn-section { margin-top: 0; }
+  .gn-label { font-size: 14px; font-weight: 500; color: #71717A; margin: 0 0 16px; }
+  .gn-rail { display: none; flex-direction: column; align-items: stretch; margin-top: 0; }
+  .gn-rail.show { display: flex; }
+  .gn-connector {
+    width: 2px; height: 48px; margin: 8px auto;
+    border-radius: 1px;
+    background: linear-gradient(180deg, #C084FC, rgba(192,132,252,0));
+  }
+  .gn-connector.short { height: 32px; }
+
+  .gn-uploads {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    width: 100%;
+  }
+  .gn-slot {
+    position: relative; width: calc(50% - 6px); max-width: 220px; aspect-ratio: 1;
+    border: 2px dashed #A5B4FC; border-radius: 24px;
+    background: linear-gradient(135deg, #E0E7FF, #EDE9FE);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; cursor: pointer; overflow: hidden; color: #312E81; font-weight: 500; font-size: 14px;
+  }
+  .gn-uploads[style*="--slots: 1"] .gn-slot,
+  .gn-uploads.slots-1 .gn-slot { width: min(220px, 100%); max-width: 260px; }
+  .gn-uploads.slots-3 .gn-slot { width: calc(33.333% - 8px); max-width: 180px; }
+  .gn-slot:hover { border-color: #818CF8; }
+  .gn-slot.has-img { border-style: solid; border-color: #C4B5FD; background: #fff; }
+  .gn-slot.has-img img { width: 100%; height: 100%; object-fit: cover; }
+  .gn-slot .swap {
+    position: absolute; right: 8px; bottom: 8px; width: 24px; height: 24px; border-radius: 50%;
+    border: none; background: rgba(17,24,39,.72); color: #fff;
+    display: none; align-items: center; justify-content: center;
+  }
+  .gn-slot.has-img .swap { display: flex; }
+
+  .gn-nav {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 22px; padding-top: 18px; border-top: none;
+  }
+  .gn-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: #fff; color: var(--ink); font-size: 13px; font-weight: 800;
+  }
+  .gn-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .gn-btn.primary {
+    border: none; color: #fff; background: var(--grad);
+    box-shadow: 0 12px 24px rgba(236,72,153,.3); min-width: 160px;
+  }
+  .gn-btn.primary:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  .gn-btn.primary:not(:disabled):hover { transform: translateY(-1px); color: #fff; }
+  .gn-btn.ghost { visibility: hidden; pointer-events: none; }
+
+  .gn-review { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .gn-review-card { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #FAF4FB; }
+  .gn-review-card img { width: 100%; height: 180px; object-fit: cover; }
+  .gn-review-card .meta { padding: 10px 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .gn-review-card .meta strong { display: block; color: var(--ink); font-size: 13px; margin-bottom: 2px; }
+  .gn-bg-thumbs { display: flex; gap: 8px; padding: 10px 12px 12px; min-height: 76px; }
+  .gn-bg-thumbs img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+  .gn-cta {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: auto; max-width: 100%; margin: 0 auto; padding: 13px 28px; border-radius: 999px; border: none;
+    background: linear-gradient(90deg, #9333EA 0%, #DB2777 55%, #E11D48 100%);
+    color: #fff; font-size: 14px; font-weight: 700; letter-spacing: .01em;
+    box-shadow: 0 8px 22px rgba(147,51,234,.38), 0 3px 10px rgba(219,39,119,.22);
+  }
+  .gn-cta svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .gn-cta:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  .gn-cta:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(147,51,234,.44); }
+  .gn-cost { margin: 10px 0 0; font-size: 13px; color: #6B7280; font-weight: 500; text-align: center; }
+  .gn-gen-inline {
+    margin: 24px auto 8px; width: fit-content; max-width: 100%;
+    display: flex; flex-direction: column; align-items: center;
+    animation: gnIn .22s ease;
+  }
+  .gn-gen-inline.hidden { display: none !important; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-newblend .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-newblend .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: initial; }
+    .pb-nav a { justify-content: center; padding: 10px; }
+    .pb-sidebar.open .pb-nav a { justify-content: flex-start; padding: 10px 11px; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-sidebar.open .pb-toggle { align-self: flex-end; }
+    .pb-content { padding: 20px; }
+  }
+  @media (max-width: 767px) {
+    .pb-topbar { padding: 16px; }
+    .pb-content { padding: 16px; }
+    .gn-card { padding: 18px 16px; border-radius: 18px; min-height: 0; }
+    .gn-pill span.lbl { display: none; }
+    .gn-line { width: 20px; }
+    .gn-drop { width: min(280px, 100%); min-height: 340px; }
+    .gn-actions { width: min(280px, 100%); }
+    .gn-review { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z" fill="currentColor"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge">12</span>
+      </a>
+      <a href="#">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13.5px;font-weight:800;">150</span>
+      </div>
+      <div style="height:6px;border-radius:999px;background:#F0E6F2;overflow:hidden;margin-bottom:11px;">
+        <div style="height:100%;width:75%;border-radius:999px;background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);"></div>
+      </div>
+      <a href="#" class="pb-credits-cta">⚡ Get more credits</a>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div style="font-size:15px;font-weight:800;letter-spacing:-.02em;">Generate</div>
+        <div style="font-size:11px;color:#8A7E92;margin-top:2px;">Source + background → AI blend</div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;font-size:12px;font-weight:800;">
+          <span style="font-size:13px;">🪙</span> 50
+        </span>
+        <button aria-label="Notifications" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;position:relative;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6zM10 19a2 2 0 004 0" stroke="#1E1422" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff;"></span>
+        </button>
+        <img src="assets/dashboard/images/img31.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 0 1px #F0E6F2;">
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="gn-flow">
+        <div class="gn-stepper">
+          <button type="button" class="gn-pill on" data-go="1"><span class="num">1</span><span class="lbl">Source</span></button>
+          <span class="gn-line" id="line-1"></span>
+          <button type="button" class="gn-pill" data-go="2" disabled><span class="num">2</span><span class="lbl">Background</span></button>
+          <span class="gn-line" id="line-2"></span>
+          <button type="button" class="gn-pill" data-go="3" disabled><span class="num">3</span><span class="lbl">Generate</span></button>
+        </div>
+
+        <div class="gn-card">
+          <section class="gn-pane on" data-pane="setup">
+            <div class="gn-block" id="block-source">
+              <h1>Step 1: Source Photo</h1>
+              <p class="sub">Upload the photo you want to transform.</p>
+              <div class="gn-drop" id="source-drop" role="button" tabindex="0">
+                <div class="gn-drop-ico" id="source-empty">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 20h16" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <strong id="source-title">Upload Source Photo</strong>
+                <span class="hint" id="source-hint">JPG, PNG up to 10MB</span>
+                <img class="preview hidden" id="source-preview" alt="Source preview">
+                <button type="button" class="gn-change" id="source-change">✎ Change</button>
+                <input type="file" id="source-file" accept="image/*" class="hidden">
+              </div>
+              <div class="gn-actions">
+                <button type="button" id="btn-camera">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1.1-1.6A1.5 1.5 0 0110 3.5h4a1.5 1.5 0 011.2.9L16.3 6h1.2A2.5 2.5 0 0120 8.5v8A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-8z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3.2" stroke="currentColor" stroke-width="1.8"/></svg>
+                  Take Photo
+                </button>
+                <button type="button" id="btn-gallery">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 17l4.2-3.8 2.8 2.2L15 12l4.5 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  My AI app Gallery
+                </button>
+              </div>
+            </div>
+
+            <div class="gn-block" id="block-background">
+              <h2>Step 2: Upload Background Photos</h2>
+              <p class="sub">Select your background type and upload photos.</p>
+              <div class="gn-cat-row">
+                <button type="button" class="gn-cat" data-cat="1">Category X</button>
+                <span class="gn-or">OR</span>
+                <button type="button" class="gn-cat" data-cat="2">Category Y</button>
+              </div>
+              <div class="gn-rail" id="bg-rail">
+                <div class="gn-connector" id="conn-1"></div>
+                <div id="path-x" class="hidden">
+                  <div class="gn-section">
+                    <p class="gn-label">Choose Type</p>
+                    <div class="gn-sub-row">
+                      <button type="button" class="gn-sub" data-xtype="X1"><span class="t">X1</span><span class="h">1 photo</span></button>
+                      <button type="button" class="gn-sub" data-xtype="X2"><span class="t">X2</span><span class="h">2 photos</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div id="path-y" class="hidden">
+                  <div class="gn-section">
+                    <p class="gn-label">Choose Branch</p>
+                    <div class="gn-branch-row">
+                      <button type="button" class="gn-branch" data-branch="A">A</button>
+                      <button type="button" class="gn-branch" data-branch="B">B</button>
+                    </div>
+                  </div>
+                  <div class="gn-section hidden" id="y-opts-a">
+                    <div class="gn-connector short"></div>
+                    <p class="gn-label">Choose Option</p>
+                    <div class="gn-sub-row">
+                      <button type="button" class="gn-sub" data-yopt="Aa"><span class="t">Aa</span><span class="h">2 photos</span></button>
+                      <button type="button" class="gn-sub" data-yopt="Ab"><span class="t">Ab</span><span class="h">2 photos</span></button>
+                    </div>
+                  </div>
+                  <div class="gn-section hidden" id="y-opts-b">
+                    <div class="gn-connector short"></div>
+                    <p class="gn-label">Choose Option</p>
+                    <div class="gn-triple">
+                      <button type="button" class="gn-sub" data-yopt="Ba"><span class="t">Ba</span><span class="h">3 photos</span></button>
+                      <button type="button" class="gn-sub" data-yopt="Bb"><span class="t">Bb</span><span class="h">1 photo</span></button>
+                      <button type="button" class="gn-sub" data-yopt="Bc"><span class="t">Bc</span><span class="h">2 photos</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="gn-section hidden" id="upload-section">
+                  <div class="gn-connector short"></div>
+                  <p class="gn-label">Upload Background Photos</p>
+                  <div class="gn-uploads slots-1" id="bg-uploads"></div>
+                  <input type="file" id="bg-file" accept="image/*" class="hidden">
+                </div>
+              </div>
+
+              <div class="gn-gen-inline hidden" id="setup-generate">
+                <button type="button" class="gn-cta" id="generate-btn-setup">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+                  Generate AI Image
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+                </button>
+                <p class="gn-cost">Cost: 10 credits</p>
+              </div>
+            </div>
+
+          </section>
+
+          <section class="gn-pane" data-pane="3">
+            <h2>Step 3: Generate</h2>
+            <p class="sub">Review your photos, then create the AI blend.</p>
+            <div class="gn-review">
+              <div class="gn-review-card">
+                <img id="review-source" src="assets/dashboard/images/img2.jpg" alt="Source">
+                <div class="meta"><strong>Source photo</strong> Ready to transform</div>
+              </div>
+              <div class="gn-review-card">
+                <div class="gn-bg-thumbs" id="review-bgs"></div>
+                <div class="meta"><strong id="review-cat">Background</strong><span id="review-detail">—</span></div>
+              </div>
+            </div>
+            <button type="button" class="gn-cta" id="generate-btn" disabled>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+              Generate AI Image
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+            </button>
+            <p class="gn-cost" id="generate-hint">Cost: 10 credits</p>
+            <div class="gn-nav">
+              <button type="button" class="gn-btn" id="back-3">← Back</button>
+              <span></span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var side = document.getElementById('pb-sidebar');
+  var btn = document.getElementById('pb-toggle');
+  if (btn && side) btn.addEventListener('click', function () { side.classList.toggle('open'); });
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+
+  var state = {
+    step: 1,
+    source: null,
+    category: null, // '1' = Category X, '2' = Category Y (app)
+    xType: null,    // 'X1' | 'X2'
+    branch: null,   // 'A' | 'B'
+    yOpt: null,     // 'Aa'|'Ab'|'Ba'|'Bb'|'Bc'
+    backgrounds: []
+  };
+
+  var sourceDrop = document.getElementById('source-drop');
+  var sourceFile = document.getElementById('source-file');
+  var sourcePreview = document.getElementById('source-preview');
+  var sourceEmpty = document.getElementById('source-empty');
+  var sourceTitle = document.getElementById('source-title');
+  var sourceHint = document.getElementById('source-hint');
+  var pathX = document.getElementById('path-x');
+  var pathY = document.getElementById('path-y');
+  var bgRail = document.getElementById('bg-rail');
+  var yOptsA = document.getElementById('y-opts-a');
+  var yOptsB = document.getElementById('y-opts-b');
+  var uploadSection = document.getElementById('upload-section');
+  var bgUploads = document.getElementById('bg-uploads');
+  var generateHint = document.getElementById('generate-hint');
+
+  // Slot count mirrors Amplify app We()
+  function neededSlots() {
+    if (state.xType === 'X1') return 1;
+    if (state.xType === 'X2' || state.yOpt === 'Aa' || state.yOpt === 'Ab') return 2;
+    if (state.yOpt === 'Ba') return 3;
+    if (state.yOpt === 'Bb') return 1;
+    if (state.yOpt === 'Bc') return 2;
+    return 0;
+  }
+
+  function filledBgs() {
+    return state.backgrounds.filter(Boolean);
+  }
+
+  // App: Ge = source && (listing || at least 1 background)
+  function canGenerate() {
+    return !!state.source && filledBgs().length > 0;
+  }
+
+  function bgPathReady() {
+    return neededSlots() > 0 && filledBgs().length > 0;
+  }
+
+  function canReach(s) {
+    if (s <= 1) return true;
+    if (s === 2) return !!state.source;
+    if (s === 3) return bgPathReady();
+    return false;
+  }
+
+  function fillReview() {
+    document.getElementById('review-source').src = state.source || 'assets/dashboard/images/img2.jpg';
+    var wrap = document.getElementById('review-bgs');
+    wrap.innerHTML = '';
+    filledBgs().forEach(function (url) {
+      var img = document.createElement('img');
+      img.src = url;
+      wrap.appendChild(img);
+    });
+    var cat = state.category === '1' ? 'Category X' : state.category === '2' ? 'Category Y' : 'Background';
+    var detail = '';
+    if (state.category === '1' && state.xType) detail = 'Type ' + state.xType;
+    if (state.category === '2') {
+      detail = (state.branch ? 'Branch ' + state.branch : '') + (state.yOpt ? ' · ' + state.yOpt : '');
+      detail = detail.replace(/^\s·\s/, '');
+    }
+    document.getElementById('review-cat').textContent = cat;
+    document.getElementById('review-detail').textContent = detail || '—';
+  }
+
+  function syncStepper() {
+    document.querySelectorAll('.gn-pill').forEach(function (pill) {
+      var s = parseInt(pill.getAttribute('data-go'), 10);
+      pill.classList.toggle('on', s === state.step);
+      pill.classList.toggle('done', s < state.step);
+      pill.disabled = s > state.step && !canReach(s);
+      if (s < state.step) pill.disabled = false;
+    });
+    document.getElementById('line-1').classList.toggle('on', state.step >= 2);
+    document.getElementById('line-2').classList.toggle('on', state.step >= 3);
+  }
+
+  function showSetup(scrollTo) {
+    document.querySelectorAll('.gn-pane').forEach(function (p) {
+      p.classList.toggle('on', p.getAttribute('data-pane') === 'setup');
+    });
+    if (scrollTo === 'bg') {
+      var el = document.getElementById('block-background');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (scrollTo === 'source') {
+      var src = document.getElementById('block-source');
+      if (src) src.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateNav() {
+    var ready = canGenerate();
+    var setupGen = document.getElementById('setup-generate');
+    if (setupGen) setupGen.classList.toggle('hidden', !ready);
+    var genBtn = document.getElementById('generate-btn');
+    if (genBtn) genBtn.disabled = !ready;
+    if (generateHint) {
+      generateHint.textContent = ready
+        ? 'Cost: 10 credits'
+        : 'Add a background photo above to continue';
+    }
+    // On setup page: Source → Background → Generate pill as photos become ready
+    var onSetup = document.querySelector('.gn-pane[data-pane="setup"]').classList.contains('on');
+    if (onSetup) {
+      state.step = ready ? 3 : (state.source ? 2 : 1);
+    }
+    syncStepper();
+  }
+
+  function toDataURL(url) {
+    return new Promise(function (resolve) {
+      if (!url) return resolve(null);
+      if (url.indexOf('data:') === 0) return resolve(url);
+      var img = new Image();
+      img.onload = function () {
+        var max = 1200;
+        var w = img.naturalWidth || img.width;
+        var h = img.naturalHeight || img.height;
+        var scale = Math.min(1, max / Math.max(w, h));
+        var c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(w * scale));
+        c.height = Math.max(1, Math.round(h * scale));
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        try { resolve(c.toDataURL('image/jpeg', 0.82)); }
+        catch (err) { resolve(null); }
+      };
+      img.onerror = function () { resolve(null); };
+      img.src = url;
+    });
+  }
+
+  function goGenerate() {
+    if (!canGenerate()) return;
+    var bgs = filledBgs();
+    var btn = document.getElementById('generate-btn-setup');
+    if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
+
+    Promise.all([toDataURL(state.source)].concat(bgs.map(toDataURL))).then(function (urls) {
+      var sourceData = urls[0] || state.source;
+      var bgData = urls.slice(1).filter(Boolean);
+      if (!bgData.length && bgs[0]) bgData = [bgs[0]];
+      try {
+        sessionStorage.setItem('pb-last-generate', JSON.stringify({
+          source: sourceData,
+          backgrounds: bgData,
+          category: state.category,
+          xType: state.xType,
+          branch: state.branch,
+          yOpt: state.yOpt,
+          // demo “blend”: use source as result so real photo always shows
+          result: sourceData,
+          at: Date.now()
+        }));
+      } catch (e) {
+        // sessionStorage full — store lighter payload
+        try {
+          sessionStorage.setItem('pb-last-generate', JSON.stringify({
+            source: sourceData,
+            backgrounds: bgData.slice(0, 1),
+            result: sourceData,
+            at: Date.now()
+          }));
+        } catch (e2) {}
+      }
+      window.location.href = 'generating.html';
+    });
+  }
+
+  function goStep(n) {
+    if (n === 3) {
+      if (!bgPathReady()) return;
+      state.step = 3;
+      document.querySelectorAll('.gn-pane').forEach(function (p) {
+        p.classList.toggle('on', p.getAttribute('data-pane') === '3');
+      });
+      fillReview();
+      syncStepper();
+      updateNav();
+      return;
+    }
+    state.step = n === 2 || state.source ? 2 : 1;
+    if (!state.source) state.step = 1;
+    showSetup(n === 2 ? 'bg' : 'source');
+    syncStepper();
+    updateNav();
+  }
+
+  function setSource(url) {
+    state.source = url;
+    sourceDrop.classList.add('has-img');
+    sourcePreview.src = url;
+    sourcePreview.classList.remove('hidden');
+    sourceEmpty.classList.add('hidden');
+    sourceTitle.classList.add('hidden');
+    sourceHint.classList.add('hidden');
+    if (state.step < 3) state.step = 2;
+    updateNav();
+  }
+
+  function setActive(buttons, attr, value) {
+    buttons.forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute(attr) === value);
+    });
+  }
+
+  function hideUploads() {
+    uploadSection.classList.add('hidden');
+    bgUploads.innerHTML = '';
+    state.backgrounds = [];
+  }
+
+  function syncYOptionPanels() {
+    var showA = state.category === '2' && state.branch === 'A';
+    var showB = state.category === '2' && state.branch === 'B';
+    yOptsA.classList.toggle('hidden', !showA);
+    yOptsB.classList.toggle('hidden', !showB);
+  }
+
+  function refreshSlots() {
+    var n = neededSlots();
+    if (n <= 0) {
+      hideUploads();
+      updateNav();
+      return;
+    }
+    renderSlots(n);
+    updateNav();
+  }
+
+  document.querySelectorAll('[data-go]').forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      var s = parseInt(pill.getAttribute('data-go'), 10);
+      if (s <= state.step || canReach(s)) goStep(s);
+    });
+  });
+  var back3 = document.getElementById('back-3');
+  if (back3) back3.addEventListener('click', function () { goStep(2); });
+
+  sourceDrop.addEventListener('click', function (e) {
+    if (e.target.closest('.gn-change')) return;
+    sourceFile.click();
+  });
+  document.getElementById('source-change').addEventListener('click', function (e) {
+    e.stopPropagation();
+    sourceFile.click();
+  });
+  sourceFile.addEventListener('change', function () {
+    var f = sourceFile.files && sourceFile.files[0];
+    if (f) setSource(URL.createObjectURL(f));
+  });
+  document.getElementById('btn-camera').addEventListener('click', function () {
+    sourceFile.click();
+  });
+  document.getElementById('btn-gallery').addEventListener('click', function () {
+    sourceFile.click();
+  });
+
+  // Category X/Y → app ve('1'|'2'): reset subtypes + backgrounds, no auto-pick
+  var catBtns = Array.prototype.slice.call(document.querySelectorAll('[data-cat]'));
+  catBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.category = b.getAttribute('data-cat');
+      state.xType = null;
+      state.branch = null;
+      state.yOpt = null;
+      state.backgrounds = [];
+      setActive(catBtns, 'data-cat', state.category);
+      setActive(Array.prototype.slice.call(document.querySelectorAll('[data-xtype]')), 'data-xtype', null);
+      setActive(Array.prototype.slice.call(document.querySelectorAll('[data-branch]')), 'data-branch', null);
+      document.querySelectorAll('[data-yopt]').forEach(function (el) { el.classList.remove('on'); });
+      bgRail.classList.add('show');
+      pathX.classList.toggle('hidden', state.category !== '1');
+      pathY.classList.toggle('hidden', state.category !== '2');
+      syncYOptionPanels();
+      hideUploads();
+      updateNav();
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-xtype]')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.xType = b.getAttribute('data-xtype');
+      setActive(Array.prototype.slice.call(document.querySelectorAll('[data-xtype]')), 'data-xtype', state.xType);
+      state.backgrounds = [];
+      refreshSlots();
+    });
+  });
+
+  // Branch A clears Ba/Bb/Bc; Branch B clears Aa/Ab
+  Array.prototype.slice.call(document.querySelectorAll('[data-branch]')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.branch = b.getAttribute('data-branch');
+      setActive(Array.prototype.slice.call(document.querySelectorAll('[data-branch]')), 'data-branch', state.branch);
+      if (state.branch === 'A') {
+        if (state.yOpt && state.yOpt.charAt(0) === 'B') state.yOpt = null;
+      } else {
+        if (state.yOpt && state.yOpt.charAt(0) === 'A') state.yOpt = null;
+      }
+      document.querySelectorAll('[data-yopt]').forEach(function (el) {
+        el.classList.toggle('on', el.getAttribute('data-yopt') === state.yOpt);
+      });
+      syncYOptionPanels();
+      state.backgrounds = [];
+      refreshSlots();
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-yopt]')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.yOpt = b.getAttribute('data-yopt');
+      document.querySelectorAll('[data-yopt]').forEach(function (el) {
+        el.classList.toggle('on', el.getAttribute('data-yopt') === state.yOpt);
+      });
+      state.backgrounds = [];
+      refreshSlots();
+    });
+  });
+
+  var uploadIco = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 20h16" stroke="#6366F1" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var swapIco = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 8a8 8 0 10-2.3 5.5M20 8V3m0 5h-5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var bgFile = document.getElementById('bg-file');
+  var pendingBgIdx = null;
+
+  function renderSlots(n) {
+    uploadSection.classList.remove('hidden');
+    bgUploads.className = 'gn-uploads slots-' + n;
+    bgUploads.innerHTML = '';
+    state.backgrounds = new Array(n);
+    for (var i = 0; i < n; i++) {
+      (function (idx) {
+        var slot = document.createElement('div');
+        slot.className = 'gn-slot';
+        slot.setAttribute('data-slot', String(idx));
+        slot.innerHTML = uploadIco + '<span>Upload ' + (idx + 1) + '</span><button type="button" class="swap" aria-label="Replace">' + swapIco + '</button>';
+        slot.addEventListener('click', function () { openBgGallery(idx); });
+        bgUploads.appendChild(slot);
+      })(i);
+    }
+  }
+
+  function openBgGallery(idx) {
+    pendingBgIdx = idx;
+    bgFile.value = '';
+    bgFile.click();
+  }
+
+  function paintSlot(slot, idx, url) {
+    state.backgrounds[idx] = url;
+    slot.classList.add('has-img');
+    slot.innerHTML = '<img src="' + url + '" alt=""><button type="button" class="swap" aria-label="Replace">' + swapIco + '</button>';
+    slot.querySelector('.swap').addEventListener('click', function (e) {
+      e.stopPropagation();
+      openBgGallery(idx);
+    });
+    updateNav();
+    if (state.step === 3) fillReview();
+  }
+
+  bgFile.addEventListener('change', function () {
+    var f = bgFile.files && bgFile.files[0];
+    if (!f || pendingBgIdx == null) return;
+    var idx = pendingBgIdx;
+    var slot = bgUploads.querySelector('[data-slot="' + idx + '"]');
+    if (slot) paintSlot(slot, idx, URL.createObjectURL(f));
+    pendingBgIdx = null;
+  });
+
+  document.getElementById('generate-btn').addEventListener('click', function () {
+    if (this.disabled) return;
+    goGenerate();
+  });
+  document.getElementById('generate-btn-setup').addEventListener('click', goGenerate);
+
+  updateNav();
+})();
+</script>
+</body>
+</html>
