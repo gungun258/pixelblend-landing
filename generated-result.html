@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Generation Result · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  .pb-shell { display: flex; min-height: 100vh; }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32);
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px;
+    padding: 18px 32px 14px; background: rgba(251,250,252,.9); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line);
+    background: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .pb-content { padding: 0 0 48px; display: flex; justify-content: center; }
+  .gr-flow { width: min(520px, 100%); }
+
+  .gr-hero {
+    padding: 20px 20px 12px;
+    background: linear-gradient(180deg, #FAF5FF, #FDF2F8 70%, transparent);
+  }
+  .gr-frame {
+    position: relative; border-radius: 22px; overflow: hidden; background: #F1F5F9;
+    box-shadow: 0 18px 40px -24px rgba(30,20,34,.45);
+    aspect-ratio: 1;
+  }
+  .gr-frame[hidden], #result-empty-frame[hidden] { display: none !important; }
+  .gr-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .gr-inset-wrap {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 18%;
+    z-index: 1;
+  }
+  .gr-inset {
+    width: 100%; max-width: 58%; aspect-ratio: 3 / 4;
+    object-fit: cover; border-radius: 10px;
+    border: 3px solid #fff;
+    box-shadow: 0 12px 28px rgba(0,0,0,.28);
+    background: #fff;
+  }
+  .gr-caption {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+    padding: 48px 16px 18px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.72));
+    text-align: center; color: #fff; pointer-events: none;
+  }
+  .gr-caption strong {
+    display: block; font-size: 13px; font-weight: 800; letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .gr-caption span {
+    display: block; margin-top: 3px; font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,.85);
+  }
+  .gr-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: #94A3B8; padding: 24px; background: #F8FAFC;
+  }
+  .gr-placeholder[hidden] { display: none !important; }
+  .gr-placeholder svg { margin: 0 auto 10px; }
+
+  /* Before / After compare slider */
+  .gr-compare {
+    position: relative; border-radius: 22px; overflow: hidden; background: #F1F5F9;
+    box-shadow: 0 18px 40px -24px rgba(30,20,34,.45);
+    aspect-ratio: 1; user-select: none; touch-action: none; cursor: ew-resize;
+  }
+  .gr-compare[hidden] { display: none !important; }
+  .gr-compare-after, .gr-compare-before {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+  .gr-compare-after img, .gr-compare-before img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    pointer-events: none;
+  }
+  .gr-compare-before {
+    z-index: 2;
+    clip-path: inset(0 50% 0 0);
+  }
+  .gr-compare-badge {
+    position: absolute; top: 12px; z-index: 4;
+    padding: 5px 10px; border-radius: 999px;
+    font-size: 10px; font-weight: 800; letter-spacing: .06em;
+    color: #fff; pointer-events: none;
+  }
+  .gr-compare-badge.before {
+    left: 12px;
+    background: linear-gradient(90deg, #7C3AED, #9333EA);
+  }
+  .gr-compare-badge.after {
+    right: 12px;
+    background: linear-gradient(90deg, #EC4899, #F43F5E);
+  }
+  .gr-compare-handle {
+    position: absolute; top: 0; bottom: 0; left: 50%;
+    width: 2px; margin-left: -1px; z-index: 5;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+    pointer-events: none;
+  }
+  .gr-compare-knob {
+    position: absolute; top: 50%; left: 50%;
+    width: 44px; height: 44px; margin: -22px 0 0 -22px;
+    border-radius: 50%; background: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    display: flex; align-items: center; justify-content: center; gap: 2px;
+    color: #64748B;
+  }
+  .gr-compare-knob svg { display: block; }
+
+  .gr-body { padding: 0 20px; }
+  .gr-toggle {
+    display: inline-flex; margin: 14px auto 16px; padding: 4px;
+    border-radius: 999px; background: #F1F5F9; gap: 2px;
+    width: 100%; max-width: 280px; display: flex;
+  }
+  .gr-toggle button {
+    flex: 1; border: none; background: transparent; color: #7C3AED;
+    font-size: 13px; font-weight: 700; padding: 10px 12px; border-radius: 999px;
+  }
+  .gr-toggle button.on {
+    background: #fff; color: #5B21B6;
+    box-shadow: 0 2px 8px rgba(15,23,42,.08);
+  }
+  .gr-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .gr-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 12px; border-radius: 999px; border: none;
+    font-size: 14px; font-weight: 700;
+  }
+  .gr-btn.dl { color: #fff; background: linear-gradient(90deg, #A855F7, #EC4899); box-shadow: 0 10px 22px rgba(168,85,247,.28); }
+  .gr-btn.share { color: #64748B; background: #F1F5F9; }
+
+  .gr-card {
+    background: #fff; border: 1px solid #F1F5F9; border-radius: 20px;
+    padding: 20px 18px 18px; margin-bottom: 14px;
+    box-shadow: 0 8px 24px -18px rgba(15,23,42,.28);
+  }
+  .gr-card h2 { margin: 0 0 14px; font-size: 16px; font-weight: 800; color: #0F172A; letter-spacing: -.01em; }
+  .gr-thumbs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    width: 100%; margin-bottom: 18px;
+  }
+  .gr-thumb label {
+    display: block; font-size: 12px; font-weight: 500; color: #94A3B8; margin-bottom: 8px;
+  }
+  .gr-thumb img, .gr-thumb .empty {
+    width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px;
+    background: #F8FAFC; border: 1px solid #F1F5F9;
+  }
+  .gr-thumb .empty {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #94A3B8; font-weight: 600;
+  }
+  .gr-thumb img[hidden], .gr-thumb .empty[hidden] { display: none !important; }
+  .gr-meta { display: grid; gap: 14px; font-size: 13px; }
+  .gr-meta div { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .gr-meta span { color: #94A3B8; font-weight: 500; flex-shrink: 0; }
+  .gr-meta strong { font-weight: 700; color: #0F172A; text-align: right; word-break: break-all; }
+
+  .gr-retry {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    width: 100%; padding: 14px 18px; border-radius: 16px; border: none;
+    background: linear-gradient(90deg, #3B82F6, #06B6D4);
+    color: #fff; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(59,130,246,.28);
+    margin-bottom: 18px;
+  }
+  .gr-retry:hover { transform: translateY(-1px); color: #fff; }
+  .gr-retry-row {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .gr-retry-row strong { font-size: 15px; font-weight: 700; }
+  .gr-retry-cost { font-size: 12px; font-weight: 500; opacity: .95; }
+  .gr-refund {
+    display: block; width: 100%; text-align: center; padding: 8px;
+    border: none; background: transparent; color: #EF4444; font-size: 14px; font-weight: 600;
+  }
+  .gr-refund:hover { color: #DC2626; }
+
+  /* Refund modal */
+  .rf-overlay {
+    position: fixed; inset: 0; z-index: 80;
+    background: rgba(15, 23, 42, .45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  .rf-overlay.open { opacity: 1; pointer-events: auto; }
+  .rf-modal {
+    width: min(420px, 100%); max-height: min(90vh, 720px);
+    background: #fff; border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(10px); transition: transform .2s ease;
+  }
+  .rf-overlay.open .rf-modal { transform: none; }
+  .rf-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 18px 10px; flex-shrink: 0;
+  }
+  .rf-head h3 { margin: 0; font-size: 18px; font-weight: 800; color: #0F172A; }
+  .rf-close {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid #E2E8F0;
+    background: #F8FAFC; display: flex; align-items: center; justify-content: center;
+    color: #64748B;
+  }
+  .rf-body {
+    padding: 0 18px 8px; overflow: auto; flex: 1 1 auto;
+  }
+  .rf-policy {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px 12px; border-radius: 14px; margin-bottom: 16px;
+    background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E;
+  }
+  .rf-policy svg { flex-shrink: 0; margin-top: 1px; }
+  .rf-policy strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .rf-policy p { margin: 0; font-size: 12px; line-height: 1.4; font-weight: 500; }
+  .rf-label { margin: 0 0 10px; font-size: 14px; font-weight: 700; color: #0F172A; }
+  .rf-opts { display: grid; gap: 8px; margin-bottom: 16px; }
+  .rf-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 14px; border: 1.5px solid #E2E8F0;
+    background: #fff; cursor: pointer; font-size: 13px; font-weight: 600; color: #0F172A;
+  }
+  .rf-opt:has(input:checked) {
+    border-color: #C084FC; background: #FAF5FF;
+  }
+  .rf-opt input {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid #CBD5E1; background: #fff; margin: 0;
+  }
+  .rf-opt input:checked {
+    border-color: #A855F7;
+    background: radial-gradient(circle at center, #A855F7 0 5px, #fff 6px);
+  }
+  .rf-area {
+    width: 100%; min-height: 96px; resize: vertical;
+    border: none; border-radius: 16px; padding: 12px 14px;
+    background: #F1F5F9; color: #0F172A; font: inherit; font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .rf-area::placeholder { color: #94A3B8; }
+  .rf-area:focus { outline: 2px solid #DDD6FE; background: #F8FAFC; }
+  .rf-gid {
+    padding: 10px 12px; border-radius: 12px; margin-bottom: 8px;
+    background: #EFF6FF; border: 1px solid #BFDBFE;
+    font-size: 12px; color: #1E3A8A; font-weight: 600; word-break: break-all;
+  }
+  .rf-gid strong { font-weight: 800; }
+  .rf-foot {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px;
+    padding: 14px 18px 18px; flex-shrink: 0; border-top: 1px solid #F1F5F9;
+  }
+  .rf-foot button {
+    padding: 13px 14px; border-radius: 999px; border: none;
+    font-size: 14px; font-weight: 700;
+  }
+  .rf-cancel { background: #F1F5F9; color: #0F172A; }
+  .rf-submit {
+    color: #fff;
+    background: linear-gradient(90deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 20px rgba(168,85,247,.28);
+  }
+  .rf-submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+  .rf-ok-modal {
+    width: min(340px, 100%);
+    background: #fff; border-radius: 20px; padding: 28px 22px 20px;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+  }
+  .rf-ok-modal h3 {
+    margin: 0 0 8px; font-size: 18px; font-weight: 800; color: #0F172A;
+  }
+  .rf-ok-modal p {
+    margin: 0 0 22px; font-size: 14px; font-weight: 500; color: #64748B; line-height: 1.4;
+  }
+  .rf-ok-btn {
+    width: 100%; padding: 14px 16px; border: none; border-radius: 999px;
+    color: #fff; font-size: 15px; font-weight: 800; letter-spacing: .04em;
+    background: linear-gradient(90deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 22px rgba(168,85,247,.3);
+  }
+
+  .gr-refund-status {
+    display: none;
+    text-align: center;
+    padding: 16px 14px;
+    border-radius: 14px;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    color: #92400E;
+    margin-bottom: 8px;
+  }
+  .gr-refund-status.show { display: block; }
+  .gr-refund-status strong {
+    display: block; font-size: 15px; font-weight: 800; margin-bottom: 6px;
+  }
+  .gr-refund-status p { margin: 0 0 8px; font-size: 13px; font-weight: 500; line-height: 1.4; }
+  .gr-refund-status span { font-size: 12px; font-weight: 600; opacity: .9; }
+  .gr-refund.hidden { display: none !important; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { display: none; }
+    .pb-topbar { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar">
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">+ New blend</a>
+    <nav class="pb-nav">
+      <a href="dashboard.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Home</a>
+      <a href="discover.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>Discover</a>
+      <a href="generate.html" class="active"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Generate</a>
+      <a href="gallery.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/></svg></span>Gallery</a>
+      <a href="#"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>Account</a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">140</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a class="pb-back" href="generate.html" aria-label="Back">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#1E1422" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div style="font-size:15px;font-weight:800;">Generation Result</div>
+      <button aria-label="More" style="margin-left:auto;width:36px;height:36px;border:none;background:transparent;font-size:18px;color:#1A1A2E;">⋮</button>
+    </header>
+
+    <div class="pb-content">
+      <div class="gr-flow">
+        <div class="gr-hero">
+          <div class="gr-frame" id="result-frame" hidden>
+            <img class="gr-bg" id="preview-bg" alt="">
+            <div class="gr-inset-wrap">
+              <img class="gr-inset" id="preview-source" alt="">
+            </div>
+            <div class="gr-caption">
+              <strong>AI Generated Image</strong>
+              <span>PixelBlend preview</span>
+            </div>
+          </div>
+
+          <div class="gr-compare" id="compare-frame" hidden>
+            <div class="gr-compare-after">
+              <img id="compare-after-img" alt="After">
+            </div>
+            <div class="gr-compare-before" id="compare-before">
+              <img id="compare-before-img" alt="Before">
+            </div>
+            <span class="gr-compare-badge before">BEFORE</span>
+            <span class="gr-compare-badge after">AFTER</span>
+            <div class="gr-compare-handle" id="compare-handle">
+              <div class="gr-compare-knob" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M10 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="gr-frame" id="result-empty-frame">
+            <div class="gr-placeholder" id="result-empty">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M4 17l5-4 3 2.5L16 11l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>This generation has no image yet.</div>
+            </div>
+          </div>
+        </div>
+        <div class="gr-body">
+          <div class="gr-toggle" id="view-toggle">
+            <button type="button" data-view="compare">Compare</button>
+            <button type="button" class="on" data-view="final">Final only</button>
+          </div>
+          <div class="gr-actions">
+            <button type="button" class="gr-btn dl" id="btn-download">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 4v10m0 0l-4-4m4 4l4-4M4 20h16" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Download
+            </button>
+            <button type="button" class="gr-btn share" id="btn-share">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8.2 10.8l7.6-4.2M8.2 13.2l7.6 4.2" stroke="currentColor" stroke-width="1.8"/></svg>
+              Share
+            </button>
+          </div>
+
+          <div class="gr-card">
+            <h2>Generation Details</h2>
+            <div class="gr-thumbs">
+              <div class="gr-thumb">
+                <label>Source Photo</label>
+                <img id="detail-source" alt="Source" hidden>
+                <div class="empty" id="detail-source-empty">No source</div>
+              </div>
+              <div class="gr-thumb">
+                <label>Background Photo</label>
+                <img id="detail-bg" alt="Background" hidden>
+                <div class="empty" id="detail-bg-empty">No background</div>
+              </div>
+            </div>
+            <div class="gr-meta">
+              <div><span>Generation ID</span><strong id="meta-id">demo-gen-001</strong></div>
+              <div><span>Created</span><strong id="meta-created">Just now</strong></div>
+              <div><span>Credits Used</span><strong>10</strong></div>
+            </div>
+          </div>
+
+          <a class="gr-retry" href="generate.html">
+            <span class="gr-retry-row">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M1 4v6h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <strong>Retry</strong>
+            </span>
+            <span class="gr-retry-cost">will cost 10 credits</span>
+          </a>
+          <div class="gr-refund-status" id="refund-status">
+            <strong>Refund Request Submitted</strong>
+            <p>We'll review your request within 24-48 hours.</p>
+            <span id="refund-requested-at"></span>
+          </div>
+          <button type="button" class="gr-refund" id="btn-refund">Request Refund</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="rf-overlay" id="refund-modal" aria-hidden="true">
+  <div class="rf-modal" role="dialog" aria-labelledby="rf-title">
+    <div class="rf-head">
+      <h3 id="rf-title">Request Refund</h3>
+      <button type="button" class="rf-close" id="rf-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="rf-body">
+      <div class="rf-policy">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D97706" stroke-width="2"/><path d="M12 8v5M12 16.5v.5" stroke="#D97706" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <div>
+          <strong>Refund Policy</strong>
+          <p>Refunds are processed within 24-48 hours. Credits will be returned to your account once approved.</p>
+        </div>
+      </div>
+      <p class="rf-label">Why are you requesting a refund?</p>
+      <div class="rf-opts" id="rf-opts">
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="poor"> Poor quality result</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="background"> Background not applied correctly</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="colors"> Colors are off/unrealistic</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="edges"> Subject edges not clean</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="expected"> Not what I expected</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="technical"> Technical issue</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="other"> Other</label>
+      </div>
+      <p class="rf-label">Additional Details (Optional)</p>
+      <textarea class="rf-area" id="rf-details" placeholder="Please provide any additional information..."></textarea>
+      <div class="rf-gid">Generation ID: <strong id="rf-gid">—</strong></div>
+    </div>
+    <div class="rf-foot">
+      <button type="button" class="rf-cancel" id="rf-cancel">Cancel</button>
+      <button type="button" class="rf-submit" id="rf-submit" disabled>Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<div class="rf-overlay" id="refund-ok-modal" aria-hidden="true">
+  <div class="rf-ok-modal" role="dialog" aria-labelledby="rf-ok-title">
+    <h3 id="rf-ok-title">Refund request submitted</h3>
+    <p>We will review your request within 24-48 hours.</p>
+    <button type="button" class="rf-ok-btn" id="rf-ok">OK</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+
+  var frame = document.getElementById('result-frame');
+  var compareFrame = document.getElementById('compare-frame');
+  var emptyFrame = document.getElementById('result-empty-frame');
+  var previewBg = document.getElementById('preview-bg');
+  var previewSource = document.getElementById('preview-source');
+  var compareBefore = document.getElementById('compare-before');
+  var compareHandle = document.getElementById('compare-handle');
+  var compareBeforeImg = document.getElementById('compare-before-img');
+  var compareAfterImg = document.getElementById('compare-after-img');
+  var detailSource = document.getElementById('detail-source');
+  var detailBg = document.getElementById('detail-bg');
+  var sourceEmpty = document.getElementById('detail-source-empty');
+  var bgEmpty = document.getElementById('detail-bg-empty');
+  var sourceUri = null;
+  var bgUri = null;
+  var downloadUri = null;
+  var split = 50;
+  var dragging = false;
+
+  function showImg(img, empty, url) {
+    if (url) {
+      img.src = url;
+      img.hidden = false;
+      if (empty) empty.hidden = true;
+      return true;
+    }
+    img.hidden = true;
+    if (empty) empty.hidden = false;
+    return false;
+  }
+
+  function setSplit(pct) {
+    split = Math.max(4, Math.min(96, pct));
+    compareBefore.style.clipPath = 'inset(0 ' + (100 - split) + '% 0 0)';
+    compareHandle.style.left = split + '%';
+  }
+
+  function setFinalView() {
+    frame.hidden = false;
+    compareFrame.hidden = true;
+  }
+
+  function setCompareView() {
+    frame.hidden = true;
+    compareFrame.hidden = false;
+    compareBeforeImg.src = sourceUri || bgUri || '';
+    compareAfterImg.src = downloadUri || bgUri || sourceUri || '';
+    setSplit(50);
+  }
+
+  try {
+    var raw = sessionStorage.getItem('pb-last-generate');
+    if (raw) {
+      var data = JSON.parse(raw);
+      sourceUri = data.source || null;
+      bgUri = (data.backgrounds && data.backgrounds[0]) || null;
+    }
+  } catch (e) {}
+
+  showImg(detailSource, sourceEmpty, sourceUri);
+  showImg(detailBg, bgEmpty, bgUri);
+
+  if (sourceUri || bgUri) {
+    emptyFrame.hidden = true;
+    if (bgUri) previewBg.src = bgUri;
+    else previewBg.src = sourceUri;
+    if (sourceUri) previewSource.src = sourceUri;
+    else previewSource.hidden = true;
+    setFinalView();
+    buildComposite(bgUri || sourceUri, sourceUri).then(function (url) {
+      if (url) {
+        downloadUri = url;
+        compareAfterImg.src = url;
+      } else {
+        compareAfterImg.src = bgUri || sourceUri || '';
+      }
+    });
+  }
+
+  var genId = Math.random().toString(16).slice(2, 14) + Date.now().toString(16).slice(-12);
+  document.getElementById('meta-id').textContent = genId;
+  document.getElementById('rf-gid').textContent = genId;
+  document.getElementById('meta-created').textContent = new Date().toLocaleString('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true
+  });
+
+  var refundModal = document.getElementById('refund-modal');
+  var refundOkModal = document.getElementById('refund-ok-modal');
+  var refundStatus = document.getElementById('refund-status');
+  var btnRefund = document.getElementById('btn-refund');
+  var rfSubmit = document.getElementById('rf-submit');
+  var scrollLockY = 0;
+  var scrollLocked = false;
+
+  function lockScroll() {
+    if (scrollLocked) return;
+    scrollLocked = true;
+    scrollLockY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + scrollLockY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    if (!scrollLocked) return;
+    scrollLocked = false;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo(0, scrollLockY);
+  }
+  function openRefund() {
+    lockScroll();
+    refundModal.classList.add('open');
+    refundModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeRefund() {
+    refundModal.classList.remove('open');
+    refundModal.setAttribute('aria-hidden', 'true');
+    if (!refundOkModal.classList.contains('open')) unlockScroll();
+  }
+  function openRefundOk() {
+    lockScroll();
+    refundOkModal.classList.add('open');
+    refundOkModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeRefundOk() {
+    refundOkModal.classList.remove('open');
+    refundOkModal.setAttribute('aria-hidden', 'true');
+    unlockScroll();
+  }
+  function showRefundStatus() {
+    var when = new Date().toLocaleString('en-GB', {
+      day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true
+    });
+    document.getElementById('refund-requested-at').textContent = 'Requested: ' + when;
+    refundStatus.classList.add('show');
+    btnRefund.classList.add('hidden');
+  }
+  function syncRefundSubmit() {
+    rfSubmit.disabled = !document.querySelector('input[name="rf-reason"]:checked');
+  }
+  btnRefund.addEventListener('click', openRefund);
+  document.getElementById('rf-close').addEventListener('click', closeRefund);
+  document.getElementById('rf-cancel').addEventListener('click', closeRefund);
+  refundModal.addEventListener('click', function (e) {
+    if (e.target === refundModal) closeRefund();
+  });
+  document.querySelectorAll('input[name="rf-reason"]').forEach(function (r) {
+    r.addEventListener('change', syncRefundSubmit);
+  });
+  rfSubmit.addEventListener('click', function () {
+    if (rfSubmit.disabled) return;
+    closeRefund();
+    showRefundStatus();
+    openRefundOk();
+  });
+  document.getElementById('rf-ok').addEventListener('click', closeRefundOk);
+  refundOkModal.addEventListener('click', function (e) {
+    if (e.target === refundOkModal) closeRefundOk();
+  });
+
+  document.querySelectorAll('#view-toggle button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('#view-toggle button').forEach(function (b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      if (btn.getAttribute('data-view') === 'compare') setCompareView();
+      else setFinalView();
+    });
+  });
+
+  function pointerPct(e) {
+    var rect = compareFrame.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    return (x / rect.width) * 100;
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    e.preventDefault();
+    setSplit(pointerPct(e));
+  }
+  function onUp() { dragging = false; }
+
+  compareFrame.addEventListener('mousedown', function (e) { dragging = true; setSplit(pointerPct(e)); });
+  compareFrame.addEventListener('touchstart', function (e) { dragging = true; setSplit(pointerPct(e)); }, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+
+  function loadImage(url) {
+    return new Promise(function (resolve, reject) {
+      if (!url) return reject();
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = reject;
+      img.src = url;
+    });
+  }
+
+  function buildComposite(bgUrl, srcUrl) {
+    return Promise.all([loadImage(bgUrl), srcUrl ? loadImage(srcUrl) : Promise.resolve(null)]).then(function (imgs) {
+      var bg = imgs[0];
+      var src = imgs[1];
+      var size = 1080;
+      var c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      var ctx = c.getContext('2d');
+      var br = Math.max(size / bg.width, size / bg.height);
+      var bw = bg.width * br, bh = bg.height * br;
+      ctx.drawImage(bg, (size - bw) / 2, (size - bh) / 2, bw, bh);
+      if (src) {
+        var iw = size * 0.42;
+        var ih = iw * (4 / 3);
+        var ix = (size - iw) / 2;
+        var iy = (size - ih) / 2 - size * 0.02;
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,.35)';
+        ctx.shadowBlur = 28;
+        ctx.shadowOffsetY = 10;
+        roundRect(ctx, ix - 4, iy - 4, iw + 8, ih + 8, 14);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.restore();
+        ctx.save();
+        roundRect(ctx, ix, iy, iw, ih, 12);
+        ctx.clip();
+        var sr = Math.max(iw / src.width, ih / src.height);
+        var sw = src.width * sr, sh = src.height * sr;
+        ctx.drawImage(src, ix + (iw - sw) / 2, iy + (ih - sh) / 2, sw, sh);
+        ctx.restore();
+      }
+      var grad = ctx.createLinearGradient(0, size * 0.62, 0, size);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.75)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, size * 0.55, size, size * 0.45);
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.font = '800 36px Hanken Grotesk, sans-serif';
+      ctx.fillText('AI GENERATED IMAGE', size / 2, size - 78);
+      ctx.font = '500 28px Hanken Grotesk, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,.88)';
+      ctx.fillText('PixelBlend preview', size / 2, size - 40);
+      return c.toDataURL('image/jpeg', 0.9);
+    }).catch(function () { return null; });
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  document.getElementById('btn-download').addEventListener('click', function () {
+    var href = downloadUri || bgUri || sourceUri;
+    if (!href) return;
+    var a = document.createElement('a');
+    a.href = href;
+    a.download = 'pixelblend-result.jpg';
+    a.click();
+  });
+  document.getElementById('btn-share').addEventListener('click', function () {
+    if (navigator.share) {
+      navigator.share({ title: 'PixelBlend result', url: location.href }).catch(function () {});
+    } else {
+      alert('Share link copied (demo)');
+    }
+  });
+})();
+</script>
+</body>
+</html>
