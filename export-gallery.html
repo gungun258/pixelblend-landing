@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Export Gallery → Static</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 520px; margin: 48px auto; padding: 0 20px; color: #1E1422; }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p { color: #64748B; line-height: 1.45; }
+  button {
+    margin-top: 16px; border: none; border-radius: 999px; padding: 14px 22px;
+    font-size: 15px; font-weight: 700; color: #fff; cursor: pointer;
+    background: linear-gradient(113deg, #A855F7, #EC4899);
+  }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .ok { margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: #ECFDF5; color: #065F46; font-weight: 600; display: none; }
+  .err { margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: #FEF2F2; color: #991B1B; font-weight: 600; display: none; }
+  ul { padding-left: 18px; color: #475569; }
+</style>
+</head>
+<body>
+  <h1>Export my generations</h1>
+  <p>Is page ko <strong>usi browser</strong> me kholo jahan tumne Generate kiya tha. Phir button dabao — JSON file download hogi.</p>
+  <p id="status">Checking gallery…</p>
+  <button type="button" id="btn" disabled>Download gallery-export.json</button>
+  <div class="ok" id="ok"></div>
+  <div class="err" id="err"></div>
+  <ul>
+    <li>Download ke baad file ko project folder me rakh dena: <code>pixelblend-landing/gallery-export.json</code></li>
+    <li>Phir Cursor me bolo: <strong>import kar do</strong></li>
+  </ul>
+<script>
+(function () {
+  var status = document.getElementById('status');
+  var btn = document.getElementById('btn');
+  var ok = document.getElementById('ok');
+  var err = document.getElementById('err');
+  var list = [];
+  try {
+    var raw = localStorage.getItem('pb-gallery-generated');
+    list = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(list)) list = [];
+  } catch (e) { list = []; }
+
+  // skip already-seeded demo items
+  list = list.filter(function (x) { return x && !x.seeded && (x.result || x.source || x.background); });
+
+  if (!list.length) {
+    status.textContent = 'Is browser me koi apni generated image nahi mili. Pehle Generate karke Gallery me lao, phir yahan wapas aao.';
+    err.style.display = 'block';
+    err.textContent = '0 personal generations found in this browser.';
+    return;
+  }
+
+  status.textContent = list.length + ' personal generation(s) mili. Download dabao.';
+  btn.disabled = false;
+
+  btn.addEventListener('click', function () {
+    var payload = {
+      exportedAt: Date.now(),
+      items: list.map(function (x, i) {
+        return {
+          id: x.id || ('export-' + i),
+          result: x.result || '',
+          source: x.source || '',
+          background: x.background || '',
+          at: x.at || Date.now()
+        };
+      })
+    };
+    var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'gallery-export.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    ok.style.display = 'block';
+    ok.textContent = 'Downloaded. Ab gallery-export.json ko pixelblend-landing folder me move karo, phir agent se “import kar do” bolo.';
+  });
+})();
+</script>
+</body>
+</html>
