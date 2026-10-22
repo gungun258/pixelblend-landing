@@ -82,7 +82,7 @@
   .pb-content { padding: 24px 32px 48px; width: 100%; display: flex; justify-content: center; }
   .pb-toggle { display: none; }
 
-  .gn-flow { width: min(780px, 100%); }
+  .gn-flow { width: min(1120px, 100%); }
   .gn-stepper {
     display: flex; align-items: center; justify-content: center; gap: 0;
     margin-bottom: 22px;
@@ -111,8 +111,8 @@
 
   .gn-card {
     background: #fff; border: 1px solid var(--line); border-radius: 24px;
-    padding: 26px 28px 24px; box-shadow: 0 14px 32px -26px rgba(30,20,34,.32);
-    min-height: 420px;
+    padding: 22px 24px 24px; box-shadow: 0 14px 32px -26px rgba(30,20,34,.32);
+    min-height: 520px;
   }
   .gn-pane { display: none; }
   .gn-pane.on { display: block; animation: gnIn .22s ease; }
@@ -120,18 +120,32 @@
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
   }
-  .gn-card h1, .gn-card h2 {
-    margin: 0 0 6px; font-size: 24px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+  .gn-desk {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 1.15fr);
+    gap: 28px;
+    align-items: start;
   }
-  .gn-card .sub { margin: 0 0 18px; font-size: 13px; color: var(--soft); font-weight: 500; }
+  .gn-col-source {
+    position: sticky; top: 88px;
+    padding: 4px 4px 0 0;
+  }
+  .gn-col-bg {
+    min-width: 0;
+    border-left: 1px solid var(--line);
+    padding-left: 28px;
+  }
+  .gn-card h1, .gn-card h2 {
+    margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
+  }
+  .gn-card .sub { margin: 0 0 16px; font-size: 13px; color: var(--soft); font-weight: 500; }
   .gn-block { scroll-margin-top: 24px; }
-  .gn-block + .gn-block { margin-top: 28px; padding-top: 22px; }
 
   .gn-drop {
     position: relative; border: 2px dashed #D8A8E8; border-radius: 22px;
     background: linear-gradient(160deg, #FCEAF5 0%, #F3ECFB 45%, #EAF4FF 100%);
-    width: min(400px, 100%); aspect-ratio: 4 / 5; min-height: 400px;
-    margin: 0 auto;
+    width: 100%; aspect-ratio: 4 / 5; max-height: 480px; min-height: 320px;
+    margin: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 10px; padding: 24px; cursor: pointer; overflow: hidden;
   }
@@ -155,8 +169,8 @@
   .gn-drop.has-img .gn-change { display: inline-flex; }
 
   .gn-actions {
-    display: flex; align-items: stretch; gap: 12px; margin: 14px auto 0;
-    width: min(400px, 100%);
+    display: flex; align-items: stretch; gap: 10px; margin: 14px 0 0;
+    width: 100%;
   }
   .gn-actions button {
     flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px;
@@ -208,10 +222,10 @@
     background: linear-gradient(113deg, #3B82F6, #22D3EE);
     box-shadow: 0 10px 22px rgba(59,130,246,.32);
   }
-  #block-background h2 {
+  .gn-col-bg h2 {
     margin: 0 0 8px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: #0F172A;
   }
-  #block-background > .sub {
+  .gn-col-bg > .sub {
     margin: 0 0 16px; font-size: 14px; font-weight: 400; color: #64748B;
   }
 
@@ -331,10 +345,15 @@
   .gn-cta:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(147,51,234,.44); }
   .gn-cost { margin: 10px 0 0; font-size: 13px; color: #6B7280; font-weight: 500; text-align: center; }
   .gn-gen-inline {
-    margin: 24px auto 8px; width: fit-content; max-width: 100%;
+    margin: 22px 0 4px; width: 100%;
     display: flex; flex-direction: column; align-items: center;
     animation: gnIn .22s ease;
   }
+  .gn-gen-inline .gn-cta {
+    width: auto; max-width: 100%;
+    margin: 0; padding: 12px 26px; font-size: 13px;
+  }
+  .gn-gen-inline .gn-cta svg { width: 16px; height: 16px; }
   .gn-gen-inline.hidden { display: none !important; }
 
   .hidden { display: none !important; }
@@ -350,6 +369,11 @@
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
     .pb-sidebar.open .pb-toggle { align-self: flex-end; }
     .pb-content { padding: 20px; }
+    .gn-desk { grid-template-columns: 1fr; gap: 22px; }
+    .gn-col-source { position: static; }
+    .gn-col-bg { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 22px; }
+    .gn-drop { max-width: 400px; margin: 0 auto; }
+    .gn-actions { max-width: 400px; margin-left: auto; margin-right: auto; }
   }
   @media (max-width: 767px) {
     .pb-topbar { padding: 16px; }
@@ -357,7 +381,7 @@
     .gn-card { padding: 18px 16px; border-radius: 18px; min-height: 0; }
     .gn-pill span.lbl { display: none; }
     .gn-line { width: 20px; }
-    .gn-drop { width: min(280px, 100%); min-height: 340px; }
+    .gn-drop { width: min(280px, 100%); min-height: 300px; max-height: none; }
     .gn-actions { width: min(280px, 100%); }
     .gn-review { grid-template-columns: 1fr; }
   }
@@ -440,94 +464,95 @@
 
         <div class="gn-card">
           <section class="gn-pane on" data-pane="setup">
-            <div class="gn-block" id="block-source">
-              <h1>Step 1: Source Photo</h1>
-              <p class="sub">Upload the photo you want to transform.</p>
-              <div class="gn-drop" id="source-drop" role="button" tabindex="0">
-                <div class="gn-drop-ico" id="source-empty">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 20h16" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="gn-desk">
+              <div class="gn-col-source" id="block-source">
+                <h1>Source Photo</h1>
+                <p class="sub">Upload the photo you want to transform.</p>
+                <div class="gn-drop" id="source-drop" role="button" tabindex="0">
+                  <div class="gn-drop-ico" id="source-empty">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4 4M12 4l4 4M4 20h16" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <strong id="source-title">Upload Source Photo</strong>
+                  <span class="hint" id="source-hint">JPG, PNG up to 10MB</span>
+                  <img class="preview hidden" id="source-preview" alt="Source preview">
+                  <button type="button" class="gn-change" id="source-change">✎ Change</button>
+                  <input type="file" id="source-file" accept="image/*" class="hidden">
                 </div>
-                <strong id="source-title">Upload Source Photo</strong>
-                <span class="hint" id="source-hint">JPG, PNG up to 10MB</span>
-                <img class="preview hidden" id="source-preview" alt="Source preview">
-                <button type="button" class="gn-change" id="source-change">✎ Change</button>
-                <input type="file" id="source-file" accept="image/*" class="hidden">
+                <div class="gn-actions">
+                  <button type="button" id="btn-camera">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1.1-1.6A1.5 1.5 0 0110 3.5h4a1.5 1.5 0 011.2.9L16.3 6h1.2A2.5 2.5 0 0120 8.5v8A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-8z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3.2" stroke="currentColor" stroke-width="1.8"/></svg>
+                    Take Photo
+                  </button>
+                  <button type="button" id="btn-gallery">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 17l4.2-3.8 2.8 2.2L15 12l4.5 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    My AI app Gallery
+                  </button>
+                </div>
               </div>
-              <div class="gn-actions">
-                <button type="button" id="btn-camera">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1.1-1.6A1.5 1.5 0 0110 3.5h4a1.5 1.5 0 011.2.9L16.3 6h1.2A2.5 2.5 0 0120 8.5v8A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-8z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3.2" stroke="currentColor" stroke-width="1.8"/></svg>
-                  Take Photo
-                </button>
-                <button type="button" id="btn-gallery">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="10" r="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 17l4.2-3.8 2.8 2.2L15 12l4.5 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  My AI app Gallery
-                </button>
+
+              <div class="gn-col-bg" id="block-background">
+                <h2>Background</h2>
+                <p class="sub">Select type and upload photos.</p>
+                <div class="gn-cat-row">
+                  <button type="button" class="gn-cat" data-cat="1">Category X</button>
+                  <span class="gn-or">OR</span>
+                  <button type="button" class="gn-cat" data-cat="2">Category Y</button>
+                </div>
+                <div class="gn-rail" id="bg-rail">
+                  <div class="gn-connector" id="conn-1"></div>
+                  <div id="path-x" class="hidden">
+                    <div class="gn-section">
+                      <p class="gn-label">Choose Type</p>
+                      <div class="gn-sub-row">
+                        <button type="button" class="gn-sub" data-xtype="X1"><span class="t">X1</span><span class="h">1 photo</span></button>
+                        <button type="button" class="gn-sub" data-xtype="X2"><span class="t">X2</span><span class="h">2 photos</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="path-y" class="hidden">
+                    <div class="gn-section">
+                      <p class="gn-label">Choose Branch</p>
+                      <div class="gn-branch-row">
+                        <button type="button" class="gn-branch" data-branch="A">A</button>
+                        <button type="button" class="gn-branch" data-branch="B">B</button>
+                      </div>
+                    </div>
+                    <div class="gn-section hidden" id="y-opts-a">
+                      <div class="gn-connector short"></div>
+                      <p class="gn-label">Choose Option</p>
+                      <div class="gn-sub-row">
+                        <button type="button" class="gn-sub" data-yopt="Aa"><span class="t">Aa</span><span class="h">2 photos</span></button>
+                        <button type="button" class="gn-sub" data-yopt="Ab"><span class="t">Ab</span><span class="h">2 photos</span></button>
+                      </div>
+                    </div>
+                    <div class="gn-section hidden" id="y-opts-b">
+                      <div class="gn-connector short"></div>
+                      <p class="gn-label">Choose Option</p>
+                      <div class="gn-triple">
+                        <button type="button" class="gn-sub" data-yopt="Ba"><span class="t">Ba</span><span class="h">3 photos</span></button>
+                        <button type="button" class="gn-sub" data-yopt="Bb"><span class="t">Bb</span><span class="h">1 photo</span></button>
+                        <button type="button" class="gn-sub" data-yopt="Bc"><span class="t">Bc</span><span class="h">2 photos</span></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="gn-section hidden" id="upload-section">
+                    <div class="gn-connector short"></div>
+                    <p class="gn-label">Upload Background Photos</p>
+                    <div class="gn-uploads slots-1" id="bg-uploads"></div>
+                    <input type="file" id="bg-file" accept="image/*" class="hidden">
+                  </div>
+                </div>
+
+                <div class="gn-gen-inline hidden" id="setup-generate">
+                  <button type="button" class="gn-cta" id="generate-btn-setup">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+                    Generate AI Image
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
+                  </button>
+                  <p class="gn-cost">Cost: 10 credits</p>
+                </div>
               </div>
             </div>
-
-            <div class="gn-block" id="block-background">
-              <h2>Step 2: Upload Background Photos</h2>
-              <p class="sub">Select your background type and upload photos.</p>
-              <div class="gn-cat-row">
-                <button type="button" class="gn-cat" data-cat="1">Category X</button>
-                <span class="gn-or">OR</span>
-                <button type="button" class="gn-cat" data-cat="2">Category Y</button>
-              </div>
-              <div class="gn-rail" id="bg-rail">
-                <div class="gn-connector" id="conn-1"></div>
-                <div id="path-x" class="hidden">
-                  <div class="gn-section">
-                    <p class="gn-label">Choose Type</p>
-                    <div class="gn-sub-row">
-                      <button type="button" class="gn-sub" data-xtype="X1"><span class="t">X1</span><span class="h">1 photo</span></button>
-                      <button type="button" class="gn-sub" data-xtype="X2"><span class="t">X2</span><span class="h">2 photos</span></button>
-                    </div>
-                  </div>
-                </div>
-                <div id="path-y" class="hidden">
-                  <div class="gn-section">
-                    <p class="gn-label">Choose Branch</p>
-                    <div class="gn-branch-row">
-                      <button type="button" class="gn-branch" data-branch="A">A</button>
-                      <button type="button" class="gn-branch" data-branch="B">B</button>
-                    </div>
-                  </div>
-                  <div class="gn-section hidden" id="y-opts-a">
-                    <div class="gn-connector short"></div>
-                    <p class="gn-label">Choose Option</p>
-                    <div class="gn-sub-row">
-                      <button type="button" class="gn-sub" data-yopt="Aa"><span class="t">Aa</span><span class="h">2 photos</span></button>
-                      <button type="button" class="gn-sub" data-yopt="Ab"><span class="t">Ab</span><span class="h">2 photos</span></button>
-                    </div>
-                  </div>
-                  <div class="gn-section hidden" id="y-opts-b">
-                    <div class="gn-connector short"></div>
-                    <p class="gn-label">Choose Option</p>
-                    <div class="gn-triple">
-                      <button type="button" class="gn-sub" data-yopt="Ba"><span class="t">Ba</span><span class="h">3 photos</span></button>
-                      <button type="button" class="gn-sub" data-yopt="Bb"><span class="t">Bb</span><span class="h">1 photo</span></button>
-                      <button type="button" class="gn-sub" data-yopt="Bc"><span class="t">Bc</span><span class="h">2 photos</span></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="gn-section hidden" id="upload-section">
-                  <div class="gn-connector short"></div>
-                  <p class="gn-label">Upload Background Photos</p>
-                  <div class="gn-uploads slots-1" id="bg-uploads"></div>
-                  <input type="file" id="bg-file" accept="image/*" class="hidden">
-                </div>
-              </div>
-
-              <div class="gn-gen-inline hidden" id="setup-generate">
-                <button type="button" class="gn-cta" id="generate-btn-setup">
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
-                  Generate AI Image
-                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
-                </button>
-                <p class="gn-cost">Cost: 10 credits</p>
-              </div>
-            </div>
-
           </section>
 
           <section class="gn-pane" data-pane="3">
