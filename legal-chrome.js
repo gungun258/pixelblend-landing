@@ -97,7 +97,7 @@
     { label: 'Marketplace', href: '#marketplace' },
     { label: 'Sellers', href: 'sellers.html' },
     { label: 'Pricing', href: 'pricing.html' },
-    { label: 'Gallery', href: 'gallery.html' },
+    { label: 'Gallery', href: 'gallery-public.html' },
     { label: 'FAQ', href: 'faq.html' }
   ];
 
@@ -108,7 +108,7 @@
         { label: 'About Us', href: 'about.html' },
         { label: 'Contact Us', href: 'contact.html' },
         { label: 'Leave us Feedback', href: 'feedback.html' },
-        { label: 'Gallery', href: 'gallery.html' }
+        { label: 'Gallery', href: 'gallery-public.html' }
       ]
     },
     {
@@ -252,6 +252,7 @@
     var labels = {
       'how-it-works.html': 'How it works',
       'sellers.html': 'Sellers',
+      'gallery-public.html': 'Gallery',
       'gallery.html': 'Gallery',
       'about.html': 'About',
       'faq.html': 'FAQ',
