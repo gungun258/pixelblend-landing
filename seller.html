@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seller · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px; min-width: 18px; text-align: center;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-content {
+    flex: 1 1 auto; padding: 0 0 40px; width: 100%; min-height: 0;
+    display: flex; flex-direction: column; align-items: stretch;
+  }
+  .pb-toggle { display: none; }
+
+  .sp-cover {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #FBFAFC;
+    border-bottom: none;
+  }
+  .sp-cover img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .sp-cover::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0; height: 72%;
+    background: linear-gradient(
+      180deg,
+      rgba(251,250,252,0) 0%,
+      rgba(251,250,252,.28) 35%,
+      rgba(251,250,252,.72) 68%,
+      #FBFAFC 100%
+    );
+    pointer-events: none;
+  }
+  .sp-flow {
+    width: min(980px, 100%);
+    margin: -56px auto 0;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .sp-profile {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 16px;
+  }
+  .sp-avatar-wrap {
+    flex-shrink: 0;
+    width: 104px; height: 104px; border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, #A855F7 0%, #EC4899 45%, #F43F5E 100%);
+    box-shadow: 0 8px 20px rgba(168, 85, 247, .28);
+  }
+  .sp-avatar {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+    border: 3px solid #fff;
+    background: #fff;
+  }
+  .sp-identity { min-width: 0; padding-top: 0; display: flex; flex-direction: column; justify-content: center; }
+  .sp-name { margin: 0 0 4px; font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
+  .sp-tag { margin: 0; font-size: 14px; font-weight: 600; color: #64748B; }
+  .sp-bio {
+    margin: 0 0 18px; max-width: 520px;
+    font-size: 13px; line-height: 1.45; color: var(--soft); font-weight: 500;
+  }
+
+  .sp-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 10px; margin-bottom: 14px;
+    box-shadow: 0 8px 22px -18px rgba(30,20,34,.3);
+  }
+  .sp-stat { text-align: center; }
+  .sp-stat strong { display: block; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+  .sp-stat span { font-size: 12px; font-weight: 600; color: var(--soft); }
+
+  .sp-actions {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin: 0 auto 28px; max-width: 360px;
+  }
+  .sp-btn {
+    flex: 1 1 0; max-width: 160px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px 14px; border-radius: 999px; border: none; font-size: 13px; font-weight: 800;
+  }
+  .sp-btn-follow {
+    color: #fff; background: var(--grad);
+    box-shadow: 0 10px 22px rgba(168,85,247,.32);
+  }
+  .sp-btn-follow:hover { transform: translateY(-1px); }
+  .sp-btn-follow.is-on { background: #F1F5F9; color: #64748B; box-shadow: none; }
+  .sp-btn-contact { color: #1E1422; background: #F1F5F9; }
+  .sp-btn-contact:hover { background: #E2E8F0; }
+
+  .sp-listings-h {
+    margin: 0 0 14px; font-size: 18px; font-weight: 800; letter-spacing: -.02em;
+  }
+  .sp-grid {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;
+  }
+  .sp-card {
+    display: block; background: #fff; border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit;
+    box-shadow: 0 10px 24px -20px rgba(30,20,34,.35);
+  }
+  .sp-card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -18px rgba(168,85,247,.4); }
+  .sp-card-media {
+    position: relative; aspect-ratio: 1; background: #F1F5F9; overflow: hidden;
+  }
+  .sp-card-media img { width: 100%; height: 100%; object-fit: cover; }
+  .sp-heart {
+    position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%;
+    border: none; background: rgba(255,255,255,.96);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(30,20,34,.12); cursor: pointer;
+  }
+  .sp-trend {
+    position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--grad); display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 14px rgba(168,85,247,.35);
+  }
+  .sp-card-body { padding: 8px 10px 10px; }
+  .sp-card-title {
+    margin: 0 0 6px; font-size: 13px; font-weight: 800; letter-spacing: -.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .sp-card-meta {
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    font-size: 11px; font-weight: 700;
+  }
+  .sp-price { display: inline-flex; align-items: center; gap: 5px; color: #7C3AED; }
+  .sp-likes { display: inline-flex; align-items: center; gap: 4px; color: #EC4899; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+  }
+  @media (max-width: 900px) {
+    .sp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sp-flow { padding: 0 20px; }
+  }
+  @media (max-width: 767px) {
+    .pb-topbar { padding: 12px 16px; min-height: 56px; }
+    .sp-cover { height: 160px; }
+    .sp-flow { margin-top: -48px; padding: 0 16px; }
+    .sp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .sp-name { font-size: 20px; }
+    .sp-avatar-wrap { width: 88px; height: 88px; }
+    .sp-identity { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge" data-pb-gallery-count hidden>0</span>
+      </a>
+      <a href="#">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">140</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div class="pb-topbar-title" id="sp-top-title">Seller</div>
+        <div class="pb-topbar-sub">Seller profile &amp; listings</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
+        </button>
+        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="sp-cover" aria-hidden="true">
+        <img id="sp-banner" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=85&auto=format&fit=crop" alt="">
+      </div>
+      <div class="sp-flow">
+        <div class="sp-profile">
+          <div class="sp-avatar-wrap">
+            <img class="sp-avatar" id="sp-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=320&q=90&auto=format&fit=crop" alt="">
+          </div>
+          <div class="sp-identity">
+            <h1 class="sp-name" id="sp-name">Visual Vibes</h1>
+            <p class="sp-tag" id="sp-tag">Professional AI background artist ✨</p>
+          </div>
+        </div>
+        <p class="sp-bio" id="sp-bio">Visual Vibes — premium AI backgrounds for standout product photos.</p>
+
+        <div class="sp-stats">
+          <div class="sp-stat"><strong id="sp-listings-n">3</strong><span>Listings</span></div>
+          <div class="sp-stat"><strong id="sp-followers">11.2k</strong><span>Followers</span></div>
+          <div class="sp-stat"><strong id="sp-gens">7.2k</strong><span>Generations</span></div>
+        </div>
+
+        <div class="sp-actions">
+          <button type="button" class="sp-btn sp-btn-follow" id="sp-follow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="8" r="3.2" stroke="currentColor" stroke-width="1.9"/><path d="M4.5 19c.9-3.2 3.2-4.8 5.5-4.8s4.6 1.6 5.5 4.8M17 8v6M14 11h6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+            Follow
+          </button>
+          <button type="button" class="sp-btn sp-btn-contact" id="sp-contact">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L4 21l1.4-4.6A8.4 8.4 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0121 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            Contact
+          </button>
+        </div>
+
+        <h2 class="sp-listings-h" id="sp-listings-h">Listings (3)</h2>
+        <div class="sp-grid" id="sp-grid"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var SELLERS = {
+    'visual-vibes': {
+      id: 'visual-vibes',
+      name: 'Visual Vibes',
+      tag: 'Professional AI background artist ✨',
+      bio: 'Visual Vibes — premium AI backgrounds for standout product photos.',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=320&q=90&auto=format&fit=crop',
+      banner: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=85&auto=format&fit=crop',
+      listings: 6,
+      followers: '11.2k',
+      gens: '7.2k',
+      items: [
+        { id: 'meadow-light', title: 'Meadow Light', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=85&auto=format&fit=crop', price: 100, likes: 276, trending: false },
+        { id: 'cosmic-drift', title: 'Cosmic Drift', img: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=85&auto=format&fit=crop', price: 75, likes: 263, trending: false },
+        { id: 'rustic-charm', title: 'Rustic Charm', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85&auto=format&fit=crop', price: 50, likes: 139, trending: true },
+        { id: 'night-sky', title: 'Night Sky', img: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=900&q=85&auto=format&fit=crop', price: 90, likes: 198, trending: false },
+        { id: 'beach-waves', title: 'Soft Horizon', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85&auto=format&fit=crop', price: 85, likes: 214, trending: false },
+        { id: 'forest-mist', title: 'Velvet Grove', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=85&auto=format&fit=crop', price: 70, likes: 167, trending: false }
+      ]
+    },
+    'sarahs-studio': {
+      id: 'sarahs-studio',
+      name: "Sarah's Studio",
+      tag: 'Scenic backgrounds & studio sets ✨',
+      bio: "Sarah's Studio — polished scenes for fashion and product shoots.",
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=320&q=90&auto=format&fit=crop',
+      banner: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=85&auto=format&fit=crop',
+      listings: 6,
+      followers: '12.5k',
+      gens: '8.9k',
+      items: [
+        { id: 'mountain-sunset', title: 'Mountain Sunset', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85&auto=format&fit=crop', price: 100, likes: 412, trending: true },
+        { id: 'forest-mist', title: 'Forest Mist', img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=85&auto=format&fit=crop', price: 80, likes: 298, trending: false },
+        { id: 'beach-waves', title: 'Beach Waves', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85&auto=format&fit=crop', price: 90, likes: 221, trending: false },
+        { id: 'meadow-light', title: 'Golden Field', img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=85&auto=format&fit=crop', price: 95, likes: 188, trending: false },
+        { id: 'rustic-charm', title: 'Studio Soft', img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=85&auto=format&fit=crop', price: 60, likes: 154, trending: false },
+        { id: 'cosmic-drift', title: 'Pastel Dusk', img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&q=85&auto=format&fit=crop', price: 88, likes: 203, trending: false }
+      ]
+    },
+    'alex-visuals': {
+      id: 'alex-visuals',
+      name: 'Alex Visuals',
+      tag: 'Night & urban AI scenes',
+      bio: 'Alex Visuals — bold night skies and city moods for product drops.',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=320&q=90&auto=format&fit=crop',
+      banner: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=1600&q=85&auto=format&fit=crop',
+      listings: 6,
+      followers: '18.2k',
+      gens: '14.1k',
+      items: [
+        { id: 'night-sky', title: 'Night Sky', img: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=85&auto=format&fit=crop', price: 110, likes: 501, trending: true },
+        { id: 'cosmic-drift', title: 'Cosmic Drift', img: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=900&q=85&auto=format&fit=crop', price: 85, likes: 340, trending: false },
+        { id: 'mountain-sunset', title: 'Neon Ridge', img: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900&q=85&auto=format&fit=crop', price: 95, likes: 276, trending: false },
+        { id: 'forest-mist', title: 'City Rain', img: 'https://images.unsplash.com/photo-1485518882345-15568b007407?w=900&q=85&auto=format&fit=crop', price: 80, likes: 229, trending: false },
+        { id: 'beach-waves', title: 'Moon Bay', img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&q=85&auto=format&fit=crop', price: 92, likes: 198, trending: false },
+        { id: 'meadow-light', title: 'Aurora Glow', img: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=900&q=85&auto=format&fit=crop', price: 105, likes: 312, trending: false }
+      ]
+    },
+    'mira-scenes': {
+      id: 'mira-scenes',
+      name: 'Mira Scenes',
+      tag: 'Coastal & nature backgrounds',
+      bio: 'Mira Scenes — clean nature plates ready for AI blend.',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=320&q=90&auto=format&fit=crop',
+      banner: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85&auto=format&fit=crop',
+      listings: 6,
+      followers: '7.4k',
+      gens: '5.1k',
+      items: [
+        { id: 'beach-waves', title: 'Beach Waves', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85&auto=format&fit=crop', price: 95, likes: 188, trending: false },
+        { id: 'forest-mist', title: 'Forest Mist', img: 'https://images.unsplash.com/photo-1511497584788-876760111969?w=900&q=85&auto=format&fit=crop', price: 70, likes: 156, trending: true },
+        { id: 'mountain-sunset', title: 'Cliff Light', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85&auto=format&fit=crop', price: 88, likes: 201, trending: false },
+        { id: 'meadow-light', title: 'Palm Soft', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80&auto=format&fit=crop&sat=-20', price: 75, likes: 142, trending: false },
+        { id: 'rustic-charm', title: 'River Fog', img: 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=900&q=85&auto=format&fit=crop', price: 82, likes: 173, trending: false },
+        { id: 'cosmic-drift', title: 'Desert Dusk', img: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=85&auto=format&fit=crop', price: 78, likes: 165, trending: false }
+      ]
+    }
+  };
+
+  function qs(name) {
+    try { return new URLSearchParams(window.location.search).get(name); }
+    catch (e) { return null; }
+  }
+
+  function render(seller) {
+    document.title = seller.name + ' · PixelBlend Studio';
+    document.getElementById('sp-top-title').textContent = seller.name;
+    document.getElementById('sp-avatar').src = seller.avatar;
+    document.getElementById('sp-avatar').alt = seller.name;
+    var banner = document.getElementById('sp-banner');
+    if (banner) {
+      banner.src = seller.banner || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=85&auto=format&fit=crop';
+      banner.alt = seller.name + ' banner';
+    }
+    document.getElementById('sp-name').textContent = seller.name;
+    document.getElementById('sp-tag').textContent = seller.tag;
+    document.getElementById('sp-bio').textContent = seller.bio;
+    document.getElementById('sp-listings-n').textContent = String(seller.items.length);
+    document.getElementById('sp-followers').textContent = seller.followers;
+    document.getElementById('sp-gens').textContent = seller.gens;
+    document.getElementById('sp-listings-h').textContent = 'Listings (' + seller.items.length + ')';
+
+    var grid = document.getElementById('sp-grid');
+    grid.innerHTML = '';
+    seller.items.forEach(function (item) {
+      var a = document.createElement('a');
+      a.className = 'sp-card';
+      a.href = 'listing.html?id=' + encodeURIComponent(item.id);
+      a.innerHTML =
+        '<div class="sp-card-media">' +
+          '<img src="' + item.img + '" alt="' + item.title + '">' +
+          (item.trending
+            ? '<span class="sp-trend" title="Trending"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3.5 16.5l5.2-5.2 3.3 3.3 6.5-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.2 7.5h4.3v4.3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
+            : '') +
+          '<button type="button" class="sp-heart" aria-label="Like" aria-pressed="false" data-stop="1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path class="sp-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/></svg></button>' +
+        '</div>' +
+        '<div class="sp-card-body">' +
+          '<h3 class="sp-card-title">' + item.title + '</h3>' +
+          '<div class="sp-card-meta">' +
+            '<span class="sp-price"><svg width="12" height="12" viewBox="0 0 24 24" fill="#A855F7"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>' + item.price + '</span>' +
+            '<span class="sp-likes"><svg width="12" height="12" viewBox="0 0 24 24" fill="#EC4899"><path d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z"/></svg>' + item.likes + '</span>' +
+          '</div>' +
+        '</div>';
+      grid.appendChild(a);
+    });
+
+    grid.querySelectorAll('[data-stop]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var on = btn.classList.toggle('is-liked');
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var path = btn.querySelector('.sp-heart-path');
+        if (path) {
+          if (on) {
+            path.setAttribute('fill', '#EC4899');
+            path.setAttribute('stroke', '#EC4899');
+          } else {
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', '#EC4899');
+          }
+        }
+      });
+    });
+  }
+
+  var id = qs('id') || 'visual-vibes';
+  var seller = SELLERS[id] || SELLERS['visual-vibes'];
+  render(seller);
+
+  var followBtn = document.getElementById('sp-follow');
+  followBtn.addEventListener('click', function () {
+    var on = followBtn.classList.toggle('is-on');
+    followBtn.innerHTML = on
+      ? 'Following'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="8" r="3.2" stroke="currentColor" stroke-width="1.9"/><path d="M4.5 19c.9-3.2 3.2-4.8 5.5-4.8s4.6 1.6 5.5 4.8M17 8v6M14 11h6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg> Follow';
+  });
+  document.getElementById('sp-contact').addEventListener('click', function () {
+    alert('Contact seller — coming soon in Studio.');
+  });
+
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function () {
+      sidebar.classList.toggle('open');
+    });
+  }
+})();
+</script>
+</body>
+</html>

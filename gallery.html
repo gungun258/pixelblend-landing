@@ -64,10 +64,14 @@
   }
   .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
   .pb-topbar {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px;
-    padding: 18px 32px 14px; background: rgba(251,250,252,.92); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line); flex-shrink: 0;
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
   }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
   .pb-content {
     flex: 1 1 auto; padding: 24px 32px 48px; width: 100%;
     position: relative;
@@ -281,6 +285,7 @@
     .pb-content { padding: 20px; }
   }
   @media (max-width: 640px) {
+    .pb-topbar { padding: 12px 16px; min-height: 56px; }
     .gy-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
     .gy-tabs { gap: 22px; }
     .gy-tab { font-size: 16px; padding: 10px 4px 14px; }
@@ -332,9 +337,23 @@
 
   <main class="pb-main">
     <header class="pb-topbar">
-      <div style="font-size:18px;font-weight:800;letter-spacing:-.02em;">Gallery</div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
-        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#FFF7ED;border:1px solid #FED7AA;font-size:13px;font-weight:800;color:#9A3412;">✦ <span id="top-count">0</span></span>
+      <div>
+        <div class="pb-topbar-title">Gallery</div>
+        <div class="pb-topbar-sub">Your generations &amp; uploaded photos</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
+        </button>
+        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </header>
 
@@ -456,7 +475,6 @@
   var paneUp = document.getElementById('pane-uploads');
   var toolbar = document.getElementById('gy-toolbar');
   var tip = document.getElementById('gy-tip');
-  var topCount = document.getElementById('top-count');
   var btnDelete = document.getElementById('btn-delete');
   var lightbox = document.getElementById('lightbox');
   var lbImg = document.getElementById('lb-img');
@@ -586,7 +604,6 @@
     var list = window.pbGallery ? pbGallery.getGenerated() : [];
     // Viewing Generated tab = mark images seen → sidebar count clears
     if (window.pbGallery) pbGallery.markAllGeneratedSeen();
-    topCount.textContent = String(list.length);
     gridGen.innerHTML = '';
     if (!list.length) {
       emptyGen.classList.add('on');

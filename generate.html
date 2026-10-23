@@ -76,11 +76,19 @@
   }
   .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
   .pb-topbar {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
-    padding: 20px 32px 14px; background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
   }
-  .pb-content { padding: 24px 32px 48px; width: 100%; display: flex; justify-content: center; }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-content {
+    padding: 24px 32px;
+    width: 100%; flex: 1 1 auto; min-height: 0;
+    display: flex; justify-content: center; align-items: center;
+  }
   .pb-toggle { display: none; }
 
   .gn-flow { width: min(1120px, 100%); }
@@ -114,9 +122,13 @@
     background: #fff; border: 1px solid var(--line); border-radius: 24px;
     padding: 22px 24px 24px; box-shadow: 0 14px 32px -26px rgba(30,20,34,.32);
     min-height: 520px;
+    display: flex; flex-direction: column;
   }
   .gn-pane { display: none; }
-  .gn-pane.on { display: block; animation: gnIn .22s ease; }
+  .gn-pane.on { display: block; width: 100%; animation: gnIn .22s ease; }
+  .gn-pane.on[data-pane="setup"] {
+    display: block; width: 100%;
+  }
   @keyframes gnIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
@@ -125,7 +137,8 @@
     display: grid;
     grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 1.15fr);
     gap: 28px;
-    align-items: start;
+    align-items: stretch;
+    min-height: 100%;
   }
   .gn-col-source {
     position: sticky; top: 88px;
@@ -135,6 +148,12 @@
     min-width: 0;
     border-left: 1px solid var(--line);
     padding-left: 28px;
+    display: flex; flex-direction: column;
+  }
+  .gn-step {
+    display: inline-block; margin: 0 0 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: #A855F7;
   }
   .gn-card h1, .gn-card h2 {
     margin: 0 0 6px; font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1.15;
@@ -346,9 +365,9 @@
   .gn-cta:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(147,51,234,.44); }
   .gn-cost { margin: 10px 0 0; font-size: 13px; color: #6B7280; font-weight: 500; text-align: center; }
   .gn-gen-inline {
-    margin: 22px 0 4px; width: 100%;
+    margin: auto 0 0; padding-top: 18px; width: 100%;
     display: flex; flex-direction: column; align-items: center;
-    animation: gnIn .22s ease;
+    flex-shrink: 0;
   }
   .gn-gen-inline .gn-cta {
     width: auto; max-width: 100%;
@@ -377,7 +396,7 @@
     .gn-actions { max-width: 400px; margin-left: auto; margin-right: auto; }
   }
   @media (max-width: 767px) {
-    .pb-topbar { padding: 16px; }
+    .pb-topbar { padding: 12px 16px; min-height: 56px; }
     .pb-content { padding: 16px; }
     .gn-card { padding: 18px 16px; border-radius: 18px; min-height: 0; }
     .gn-pill span.lbl { display: none; }
@@ -438,35 +457,32 @@
   <main class="pb-main">
     <header class="pb-topbar">
       <div>
-        <div style="font-size:15px;font-weight:800;letter-spacing:-.02em;">Generate</div>
-        <div style="font-size:11px;color:#8A7E92;margin-top:2px;">Source + background → AI blend</div>
+        <div class="pb-topbar-title">Generate</div>
+        <div class="pb-topbar-sub">Source + background → AI blend</div>
       </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
-        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;font-size:12px;font-weight:800;">
-          <span style="font-size:13px;">🪙</span> 50
-        </span>
-        <button aria-label="Notifications" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;position:relative;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6zM10 19a2 2 0 004 0" stroke="#1E1422" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff;"></span>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
         </button>
-        <img src="assets/dashboard/images/img31.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 0 1px #F0E6F2;">
+        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </header>
 
     <div class="pb-content">
       <div class="gn-flow">
-        <div class="gn-stepper">
-          <button type="button" class="gn-pill on" data-go="1"><span class="num">1</span><span class="lbl">Source</span></button>
-          <span class="gn-line" id="line-1"></span>
-          <button type="button" class="gn-pill" data-go="2" disabled><span class="num">2</span><span class="lbl">Background</span></button>
-          <span class="gn-line" id="line-2"></span>
-          <button type="button" class="gn-pill" data-go="3" disabled><span class="num">3</span><span class="lbl">Generate</span></button>
-        </div>
-
         <div class="gn-card">
           <section class="gn-pane on" data-pane="setup">
             <div class="gn-desk">
               <div class="gn-col-source" id="block-source">
+                <span class="gn-step">Step 1</span>
                 <h1>Source Photo</h1>
                 <p class="sub">Upload the photo you want to transform.</p>
                 <div class="gn-drop" id="source-drop" role="button" tabindex="0">
@@ -492,6 +508,7 @@
               </div>
 
               <div class="gn-col-bg" id="block-background">
+                <span class="gn-step">Step 2</span>
                 <h2>Background</h2>
                 <p class="sub">Select type and upload photos.</p>
                 <div class="gn-cat-row">
@@ -544,13 +561,13 @@
                   </div>
                 </div>
 
-                <div class="gn-gen-inline hidden" id="setup-generate">
-                  <button type="button" class="gn-cta" id="generate-btn-setup">
+                <div class="gn-gen-inline" id="setup-generate">
+                  <button type="button" class="gn-cta" id="generate-btn-setup" disabled>
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
                     Generate AI Image
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.2l2.05 5.35 5.75.35-4.4 3.55 1.4 5.55L12 13.9 7.2 17l1.4-5.55-4.4-3.55 5.75-.35L12 2.2z" fill="#fff"/><path d="M19.2 13.2l.85 2.15 2.25.15-1.7 1.4.55 2.2-1.95-1.25-1.95 1.25.55-2.2-1.7-1.4 2.25-.15.85-2.15z" fill="#fff"/></svg>
                   </button>
-                  <p class="gn-cost">Cost: 10 credits</p>
+                  <p class="gn-cost" id="setup-generate-hint">Cost: 10 credits</p>
                 </div>
               </div>
             </div>
@@ -669,15 +686,7 @@
   }
 
   function syncStepper() {
-    document.querySelectorAll('.gn-pill').forEach(function (pill) {
-      var s = parseInt(pill.getAttribute('data-go'), 10);
-      pill.classList.toggle('on', s === state.step);
-      pill.classList.toggle('done', s < state.step);
-      pill.disabled = s > state.step && !canReach(s);
-      if (s < state.step) pill.disabled = false;
-    });
-    document.getElementById('line-1').classList.toggle('on', state.step >= 2);
-    document.getElementById('line-2').classList.toggle('on', state.step >= 3);
+    // Steps pipeline removed from UI — keep no-op so flow logic still calls safely
   }
 
   function showSetup(scrollTo) {
@@ -695,15 +704,14 @@
 
   function updateNav() {
     var ready = canGenerate();
-    var setupGen = document.getElementById('setup-generate');
-    if (setupGen) setupGen.classList.toggle('hidden', !ready);
+    var setupBtn = document.getElementById('generate-btn-setup');
+    if (setupBtn) setupBtn.disabled = !ready;
     var genBtn = document.getElementById('generate-btn');
     if (genBtn) genBtn.disabled = !ready;
-    if (generateHint) {
-      generateHint.textContent = ready
-        ? 'Cost: 10 credits'
-        : 'Add a background photo above to continue';
-    }
+    var setupHint = document.getElementById('setup-generate-hint');
+    var hintText = ready ? 'Cost: 10 credits' : 'Add source + background photos to continue';
+    if (setupHint) setupHint.textContent = hintText;
+    if (generateHint) generateHint.textContent = hintText;
     // On setup page: Source → Background → Generate pill as photos become ready
     var onSetup = document.querySelector('.gn-pane[data-pane="setup"]').classList.contains('on');
     if (onSetup) {
@@ -974,15 +982,31 @@
     if (this.disabled) return;
     goGenerate();
   });
-  document.getElementById('generate-btn-setup').addEventListener('click', goGenerate);
+  document.getElementById('generate-btn-setup').addEventListener('click', function () {
+    if (this.disabled) return;
+    goGenerate();
+  });
 
   // Gallery upload → Generate: prefill source photo
+  // Listing "Try with AI" → Generate: prefill background (Category X → X1 → slot 0)
   try {
     var prefill = sessionStorage.getItem('pb-prefill-source');
     if (prefill) {
       sessionStorage.removeItem('pb-prefill-source');
       setSource(prefill);
       showSetup('bg');
+    }
+    var prefillBg = sessionStorage.getItem('pb-prefill-bg');
+    if (prefillBg) {
+      sessionStorage.removeItem('pb-prefill-bg');
+      sessionStorage.removeItem('pb-prefill-bg-title');
+      var cat1 = document.querySelector('[data-cat="1"]');
+      if (cat1) cat1.click();
+      var x1 = document.querySelector('[data-xtype="X1"]');
+      if (x1) x1.click();
+      var slot0 = bgUploads.querySelector('[data-slot="0"]');
+      if (slot0) paintSlot(slot0, 0, prefillBg);
+      showSetup(prefill ? 'bg' : 'source');
     }
   } catch (e) {}
 
