@@ -80,9 +80,13 @@
   .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
   .pb-topbar {
     position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
-    padding: 24px 32px 16px; background: rgba(250,244,251,.82); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
   }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
   .pb-content { padding: 28px 32px 56px; width: 100%; box-sizing: border-box; }
 
   .dc-badge {
@@ -157,23 +161,30 @@
     font-size: 11px; font-weight: 800; letter-spacing: .16em; color: #A855F7;
   }
 
+  .dc-market-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
   .dc-market {
-    position: relative; overflow: hidden; border-radius: 20px; padding: 28px 32px;
+    position: relative; overflow: hidden; border-radius: 20px; padding: 24px 22px;
     background: linear-gradient(125deg, #A855F7 0%, #EC4899 55%, #F43F5E 100%);
     color: #fff;
+    min-width: 0;
   }
   .dc-market::after {
     content: ''; position: absolute; right: -80px; top: -40px; width: 240px; height: 240px;
     border-radius: 50%; background: rgba(255,255,255,.12);
   }
-  .dc-market-inner { position: relative; z-index: 1; max-width: 680px; }
+  .dc-market-inner { position: relative; z-index: 1; max-width: none; }
   .dc-market .pill {
     display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
     background: rgba(255,255,255,.16);
     font-size: 10px; font-weight: 800; letter-spacing: .08em; margin-bottom: 12px;
   }
-  .dc-market h2 { margin: 0 0 8px; font-size: 28px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; }
-  .dc-market p { margin: 0 0 16px; font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.9); max-width: 500px; }
+  .dc-market h2 { margin: 0 0 8px; font-size: 22px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; }
+  .dc-market p { margin: 0 0 14px; font-size: 13px; line-height: 1.5; color: rgba(255,255,255,.9); max-width: none; }
   .dc-steps { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .dc-step {
     display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
@@ -281,6 +292,38 @@
     border-radius: 16px; overflow: hidden; aspect-ratio: 3/4;
     background: #1E1422; scroll-snap-align: start;
   }
+
+  /* Desktop horizontal scroll: peek + arrows */
+  .pb-hscroll {
+    position: relative;
+    margin-left: -4px; margin-right: -4px;
+    padding-left: 4px; padding-right: 4px;
+  }
+  .pb-hscroll-btn {
+    display: none;
+    position: absolute; top: 50%; z-index: 6;
+    width: 36px; height: 36px; margin-top: -18px;
+    border-radius: 50%; border: 1px solid var(--line);
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 8px 22px -8px rgba(30,20,34,.35);
+    align-items: center; justify-content: center;
+    cursor: pointer; color: var(--ink); padding: 0;
+    transition: opacity .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .pb-hscroll-btn:hover { transform: scale(1.04); box-shadow: 0 10px 26px -8px rgba(196,46,139,.35); }
+  .pb-hscroll-btn.is-hidden { display: none !important; }
+  .pb-hscroll-btn.prev { left: 2px; }
+  .pb-hscroll-btn.next { right: 2px; }
+  @media (min-width: 1080px) {
+    .pb-hscroll-btn { display: flex; }
+    .dc-new .dc-bg {
+      flex: 0 0 calc((100% - 60px) / 5.35) !important;
+      width: auto !important;
+      max-width: 176px;
+    }
+    .dc-follow .dc-seller { flex: 0 0 calc((100% - 28px) / 2.25) !important; max-width: 280px; }
+    .dc-trend .dc-trend-card { flex: 0 0 calc((100% - 28px) / 2.25) !important; max-width: 280px; }
+  }
   .dc-bg img { width: 100%; height: 100%; object-fit: cover; }
   .dc-bg .tl, .dc-bg .tr {
     position: absolute; top: 10px; width: 28px; height: 28px; border-radius: 50%;
@@ -303,19 +346,21 @@
   .dc-explore {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     margin-top: 28px; padding: 12px 22px; border-radius: 999px; border: none;
-    background: transparent; color: var(--accent); font-size: 13px; font-weight: 800; cursor: pointer;
-    text-decoration: none; border: 1.5px solid #F0C4DF;
+    background: var(--grad); color: #fff; font-size: 13px; font-weight: 800; cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 10px 22px rgba(236,72,153,.28);
   }
-  .dc-explore:hover { background: #FBEEF6; }
+  .dc-explore:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(236,72,153,.36); }
 
   .dc-forsellers {
-    margin-top: 36px; border-radius: 0; padding: 28px 0 0;
-    background: transparent; border: none; border-top: 1px solid var(--line);
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+    margin: 0; border-radius: 20px; padding: 24px 22px;
+    background: #fff; border: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+    min-width: 0; box-sizing: border-box;
   }
   .dc-forsellers .eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .12em; color: var(--accent); margin: 0 0 6px; }
-  .dc-forsellers h2 { margin: 0 0 6px; font-size: 20px; letter-spacing: -.03em; font-weight: 800; color: #2A1339; }
-  .dc-forsellers p { margin: 0 0 12px; font-size: 13px; color: var(--muted); line-height: 1.45; max-width: 420px; }
+  .dc-forsellers h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.03em; font-weight: 800; color: #2A1339; line-height: 1.15; }
+  .dc-forsellers p { margin: 0 0 14px; font-size: 13px; color: var(--muted); line-height: 1.45; max-width: none; }
   .dc-forsellers .list-btn {
     display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px;
     background: var(--grad); border: none; color: #fff; font-size: 12.5px; font-weight: 800;
@@ -341,7 +386,7 @@
     .dc-trend-card { flex-basis: 240px; max-width: 240px; }
     .dc-bg { flex-basis: 156px; width: 156px; }
     .dc-head h1 { font-size: 24px; }
-    .dc-market h2 { font-size: 24px; }
+    .dc-market h2, .dc-forsellers h2 { font-size: 20px; }
   }
   @media (max-width: 1079px) {
     .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
@@ -364,9 +409,10 @@
     .dc-bg { flex-basis: 148px; width: 148px; }
     .dc-trend-card { flex-basis: 220px; max-width: 220px; }
     .dc-head { flex-direction: column; align-items: flex-start; }
+    .dc-market-row { grid-template-columns: 1fr; }
     .dc-market { padding: 20px; }
-    .dc-market h2 { font-size: 22px; }
-    .pb-topbar { padding: 18px 16px 12px; }
+    .dc-market h2, .dc-forsellers h2 { font-size: 20px; }
+    .pb-topbar { padding: 12px 16px; min-height: 56px; }
     .pb-content { padding: 16px; }
   }
 </style>
@@ -421,16 +467,22 @@
   <main class="pb-main">
     <header class="pb-topbar">
       <div>
-        <div style="font-size:15px;font-weight:800;letter-spacing:-.02em;">Discover</div>
-        <div style="font-size:11px;color:#8A7E92;margin-top:2px;">Community blends &amp; seller marketplace</div>
+        <div class="pb-topbar-title">Discover</div>
+        <div class="pb-topbar-sub">Community blends &amp; seller marketplace</div>
       </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
-        <div class="dc-stat"><i class="dot"></i>12.4k <span>blends today</span></div>
-        <button aria-label="Notifications" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5.5 2 6H4c.5-.5 2-2 2-6zM10 19a2 2 0 004 0" stroke="#1E1422" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#EF4444;border:1.5px solid #fff;"></span>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
         </button>
-        <img src="assets/dashboard/images/img31.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid #fff;box-shadow:0 0 0 1px #F0E6F2;">
+        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </header>
 
@@ -478,24 +530,39 @@
         <span>THE MARKETPLACE</span>
       </div>
 
-      <section class="dc-market">
-        <div class="dc-market-inner">
-          <div class="pill"><span style="width:6px;height:6px;border-radius:50%;background:#fff;"></span> SELLER MARKETPLACE</div>
-          <h2>Sellers list it.<br>AI blends it for you.</h2>
-          <p>Add your product photo, pick a backdrop from a seller, and our AI blends them into a studio-grade shot.</p>
-          <div class="dc-steps">
-            <div class="dc-step">▦ Browse</div>
-            <span class="dc-step-arrow">→</span>
-            <div class="dc-step">+ Blend it</div>
-            <span class="dc-step-arrow">→</span>
-            <div class="dc-step on">💬 Connect</div>
+      <div class="dc-market-row">
+        <section class="dc-market">
+          <div class="dc-market-inner">
+            <div class="pill"><span style="width:6px;height:6px;border-radius:50%;background:#fff;"></span> SELLER MARKETPLACE</div>
+            <h2>Sellers list it.<br>AI blends it for you.</h2>
+            <p>Add your product photo, pick a backdrop from a seller, and our AI blends them into a studio-grade shot.</p>
+            <div class="dc-steps">
+              <div class="dc-step">▦ Browse</div>
+              <span class="dc-step-arrow">→</span>
+              <div class="dc-step">+ Blend it</div>
+              <span class="dc-step-arrow">→</span>
+              <div class="dc-step on">💬 Connect</div>
+            </div>
+            <div class="dc-note">
+              <span class="mark">✦</span>
+              <span>Sellers are creators who publish the backgrounds you blend into. Follow them for fresh drops.</span>
+            </div>
           </div>
-          <div class="dc-note">
-            <span class="mark">✦</span>
-            <span>Sellers are creators who publish the backgrounds you blend into. Follow them for fresh drops.</span>
+        </section>
+
+        <section class="dc-forsellers">
+          <div>
+            <p class="eyebrow">FOR SELLERS</p>
+            <h2>List your catalogue on PixelBlend</h2>
+            <p>Upload your backgrounds and earn from your creations.</p>
+            <a class="list-btn" href="sellers.html">List your products for free →</a>
           </div>
-        </div>
-      </section>
+          <div class="dc-join">
+            <div class="dc-avatars"><i></i><i></i><i></i></div>
+            Join 2,400+ sellers already growing
+          </div>
+        </section>
+      </div>
 
       <section class="dc-section">
         <div class="dc-section-h">
@@ -700,19 +767,6 @@
         <a class="dc-explore" href="#">✨ Explore All Sellers →</a>
       </div>
 
-      <section class="dc-forsellers">
-        <div>
-          <p class="eyebrow">FOR SELLERS</p>
-          <h2>List your catalogue on PixelBlend</h2>
-          <p>Upload your backgrounds and earn from your creations.</p>
-          <a class="list-btn" href="sellers.html">List your products for free →</a>
-        </div>
-        <div class="dc-join">
-          <div class="dc-avatars"><i></i><i></i><i></i></div>
-          Join 2,400+ sellers already growing
-        </div>
-      </section>
-
       <p class="dc-end">You're all caught up ✨</p>
     </div>
   </main>
@@ -723,6 +777,69 @@
   var btn = document.getElementById('pb-toggle');
   if (btn && side) btn.addEventListener('click', function () { side.classList.toggle('open'); });
   if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+
+  var CHEV_L = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEV_R = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function syncHScrollBtns(wrap) {
+    var track = wrap.__pbTrack;
+    var prev = wrap.__pbPrev;
+    var next = wrap.__pbNext;
+    if (!track || !prev || !next) return;
+    var max = Math.max(0, track.scrollWidth - track.clientWidth - 2);
+    var can = max > 4;
+    var atStart = track.scrollLeft <= 2;
+    var atEnd = track.scrollLeft >= max;
+    prev.classList.toggle('is-hidden', !can || atStart);
+    next.classList.toggle('is-hidden', !can || atEnd);
+    prev.disabled = !can || atStart;
+    next.disabled = !can || atEnd;
+  }
+
+  function wireHScroll(track) {
+    if (!track || track.dataset.pbHscroll === '1') return;
+    if (track.parentElement && track.parentElement.classList.contains('pb-hscroll')) {
+      track.dataset.pbHscroll = '1';
+      return;
+    }
+    track.dataset.pbHscroll = '1';
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-hscroll';
+    track.parentNode.insertBefore(wrap, track);
+    wrap.appendChild(track);
+
+    var prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'pb-hscroll-btn prev is-hidden';
+    prev.setAttribute('aria-label', 'Scroll left');
+    prev.innerHTML = CHEV_L;
+
+    var next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'pb-hscroll-btn next';
+    next.setAttribute('aria-label', 'Scroll right');
+    next.innerHTML = CHEV_R;
+
+    wrap.appendChild(prev);
+    wrap.appendChild(next);
+    wrap.__pbTrack = track;
+    wrap.__pbPrev = prev;
+    wrap.__pbNext = next;
+
+    function step(dir) {
+      var amount = Math.max(160, Math.round(track.clientWidth * 0.72));
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
+    track.addEventListener('scroll', function () { syncHScrollBtns(wrap); }, { passive: true });
+    window.addEventListener('resize', function () { syncHScrollBtns(wrap); });
+    setTimeout(function () { syncHScrollBtns(wrap); }, 40);
+  }
+
+  ['.dc-new', '.dc-follow', '.dc-trend', '.dc-community'].forEach(function (sel) {
+    document.querySelectorAll(sel).forEach(wireHScroll);
+  });
 })();
 </script>
 </body>

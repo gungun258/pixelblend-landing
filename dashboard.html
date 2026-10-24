@@ -314,14 +314,69 @@
   .pb-scroll::-webkit-scrollbar { height: 0; width: 0; }
   .pb-row::-webkit-scrollbar { height: 0; }
   .pb-grid-recents::-webkit-scrollbar, .pb-grid-trending::-webkit-scrollbar, .pb-grid-sellers::-webkit-scrollbar, .pb-grid-byo::-webkit-scrollbar { height: 0; }
+  .pb-row, .pb-grid-recents, .pb-grid-trending, .pb-grid-sellers, .pb-grid-byo { scrollbar-width: none; }
 
   /* Trending + Top Sellers + BYO are always a single scrolling row */
   .pb-grid-trending, .pb-grid-sellers, .pb-grid-byo {
     scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
   }
-  .pb-grid-trending > div { flex: 0 0 188.8px; scroll-snap-align: start; }
+  .pb-grid-trending {
+    padding-top: 8px !important;
+    padding-bottom: 16px !important;
+    margin-bottom: -8px;
+  }
+  .pb-hscroll:has(.pb-grid-trending) {
+    overflow: visible;
+    padding-top: 4px;
+    padding-bottom: 8px;
+  }
+  .pb-trend-card {
+    transition: transform .18s ease, box-shadow .18s ease;
+    will-change: transform;
+  }
+  .pb-trend-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 40px -22px rgba(168,85,247,.7) !important;
+  }
+  .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 188.8px; scroll-snap-align: start; }
   .pb-grid-sellers > div  { flex: 0 0 288px; scroll-snap-align: start; }
   .pb-grid-byo > div      { flex: 0 0 166.4px; scroll-snap-align: start; }
+
+  /* Desktop: peek of next card + side arrows */
+  .pb-hscroll {
+    position: relative;
+    margin-left: -4px; margin-right: -4px;
+    padding-left: 4px; padding-right: 4px;
+  }
+  .pb-hscroll-btn {
+    display: none;
+    position: absolute; top: 50%; z-index: 6;
+    width: 36px; height: 36px; margin-top: -18px;
+    border-radius: 50%; border: 1px solid #F0E6F2;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 8px 22px -8px rgba(30,20,34,.35);
+    align-items: center; justify-content: center;
+    cursor: pointer; color: #1E1422; padding: 0;
+    transition: opacity .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .pb-hscroll-btn:hover { transform: scale(1.04); box-shadow: 0 10px 26px -8px rgba(196,46,139,.35); }
+  .pb-hscroll-btn.is-hidden { display: none !important; }
+  .pb-hscroll-btn.prev { left: 2px; }
+  .pb-hscroll-btn.next { right: 2px; }
+  @media (min-width: 1080px) {
+    .pb-hscroll-btn { display: flex; }
+    /* ~N.3 cards visible so last one is cut (“more this way”) */
+    .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 calc((100% - 48px) / 3.35) !important; max-width: 220px; }
+    .pb-grid-sellers > div  { flex: 0 0 calc((100% - 16px) / 2.2) !important; max-width: 340px; }
+    .pb-grid-byo > div      { flex: 0 0 calc((100% - 56px) / 5.4) !important; max-width: 176px; }
+    .pb-grid-recents {
+      display: flex !important; grid-template-columns: none !important;
+      overflow-x: auto; gap: 12.8px !important; padding-bottom: 4.8px;
+      scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    }
+    .pb-grid-recents > div { flex: 0 0 calc((100% - 51.2px) / 4.35) !important; max-width: 168px; scroll-snap-align: start; }
+    .pb-row > button { flex: 0 0 auto; }
+  }
 
   /* marquee brand strip — seamless infinite loop */
   .pb-marquee { overflow: hidden; width: 100%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
@@ -352,6 +407,22 @@
   .pb-credits-cta { transition: border-color .15s ease, color .15s ease, box-shadow .15s ease; }
   .pb-credits-cta:hover { border-color: #C42E8B !important; color: #C42E8B !important; box-shadow: 0 6px 14px -8px rgba(196,46,139,.45); }
 
+  /* Shared Studio header — match Discover / Generate / Gallery */
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid #F0E6F2; flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  html { scroll-behavior: smooth; }
+  #pb-watch { scroll-margin-top: 80px; }
+  @media (max-width: 720px) {
+    .pb-lead-copy { white-space: normal !important; }
+  }
+
   /* ===================== RESPONSIVE ===================== */
   /* base = large desktop (>=1440). Overrides cascade down. */
 
@@ -366,9 +437,8 @@
   /* Laptop */
   @media (max-width: 1279px) {
     .pb-sidebar { width: 172.8px !important; flex-basis: 172.8px !important; }
-    .pb-topbar { padding: 20.8px 22.4px 14.4px !important; }
+    .pb-topbar { padding: 14px 24px !important; min-height: 64px !important; }
     .pb-content { padding: 22.4px 22.4px 44.8px !important; }
-    .pb-search { width: 176px !important; }
     .pb-grid-trending { grid-template-columns: repeat(3, 1fr) !important; }
     .pb-grid-sellers { grid-template-columns: repeat(2, 1fr) !important; }
     .pb-hero-title { font-size: 32px !important; }
@@ -396,7 +466,7 @@
       scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
     }
     .pb-grid-recents > div  { flex: 0 0 129.6px !important; scroll-snap-align: start; }
-    .pb-grid-trending > div { flex: 0 0 164.8px !important; scroll-snap-align: start; }
+    .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 164.8px !important; scroll-snap-align: start; }
     .pb-grid-sellers > div  { flex: 0 0 272px !important; scroll-snap-align: start; }
     .pb-grid-byo {
       display: flex !important; grid-template-columns: none !important;
@@ -423,8 +493,7 @@
 
   /* Tablet landscape — stack the hero, drop step operators */
   @media (max-width: 899px) {
-    .pb-topbar { padding: 17.6px 17.6px 12.8px !important; gap: 9.6px !important; }
-    .pb-search { width: 136px !important; }
+    .pb-topbar { padding: 12px 16px !important; min-height: 56px !important; gap: 12px !important; }
     .pb-content { padding: 19.2px 17.6px 41.6px !important; }
     .pb-hero { grid-template-columns: 1fr !important; gap: 14.4px !important; }
     .pb-hero-cta { padding: 27.2px !important; }
@@ -445,12 +514,11 @@
   /* Tablet portrait */
   @media (max-width: 767px) {
     .pb-welcome-sub { display: none !important; }
-    .pb-search { display: none !important; }
     .pb-content { padding: 17.6px 14.4px 38.4px !important; }
     .pb-hero-cta { padding: 22.4px !important; }
     .pb-hero-title { font-size: 28.8px !important; }
     .pb-grid-recents > div  { flex: 0 0 118.4px !important; }
-    .pb-grid-trending > div { flex: 0 0 150.4px !important; }
+    .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 150.4px !important; }
     .pb-grid-sellers > div  { flex: 0 0 240px !important; }
     .pb-grid-byo > div { flex: 0 0 134.4px !important; }
     .pb-video { min-height: 176px !important; padding: 20.8px 19.2px !important; }
@@ -519,27 +587,23 @@
   <main class="pb-main" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;">
 
     <!-- ===== TOPBAR ===== -->
-    <header class="pb-topbar" style="position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; padding: 24px 32px 16px; background: rgba(250,244,251,.82); backdrop-filter: blur(9.6px); border-bottom: 0.8px solid #F0E6F2;">
-      <div style="flex-shrink: 0;">
-        <div class="pb-welcome-title" style="font-size: 15.2px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap;">Welcome back, {{ userName }} 👋</div>
-        <div class="pb-welcome-sub" style="font-size: 10.8px; color: #8A7E92; margin-top: 0.8px;">Let's blend something stunning today.</div>
+    <header class="pb-topbar">
+      <div style="flex-shrink: 0; min-width: 0;">
+        <div class="pb-topbar-title" style="white-space: nowrap;">Welcome back, {{ userName }} 👋</div>
+        <div class="pb-topbar-sub">Let's blend something stunning today.</div>
       </div>
-      <div style="margin-left: auto; display: flex; align-items: center; gap: 11.2px;">
-        <div class="pb-search" style="display: flex; align-items: center; gap: 7.2px; width: 224px; padding: 8px 12px; border-radius: 799.2px; background: #fff; border: 0.8px solid #F0E6F2;">
-          <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#8A7E92" stroke-width="2"></circle><path d="M20 20l-3.5-3.5" stroke="#8A7E92" stroke-width="2" stroke-linecap="round"></path></svg>
-          <input placeholder="Search scenes, sellers…" style="border: none; outline: none; background: transparent; font-family: inherit; font-size: 11.2px; color: #1E1422; width: 100%;">
-        </div>
-        <a href="#" style="display: inline-flex; align-items: center; gap: 6.4px; text-decoration: none; padding: 7.2px 12px; border-radius: 799.2px; background: #fff; border: 0.8px solid #F4E2B8; box-shadow: 0 1.6px 8px rgba(224,168,40,.12);">
-          <span style="display: inline-flex; width: 17.6px; height: 17.6px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); align-items: center; justify-content: center; color: #fff; font-size: 9.6px;">◆</span>
-          <span style="font-size: 11.6px; font-weight: 800; color: #B7791F;">{{ credits }}</span>
+      <div class="pb-top-actions">
+        <a href="#" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid #F4E2B8; box-shadow: 0 2px 8px rgba(224,168,40,.12);">
+          <span style="display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); align-items: center; justify-content: center; color: #fff; font-size: 10px;">◆</span>
+          <span style="font-size: 12px; font-weight: 800; color: #B7791F;">{{ credits }}</span>
         </a>
-        <button style="position: relative; width: 35.2px; height: 35.2px; border-radius: 50%; border: 0.8px solid #F0E6F2; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="border-color:#C42E8B;">
+        <button type="button" aria-label="Notifications" style="position: relative; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #F0E6F2; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="border-color:#C42E8B;">
           <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"></path></svg>
-          <span style="position: absolute; top: 7.2px; right: 8.8px; width: 7.2px; height: 7.2px; border-radius: 50%; background: #F43F5E; border: 1.6px solid #fff;"></span>
+          <span style="position: absolute; top: 8px; right: 9px; width: 7px; height: 7px; border-radius: 50%; background: #F43F5E; border: 1.5px solid #fff;"></span>
         </button>
-        <button style="display: flex; align-items: center; gap: 7.2px; padding: 4px 4px 4px 4px; border-radius: 799.2px; border: 0.8px solid #F0E6F2; background: #fff; cursor: pointer;" style-hover="border-color:#C42E8B;">
-          <img src="assets/dashboard/images/img1.jpg" style="width: 27.2px; height: 27.2px; border-radius: 50%; object-fit: cover;">
-          <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none" style="margin-right:4.8px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <button type="button" aria-label="Account" style="display: flex; align-items: center; gap: 7px; padding: 4px; border-radius: 999px; border: 1px solid #F0E6F2; background: #fff; cursor: pointer;" style-hover="border-color:#C42E8B;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
+          <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </button>
       </div>
     </header>
@@ -558,7 +622,7 @@
           <h1 class="pb-hero-title" style="font-size: 36.8px; line-height: 1.02; letter-spacing: -.035em; font-weight: 800; margin: 0 0 12.8px; max-width: 368px;">Blend it with a <span style="font-family:'Instrument Serif',serif; font-weight:400; font-style:italic; background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">new background</span></h1>
           <p style="font-size: 13.6px; line-height: 1.5; color: #5b5060; margin: 0 0 22.4px; max-width: 336px;">Upload your product, pick any scene, and let AI blend it into studio-quality photos — in seconds.</p>
           <div style="display: flex; align-items: center; gap: 12.8px; flex-wrap: wrap;">
-            <a href="#" style="display: inline-flex; align-items: center; gap: 7.2px; text-decoration: none; padding: 12.8px 20.8px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.8px; font-weight: 700; box-shadow: 0 12.8px 27.2px rgba(236,72,153,.4);" style-hover="transform:translateY(-1.6px); box-shadow:0 16px 33.6px rgba(236,72,153,.55);">✦ Create my first photo — free</a>
+            <a href="generate.html" style="display: inline-flex; align-items: center; gap: 7.2px; text-decoration: none; padding: 12.8px 20.8px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.8px; font-weight: 700; box-shadow: 0 12.8px 27.2px rgba(236,72,153,.4);" style-hover="transform:translateY(-1.6px); box-shadow:0 16px 33.6px rgba(236,72,153,.55);">✦ Create my first photo — free</a>
             <div style="font-size: 10.8px; color: #5b5060;"><strong style="color:#1E1422;">50 free credits</strong> · ~5 generations</div>
           </div>
         </div>
@@ -574,14 +638,18 @@
           </div>
           <span style="position: absolute; top: 14.4px; right: 14.4px; padding: 4.8px 9.6px; border-radius: 799.2px; background: rgba(255,255,255,.16); border: 0.8px solid rgba(255,255,255,.3); backdrop-filter: blur(4.8px); font-size: 9.2px; font-weight: 700; color: #fff;">{{ slide.tag }}</span>
 
-          <!-- floating product + scene = result -->
-          <div style="position: absolute; left: 19.2px; bottom: 104px; display: flex; align-items: center; gap: 8px;">
-            <div style="width: 51.2px; height: 51.2px; border-radius: 12.8px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatA 5s ease-in-out infinite;">
-              <img src="assets/dashboard/images/img2.jpg" style="width:100%;height:100%;object-fit:cover;">
+          <!-- floating: product + background = result -->
+          <div style="position: absolute; left: 19.2px; bottom: 104px; display: flex; align-items: center; gap: 7px;">
+            <div style="width: 48px; height: 48px; border-radius: 12px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatA 5s ease-in-out infinite;">
+              {{ slideProductEl }}
             </div>
-            <span style="color: #fff; font-size: 16px; font-weight: 700; text-shadow: 0 1.6px 6.4px rgba(0,0,0,.4);">+</span>
-            <div style="width: 51.2px; height: 51.2px; border-radius: 12.8px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatB 5.6s ease-in-out infinite;">
-              {{ slideMiniEl }}
+            <span style="color: #fff; font-size: 15px; font-weight: 700; text-shadow: 0 1.6px 6.4px rgba(0,0,0,.4);">+</span>
+            <div style="width: 48px; height: 48px; border-radius: 12px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(0,0,0,.35); animation: floatB 5.6s ease-in-out infinite;">
+              {{ slideBgMiniEl }}
+            </div>
+            <span style="color: #fff; font-size: 15px; font-weight: 700; text-shadow: 0 1.6px 6.4px rgba(0,0,0,.4);">=</span>
+            <div style="width: 48px; height: 48px; border-radius: 12px; overflow: hidden; border: 2.4px solid #fff; box-shadow: 0 11.2px 24px rgba(168,85,247,.45), 0 0 0 1.5px rgba(236,72,153,.55); animation: floatA 5.4s ease-in-out infinite;">
+              {{ slideResultEl }}
             </div>
           </div>
 
@@ -646,7 +714,7 @@
 
       <!-- ===== HOW IT WORKS ===== -->
       <section class="pb-how" style="margin: 35.2px auto 0; max-width: 800px; background: #fff; border: 0.8px solid #F0E6F2; border-radius: 22.4px; padding: 28.8px 32px; box-shadow: 0 24px 48px -40px rgba(168,85,247,.6);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 19.2px; max-width: 720px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 19.2px; max-width: 720px; margin-left: auto; margin-right: auto; gap: 12px; flex-wrap: wrap;">
           <div>
             <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 3.2px;">How it works</h2>
             <p style="font-size: 11.6px; color: #5b5060; margin: 0;">Upload → Pick a scene → AI blends it. That easy.</p>
@@ -671,13 +739,22 @@
             </sc-if>
           </sc-for>
         </div>
+        <!-- App: Watch a video → desktop scrolls to video block below -->
+        <div style="display: flex; justify-content: center; margin-top: 22px;">
+          <a href="#pb-watch" class="pb-watch-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 11px 22px 11px 12px; border-radius: 16px; background: #F8F6FF; text-decoration: none; color: #5B21B6; font-size: 15px; font-weight: 700; letter-spacing: -.01em;" style-hover="background:#F3F0FF;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; background: #B85CFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none" style="margin-left:1px;"><path d="M8 5.2v13.6L19.5 12z" fill="#fff"></path></svg>
+            </span>
+            Watch a video
+          </a>
+        </div>
       </section>
 
       <!-- ===== BRING YOUR OWN BACKGROUND ===== -->
       <section class="pb-byo" style="margin-top: 38.4px;">
-        <div style="max-width: 512px; margin-bottom: 16px;">
+        <div style="max-width: 680px; margin-bottom: 16px;">
           <h2 class="pb-lead-title" style="font-size: 25.6px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 9.6px;">Bring your own <span style="background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">background</span></h2>
-          <p style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
+          <p class="pb-lead-copy" style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0; white-space: nowrap;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
         </div>
         <div class="pb-marquee" id="pb-brand-marquee" style="margin-bottom: 16px;" aria-hidden="true">
           <div class="pb-marquee-track">
@@ -749,9 +826,9 @@
       </div>
 
       <!-- ===== SELLER LISTINGS LEAD-IN ===== -->
-      <section style="margin-top: 19.2px; max-width: 512px;">
+      <section style="margin-top: 19.2px; max-width: 680px;">
         <h2 class="pb-lead-title" style="font-size: 25.6px; line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 9.6px;">Choose from <span style="background:linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">our seller listings</span></h2>
-        <p style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
+        <p class="pb-lead-copy" style="font-size: 12.8px; line-height: 1.5; color: #5b5060; margin: 0; white-space: nowrap;">Pick any scene listed by our sellers, and let AI blend it into a studio-quality photo — in seconds.</p>
       </section>
 
       <!-- ===== TRENDING BACKGROUNDS ===== -->
@@ -763,15 +840,26 @@
           </div>
           <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">View All →</a>
         </div>
-        <div class="pb-grid-trending" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 4.8px;">
+        <div class="pb-grid-trending" style="display: flex; gap: 16px; overflow-x: auto; overflow-y: visible; padding-top: 8px; padding-bottom: 16px;">
           <sc-for list="{{ trending }}" as="t" hint-placeholder-count="4">
-            <div style="position: relative; border-radius: 17.6px; overflow: hidden; border: 0.8px solid #F0E6F2; aspect-ratio: 3/4; box-shadow: 0 17.6px 35.2px -24px rgba(168,85,247,.6); cursor: pointer;" style-hover="transform:translateY(-3.2px);">
+            <div class="pb-trend-card" data-listing="{{ t.href }}" style="position: relative; display: block; border-radius: 17.6px; overflow: hidden; border: 0.8px solid #F0E6F2; aspect-ratio: 3/4; box-shadow: 0 17.6px 35.2px -24px rgba(168,85,247,.6); cursor: pointer; text-decoration: none; color: inherit; flex: 0 0 188.8px;">
               {{ t.imgEl }}
-              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(30,20,34,.74));"></div>
-              <span style="position: absolute; top: 10.4px; left: 10.4px; padding: 4px 8.8px; border-radius: 799.2px; background: rgba(255,255,255,.92); backdrop-filter: blur(4.8px); font-size: 8.8px; font-weight: 800; color: #C42E8B;">🔥 {{ t.uses }}</span>
-              <div style="position: absolute; left: 12px; right: 12px; bottom: 12px;">
-                <div style="font-size: 14.4px; font-weight: 800; color: #fff; letter-spacing: -.02em; margin-bottom: 6.4px;">{{ t.title }}</div>
-                <button style="display: inline-flex; align-items: center; gap: 4.8px; padding: 6.4px 11.2px; border-radius: 799.2px; border: none; background: rgba(255,255,255,.94); font-size: 10px; font-weight: 800; color: #1E1422; cursor: pointer; white-space: nowrap;" style-hover="background:#fff;">Use this scene →</button>
+              <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 48%, rgba(30,20,34,.55));"></div>
+              <span style="position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px rgba(168,85,247,.35);" title="Trending">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 16.5l5.2-5.2 3.3 3.3 6.5-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.2 7.5h4.3v4.3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <button type="button" class="pb-heart-btn" aria-label="Like" aria-pressed="false" style="position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,.96); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(30,20,34,.12); cursor: pointer; z-index: 2;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="pb-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/></svg>
+              </button>
+              <div style="position: absolute; left: 14px; right: 14px; bottom: 14px;">
+                <a href="generate.html" class="pb-blend-btn" data-bg="{{ t.img }}" data-title="{{ t.title }}" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 999px; background: linear-gradient(90deg, #A855F7 0%, #EC4899 55%, #F43F5E 100%); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: -.01em; line-height: 1; box-shadow: 0 10px 22px rgba(168,85,247,.4); text-decoration: none;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#FACC15" aria-hidden="true">
+                    <path d="M12 6.4c.65 2.15 2.25 3.75 4.4 4.4-2.15.65-3.75 2.25-4.4 4.4-.65-2.15-2.25-3.75-4.4-4.4 2.15-.65 3.75-2.25 4.4-4.4z"/>
+                    <path d="M5.6 3.6c.38 1.22 1.28 2.12 2.5 2.5-1.22.38-2.12 1.28-2.5 2.5-.38-1.22-1.28-2.12-2.5-2.5 1.22-.38 2.12-1.28 2.5-2.5z"/>
+                    <path d="M18.1 3.4c.32 1.05 1.1 1.83 2.15 2.15-1.05.32-1.83 1.1-2.15 2.15-.32-1.05-1.1-1.83-2.15-2.15 1.05-.32 1.83-1.1 2.15-2.15z"/>
+                  </svg>
+                  Blend it
+                </a>
               </div>
             </div>
           </sc-for>
@@ -781,15 +869,15 @@
       <!-- ===== TOP SELLERS ===== -->
       <section style="margin-top: 38.4px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14.4px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <a href="top-sellers.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
             <span style="color:#A855F7; font-size: 16px;">👥</span>
             <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Top Sellers</h2>
-          </div>
-          <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">See All →</a>
+          </a>
+          <a href="top-sellers.html" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">See All →</a>
         </div>
         <div class="pb-grid-sellers" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 4.8px;">
           <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="3">
-            <div style="background: #fff; border: 0.8px solid #F0E6F2; border-radius: 19.2px; padding: 16px; box-shadow: 0 17.6px 40px -33.6px rgba(168,85,247,.7);">
+            <a href="{{ s.href }}" style="display: block; background: #fff; border: 0.8px solid #F0E6F2; border-radius: 19.2px; padding: 16px; box-shadow: 0 17.6px 40px -33.6px rgba(168,85,247,.7); text-decoration: none; color: inherit;">
               <div style="display: flex; align-items: center; gap: 10.4px; margin-bottom: 12.8px;">
                 <div style="position: relative;">
                   {{ s.avatarEl }}
@@ -799,7 +887,7 @@
                   <div style="font-size: 13.2px; font-weight: 800; letter-spacing: -.01em;">{{ s.name }}</div>
                   <div style="font-size: 10.4px; color: #8A7E92;">{{ s.listings }} listings · {{ s.followers }} followers</div>
                 </div>
-                <button style="margin-left: auto; padding: 6.4px 12.8px; border-radius: 799.2px; border: none; background: linear-gradient(113deg,#A855F7,#EC4899); color: #fff; font-size: 10.4px; font-weight: 800; cursor: pointer;" style-hover="opacity:.9;">Follow</button>
+                <button type="button" class="pb-seller-follow" style="margin-left: auto; padding: 6.4px 12.8px; border-radius: 799.2px; border: none; background: linear-gradient(113deg,#A855F7,#EC4899); color: #fff; font-size: 10.4px; font-weight: 800; cursor: pointer;" style-hover="opacity:.9;">Follow</button>
               </div>
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6.4px;">
                 <sc-for list="{{ s.thumbs }}" as="th" hint-placeholder-count="4">
@@ -808,13 +896,13 @@
                   </div>
                 </sc-for>
               </div>
-            </div>
+            </a>
           </sc-for>
         </div>
       </section>
 
       <!-- ===== WATCH + REFER (dual row) ===== -->
-      <div class="pb-dual">
+      <div class="pb-dual" id="pb-watch">
       <section style="margin-top: 0; display: flex; flex-direction: column;">
         <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 14.4px;">Watch how it works</h2>
         <div class="pb-video" style="position: relative; overflow: hidden; border-radius: 22.4px; flex: 1; min-height: 240px; padding: 32px 35.2px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(120deg, #7C3AED 0%, #A855F7 42%, #EC4899 100%); box-shadow: 0 24px 48px -30.4px rgba(124,58,237,.7);">
@@ -862,6 +950,30 @@
 <script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1120},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Sarah&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;credits&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;min&quot;:0,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C42E8B&quot;,&quot;options&quot;:[&quot;#C42E8B&quot;,&quot;#A855F7&quot;,&quot;#EC4899&quot;,&quot;#F43F5E&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { activeCat: 'Mountains', slide: 0, navOpen: false };
+  _slideTimer = null;
+  _slidePaused = false;
+  _slideCount = 4;
+
+  componentDidMount() {
+    var self = this;
+    this._slideTimer = setInterval(function () {
+      if (self._slidePaused) return;
+      self.setState(function (s) {
+        return { slide: (s.slide + 1) % self._slideCount };
+      });
+    }, 4200);
+    // Pause autoplay while hovering the featured carousel
+    setTimeout(function () {
+      var el = document.querySelector('.pb-hero-demo');
+      if (!el) return;
+      el.addEventListener('mouseenter', function () { self._slidePaused = true; });
+      el.addEventListener('mouseleave', function () { self._slidePaused = false; });
+    }, 200);
+  }
+
+  componentWillUnmount() {
+    if (this._slideTimer) clearInterval(this._slideTimer);
+  }
 
   navIcon(name) {
     const I = {
@@ -920,17 +1032,40 @@ class Component extends DCLogic {
       };
     });
 
+    const R = window.__resources || {};
     const slidesData = [
-      { name: 'Mountain Sunset', tag: 'Outdoor', img: ((window.__resources||{}).img3 || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=80&auto=format&fit=crop') },
-      { name: 'Night Sky', tag: 'Dramatic', img: ((window.__resources||{}).img4 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900&q=80&auto=format&fit=crop') },
-      { name: 'Beach Waves', tag: 'Lifestyle', img: ((window.__resources||{}).img5 || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80&auto=format&fit=crop') },
-      { name: 'Desert Dunes', tag: 'Minimal', img: ((window.__resources||{}).img6 || 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=80&auto=format&fit=crop') }
+      {
+        name: 'Mountain Sunset', tag: 'Outdoor',
+        product: R.img2 || 'assets/dashboard/images/img2.jpg',
+        bg: R.img3 || 'assets/dashboard/images/img3.jpg',
+        result: R.img7 || 'assets/dashboard/images/img7.jpg'
+      },
+      {
+        name: 'Night Sky', tag: 'Dramatic',
+        product: R.img12 || 'assets/dashboard/images/img12.jpg',
+        bg: R.img4 || 'assets/dashboard/images/img4.jpg',
+        result: R.img8 || 'assets/dashboard/images/img8.jpg'
+      },
+      {
+        name: 'Beach Waves', tag: 'Lifestyle',
+        product: R.img15 || 'assets/dashboard/images/img15.jpg',
+        bg: R.img5 || 'assets/dashboard/images/img5.jpg',
+        result: R.img9 || 'assets/dashboard/images/img9.jpg'
+      },
+      {
+        name: 'Desert Dunes', tag: 'Minimal',
+        product: R.img2 || 'assets/dashboard/images/img2.jpg',
+        bg: R.img6 || 'assets/dashboard/images/img6.jpg',
+        result: R.img10 || 'assets/dashboard/images/img10.jpg'
+      }
     ];
+    this._slideCount = slidesData.length;
     const si = this.state.slide;
     const dots = slidesData.map((s, i) => ({
       onClick: () => this.setState({ slide: i }),
       style: `width:${i === si ? 22 : 8}px; height:6.4px; border-radius:799.2px; border:none; cursor:pointer; padding:0; background:${i === si ? '#fff' : 'rgba(255,255,255,.5)'}; transition:width .2s;`
     }));
+    const chipImg = (src) => this.img(src, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' });
 
     const recents = [
       { label: 'Alpine Glow', time: '2h ago', tag: 'HD', img: ((window.__resources||{}).img7 || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80&auto=format&fit=crop') },
@@ -963,11 +1098,14 @@ class Component extends DCLogic {
     ].map(c => Object.assign({}, c, { imgEl: this.img(c.img) }));
 
     const trending = [
-      { title: 'Mountain Sunset', uses: '12.4K', img: ((window.__resources||{}).img23 || 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&auto=format&fit=crop') },
-      { title: 'Night Sky', uses: '9.8K', img: ((window.__resources||{}).img24 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=600&q=80&auto=format&fit=crop') },
-      { title: 'Beach Waves', uses: '8.1K', img: ((window.__resources||{}).img25 || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80&auto=format&fit=crop') },
-      { title: 'Forest Mist', uses: '6.5K', img: ((window.__resources||{}).img26 || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80&auto=format&fit=crop') }
-    ].map(t => Object.assign({}, t, { imgEl: this.img(t.img) }));
+      { id: 'mountain-sunset', title: 'Mountain Sunset', uses: '12.4K', img: ((window.__resources||{}).img23 || 'assets/dashboard/images/img23.jpg') },
+      { id: 'night-sky', title: 'Night Sky', uses: '9.8K', img: ((window.__resources||{}).img24 || 'assets/dashboard/images/img24.jpg') },
+      { id: 'beach-waves', title: 'Beach Waves', uses: '8.1K', img: ((window.__resources||{}).img25 || 'assets/dashboard/images/img25.jpg') },
+      { id: 'forest-mist', title: 'Forest Mist', uses: '6.5K', img: ((window.__resources||{}).img26 || 'assets/dashboard/images/img26.jpg') }
+    ].map(t => Object.assign({}, t, {
+      href: 'listing.html?id=' + encodeURIComponent(t.id),
+      imgEl: this.img(t.img)
+    }));
 
     const sceneThumbs = [
       ((window.__resources||{}).img27 || 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=200&q=80&auto=format&fit=crop'),
@@ -977,10 +1115,14 @@ class Component extends DCLogic {
     ];
     const avStyle = { width: '44.8px', height: '44.8px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #fff', boxShadow: '0 0 0 1.6px #EC4899' };
     const sellers = [
-      { name: "Sarah's Studio", listings: 156, followers: '12.5K', badge: '⭐', avatar: ((window.__resources||{}).img31 || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop'), thumbs: sceneThumbs },
-      { name: 'Alex Visuals', listings: 234, followers: '18.2K', badge: '⭐', avatar: ((window.__resources||{}).img32 || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[2], sceneThumbs[0], sceneThumbs[3], sceneThumbs[1]] },
-      { name: 'Mira Scenes', listings: 98, followers: '7.4K', badge: '⭐', avatar: ((window.__resources||{}).img33 || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[3], sceneThumbs[1], sceneThumbs[0], sceneThumbs[2]] }
-    ].map(s => Object.assign({}, s, { avatarEl: this.img(s.avatar, avStyle), thumbs: s.thumbs.map(t => this.img(t)) }));
+      { id: 'sarahs-studio', name: "Sarah's Studio", listings: 156, followers: '12.5K', badge: '⭐', avatar: ((window.__resources||{}).img31 || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop'), thumbs: sceneThumbs },
+      { id: 'alex-visuals', name: 'Alex Visuals', listings: 234, followers: '18.2K', badge: '⭐', avatar: ((window.__resources||{}).img32 || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[2], sceneThumbs[0], sceneThumbs[3], sceneThumbs[1]] },
+      { id: 'mira-scenes', name: 'Mira Scenes', listings: 98, followers: '7.4K', badge: '⭐', avatar: ((window.__resources||{}).img33 || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80&auto=format&fit=crop'), thumbs: [sceneThumbs[3], sceneThumbs[1], sceneThumbs[0], sceneThumbs[2]] }
+    ].map(s => Object.assign({}, s, {
+      href: 'seller.html?id=' + encodeURIComponent(s.id),
+      avatarEl: this.img(s.avatar, avStyle),
+      thumbs: s.thumbs.map(t => this.img(t))
+    }));
 
     return {
       userName: this.props.userName || 'Sarah',
@@ -989,8 +1131,11 @@ class Component extends DCLogic {
       toggleIconEl: React.createElement('span', { style: { display: 'flex', alignItems: 'center', justifyContent: 'center' }, dangerouslySetInnerHTML: { __html: toggleIcon } }),
       credits, navItems, categories, dots, recents, steps, trending, sellers, brands, byoCards,
       slide: slidesData[si],
-      slideBgEl: this.img(slidesData[si].img, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }),
-      slideMiniEl: this.img(slidesData[si].img),
+      // Hero shows the AI result; chips explain product + background = result
+      slideBgEl: this.img(slidesData[si].result, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }),
+      slideProductEl: chipImg(slidesData[si].product),
+      slideBgMiniEl: chipImg(slidesData[si].bg),
+      slideResultEl: chipImg(slidesData[si].result),
       creditBarStyle: `height:100%; width:${Math.min(100, (credits / 200) * 100)}%; border-radius:799.2px; background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);`,
       next: () => this.setState(s => ({ slide: (s.slide + 1) % slidesData.length })),
       prev: () => this.setState(s => ({ slide: (s.slide - 1 + slidesData.length) % slidesData.length }))
@@ -1017,6 +1162,140 @@ class Component extends DCLogic {
     if (!shift) return;
     root.style.setProperty('--mq-shift', shift + 'px');
   }
+
+  var CHEV_L = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEV_R = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function syncHScrollBtns(wrap) {
+    var track = wrap.__pbTrack;
+    var prev = wrap.__pbPrev;
+    var next = wrap.__pbNext;
+    if (!track || !prev || !next) return;
+    var max = Math.max(0, track.scrollWidth - track.clientWidth - 2);
+    var can = max > 4;
+    var atStart = track.scrollLeft <= 2;
+    var atEnd = track.scrollLeft >= max;
+    // Left arrow only after user scrolls right; right arrow only when more content ahead
+    prev.classList.toggle('is-hidden', !can || atStart);
+    next.classList.toggle('is-hidden', !can || atEnd);
+    prev.disabled = !can || atStart;
+    next.disabled = !can || atEnd;
+  }
+
+  function wireHScroll(track) {
+    if (!track || track.dataset.pbHscroll === '1') return;
+    if (track.parentElement && track.parentElement.classList.contains('pb-hscroll')) {
+      track.dataset.pbHscroll = '1';
+      return;
+    }
+    track.dataset.pbHscroll = '1';
+    var wrap = document.createElement('div');
+    wrap.className = 'pb-hscroll';
+    track.parentNode.insertBefore(wrap, track);
+    wrap.appendChild(track);
+
+    var prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'pb-hscroll-btn prev';
+    prev.setAttribute('aria-label', 'Scroll left');
+    prev.innerHTML = CHEV_L;
+
+    var next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'pb-hscroll-btn next';
+    next.setAttribute('aria-label', 'Scroll right');
+    next.innerHTML = CHEV_R;
+
+    wrap.appendChild(prev);
+    wrap.appendChild(next);
+    wrap.__pbTrack = track;
+    wrap.__pbPrev = prev;
+    wrap.__pbNext = next;
+
+    function step(dir) {
+      var amount = Math.max(160, Math.round(track.clientWidth * 0.72));
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
+    track.addEventListener('scroll', function () { syncHScrollBtns(wrap); }, { passive: true });
+    window.addEventListener('resize', function () { syncHScrollBtns(wrap); });
+    setTimeout(function () { syncHScrollBtns(wrap); }, 50);
+    setTimeout(function () { syncHScrollBtns(wrap); }, 400);
+  }
+
+  function setupHScrolls() {
+    var sels = ['.pb-grid-trending', '.pb-grid-sellers', '.pb-grid-byo', '.pb-grid-recents', '.pb-row'];
+    for (var i = 0; i < sels.length; i++) {
+      var nodes = document.querySelectorAll(sels[i]);
+      for (var j = 0; j < nodes.length; j++) wireHScroll(nodes[j]);
+    }
+  }
+
+  function setupTrendingBlend() {
+    document.querySelectorAll('.pb-seller-follow').forEach(function (btn) {
+      if (btn.__pbBound) return;
+      btn.__pbBound = true;
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var on = btn.classList.toggle('is-on');
+        btn.textContent = on ? 'Following' : 'Follow';
+        if (on) {
+          btn.style.background = '#F1F5F9';
+          btn.style.color = '#64748B';
+        } else {
+          btn.style.background = 'linear-gradient(113deg,#A855F7,#EC4899)';
+          btn.style.color = '#fff';
+        }
+      });
+    });
+    document.querySelectorAll('.pb-blend-btn').forEach(function (btn) {
+      if (btn.__pbBound) return;
+      btn.__pbBound = true;
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        try {
+          var bg = btn.getAttribute('data-bg');
+          var title = btn.getAttribute('data-title') || '';
+          if (bg) {
+            sessionStorage.setItem('pb-prefill-bg', bg);
+            sessionStorage.setItem('pb-prefill-bg-title', title);
+          }
+        } catch (err) {}
+      });
+    });
+    document.querySelectorAll('.pb-heart-btn').forEach(function (btn) {
+      if (btn.__pbBound) return;
+      btn.__pbBound = true;
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var on = btn.classList.toggle('is-liked');
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var path = btn.querySelector('.pb-heart-path');
+        if (path) {
+          if (on) {
+            path.setAttribute('fill', '#EC4899');
+            path.setAttribute('stroke', '#EC4899');
+          } else {
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', '#EC4899');
+          }
+        }
+      });
+    });
+    document.querySelectorAll('.pb-trend-card').forEach(function (card) {
+      if (card.__pbBound) return;
+      card.__pbBound = true;
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('.pb-blend-btn') || e.target.closest('.pb-heart-btn')) return;
+        var href = card.getAttribute('data-listing');
+        if (href) window.location.href = href;
+      });
+    });
+  }
+
   var tries = 0;
   var t = setInterval(function () {
     tries += 1;
@@ -1026,12 +1305,25 @@ class Component extends DCLogic {
       clearInterval(t);
       ready();
       setupBrandMarquee();
+      setupHScrolls();
+      setupTrendingBlend();
     }
   }, 100);
-  window.addEventListener('load', function () { setTimeout(function () { ready(); setupBrandMarquee(); }, 0); });
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      ready();
+      setupBrandMarquee();
+      setupHScrolls();
+      setupTrendingBlend();
+    }, 0);
+  });
   window.addEventListener('resize', function () {
     clearTimeout(window.__pbMqT);
-    window.__pbMqT = setTimeout(setupBrandMarquee, 120);
+    window.__pbMqT = setTimeout(function () {
+      setupBrandMarquee();
+      setupHScrolls();
+      document.querySelectorAll('.pb-hscroll').forEach(syncHScrollBtns);
+    }, 120);
   });
 })();
 </script>
