@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edit Profile · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font-family: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px; min-width: 18px; text-align: center;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .pb-content {
+    flex: 1 1 auto; padding: 28px 36px 48px; width: 100%;
+    display: flex; justify-content: center; align-items: flex-start;
+  }
+  .pb-toggle { display: none; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink); flex-shrink: 0;
+  }
+  .pb-back:hover { background: #FBF1FB; }
+  .ep-save-ico {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+    color: #7C3AED;
+  }
+  .ep-save-ico:hover { background: #F5F3FF; }
+
+  .ep-flow { width: min(520px, 100%); }
+  .ep-avatar-wrap {
+    display: flex; justify-content: center; margin: 8px 0 28px;
+  }
+  .ep-avatar {
+    position: relative; width: 128px; height: 128px;
+  }
+  .ep-avatar img {
+    width: 128px; height: 128px; border-radius: 50%; object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 10px 28px -12px rgba(30,20,34,.35);
+  }
+  .ep-cam {
+    position: absolute; right: 2px; bottom: 2px;
+    width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid #fff;
+    background: #7C3AED; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 14px rgba(124,58,237,.35);
+  }
+  .ep-cam:hover { filter: brightness(1.06); }
+  .ep-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 22px 22px 18px;
+    box-shadow: 0 14px 32px -24px rgba(30,20,34,.3);
+  }
+  .ep-field { margin-bottom: 16px; }
+  .ep-field label {
+    display: block; margin: 0 0 8px;
+    font-size: 13px; font-weight: 800; color: var(--ink);
+  }
+  .ep-field input {
+    width: 100%; border: none; outline: none;
+    background: #F3F4F6; color: var(--ink);
+    border-radius: 14px; padding: 14px 16px;
+    font-size: 15px; font-weight: 600;
+  }
+  .ep-field input:focus {
+    box-shadow: 0 0 0 2px rgba(168,85,247,.25);
+  }
+  .ep-link {
+    display: inline-block; margin: 2px 0 14px;
+    font-size: 14px; font-weight: 700; color: #6D28D9;
+    background: none; border: none; padding: 0;
+  }
+  .ep-link:hover { text-decoration: underline; }
+  .ep-note {
+    margin: 0; font-size: 12px; font-weight: 500; color: var(--soft); line-height: 1.45;
+  }
+  .ep-cta {
+    margin-top: 22px; width: 100%;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 15px 20px; border: none; border-radius: 999px;
+    background: var(--grad); color: #fff;
+    font-size: 15px; font-weight: 800;
+    box-shadow: 0 12px 28px rgba(236,72,153,.32);
+  }
+  .ep-cta:hover { filter: brightness(1.03); }
+  .ep-toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: #1E1422; color: #fff; padding: 12px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
+    transition: .25s ease; z-index: 80;
+  }
+  .ep-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .ep-overlay {
+    position: fixed; inset: 0; z-index: 60;
+    background: rgba(30,20,34,.45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .ep-modal {
+    width: min(440px, 100%);
+    background: #fff; border-radius: 24px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,.4);
+    animation: epIn .2s ease;
+  }
+  @keyframes epIn {
+    from { opacity: 0; transform: translateY(8px) scale(.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .ep-modal-head {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    margin-bottom: 8px;
+  }
+  .ep-modal-head h2 {
+    margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -.02em;
+  }
+  .ep-close {
+    width: 34px; height: 34px; border-radius: 50%; border: none;
+    background: #F3F4F6; color: var(--ink);
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ep-close:hover { background: #E5E7EB; }
+  .ep-modal-note {
+    margin: 0 0 18px; font-size: 13px; font-weight: 600; color: #7C3AED; line-height: 1.4;
+  }
+  .ep-pw {
+    position: relative;
+  }
+  .ep-pw input { padding-right: 48px; }
+  .ep-eye {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 34px; height: 34px; border: none; border-radius: 50%;
+    background: transparent; color: #9CA3AF;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .ep-eye:hover { color: var(--ink); background: rgba(0,0,0,.04); }
+  .ep-modal-actions {
+    display: grid; grid-template-columns: 1fr 1.35fr; gap: 10px; margin-top: 8px;
+  }
+  .ep-btn-cancel {
+    border: none; border-radius: 999px; padding: 13px 14px;
+    background: #EEF2FF; color: var(--ink);
+    font-size: 14px; font-weight: 800;
+  }
+  .ep-btn-cancel:hover { background: #E0E7FF; }
+  .ep-btn-update {
+    border: none; border-radius: 999px; padding: 13px 14px;
+    background: var(--grad); color: #fff;
+    font-size: 14px; font-weight: 800;
+    box-shadow: 0 10px 22px rgba(236,72,153,.28);
+  }
+  .ep-btn-update:hover { filter: brightness(1.03); }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 20px; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 16px; }
+    .ep-avatar, .ep-avatar img { width: 108px; height: 108px; }
+    .ep-modal-actions { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge" data-pb-gallery-count hidden>0</span>
+      </a>
+      <a href="account.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">30</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a href="account.html" class="pb-back" aria-label="Back to Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div class="pb-topbar-title">Edit Profile</div>
+        <div class="pb-topbar-sub">Update your name, email &amp; photo</div>
+      </div>
+      <div class="pb-top-actions">
+        <button type="button" class="ep-save-ico" id="btn-save-top" aria-label="Save">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 4h11l3 3v13H5V4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 4v5h8V4M8 20v-7h8v7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="ep-flow">
+        <div class="ep-avatar-wrap">
+          <div class="ep-avatar">
+            <img id="ep-photo" src="assets/dashboard/images/img1.jpg" alt="Profile photo">
+            <button type="button" class="ep-cam" id="btn-photo" aria-label="Change photo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1.1-1.6A1.5 1.5 0 0110 3.5h4a1.5 1.5 0 011.2.9L16.3 6h1.2A2.5 2.5 0 0120 8.5v8A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-8z" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3.2" stroke="#fff" stroke-width="1.8"/></svg>
+            </button>
+            <input type="file" id="photo-file" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <form class="ep-card" id="ep-form" autocomplete="on">
+          <div class="ep-field">
+            <label for="ep-name">Full Name</label>
+            <input id="ep-name" name="name" type="text" value="9845673647">
+          </div>
+          <div class="ep-field">
+            <label for="ep-email">Email</label>
+            <input id="ep-email" name="email" type="email" value="9845673647@pixelblend.app">
+          </div>
+          <div class="ep-field">
+            <label for="ep-phone">Phone Number</label>
+            <input id="ep-phone" name="phone" type="tel" value="9845673647">
+          </div>
+          <button type="button" class="ep-link" id="btn-change-pw">Change Password</button>
+          <p class="ep-note">Changing your email, phone or password signs you out on your other devices.</p>
+        </form>
+
+        <button type="button" class="ep-cta" id="btn-save">Save Changes</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="ep-overlay" id="pw-overlay" hidden>
+  <div class="ep-modal" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <div class="ep-modal-head">
+      <h2 id="pw-title">Change Password</h2>
+      <button type="button" class="ep-close" id="pw-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <p class="ep-modal-note">For your security, you'll be signed out on all devices, including this one.</p>
+    <div class="ep-field">
+      <label for="pw-current">Current Password</label>
+      <div class="ep-pw">
+        <input id="pw-current" type="password" placeholder="Enter current password">
+        <button type="button" class="ep-eye" data-eye="pw-current" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="ep-field">
+      <label for="pw-new">New Password</label>
+      <div class="ep-pw">
+        <input id="pw-new" type="password" placeholder="Enter new password">
+        <button type="button" class="ep-eye" data-eye="pw-new" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="ep-field">
+      <label for="pw-confirm">Confirm New Password</label>
+      <div class="ep-pw">
+        <input id="pw-confirm" type="password" placeholder="Re-enter new password">
+        <button type="button" class="ep-eye" data-eye="pw-confirm" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="ep-modal-actions">
+      <button type="button" class="ep-btn-cancel" id="pw-cancel">Cancel</button>
+      <button type="button" class="ep-btn-update" id="pw-update">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<div class="ep-toast" id="ep-toast">Profile saved</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+  }
+
+  var toast = document.getElementById('ep-toast');
+  var toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('on'); }, 2200);
+  }
+
+  function saveProfile() {
+    showToast('Profile saved');
+  }
+  document.getElementById('btn-save').addEventListener('click', saveProfile);
+  document.getElementById('btn-save-top').addEventListener('click', saveProfile);
+
+  var photoFile = document.getElementById('photo-file');
+  var photoImg = document.getElementById('ep-photo');
+  document.getElementById('btn-photo').addEventListener('click', function () { photoFile.click(); });
+  photoFile.addEventListener('change', function () {
+    var f = photoFile.files && photoFile.files[0];
+    if (!f) return;
+    var url = URL.createObjectURL(f);
+    photoImg.src = url;
+    showToast('Photo updated');
+  });
+
+  var overlay = document.getElementById('pw-overlay');
+  function openPw() { overlay.hidden = false; document.getElementById('pw-current').focus(); }
+  function closePw() { overlay.hidden = true; }
+  document.getElementById('btn-change-pw').addEventListener('click', openPw);
+  document.getElementById('pw-close').addEventListener('click', closePw);
+  document.getElementById('pw-cancel').addEventListener('click', closePw);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closePw();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !overlay.hidden) closePw();
+  });
+
+  document.querySelectorAll('.ep-eye').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-eye');
+      var input = document.getElementById(id);
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+    });
+  });
+
+  document.getElementById('pw-update').addEventListener('click', function () {
+    var cur = document.getElementById('pw-current').value;
+    var nw = document.getElementById('pw-new').value;
+    var conf = document.getElementById('pw-confirm').value;
+    if (!cur || !nw || !conf) {
+      showToast('Fill all password fields');
+      return;
+    }
+    if (nw !== conf) {
+      showToast('New passwords do not match');
+      return;
+    }
+    closePw();
+    document.getElementById('pw-current').value = '';
+    document.getElementById('pw-new').value = '';
+    document.getElementById('pw-confirm').value = '';
+    showToast('Password updated — signed out elsewhere');
+  });
+})();
+</script>
+</body>
+</html>

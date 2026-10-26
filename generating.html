@@ -2,102 +2,272 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Creating · PixelBlend</title>
+<title>Creating · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
   * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh;
-    font-family: 'Hanken Grotesk', sans-serif;
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #9333EA, #DB2777, #E11D48);
-    color: #fff; -webkit-font-smoothing: antialiased;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px; min-width: 18px; text-align: center;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-content {
+    padding: 0;
+    width: 100%; flex: 1 1 auto; min-height: 0;
+    display: flex; align-items: stretch; justify-content: stretch;
+  }
+  .pb-toggle { display: none; }
+
+  .gn-flow {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .gn-card {
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 0;
+    height: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
     overflow: hidden;
   }
+
+  .gl-panel {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    padding: 40px 28px;
+    background: linear-gradient(135deg, #9333EA, #DB2777, #E11D48);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
   .gl-wrap {
-    width: min(400px, 100%);
-    padding: 32px 32px 40px;
+    width: min(420px, 92%);
     display: flex; flex-direction: column; align-items: center; text-align: center;
   }
   .gl-icon {
-    width: 128px; height: 128px; border-radius: 50%;
-    background: rgba(255,255,255,.2);
+    width: 88px; height: 88px; border-radius: 50%;
+    background: rgba(255,255,255,.22);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 32px;
-    animation: glPulse 2s ease-in-out infinite, glSpin 3s linear infinite;
+    margin-bottom: 22px;
+    animation: glPulse 2s ease-in-out infinite;
   }
-  @keyframes glSpin {
-    from { transform: rotate(0deg) scale(1); }
-    to { transform: rotate(360deg) scale(1); }
-  }
+  .gl-icon svg { width: 40px; height: 40px; }
   @keyframes glPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.15); }
-    50% { box-shadow: 0 0 0 16px rgba(255,255,255,0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.15); transform: scale(1); }
+    50% { box-shadow: 0 0 0 14px rgba(255,255,255,0); transform: scale(1.04); }
   }
   .gl-step {
-    min-height: 56px; margin-bottom: 32px;
-    display: flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 36px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
     width: 100%;
   }
-  .gl-step svg { flex-shrink: 0; }
+  .gl-step svg { flex-shrink: 0; width: 20px; height: 20px; }
   .gl-step span {
-    font-size: 22px; font-weight: 700; line-height: 1.25; text-align: center;
+    font-size: 20px; font-weight: 700; line-height: 1.3; text-align: center;
   }
-  .gl-progress { width: 100%; margin-bottom: 24px; }
+  .gl-progress { width: 100%; margin-bottom: 14px; }
   .gl-track {
-    width: 100%; height: 12px; border-radius: 999px;
-    background: rgba(255,255,255,.2); overflow: hidden;
+    width: 100%; height: 10px; border-radius: 999px;
+    background: rgba(255,255,255,.22); overflow: hidden;
   }
   .gl-fill {
-    height: 100%; width: 1%; min-width: 4px; border-radius: 999px;
+    height: 100%; width: 1%; min-width: 6px; border-radius: 999px;
     background: linear-gradient(90deg, #fff, #FEF08A);
     transition: width .08s linear;
   }
   .gl-pct {
-    margin-top: 8px; font-size: 14px; font-weight: 500;
-    color: rgba(255,255,255,.9);
+    margin-top: 8px; font-size: 15px; font-weight: 700;
+    color: rgba(255,255,255,.95);
   }
-  .gl-dots { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .gl-dots { display: flex; gap: 7px; align-items: center; justify-content: center; }
   .gl-dot {
-    width: 8px; height: 8px; border-radius: 4px;
+    width: 7px; height: 7px; border-radius: 4px;
     background: rgba(255,255,255,.4); transition: .25s ease;
   }
-  .gl-dot.on { width: 24px; background: #fff; }
+  .gl-dot.on { width: 22px; background: #fff; }
   .gl-foot {
-    margin-top: 32px; font-size: 14px; color: rgba(255,255,255,.8);
+    margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.85);
     animation: glBlink 2s ease-in-out infinite;
   }
   @keyframes glBlink {
     0%, 100% { opacity: .7; }
     50% { opacity: 1; }
   }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 0; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 0; }
+  }
 </style>
 </head>
 <body>
-  <div class="gl-wrap">
-    <div class="gl-icon" aria-hidden="true">
-      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
-        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-      </svg>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge" data-pb-gallery-count hidden>0</span>
+      </a>
+      <a href="account.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">150</span>
+      </div>
     </div>
-    <div class="gl-step">
-      <span id="gl-icon-slot"></span>
-      <span id="gl-text">Uploading your photos...</span>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div class="pb-topbar-title">Generate</div>
+        <div class="pb-topbar-sub">Creating your AI blend…</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="gn-flow">
+        <div class="gn-card">
+          <div class="gl-panel">
+            <div class="gl-wrap">
+              <div class="gl-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="gl-step">
+                <span id="gl-icon-slot"></span>
+                <span id="gl-text">Uploading your photos...</span>
+              </div>
+              <div class="gl-progress">
+                <div class="gl-track"><div class="gl-fill" id="gl-fill"></div></div>
+                <div class="gl-pct" id="gl-pct">0%</div>
+              </div>
+              <div class="gl-dots" id="gl-dots"></div>
+              <div class="gl-foot">Creating something amazing...</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="gl-progress">
-      <div class="gl-track"><div class="gl-fill" id="gl-fill"></div></div>
-      <div class="gl-pct" id="gl-pct">0%</div>
-    </div>
-    <div class="gl-dots" id="gl-dots"></div>
-    <div class="gl-foot">Creating something amazing...</div>
-  </div>
+  </main>
+</div>
+
 <script>
 (function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+
   var steps = [
     { text: 'Uploading your photos...', duration: 2000 },
     { text: 'Preparing your generation...', duration: 2500 },
@@ -105,10 +275,10 @@
     { text: 'Almost there...', duration: 1500 }
   ];
   var icons = [
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="18" height="18" x="3" y="3" rx="2" stroke="#fff" stroke-width="2"/><circle cx="9" cy="9" r="2" stroke="#fff" stroke-width="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2 18.56V22h3.44L21.64 5.36a1.21 1.21 0 0 0 0-1.72" stroke="#fff" stroke-width="2"/><path d="m14 7 3 3M5 6v4M19 14v4M10 2v2M7 8H3M21 16h-4M11 3H9" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" stroke="#fff" stroke-width="2"/></svg>',
-    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21.801 10A10 10 0 1 1 17 3.335" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 11 2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="18" height="18" x="3" y="3" rx="2" stroke="#fff" stroke-width="2"/><circle cx="9" cy="9" r="2" stroke="#fff" stroke-width="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" stroke="#fff" stroke-width="2"/></svg>',
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21.801 10A10 10 0 1 1 17 3.335" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="m9 11 2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="m9 11 2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2"/></svg>'
   ];
 
   var textEl = document.getElementById('gl-text');
@@ -154,6 +324,14 @@
     setTimeout(function () { next(i + 1); }, steps[i].duration);
   }
   setTimeout(function () { next(1); }, steps[0].duration);
+
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function () {
+      sidebar.classList.toggle('open');
+    });
+  }
 })();
 </script>
 </body>
