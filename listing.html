@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
 <script src="js/pb-gallery.js?v=3"></script>
+<script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -806,8 +807,66 @@
     document.getElementById('ld-try-ai').onclick = goTryAi;
   }
 
+  function resolveListing(id) {
+    if (LISTINGS[id]) return LISTINGS[id];
+    var wish = null;
+    try {
+      if (window.pbWishlist) {
+        wish = pbWishlist.list().filter(function (x) { return x.id === id; })[0] || null;
+      } else {
+        var raw = localStorage.getItem('pb-wishlist');
+        var arr = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(arr)) wish = arr.filter(function (x) { return x.id === id; })[0] || null;
+      }
+    } catch (e) {}
+    if (wish) {
+      return {
+        id: wish.id,
+        title: wish.title || 'Background',
+        img: wish.img,
+        gallery: [wish.img],
+        seller: wish.seller || 'Seller',
+        sellerId: 'visual-vibes',
+        sellerAvatar: 'assets/dashboard/images/img31.jpg',
+        listingsCount: 3,
+        views: '—',
+        gens: '—',
+        posted: 'Just now',
+        more: [
+          { id: 'rustic-charm', img: 'assets/dashboard/images/img2.jpg' },
+          { id: 'mountain-sunset', img: 'assets/dashboard/images/img23.jpg' },
+          { id: 'beach-waves', img: 'assets/dashboard/images/img25.jpg' }
+        ]
+      };
+    }
+    var fb = null;
+    try {
+      fb = JSON.parse(sessionStorage.getItem('pb-listing-fallback') || 'null');
+    } catch (e2) {}
+    if (fb && fb.id === id) {
+      return {
+        id: fb.id,
+        title: fb.title || 'Background',
+        img: fb.img || 'assets/dashboard/images/img2.jpg',
+        gallery: [fb.img || 'assets/dashboard/images/img2.jpg'],
+        seller: fb.seller || 'Seller',
+        sellerId: fb.sellerId || 'visual-vibes',
+        sellerAvatar: 'assets/dashboard/images/img31.jpg',
+        listingsCount: 1,
+        views: '0',
+        gens: '0',
+        posted: 'Just now',
+        more: [
+          { id: 'rustic-charm', img: 'assets/dashboard/images/img2.jpg' },
+          { id: 'forest-mist', img: 'assets/dashboard/images/img26.jpg' }
+        ]
+      };
+    }
+    return LISTINGS['mountain-sunset'];
+  }
+
   var id = qs('id') || 'mountain-sunset';
-  var listing = LISTINGS[id] || LISTINGS['mountain-sunset'];
+  var listing = resolveListing(id);
   render(listing);
   bindSwipe();
 

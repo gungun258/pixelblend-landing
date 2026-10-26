@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
 <script src="js/pb-gallery.js"></script>
+<script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -333,7 +334,12 @@
     left: 10px; background: var(--grad); color: #fff;
     box-shadow: 0 6px 12px rgba(196,46,139,.35);
   }
-  .dc-bg .tr { right: 10px; background: rgba(255,255,255,.95); color: #EC4899; }
+  .dc-bg .tr {
+    right: 10px; background: rgba(255,255,255,.95); color: #EC4899;
+    border: none; padding: 0; cursor: pointer; font-size: 14px; line-height: 1;
+    box-shadow: 0 4px 12px rgba(30,20,34,.12);
+  }
+  .dc-bg .tr.is-liked { color: #EC4899; }
   .dc-blend {
     position: absolute; left: 10px; right: 10px; bottom: 10px;
     display: flex; align-items: center; justify-content: center; gap: 5px;
@@ -720,45 +726,45 @@
           <a class="dc-link" href="#">View All →</a>
         </div>
         <div class="dc-new">
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img20" data-wish-title="Soft Studio" data-wish-img="assets/dashboard/images/img20.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img20.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img16" data-wish-title="Forest Path" data-wish-img="assets/dashboard/images/img16.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img16.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img26" data-wish-title="Mist Valley" data-wish-img="assets/dashboard/images/img26.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img26.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img5" data-wish-title="Studio Softbox" data-wish-img="assets/dashboard/images/img5.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img5.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img4" data-wish-title="Night Glow" data-wish-img="assets/dashboard/images/img4.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img4.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img23" data-wish-title="Mountain Sunset" data-wish-img="assets/dashboard/images/img23.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img23.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img18" data-wish-title="City Lights" data-wish-img="assets/dashboard/images/img18.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img18.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg">
+          <div class="dc-bg" data-wish-id="new-img3" data-wish-title="Portrait Soft" data-wish-img="assets/dashboard/images/img3.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img3.jpg" alt="">
-            <span class="tl">↗</span><span class="tr">♡</span>
-            <a class="dc-blend" href="dashboard.html">✨ Blend it</a>
+            <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
+            <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
         </div>
       </section>
@@ -840,6 +846,8 @@
   ['.dc-new', '.dc-follow', '.dc-trend', '.dc-community'].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(wireHScroll);
   });
+
+  if (window.pbWishlist) pbWishlist.bindAll(document);
 })();
 </script>
 </body>

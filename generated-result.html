@@ -7,6 +7,7 @@
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <script src="js/pb-nav-boot.js?v=3"></script>
 <script src="js/pb-gallery.js"></script>
+<script src="js/pb-refunds.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -910,10 +911,24 @@
   });
   rfSubmit.addEventListener('click', function () {
     if (rfSubmit.disabled) return;
+    var picked = document.querySelector('input[name="rf-reason"]:checked');
+    var reasonKey = picked ? picked.value : 'other';
+    var details = (document.getElementById('rf-details').value || '').trim();
+    if (window.pbRefunds) {
+      pbRefunds.add({
+        reasonKey: reasonKey,
+        generationId: genId,
+        details: details,
+        resultUrl: downloadUri || (lastGenMeta && lastGenMeta.result) || ''
+      });
+    }
     closeRefund();
     showRefundStatus();
     openRefundOk();
   });
+  if (window.pbRefunds && pbRefunds.hasForGeneration(genId)) {
+    showRefundStatus();
+  }
   document.getElementById('rf-ok').addEventListener('click', closeRefundOk);
   refundOkModal.addEventListener('click', function (e) {
     if (e.target === refundOkModal) closeRefundOk();

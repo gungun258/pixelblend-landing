@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
 <script src="js/pb-gallery.js"></script>
+<script src="js/pb-wishlist.js?v=1"></script>
 <script>window.__resources={"img1":"assets/dashboard/images/img1.jpg","img2":"assets/dashboard/images/img2.jpg","img3":"assets/dashboard/images/img3.jpg","img4":"assets/dashboard/images/img4.jpg","img5":"assets/dashboard/images/img5.jpg","img7":"assets/dashboard/images/img7.jpg","img6":"assets/dashboard/images/img6.jpg","img8":"assets/dashboard/images/img8.jpg","img9":"assets/dashboard/images/img9.jpg","img10":"assets/dashboard/images/img10.jpg","img11":"assets/dashboard/images/img11.jpg","img12":"assets/dashboard/images/img12.jpg","img13":"assets/dashboard/images/img13.jpg","img14":"assets/dashboard/images/img14.jpg","img15":"assets/dashboard/images/img15.jpg","img16":"assets/dashboard/images/img16.jpg","img17":"assets/dashboard/images/img17.jpg","img18":"assets/dashboard/images/img18.jpg","img19":"assets/dashboard/images/img19.jpg","img20":"assets/dashboard/images/img20.jpg","img21":"assets/dashboard/images/img21.jpg","img23":"assets/dashboard/images/img23.jpg","img24":"assets/dashboard/images/img24.jpg","img27":"assets/dashboard/images/img27.jpg","img22":"assets/dashboard/images/img22.jpg","img25":"assets/dashboard/images/img25.jpg","img28":"assets/dashboard/images/img28.jpg","img26":"assets/dashboard/images/img26.jpg","img29":"assets/dashboard/images/img29.jpg","img30":"assets/dashboard/images/img30.jpg","img31":"assets/dashboard/images/img31.jpg","img32":"assets/dashboard/images/img32.jpg","img33":"assets/dashboard/images/img33.jpg"};</script>
 <script src="assets/dashboard/js/react.production.min.js"></script>
 <script src="assets/dashboard/js/react-dom.production.min.js"></script>
@@ -848,7 +849,9 @@
               <span style="position: absolute; top: 10px; left: 10px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px rgba(168,85,247,.35);" title="Trending">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3.5 16.5l5.2-5.2 3.3 3.3 6.5-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.2 7.5h4.3v4.3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
-              <button type="button" class="pb-heart-btn" aria-label="Like" aria-pressed="false" style="position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,.96); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(30,20,34,.12); cursor: pointer; z-index: 2;">
+              <button type="button" class="pb-heart-btn" aria-label="Save to Wishlist" aria-pressed="false"
+                data-wish-id="{{ t.id }}" data-wish-title="{{ t.title }}" data-wish-img="{{ t.img }}" data-wish-seller="Trending" data-wish-tag="Background" data-wish-trending="1"
+                style="position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,.96); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(30,20,34,.12); cursor: pointer; z-index: 2;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="pb-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/></svg>
               </button>
               <div style="position: absolute; left: 14px; right: 14px; bottom: 14px;">
@@ -1265,26 +1268,7 @@ class Component extends DCLogic {
         } catch (err) {}
       });
     });
-    document.querySelectorAll('.pb-heart-btn').forEach(function (btn) {
-      if (btn.__pbBound) return;
-      btn.__pbBound = true;
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var on = btn.classList.toggle('is-liked');
-        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        var path = btn.querySelector('.pb-heart-path');
-        if (path) {
-          if (on) {
-            path.setAttribute('fill', '#EC4899');
-            path.setAttribute('stroke', '#EC4899');
-          } else {
-            path.setAttribute('fill', 'none');
-            path.setAttribute('stroke', '#EC4899');
-          }
-        }
-      });
-    });
+    if (window.pbWishlist) pbWishlist.bindAll(document);
     document.querySelectorAll('.pb-trend-card').forEach(function (card) {
       if (card.__pbBound) return;
       card.__pbBound = true;
