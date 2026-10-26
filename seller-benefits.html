@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seller Benefits · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --grad-warm: linear-gradient(145deg, #E040A8 0%, #F06B6B 45%, #F5A05A 100%);
+    --purple-deep: #3B1F4A;
+    --lavender: #F3ECFB;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+  .em {
+    font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; letter-spacing: -.01em;
+    padding-right: 0.18em; display: inline-block;
+  }
+  .em-lite {
+    font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400;
+    color: #F9A8D4; letter-spacing: -.01em;
+    padding-right: 0.12em; display: inline-block;
+  }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px; min-width: 18px; text-align: center;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pb-back:hover { background: #FBF1FB; }
+  .pb-content { flex: 1 1 auto; padding: 28px 36px 56px; width: 100%; }
+  .pb-toggle { display: none; }
+
+  .sb-flow { width: min(1120px, 100%); margin: 0 auto; }
+
+  .sb-kicker {
+    display: block; text-align: center; margin: 0 0 10px;
+    font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    color: #DB2777;
+  }
+  .sb-top {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    align-items: stretch; margin: 0 0 40px;
+  }
+  .sb-hero {
+    text-align: left; margin: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 28px 26px 26px;
+    background: linear-gradient(155deg, #F8FBFA 0%, #F7F1FB 55%, #FDF2F8 100%);
+    border: 1px solid rgba(240,230,242,.9);
+    border-radius: 22px;
+    box-shadow: 0 14px 32px -22px rgba(30,20,34,.28);
+  }
+  .sb-hero .sb-kicker { text-align: left; margin-bottom: 10px; font-size: 11px; }
+  .sb-hero h1 {
+    margin: 0 0 12px; font-size: clamp(26px, 2.8vw, 34px); font-weight: 800;
+    letter-spacing: -.035em; line-height: 1.12;
+  }
+  .sb-hero p {
+    margin: 0 0 18px; max-width: 40ch;
+    font-size: 14px; font-weight: 500; color: var(--muted); line-height: 1.55;
+  }
+  .sb-pill {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    padding: 11px 18px; border-radius: 999px; border: none;
+    background: var(--grad); color: #fff; font-size: 13px; font-weight: 700;
+    box-shadow: 0 10px 24px rgba(236,72,153,.28);
+  }
+
+  .sb-checks {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin: 0; padding: 18px;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(236,72,153,.22), transparent 45%),
+      radial-gradient(ellipse at 90% 85%, rgba(168,85,247,.2), transparent 40%),
+      var(--purple-deep);
+    border-radius: 22px; color: #fff;
+    box-shadow: 0 14px 32px -18px rgba(59,31,74,.5);
+    align-content: stretch;
+  }
+  .sb-check {
+    display: flex; flex-direction: row; align-items: center; text-align: left; gap: 12px;
+    padding: 14px 14px;
+    height: auto;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    backdrop-filter: blur(6px);
+    min-height: 0;
+  }
+  .sb-check-ico {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(150deg, #E83A9C 0%, #F06A7A 42%, #FF8F4A 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(232,58,156,.4);
+    flex-shrink: 0;
+  }
+  .sb-check-ico svg {
+    display: block; width: 14px; height: 14px;
+    stroke: #fff; stroke-width: 2.6;
+  }
+  .sb-check span { font-size: 13px; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; }
+
+  .sb-mid { text-align: center; margin: 0 0 22px; }
+  .sb-mid h2 {
+    margin: 0 0 10px; font-size: clamp(26px, 3vw, 34px); font-weight: 800;
+    letter-spacing: -.03em; line-height: 1.15;
+  }
+  .sb-mid p {
+    margin: 0 auto; max-width: 520px;
+    font-size: 14px; font-weight: 500; color: var(--muted); line-height: 1.5;
+  }
+  .sb-mid p strong { color: var(--ink); font-weight: 800; }
+
+  .sb-way {
+    border-radius: 28px; padding: 28px 28px 26px; margin: 0 0 22px;
+  }
+  .sb-way-1 { background: var(--lavender); }
+  .sb-way-2 {
+    background: linear-gradient(160deg, #4A2860 0%, #3B1F4A 55%, #2E1638 100%);
+    color: #fff;
+  }
+  .sb-badge {
+    display: inline-flex; align-items: center;
+    padding: 7px 12px; border-radius: 999px;
+    font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sb-way-1 .sb-badge { background: #7C3AED; color: #fff; }
+  .sb-way-2 .sb-badge {
+    background: transparent; color: #E9D5FF;
+    border: 1.5px solid rgba(233,213,255,.45);
+  }
+  .sb-way h3 {
+    margin: 0 0 10px; font-size: clamp(24px, 2.6vw, 30px); font-weight: 800;
+    letter-spacing: -.03em; line-height: 1.15;
+  }
+  .sb-way .sb-copy {
+    margin: 0 0 22px; font-size: 14px; font-weight: 500; line-height: 1.55;
+    color: var(--muted); max-width: 640px;
+  }
+  .sb-way-2 .sb-copy { color: rgba(255,255,255,.82); }
+
+  .sb-steps { display: flex; flex-direction: column; gap: 0; margin: 0 0 22px; }
+  .sb-way-1 .sb-steps {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 24px;
+  }
+  .sb-step {
+    display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: start;
+    position: relative; padding-bottom: 18px;
+  }
+  .sb-way-1 .sb-step {
+    padding: 16px 16px 16px 14px; padding-bottom: 16px;
+    background: rgba(255,255,255,.78); border-radius: 18px;
+    box-shadow: 0 6px 18px -14px rgba(30,20,34,.28);
+  }
+  .sb-step:last-child { padding-bottom: 0; }
+  .sb-way-1 .sb-step:last-child { padding-bottom: 16px; }
+  .sb-step:not(:last-child)::before {
+    content: ''; position: absolute; left: 23px; top: 48px; bottom: 0;
+    width: 2px; background: rgba(168,85,247,.22);
+  }
+  .sb-way-1 .sb-step:not(:last-child)::before { display: none; }
+  .sb-way-2 .sb-step:not(:last-child)::before { background: rgba(255,255,255,.18); }
+  .sb-step-ico {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(30,20,34,.08); font-size: 22px; z-index: 1;
+  }
+  .sb-way-1 .sb-step-ico {
+    background: #fff; box-shadow: 0 4px 12px rgba(168,85,247,.12);
+  }
+  .sb-way-2 .sb-step-ico {
+    background: var(--grad); color: #fff; box-shadow: 0 8px 18px rgba(236,72,153,.28);
+  }
+  .sb-step strong { display: block; font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+  .sb-step span { font-size: 13px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .sb-way-2 .sb-step span { color: rgba(255,255,255,.72); }
+  .sb-way-1 .sb-copy { max-width: none; }
+  .sb-step-label {
+    display: block; font-size: 10px; font-weight: 800; letter-spacing: .08em;
+    text-transform: uppercase; color: #C084FC; margin-bottom: 2px;
+  }
+
+  .sb-cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 14px 28px; border: none; border-radius: 999px;
+    font-size: 14px; font-weight: 800;
+  }
+  .sb-cta-grad {
+    width: auto; max-width: 100%;
+    margin: 0 auto; display: flex;
+    background: var(--grad); color: #fff;
+    box-shadow: 0 12px 28px rgba(236,72,153,.32);
+  }
+  .sb-way-1 .sb-cta-grad { width: fit-content; }
+  .sb-cta-white {
+    background: #fff; color: #9333EA;
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  }
+  .sb-cta:hover { filter: brightness(1.03); }
+
+  .sb-way2-grid {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; align-items: center;
+  }
+  .sb-chat {
+    position: relative;
+    background: #fff; border-radius: 22px; padding: 14px 14px 18px;
+    color: var(--ink); box-shadow: 0 16px 40px -18px rgba(0,0,0,.45);
+  }
+  .sb-chat-head {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 12px; border-bottom: 1px solid #F1E8F3; margin-bottom: 12px;
+  }
+  .sb-chat-av {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--grad); flex-shrink: 0;
+  }
+  .sb-chat-name { font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
+  .sb-chat-status { font-size: 11px; font-weight: 600; color: #16A34A; }
+  .sb-chat-actions { margin-left: auto; display: flex; gap: 8px; color: #9CA3AF; }
+  .sb-bubble {
+    max-width: 88%; padding: 10px 12px; border-radius: 16px;
+    font-size: 13px; font-weight: 600; line-height: 1.35; margin-bottom: 8px;
+  }
+  .sb-bubble.in { background: #F3F4F6; border-bottom-left-radius: 6px; }
+  .sb-bubble.out {
+    margin-left: auto; background: var(--grad); color: #fff;
+    border-bottom-right-radius: 6px;
+  }
+  .sb-linkcard {
+    margin: 0 0 10px 12%;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px; border-radius: 14px; border: 1.5px solid #EDE4EF; background: #fff;
+  }
+  .sb-linkcard img, .sb-linkthumb {
+    width: 42px; height: 42px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+    background: linear-gradient(135deg, #FCE7F3, #E9D5FF);
+  }
+  .sb-linkcard strong { display: block; font-size: 12px; font-weight: 800; }
+  .sb-linkcard span { font-size: 10px; color: var(--soft); font-weight: 600; }
+  .sb-open {
+    margin-left: auto; padding: 7px 12px; border: none; border-radius: 999px;
+    background: var(--grad); color: #fff; font-size: 11px; font-weight: 800;
+  }
+  .sb-confirm {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 4px auto 0; padding: 7px 12px; border-radius: 999px;
+    background: #DCFCE7; color: #166534; font-size: 12px; font-weight: 800;
+  }
+  .sb-confirm-wrap { display: flex; justify-content: center; margin-top: 4px; }
+  .sb-float {
+    position: absolute; left: 12px; bottom: -14px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-radius: 14px; background: #fff;
+    box-shadow: 0 10px 24px rgba(0,0,0,.14);
+    font-size: 11px; font-weight: 700; color: var(--ink); line-height: 1.25;
+  }
+  .sb-float-ico {
+    width: 28px; height: 28px; border-radius: 50%; background: #DBEAFE; color: #2563EB;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  .sb-why {
+    margin: 36px 0 22px; padding: 26px 22px;
+    background: var(--lavender); border-radius: 28px;
+  }
+  .sb-why h2 {
+    margin: 0 0 18px; text-align: center;
+    font-size: clamp(22px, 2.4vw, 28px); font-weight: 800; letter-spacing: -.03em;
+  }
+  .sb-why-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+  }
+  .sb-why-card {
+    background: rgba(255,255,255,.72); border-radius: 18px; padding: 18px 16px;
+  }
+  .sb-why-card.wide { grid-column: 1 / -1; }
+  .sb-why-stat {
+    font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: 1;
+    margin-bottom: 2px;
+  }
+  .sb-why-card h4 { margin: 0 0 6px; font-size: 15px; font-weight: 800; }
+  .sb-why-card p { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted); line-height: 1.4; }
+  .sb-why-ico { font-size: 22px; margin-bottom: 8px; display: block; }
+
+  .sb-final {
+    margin-top: 8px; padding: 36px 28px;
+    border-radius: 28px; text-align: center; color: #fff;
+    background: var(--grad);
+    box-shadow: 0 18px 40px -16px rgba(236,72,153,.45);
+  }
+  .sb-final h2 {
+    margin: 0 0 8px; font-size: clamp(24px, 2.8vw, 32px); font-weight: 800;
+    letter-spacing: -.03em;
+  }
+  .sb-final p { margin: 0 0 18px; font-size: 14px; font-weight: 600; opacity: .92; }
+  .sb-final .sb-cta-white { width: auto; min-width: 240px; padding-inline: 28px; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 20px; }
+    .sb-top { grid-template-columns: 1fr; gap: 16px; min-height: 0; }
+    .sb-hero { text-align: center; padding: 32px 24px; min-height: 0; }
+    .sb-hero .sb-kicker { text-align: center; }
+    .sb-hero p { max-width: none; margin-left: auto; margin-right: auto; }
+    .sb-pill { align-self: center; }
+    .sb-checks { padding: 28px 22px; min-height: 0; }
+    .sb-way2-grid { grid-template-columns: 1fr; }
+    .sb-way-1 .sb-steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 16px; }
+    .sb-checks { padding: 16px; gap: 10px; }
+    .sb-way { padding: 20px 16px; border-radius: 22px; }
+    .sb-float { position: static; margin-top: 14px; }
+    .sb-way-1 .sb-steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge" data-pb-gallery-count hidden>0</span>
+      </a>
+      <a href="account.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">30</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a href="account.html" class="pb-back" aria-label="Back to Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div class="pb-topbar-title">Seller Benefits</div>
+        <div class="pb-topbar-sub">List free · get discovered · close licenses</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="sb-flow">
+        <section class="sb-top">
+          <div class="sb-hero">
+            <span class="sb-kicker">For background creators</span>
+            <h1>How do we <span class="em">‘help’</span> sellers</h1>
+            <p>List your backdrops for free. Brands blend their products into your scenes with AI… then message you to license.</p>
+            <span class="sb-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 8l8-4 10 4-8 4L3 8z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 12v4c0 1.5 2.5 3 5 3s5-1.5 5-3v-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+              Listing is 100% free — forever
+            </span>
+          </div>
+
+          <div class="sb-checks" aria-label="Benefits">
+            <div class="sb-check">
+              <div class="sb-check-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span>No prompts to write</span>
+            </div>
+            <div class="sb-check">
+              <div class="sb-check-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span>No editing skills needed</span>
+            </div>
+            <div class="sb-check">
+              <div class="sb-check-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span>Just upload product + background</span>
+            </div>
+            <div class="sb-check">
+              <div class="sb-check-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span>AI does everything else</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="sb-mid">
+          <span class="sb-kicker">How we help you sell</span>
+          <h2>Two ways to close the deal</h2>
+          <p>Win <strong>brand-new licensees</strong> — and convert the <strong>hesitant ones</strong> you already have.</p>
+        </section>
+
+        <section class="sb-way sb-way-1">
+          <span class="sb-badge">Way 1 · Get new customers</span>
+          <h3>Get discovered by <span class="em">new brands</span></h3>
+          <p class="sb-copy">Brands browse your scenes, blend their products in with AI, then message you to license. High-intent leads, zero ad spend.</p>
+          <div class="sb-steps">
+            <div class="sb-step">
+              <div class="sb-step-ico">🏷️</div>
+              <div>
+                <strong>List your backdrops</strong>
+                <span>Upload your collection — free, no commission.</span>
+              </div>
+            </div>
+            <div class="sb-step">
+              <div class="sb-step-ico">🔍</div>
+              <div>
+                <strong>Brands discover you</strong>
+                <span>Creators browse your scenes on PixelBlend.</span>
+              </div>
+            </div>
+            <div class="sb-step">
+              <div class="sb-step-ico">🪞</div>
+              <div>
+                <strong>They AI-blend</strong>
+                <span>They see their product in your backdrop.</span>
+              </div>
+            </div>
+            <div class="sb-step">
+              <div class="sb-step-ico">💬</div>
+              <div>
+                <strong>Brand contacts you</strong>
+                <span>High-intent leads message you to license.</span>
+              </div>
+            </div>
+          </div>
+          <a class="sb-cta sb-cta-grad" href="sellers.html">List your backdrops — free</a>
+        </section>
+
+        <section class="sb-way sb-way-2">
+          <div class="sb-way2-grid">
+            <div>
+              <span class="sb-badge">Way 2 · Close deals</span>
+              <h3>Share your listing links <span class="em-lite">directly</span></h3>
+              <p class="sb-copy">They found your backdrop but aren’t sure it fits. Share your link — they blend their product in, see the result, and come back ready to license.</p>
+
+              <div class="sb-steps">
+                <div class="sb-step">
+                  <div class="sb-step-ico">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M10 14a5 5 0 007.07 0l2.12-2.12a5 5 0 00-7.07-7.07L11 5.9" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/><path d="M14 10a5 5 0 00-7.07 0L4.8 12.12a5 5 0 007.07 7.07L13 18.1" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg>
+                  </div>
+                  <div>
+                    <span class="sb-step-label">Step 1</span>
+                    <strong>Share your listing link</strong>
+                    <span>Drop it in Instagram, WhatsApp — anywhere you chat.</span>
+                  </div>
+                </div>
+                <div class="sb-step">
+                  <div class="sb-step-ico">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 3l-1 7h5L9 21l1-8H6l7-10z" stroke="#fff" stroke-width="1.9" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div>
+                    <span class="sb-step-label">Step 2</span>
+                    <strong>They blend their product in</strong>
+                    <span>Our AI drops their product into your scene, instantly.</span>
+                  </div>
+                </div>
+                <div class="sb-step">
+                  <div class="sb-step-ico">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1.8"/></svg>
+                  </div>
+                  <div>
+                    <span class="sb-step-label">Step 3</span>
+                    <strong>They license with confidence</strong>
+                    <span>Higher conversions, fewer reshoots, happier brands.</span>
+                  </div>
+                </div>
+              </div>
+
+              <a class="sb-cta sb-cta-white" href="sellers.html">Get your shareable link</a>
+            </div>
+
+            <div class="sb-chat" aria-hidden="true">
+              <div class="sb-chat-head">
+                <div class="sb-chat-av"></div>
+                <div>
+                  <div class="sb-chat-name">arclight.co <svg width="14" height="14" viewBox="0 0 24 24" fill="#3B82F6"><path d="M12 2l2.2 2.2L17 3.5l.7 2.8L20.5 7l-.7 2.8L22 12l-2.2 2.2.7 2.8-2.8.7L17 20.5l-2.8-.7L12 22l-2.2-2.2-2.8.7-.7-2.8L3.5 17l.7-2.8L2 12l2.2-2.2L3.5 7l2.8-.7L7 3.5l2.8.7L12 2z"/><path d="M10 12.5l1.5 1.5 3-3" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+                  <div class="sb-chat-status">Active now</div>
+                </div>
+                <div class="sb-chat-actions">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 4h3l2 5-2 1a10 10 0 005 5l1-2 5 2v3a2 2 0 01-2 2A14 14 0 014 6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.7"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 10v6M12 7.5v.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                </div>
+              </div>
+              <div class="sb-bubble in">I love this backdrop 😍 …</div>
+              <div class="sb-bubble out">Blend your product in first! 👇</div>
+              <div class="sb-linkcard">
+                <div class="sb-linkthumb"></div>
+                <div>
+                  <strong>Blend your product with AI</strong>
+                  <span>pixelblend.app/blend/…</span>
+                </div>
+                <span class="sb-open">OPEN</span>
+              </div>
+              <div class="sb-bubble in">Omg it looks amazing 😍 I’ll license the full pack!</div>
+              <div class="sb-confirm-wrap"><span class="sb-confirm">✓ License confirmed · ₹2,499</span></div>
+              <div class="sb-float">
+                <span class="sb-float-ico">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.8"/></svg>
+                </span>
+                No reshoot costs<br>Sure before licensing.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sb-why">
+          <h2>Why creators list here</h2>
+          <div class="sb-why-grid">
+            <div class="sb-why-card">
+              <div class="sb-why-stat">0%</div>
+              <h4>commission</h4>
+              <p>You keep every rupee of every sale.</p>
+            </div>
+            <div class="sb-why-card">
+              <div class="sb-why-stat">₹0</div>
+              <h4>to list</h4>
+              <p>No listing fees, no limits on your catalogue.</p>
+            </div>
+            <div class="sb-why-card">
+              <span class="sb-why-ico">🎯</span>
+              <h4>High-intent leads</h4>
+              <p>Brands reach out after seeing their product in your scene.</p>
+            </div>
+            <div class="sb-why-card">
+              <span class="sb-why-ico">🏷️</span>
+              <h4>List your full catalogue</h4>
+              <p>Upload everything you sell at zero cost.</p>
+            </div>
+            <div class="sb-why-card wide">
+              <span class="sb-why-ico">💯</span>
+              <h4>Keep 100% of every sale</h4>
+              <p>No commission. No listing fees. Ever.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="sb-final">
+          <h2>Your catalogue could be live today</h2>
+          <p>Free to list · No commission · Reach brands ready to license.</p>
+          <a class="sb-cta sb-cta-white" href="sellers.html">Become a seller →</a>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+})();
+</script>
+</body>
+</html>

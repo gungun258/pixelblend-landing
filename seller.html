@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
 <script src="js/pb-gallery.js?v=3"></script>
+<script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -443,7 +444,7 @@
           (item.trending
             ? '<span class="sp-trend" title="Trending"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3.5 16.5l5.2-5.2 3.3 3.3 6.5-7.1" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.2 7.5h4.3v4.3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
             : '') +
-          '<button type="button" class="sp-heart" aria-label="Like" aria-pressed="false" data-stop="1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path class="sp-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/></svg></button>' +
+          '<button type="button" class="sp-heart" aria-label="Save to Wishlist" aria-pressed="false" data-stop="1" data-wish-id="' + item.id + '" data-wish-title="' + item.title.replace(/"/g, '&quot;') + '" data-wish-img="' + item.img + '" data-wish-seller="' + seller.name.replace(/"/g, '&quot;') + '" data-wish-tag="Listing" data-wish-trending="' + (item.trending ? '1' : '0') + '"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path class="sp-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/></svg></button>' +
         '</div>' +
         '<div class="sp-card-body">' +
           '<h3 class="sp-card-title">' + item.title + '</h3>' +
@@ -455,24 +456,16 @@
       grid.appendChild(a);
     });
 
-    grid.querySelectorAll('[data-stop]').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var on = btn.classList.toggle('is-liked');
-        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        var path = btn.querySelector('.sp-heart-path');
-        if (path) {
-          if (on) {
-            path.setAttribute('fill', '#EC4899');
-            path.setAttribute('stroke', '#EC4899');
-          } else {
-            path.setAttribute('fill', 'none');
-            path.setAttribute('stroke', '#EC4899');
-          }
-        }
+    if (window.pbWishlist) {
+      pbWishlist.bindAll(grid);
+    } else {
+      grid.querySelectorAll('[data-stop]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
       });
-    });
+    }
   }
 
   var id = qs('id') || 'visual-vibes';

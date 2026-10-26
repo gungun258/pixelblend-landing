@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FAQs · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font-family: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pb-content { flex: 1 1 auto; padding: 24px 32px 48px; }
+  .pb-toggle { display: none; }
+
+  .fq-flow { width: min(760px, 100%); margin: 0 auto; }
+
+  .fq-search {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 16px; margin-bottom: 10px;
+    box-shadow: 0 8px 20px -16px rgba(30,20,34,.25);
+  }
+  .fq-search svg { color: var(--soft); flex-shrink: 0; }
+  .fq-search input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-size: 15px; font-weight: 500; color: var(--ink);
+  }
+  .fq-search input::placeholder { color: #B0A8B6; }
+  .fq-lead {
+    margin: 0 0 18px; font-size: 13px; font-weight: 500; color: var(--soft); line-height: 1.45;
+  }
+
+  .fq-list { display: flex; flex-direction: column; gap: 10px; }
+  .fq-item {
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    overflow: hidden; box-shadow: 0 8px 20px -18px rgba(30,20,34,.25);
+  }
+  .fq-item[hidden] { display: none !important; }
+  .fq-q {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    width: 100%; border: none; background: transparent; padding: 16px 18px;
+    text-align: left; color: inherit; font: inherit; cursor: pointer;
+  }
+  .fq-q:hover { background: #FBF9FC; }
+  .fq-q span {
+    font-size: 15px; font-weight: 700; letter-spacing: -.01em; line-height: 1.35;
+  }
+  .fq-chev {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: #F3F4F6; color: var(--soft);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform .2s ease, background .15s ease, color .15s ease;
+  }
+  .fq-item.open .fq-chev {
+    transform: rotate(180deg);
+    background: #F3E8FF; color: #7C3AED;
+  }
+  .fq-a {
+    display: none; padding: 0 18px 16px;
+    font-size: 14px; font-weight: 500; color: var(--muted); line-height: 1.5;
+  }
+  .fq-item.open .fq-a { display: block; }
+
+  .fq-empty {
+    display: none; text-align: center; padding: 40px 16px;
+    background: #fff; border: 1px dashed #E5E7EB; border-radius: 16px;
+    color: var(--soft); font-size: 13px; font-weight: 600;
+  }
+  .fq-empty.on { display: block; }
+
+  .fq-more {
+    margin-top: 22px; text-align: center;
+    font-size: 13px; font-weight: 600; color: var(--soft);
+  }
+  .fq-more a { color: #7C3AED; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Home</span></a>
+      <a href="discover.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Discover</span></a>
+      <a href="generate.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Generate</span></a>
+      <a href="gallery.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Gallery</span><span class="pb-navbadge" data-pb-gallery-count hidden>0</span></a>
+      <a href="account.html" class="active"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="pb-navlabel">Account</span></a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">30</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a href="account.html" class="pb-back" aria-label="Back to Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div class="pb-topbar-title">FAQs</div>
+        <div class="pb-topbar-sub">Credits, generations &amp; selling</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="fq-flow">
+        <div class="fq-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="search" id="fq-search" placeholder="Search FAQs..." autocomplete="off">
+        </div>
+        <p class="fq-lead">Quick answers about credits, generations and selling on PixelBlend.</p>
+
+        <div class="fq-list" id="fq-list">
+          <article class="fq-item" data-q="What are credits and how do they work? credits buy pack">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>What are credits and how do they work?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">Credits power AI generations. Each blend uses credits from your balance. Buy packs anytime from Buy Credits — unused credits stay in your account.</div>
+          </article>
+
+          <article class="fq-item" data-q="How does background generation work? blend ai scene">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>How does background generation work?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">Upload a product photo, pick a background (or upload your own), then Generate. PixelBlend cuts out your subject and blends it into the scene in seconds.</div>
+          </article>
+
+          <article class="fq-item" data-q="Can I get a refund for a bad generation? refund request">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>Can I get a refund for a bad generation?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">Yes. Open the generation result and tap Request Refund within 24 hours. Choose a reason — we review within 24–48 hours and return credits if approved.</div>
+          </article>
+
+          <article class="fq-item" data-q="How do I become a seller? selling listings profile">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>How do I become a seller?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">Set up your Seller Profile, then open Seller Dashboard and tap Add New Listing. Once approved, your backgrounds go live for others to blend.</div>
+          </article>
+
+          <article class="fq-item" data-q="Why is my listing still pending? approval review">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>Why is my listing still pending?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">New listings go through a quick quality check. Most are reviewed shortly after submit. You’ll get a notification when it’s live or if action is needed.</div>
+          </article>
+
+          <article class="fq-item" data-q="What is the wishlist for? heart save favorites">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>What is the wishlist for?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">Tap the heart on any background to save it. Wishlist keeps them in one place so you can Try AI anytime without searching again.</div>
+          </article>
+
+          <article class="fq-item" data-q="Do my credits expire? expiry validity">
+            <button type="button" class="fq-q" aria-expanded="false">
+              <span>Do my credits expire?</span>
+              <span class="fq-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="fq-a">No — purchased credits don’t expire while your account is active. Use them whenever you’re ready to generate.</div>
+          </article>
+        </div>
+
+        <div class="fq-empty" id="fq-empty">No matching FAQs. Try another search.</div>
+
+        <p class="fq-more">Need more help? <a href="contact.html">Contact support</a> · <a href="faq.html">Full FAQ site</a></p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+
+  var list = document.getElementById('fq-list');
+  var empty = document.getElementById('fq-empty');
+  var search = document.getElementById('fq-search');
+
+  list.addEventListener('click', function (e) {
+    var btn = e.target.closest('.fq-q');
+    if (!btn) return;
+    var item = btn.closest('.fq-item');
+    var open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  function filter() {
+    var q = (search.value || '').trim().toLowerCase();
+    var n = 0;
+    list.querySelectorAll('.fq-item').forEach(function (item) {
+      var hay = (item.getAttribute('data-q') || '') + ' ' + (item.querySelector('.fq-a') || {}).textContent;
+      var show = !q || hay.toLowerCase().indexOf(q) !== -1;
+      item.hidden = !show;
+      if (show) n++;
+    });
+    empty.classList.toggle('on', n === 0);
+  }
+
+  search.addEventListener('input', filter);
+})();
+</script>
+</body>
+</html>

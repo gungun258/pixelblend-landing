@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seller Profile · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button, input, textarea { font-family: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pb-content { flex: 1 1 auto; padding: 24px 32px 48px; display: flex; justify-content: center; }
+  .pb-toggle { display: none; }
+
+  .sp-flow { width: min(720px, 100%); }
+
+  .sp-media { margin-bottom: 18px; }
+  .sp-banner-wrap { position: relative; }
+  .sp-banner {
+    position: relative;
+    width: 100%; aspect-ratio: 16 / 5.5; min-height: 160px;
+    border-radius: 20px; border: none; overflow: hidden;
+    background: #E8E8ED;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; color: #7C3AED; font-size: 14px; font-weight: 700;
+  }
+  .sp-banner:hover { filter: brightness(.98); }
+  .sp-banner.has-img { padding: 0; }
+  .sp-banner.has-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sp-banner .ph { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sp-banner.has-img .ph { display: none; }
+  .sp-banner-remove {
+    display: none;
+    position: absolute; top: 12px; right: 12px; z-index: 3;
+    align-items: center; gap: 6px;
+    padding: 7px 12px; border: none; border-radius: 999px;
+    background: rgba(30,20,34,.72); color: #fff;
+    font-size: 12px; font-weight: 700;
+    backdrop-filter: blur(6px);
+  }
+  .sp-banner-wrap.has-img .sp-banner-remove { display: inline-flex; }
+  .sp-banner-remove:hover { background: rgba(30,20,34,.88); }
+
+  .sp-logo-wrap {
+    margin: -46px 0 8px 22px; position: relative; z-index: 2; width: fit-content;
+  }
+  .sp-logo {
+    width: 92px; height: 92px; border-radius: 50%;
+    background: #fff; border: 4px solid #fff;
+    box-shadow: 0 8px 22px rgba(30,20,34,.14);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; overflow: hidden; color: #9CA3AF;
+  }
+  .sp-logo.has-img img { width: 100%; height: 100%; object-fit: cover; }
+  .sp-logo.has-img .ph { display: none; }
+  .sp-logo-actions {
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 10px; margin-left: 2px;
+  }
+  .sp-logo-actions .upload-only { display: inline; }
+  .sp-logo-actions .edit-only { display: none; }
+  .sp-logo-wrap.has-img .sp-logo-actions .upload-only { display: none; }
+  .sp-logo-wrap.has-img .sp-logo-actions .edit-only { display: inline; }
+  .sp-logo-act {
+    border: none; background: none; padding: 0;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .sp-logo-act.change { color: #2563EB; }
+  .sp-logo-act.upload { color: #7C3AED; }
+  .sp-logo-act.remove { color: #EF4444; }
+  .sp-logo-act:hover { text-decoration: underline; }
+
+  .sp-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 22px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 14px 32px -24px rgba(30,20,34,.3);
+  }
+  .sp-field { margin-bottom: 16px; }
+  .sp-field label {
+    display: block; margin: 0 0 8px;
+    font-size: 13px; font-weight: 800; color: var(--ink);
+  }
+  .sp-field input, .sp-field textarea {
+    width: 100%; border: none; outline: none;
+    background: #F3F4F6; color: var(--ink);
+    border-radius: 14px; padding: 14px 16px;
+    font-size: 14px; font-weight: 600;
+  }
+  .sp-field textarea {
+    min-height: 110px; resize: vertical; line-height: 1.45; font-weight: 500;
+  }
+  .sp-field input:focus, .sp-field textarea:focus {
+    box-shadow: 0 0 0 2px rgba(168,85,247,.22);
+  }
+  .sp-field input::placeholder, .sp-field textarea::placeholder {
+    color: #9CA3AF; font-weight: 500;
+  }
+  .sp-count {
+    display: block; text-align: right; margin-top: 6px;
+    font-size: 12px; font-weight: 600; color: var(--soft);
+  }
+  .sp-social {
+    position: relative;
+  }
+  .sp-social input { padding-left: 46px; }
+  .sp-social .si {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+
+  .sp-save {
+    display: flex; width: fit-content; min-width: 200px;
+    margin: 20px auto 0; align-items: center; justify-content: center;
+    padding: 14px 36px; border: none; border-radius: 999px;
+    background: var(--grad); color: #fff;
+    font-size: 15px; font-weight: 800;
+    box-shadow: 0 12px 28px rgba(236,72,153,.32);
+  }
+  .sp-save:hover { filter: brightness(1.03); }
+
+  .sp-toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(16px);
+    background: #1E1422; color: #fff; padding: 12px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
+    transition: .25s ease; z-index: 80;
+  }
+  .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .sp-overlay {
+    position: fixed; inset: 0; z-index: 70;
+    background: rgba(30,20,34,.45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .sp-modal {
+    width: min(360px, 100%);
+    background: #fff; border-radius: 24px;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,.4);
+    animation: spIn .2s ease;
+  }
+  @keyframes spIn {
+    from { opacity: 0; transform: translateY(8px) scale(.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .sp-modal h2 {
+    margin: 0 0 10px; font-size: 20px; font-weight: 800; letter-spacing: -.02em;
+  }
+  .sp-modal p {
+    margin: 0 0 22px; font-size: 14px; font-weight: 500; color: var(--soft); line-height: 1.45;
+  }
+  .sp-modal-actions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .sp-btn-keep {
+    border: none; border-radius: 999px; padding: 13px 12px;
+    background: #EEF2FF; color: var(--ink);
+    font-size: 14px; font-weight: 800;
+  }
+  .sp-btn-keep:hover { background: #E0E7FF; }
+  .sp-btn-discard {
+    border: 1.5px solid #FECACA; border-radius: 999px; padding: 13px 12px;
+    background: #FEF2F2; color: #EF4444;
+    font-size: 14px; font-weight: 800;
+  }
+  .sp-btn-discard:hover { background: #FEE2E2; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 20px; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 16px; }
+    .sp-logo { width: 78px; height: 78px; }
+    .sp-logo-wrap { margin-left: 16px; margin-top: -40px; }
+    .sp-save { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Home</span></a>
+      <a href="discover.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Discover</span></a>
+      <a href="generate.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Generate</span></a>
+      <a href="gallery.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Gallery</span><span class="pb-navbadge" data-pb-gallery-count hidden>0</span></a>
+      <a href="account.html" class="active"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="pb-navlabel">Account</span></a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">30</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <button type="button" class="pb-back" id="btn-back" aria-label="Back to Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div>
+        <div class="pb-topbar-title">Seller Profile</div>
+        <div class="pb-topbar-sub">Store banner, logo &amp; social links</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="sp-flow">
+        <div class="sp-media">
+          <div class="sp-banner-wrap" id="banner-wrap">
+            <button type="button" class="sp-banner" id="btn-banner" aria-label="Upload store banner">
+              <span class="ph">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.2" stroke="#A78BFA" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.5" stroke="#A78BFA" stroke-width="1.5"/><path d="M4.5 16l4.2-3.6 2.8 2.2L15 11l4.5 4.2" stroke="#A78BFA" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Upload store banner
+              </span>
+              <img id="banner-preview" alt="" hidden>
+            </button>
+            <button type="button" class="sp-banner-remove" id="btn-banner-remove" aria-label="Remove banner">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+              Remove
+            </button>
+            <input type="file" id="banner-file" accept="image/*" hidden>
+          </div>
+
+          <div class="sp-logo-wrap" id="logo-wrap">
+            <button type="button" class="sp-logo" id="btn-logo" aria-label="Upload store logo">
+              <span class="ph">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="8.5" cy="10" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 16l4.2-3.6 2.8 2.2L15 11l4.5 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <img id="logo-preview" alt="" hidden>
+            </button>
+            <div class="sp-logo-actions">
+              <button type="button" class="sp-logo-act upload upload-only" id="btn-logo-upload">Upload store logo</button>
+              <button type="button" class="sp-logo-act change edit-only" id="btn-logo-change">Change logo</button>
+              <button type="button" class="sp-logo-act remove edit-only" id="btn-logo-remove">Remove</button>
+            </div>
+            <input type="file" id="logo-file" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <form class="sp-card" id="sp-form">
+          <div class="sp-field">
+            <label for="sp-name">Store Name</label>
+            <input id="sp-name" type="text" placeholder="e.g. Luna's Art Studio">
+          </div>
+          <div class="sp-field">
+            <label for="sp-desc">Store Description</label>
+            <textarea id="sp-desc" maxlength="300" placeholder="Tell buyers about your store, products and what makes it special"></textarea>
+            <span class="sp-count" id="sp-count">0/300</span>
+          </div>
+          <div class="sp-field">
+            <label for="sp-wa">WhatsApp</label>
+            <div class="sp-social">
+              <span class="si" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 00-8.7 14.9L2 22l5.2-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7.9-.3.2-.5.1a6.7 6.7 0 01-2-1.2 7.4 7.4 0 01-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.1-.3a.7.7 0 000-.5c0-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.5a1 1 0 00-.7.3 2.9 2.9 0 00-.9 2.2 5 5 0 001.1 2.6 11.5 11.5 0 004.4 3.9c.5.2 1 .4 1.4.5a3.4 3.4 0 001.8.1 2.7 2.7 0 001.7-1.2 2.2 2.2 0 00.1-1.2c-.1-.1-.3-.2-.5-.3z"/></svg>
+              </span>
+              <input id="sp-wa" type="tel" placeholder="+91 98765 43210">
+            </div>
+          </div>
+          <div class="sp-field">
+            <label for="sp-ig">Instagram</label>
+            <div class="sp-social">
+              <span class="si" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#E1306C" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#E1306C" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="#E1306C"/></svg>
+              </span>
+              <input id="sp-ig" type="text" placeholder="@yourhandle">
+            </div>
+          </div>
+          <div class="sp-field">
+            <label for="sp-fb">Facebook</label>
+            <div class="sp-social">
+              <span class="si" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg>
+              </span>
+              <input id="sp-fb" type="text" placeholder="facebook.com/yourpage">
+            </div>
+          </div>
+          <div class="sp-field" style="margin-bottom:0;">
+            <label for="sp-web">Website</label>
+            <div class="sp-social">
+              <span class="si" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#A855F7" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.8 4 5.8 4 9s-1.5 6.2-4 9c-2.5-2.8-4-5.8-4-9s1.5-6.2 4-9z" stroke="#A855F7" stroke-width="1.8"/></svg>
+              </span>
+              <input id="sp-web" type="url" placeholder="https://yourstore.com">
+            </div>
+          </div>
+        </form>
+
+        <button type="button" class="sp-save" id="btn-save">Save</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="sp-overlay" id="sp-discard" hidden>
+  <div class="sp-modal" role="dialog" aria-modal="true" aria-labelledby="sp-discard-title">
+    <h2 id="sp-discard-title">Discard changes?</h2>
+    <p>You have unsaved changes. If you leave now, they will be lost.</p>
+    <div class="sp-modal-actions">
+      <button type="button" class="sp-btn-keep" id="btn-keep">Keep editing</button>
+      <button type="button" class="sp-btn-discard" id="btn-discard">Discard</button>
+    </div>
+  </div>
+</div>
+
+<div class="sp-toast" id="sp-toast">Saved</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+
+  var toast = document.getElementById('sp-toast');
+  var discardOverlay = document.getElementById('sp-discard');
+  var dirty = false;
+  var t;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('on');
+    clearTimeout(t);
+    t = setTimeout(function () { toast.classList.remove('on'); }, 2200);
+  }
+  function markDirty() { dirty = true; }
+  function openDiscard() { discardOverlay.hidden = false; }
+  function closeDiscard() { discardOverlay.hidden = true; }
+  function goBack() { window.location.href = 'account.html'; }
+
+  document.getElementById('btn-back').addEventListener('click', function () {
+    if (dirty) openDiscard();
+    else goBack();
+  });
+  document.getElementById('btn-keep').addEventListener('click', closeDiscard);
+  document.getElementById('btn-discard').addEventListener('click', goBack);
+  discardOverlay.addEventListener('click', function (e) {
+    if (e.target === discardOverlay) closeDiscard();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !discardOverlay.hidden) closeDiscard();
+  });
+
+  var desc = document.getElementById('sp-desc');
+  var count = document.getElementById('sp-count');
+  function syncCount() { count.textContent = (desc.value || '').length + '/300'; }
+  desc.addEventListener('input', function () { syncCount(); markDirty(); });
+  document.querySelectorAll('#sp-form input, #sp-form textarea').forEach(function (el) {
+    el.addEventListener('input', markDirty);
+    el.addEventListener('change', markDirty);
+  });
+
+  var bannerBtn = document.getElementById('btn-banner');
+  var bannerFile = document.getElementById('banner-file');
+  var bannerPreview = document.getElementById('banner-preview');
+  var bannerWrap = document.getElementById('banner-wrap');
+  var logoBtn = document.getElementById('btn-logo');
+  var logoFile = document.getElementById('logo-file');
+  var logoPreview = document.getElementById('logo-preview');
+  var logoWrap = document.getElementById('logo-wrap');
+
+  function setBanner(url) {
+    if (url) {
+      bannerPreview.src = url;
+      bannerPreview.hidden = false;
+      bannerBtn.classList.add('has-img');
+      bannerWrap.classList.add('has-img');
+    } else {
+      bannerPreview.removeAttribute('src');
+      bannerPreview.hidden = true;
+      bannerBtn.classList.remove('has-img');
+      bannerWrap.classList.remove('has-img');
+      bannerFile.value = '';
+    }
+  }
+  function setLogo(url) {
+    if (url) {
+      logoPreview.src = url;
+      logoPreview.hidden = false;
+      logoBtn.classList.add('has-img');
+      logoWrap.classList.add('has-img');
+    } else {
+      logoPreview.removeAttribute('src');
+      logoPreview.hidden = true;
+      logoBtn.classList.remove('has-img');
+      logoWrap.classList.remove('has-img');
+      logoFile.value = '';
+    }
+  }
+
+  bannerBtn.addEventListener('click', function () { bannerFile.click(); });
+  bannerFile.addEventListener('change', function () {
+    var f = bannerFile.files && bannerFile.files[0];
+    if (!f) return;
+    setBanner(URL.createObjectURL(f));
+    markDirty();
+    showToast('Banner updated');
+  });
+  document.getElementById('btn-banner-remove').addEventListener('click', function (e) {
+    e.stopPropagation();
+    setBanner(null);
+    markDirty();
+    showToast('Banner removed');
+  });
+
+  function openLogoPicker() { logoFile.click(); }
+  logoBtn.addEventListener('click', openLogoPicker);
+  document.getElementById('btn-logo-upload').addEventListener('click', openLogoPicker);
+  document.getElementById('btn-logo-change').addEventListener('click', openLogoPicker);
+  logoFile.addEventListener('change', function () {
+    var f = logoFile.files && logoFile.files[0];
+    if (!f) return;
+    setLogo(URL.createObjectURL(f));
+    markDirty();
+    showToast('Logo updated');
+  });
+  document.getElementById('btn-logo-remove').addEventListener('click', function () {
+    setLogo(null);
+    markDirty();
+    showToast('Logo removed');
+  });
+
+  document.getElementById('btn-save').addEventListener('click', function () {
+    dirty = false;
+    showToast('Seller profile saved');
+  });
+})();
+</script>
+</body>
+</html>

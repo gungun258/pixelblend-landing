@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Referrals · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<script src="js/pb-gallery.js?v=3"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --green: linear-gradient(135deg, #22C55E 0%, #16A34A 55%, #15803D 100%);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font-family: inherit; }
+  button { cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .pb-content { flex: 1 1 auto; padding: 24px 32px 48px; }
+  .pb-toggle { display: none; }
+
+  .rf-flow { width: min(720px, 100%); margin: 0 auto; }
+
+  .rf-hero {
+    background: var(--green); border-radius: 22px; padding: 22px 22px 20px;
+    color: #fff; margin-bottom: 16px;
+    box-shadow: 0 18px 40px -18px rgba(22,163,74,.55);
+  }
+  .rf-hero-top {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    margin-bottom: 18px;
+  }
+  .rf-earned-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; opacity: .95; margin-bottom: 6px;
+  }
+  .rf-earned-val { font-size: 32px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+  .rf-count-box {
+    background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.28);
+    border-radius: 14px; padding: 12px 18px; text-align: center; min-width: 110px;
+    backdrop-filter: blur(6px);
+  }
+  .rf-count-box strong { display: block; font-size: 26px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+  .rf-count-box span { font-size: 11px; font-weight: 600; opacity: .92; }
+
+  .rf-code-box {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(0,0,0,.14); border-radius: 14px; padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .rf-code-meta { flex: 1; min-width: 0; }
+  .rf-code-meta small { display: block; font-size: 11px; font-weight: 600; opacity: .85; margin-bottom: 2px; }
+  .rf-code-meta strong { font-size: 20px; font-weight: 800; letter-spacing: .02em; }
+  .rf-copy {
+    width: 40px; height: 40px; border: none; border-radius: 12px;
+    background: rgba(255,255,255,.2); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rf-copy:hover { background: rgba(255,255,255,.3); }
+
+  .rf-share-wrap { display: flex; justify-content: center; }
+  .rf-share {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: none; border-radius: 999px; padding: 12px 28px;
+    background: #fff; color: #15803D; font-size: 14px; font-weight: 800;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  }
+  .rf-share:hover { filter: brightness(1.03); }
+
+  .rf-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px; margin-bottom: 14px;
+    box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
+  }
+  .rf-card h2 { margin: 0 0 6px; font-size: 17px; font-weight: 800; letter-spacing: -.02em; }
+  .rf-card p { margin: 0 0 14px; font-size: 13px; font-weight: 500; color: var(--soft); line-height: 1.45; }
+
+  .rf-apply-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .rf-apply-row input {
+    flex: 1; min-width: 0; border: none; outline: none; border-radius: 12px;
+    background: #F3F4F6; padding: 13px 14px;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+  }
+  .rf-apply-row input::placeholder { color: #A1A1AA; font-weight: 500; }
+  .rf-apply {
+    border: none; border-radius: 12px; padding: 13px 20px;
+    background: #86EFAC; color: #14532D; font-size: 14px; font-weight: 800;
+    flex-shrink: 0;
+  }
+  .rf-apply:hover { filter: brightness(1.03); }
+  .rf-apply:disabled { opacity: .55; cursor: not-allowed; }
+
+  .rf-how {
+    background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 18px;
+    padding: 18px; margin-bottom: 22px; color: #1E3A8A;
+  }
+  .rf-how h2 {
+    margin: 0 0 12px; font-size: 16px; font-weight: 800; color: #1E40AF;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rf-how ol { margin: 0; padding-left: 20px; }
+  .rf-how li {
+    font-size: 13px; font-weight: 600; line-height: 1.45;
+    margin-bottom: 8px; color: #1E3A8A;
+  }
+  .rf-how li:last-child { margin-bottom: 0; }
+
+  .rf-hist-title { margin: 0 0 12px; font-size: 17px; font-weight: 800; letter-spacing: -.02em; }
+  .rf-hist-empty {
+    text-align: center; padding: 36px 16px;
+    background: #fff; border: 1px dashed #E5E7EB; border-radius: 16px;
+    color: var(--soft); font-size: 13px; font-weight: 600;
+  }
+  .rf-hist-list { display: flex; flex-direction: column; gap: 10px; }
+  .rf-hist-item {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  }
+  .rf-hist-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, #86EFAC, #22C55E);
+    color: #fff; font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rf-hist-meta { flex: 1; min-width: 0; }
+  .rf-hist-meta strong { display: block; font-size: 14px; font-weight: 800; }
+  .rf-hist-meta span { font-size: 12px; font-weight: 600; color: var(--soft); }
+  .rf-hist-cred {
+    font-size: 13px; font-weight: 800; color: #16A34A; white-space: nowrap;
+  }
+
+  .rf-toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(16px);
+    background: #1E1422; color: #fff; padding: 12px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
+    transition: .25s ease; z-index: 80;
+  }
+  .rf-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .pb-content { padding: 20px; }
+  }
+  @media (max-width: 520px) {
+    .rf-hero-top { flex-direction: column; }
+    .rf-count-box { width: 100%; }
+    .rf-apply-row { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Home</span></a>
+      <a href="discover.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Discover</span></a>
+      <a href="generate.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Generate</span></a>
+      <a href="gallery.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-navlabel">Gallery</span><span class="pb-navbadge" data-pb-gallery-count hidden>0</span></a>
+      <a href="account.html" class="active"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span><span class="pb-navlabel">Account</span></a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">30</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a href="account.html" class="pb-back" aria-label="Back to Account">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div class="pb-topbar-title">Referrals</div>
+        <div class="pb-topbar-sub">Invite friends · earn 50 credits each</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="rf-flow">
+        <section class="rf-hero">
+          <div class="rf-hero-top">
+            <div>
+              <div class="rf-earned-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 4l2 4h4l-3.2 2.6L16 15l-4-2.4L8 15l1.2-4.4L6 8h4z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M5 19h14" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+                Total Earned
+              </div>
+              <div class="rf-earned-val" id="rf-earned">0 Credits</div>
+            </div>
+            <div class="rf-count-box">
+              <strong id="rf-total">0</strong>
+              <span>Total Referrals</span>
+            </div>
+          </div>
+
+          <div class="rf-code-box">
+            <div class="rf-code-meta">
+              <small>Your Referral Code</small>
+              <strong id="rf-code">9845679780</strong>
+            </div>
+            <button type="button" class="rf-copy" id="btn-copy" aria-label="Copy code">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="11" height="11" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M6 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v1" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="rf-share-wrap">
+            <button type="button" class="rf-share" id="btn-share">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.4" stroke="currentColor" stroke-width="1.7"/><circle cx="6" cy="12" r="2.4" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="19" r="2.4" stroke="currentColor" stroke-width="1.7"/><path d="M8.4 10.8l7.2-4.2M8.4 13.2l7.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              Share Referral Link
+            </button>
+          </div>
+        </section>
+
+        <section class="rf-card">
+          <h2>Have a referral code?</h2>
+          <p>Enter it within 30 days of joining. You each get 50 credits.</p>
+          <div class="rf-apply-row">
+            <input type="text" id="rf-input" placeholder="e.g. PRIYA1234" maxlength="24" autocomplete="off">
+            <button type="button" class="rf-apply" id="btn-apply">Apply</button>
+          </div>
+        </section>
+
+        <section class="rf-how">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 10v5M12 7.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            How It Works
+          </h2>
+          <ol>
+            <li>Share your unique referral code with friends.</li>
+            <li>They sign up using your code.</li>
+            <li>As soon as they join, you each get 50 credits.</li>
+            <li>No limit on referrals!</li>
+          </ol>
+        </section>
+
+        <h2 class="rf-hist-title">Referral History</h2>
+        <div class="rf-hist-empty" id="rf-hist-empty">No referrals yet — share your code to get started.</div>
+        <div class="rf-hist-list" id="rf-hist-list" hidden></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="rf-toast" id="rf-toast">Copied</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+
+  var CODE = '9845679780';
+  var LINK = 'https://pixelblend.app/r/' + CODE;
+  var toast = document.getElementById('rf-toast');
+  var toastT;
+  var earned = 0;
+  var total = 0;
+  var history = [];
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('on');
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { toast.classList.remove('on'); }, 2200);
+  }
+
+  function syncStats() {
+    document.getElementById('rf-earned').textContent = earned + ' Credits';
+    document.getElementById('rf-total').textContent = String(total);
+    var empty = document.getElementById('rf-hist-empty');
+    var list = document.getElementById('rf-hist-list');
+    if (!history.length) {
+      empty.hidden = false;
+      list.hidden = true;
+      list.innerHTML = '';
+      return;
+    }
+    empty.hidden = true;
+    list.hidden = false;
+    list.innerHTML = history.map(function (h) {
+      return (
+        '<div class="rf-hist-item">' +
+          '<div class="rf-hist-avatar">' + h.initials + '</div>' +
+          '<div class="rf-hist-meta"><strong>' + h.name + '</strong><span>' + h.when + '</span></div>' +
+          '<div class="rf-hist-cred">+' + h.credits + '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        resolve();
+      } catch (e) { reject(e); }
+    });
+  }
+
+  document.getElementById('btn-copy').addEventListener('click', function () {
+    copyText(CODE).then(function () { showToast('Code copied'); }).catch(function () { showToast(CODE); });
+  });
+
+  document.getElementById('btn-share').addEventListener('click', function () {
+    var msg = 'Join me on PixelBlend! Use my referral code ' + CODE + ' — we both get 50 credits. ' + LINK;
+    if (navigator.share) {
+      navigator.share({ title: 'PixelBlend Referral', text: msg, url: LINK }).catch(function () {
+        copyText(msg).then(function () { showToast('Referral link copied'); });
+      });
+      return;
+    }
+    copyText(msg).then(function () { showToast('Referral link copied'); });
+  });
+
+  document.getElementById('btn-apply').addEventListener('click', function () {
+    var input = document.getElementById('rf-input');
+    var code = (input.value || '').trim().toUpperCase();
+    if (!code) {
+      showToast('Enter a referral code');
+      input.focus();
+      return;
+    }
+    if (code === CODE) {
+      showToast("You can't use your own code");
+      return;
+    }
+    // Demo: successful apply adds sample history once
+    earned += 50;
+    total += 1;
+    history.unshift({
+      initials: code.slice(0, 2),
+      name: code,
+      when: 'Just now · Applied',
+      credits: 50
+    });
+    input.value = '';
+    input.disabled = true;
+    document.getElementById('btn-apply').disabled = true;
+    syncStats();
+    showToast('+50 credits applied');
+  });
+
+  syncStats();
+})();
+</script>
+</body>
+</html>
