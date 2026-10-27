@@ -340,7 +340,11 @@
     box-shadow: 0 22px 40px -22px rgba(168,85,247,.7) !important;
   }
   .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 188.8px; scroll-snap-align: start; }
-  .pb-grid-sellers > div  { flex: 0 0 288px; scroll-snap-align: start; }
+  .pb-grid-sellers > div,
+  .pb-grid-sellers > a,
+  .pb-grid-sellers > .pb-seller-card { flex: 0 0 288px; width: 288px; max-width: 288px; scroll-snap-align: start; box-sizing: border-box; }
+  .pb-grid-sellers .pb-seller-card img,
+  .pb-grid-sellers a img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .pb-grid-byo > div      { flex: 0 0 166.4px; scroll-snap-align: start; }
 
   /* Desktop: peek of next card + side arrows */
@@ -368,7 +372,9 @@
     .pb-hscroll-btn { display: flex; }
     /* ~N.3 cards visible so last one is cut (“more this way”) */
     .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 calc((100% - 48px) / 3.35) !important; max-width: 220px; }
-    .pb-grid-sellers > div  { flex: 0 0 calc((100% - 16px) / 2.2) !important; max-width: 340px; }
+    .pb-grid-sellers > div,
+    .pb-grid-sellers > a,
+    .pb-grid-sellers > .pb-seller-card { flex: 0 0 288px !important; width: 288px !important; max-width: 288px !important; }
     .pb-grid-byo > div      { flex: 0 0 calc((100% - 56px) / 5.4) !important; max-width: 176px; }
     .pb-grid-recents {
       display: flex !important; grid-template-columns: none !important;
@@ -468,7 +474,9 @@
     }
     .pb-grid-recents > div  { flex: 0 0 129.6px !important; scroll-snap-align: start; }
     .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 164.8px !important; scroll-snap-align: start; }
-    .pb-grid-sellers > div  { flex: 0 0 272px !important; scroll-snap-align: start; }
+    .pb-grid-sellers > div,
+    .pb-grid-sellers > a,
+    .pb-grid-sellers > .pb-seller-card { flex: 0 0 272px !important; width: 272px !important; max-width: 272px !important; scroll-snap-align: start; }
     .pb-grid-byo {
       display: flex !important; grid-template-columns: none !important;
       overflow-x: auto; gap: 11.2px !important; padding-bottom: 4.8px;
@@ -520,7 +528,9 @@
     .pb-hero-title { font-size: 28.8px !important; }
     .pb-grid-recents > div  { flex: 0 0 118.4px !important; }
     .pb-grid-trending > div, .pb-grid-trending > a, .pb-grid-trending > .pb-trend-card { flex: 0 0 150.4px !important; }
-    .pb-grid-sellers > div  { flex: 0 0 240px !important; }
+    .pb-grid-sellers > div,
+    .pb-grid-sellers > a,
+    .pb-grid-sellers > .pb-seller-card { flex: 0 0 240px !important; width: 240px !important; max-width: 240px !important; }
     .pb-grid-byo > div { flex: 0 0 134.4px !important; }
     .pb-video { min-height: 176px !important; padding: 20.8px 19.2px !important; }
     .pb-play { width: 49.6px !important; height: 49.6px !important; }
@@ -578,7 +588,7 @@
       <div style="height: 6px; border-radius: 799.2px; background: #F0E6F2; overflow: hidden; margin-bottom: 11px;">
         <div style="{{ creditBarStyle }}"></div>
       </div>
-      <a href="#" class="pb-credits-cta" style="display: flex; align-items: center; justify-content: center; gap: 5.5px; text-decoration: none; padding: 8px; border-radius: 10px; border: 1.2px solid #F0E6F2; background: #fff; font-size: 10.4px; font-weight: 700; color: #1E1422;">
+      <a href="buy-credits.html" class="pb-credits-cta" style="display: flex; align-items: center; justify-content: center; gap: 5.5px; text-decoration: none; padding: 8px; border-radius: 10px; border: 1.2px solid #F0E6F2; background: #fff; font-size: 10.4px; font-weight: 700; color: #1E1422;">
         <span style="font-size: 11px; line-height: 1;">⚡</span> Get more credits
       </a>
     </div>
@@ -594,18 +604,18 @@
         <div class="pb-topbar-sub">Let's blend something stunning today.</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid #F4E2B8; box-shadow: 0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 7px 12px; border-radius: 999px; background: #fff; border: 1px solid #F4E2B8; box-shadow: 0 2px 8px rgba(224,168,40,.12);">
           <span style="display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); align-items: center; justify-content: center; color: #fff; font-size: 10px;">◆</span>
           <span style="font-size: 12px; font-weight: 800; color: #B7791F;">{{ credits }}</span>
         </a>
-        <button type="button" aria-label="Notifications" style="position: relative; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #F0E6F2; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="border-color:#C42E8B;">
+        <a href="notifications.html" aria-label="Notifications" style="text-decoration:none;position: relative; width: 36px; height: 36px; border-radius: 50%; border: 1px solid #F0E6F2; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;" style-hover="border-color:#C42E8B;">
           <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"></path></svg>
           <span style="position: absolute; top: 8px; right: 9px; width: 7px; height: 7px; border-radius: 50%; background: #F43F5E; border: 1.5px solid #fff;"></span>
-        </button>
-        <button type="button" aria-label="Account" style="display: flex; align-items: center; gap: 7px; padding: 4px; border-radius: 999px; border: 1px solid #F0E6F2; background: #fff; cursor: pointer;" style-hover="border-color:#C42E8B;">
+        </a>
+        <a href="account.html" aria-label="Account" style="text-decoration:none;display: flex; align-items: center; gap: 7px; padding: 4px; border-radius: 999px; border: 1px solid #F0E6F2; background: #fff; cursor: pointer;" style-hover="border-color:#C42E8B;">
           <img src="assets/dashboard/images/img1.jpg" alt="" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
           <svg width="10" height="10" sc-camel-view-box="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </button>
+        </a>
       </div>
     </header>
 
@@ -839,7 +849,7 @@
             <span style="color:#EC4899; font-size: 16px;">📈</span>
             <h2 style="font-size: 17.6px; font-weight: 800; letter-spacing: -.02em; margin: 0;">Trending Backgrounds</h2>
           </div>
-          <a href="#" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">View All →</a>
+          <a href="all-listings.html" style="font-size: 11.6px; font-weight: 700; color: #C42E8B; text-decoration: none;">View All →</a>
         </div>
         <div class="pb-grid-trending" style="display: flex; gap: 16px; overflow-x: auto; overflow-y: visible; padding-top: 8px; padding-bottom: 16px;">
           <sc-for list="{{ trending }}" as="t" hint-placeholder-count="4">
@@ -880,21 +890,21 @@
         </div>
         <div class="pb-grid-sellers" style="display: flex; gap: 16px; overflow-x: auto; padding-bottom: 4.8px;">
           <sc-for list="{{ sellers }}" as="s" hint-placeholder-count="3">
-            <a href="{{ s.href }}" style="display: block; background: #fff; border: 0.8px solid #F0E6F2; border-radius: 19.2px; padding: 16px; box-shadow: 0 17.6px 40px -33.6px rgba(168,85,247,.7); text-decoration: none; color: inherit;">
+            <a href="{{ s.href }}" class="pb-seller-card" style="display: block; flex: 0 0 288px; width: 288px; max-width: 288px; box-sizing: border-box; background: #fff; border: 0.8px solid #F0E6F2; border-radius: 19.2px; padding: 16px; box-shadow: none; text-decoration: none; color: inherit;">
               <div style="display: flex; align-items: center; gap: 10.4px; margin-bottom: 12.8px;">
-                <div style="position: relative;">
+                <div style="position: relative; flex-shrink: 0;">
                   {{ s.avatarEl }}
                   <span style="position: absolute; right: -1.6px; bottom: -1.6px; width: 17.6px; height: 17.6px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); border: 1.6px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 8.8px;">{{ s.badge }}</span>
                 </div>
-                <div style="min-width: 0;">
-                  <div style="font-size: 13.2px; font-weight: 800; letter-spacing: -.01em;">{{ s.name }}</div>
+                <div style="min-width: 0; flex: 1;">
+                  <div style="font-size: 13.2px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ s.name }}</div>
                   <div style="font-size: 10.4px; color: #8A7E92;">{{ s.listings }} listings · {{ s.followers }} followers</div>
                 </div>
-                <button type="button" class="pb-seller-follow" style="margin-left: auto; padding: 6.4px 12.8px; border-radius: 799.2px; border: none; background: linear-gradient(113deg,#A855F7,#EC4899); color: #fff; font-size: 10.4px; font-weight: 800; cursor: pointer;" style-hover="opacity:.9;">Follow</button>
+                <button type="button" class="pb-seller-follow" style="margin-left: auto; flex-shrink: 0; padding: 6.4px 12.8px; border-radius: 799.2px; border: none; background: linear-gradient(113deg,#A855F7,#EC4899); color: #fff; font-size: 10.4px; font-weight: 800; cursor: pointer;" style-hover="opacity:.9;">Follow</button>
               </div>
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6.4px;">
                 <sc-for list="{{ s.thumbs }}" as="th" hint-placeholder-count="4">
-                  <div style="border-radius: 9.6px; overflow: hidden; aspect-ratio: 1; border: 0.8px solid #F0E6F2;">
+                  <div style="border-radius: 9.6px; overflow: hidden; aspect-ratio: 1 / 1; border: 0.8px solid #F0E6F2; background: #F8FAFC;">
                     {{ th }}
                   </div>
                 </sc-for>
@@ -940,7 +950,7 @@
             <span style="font-size: 10.8px; font-weight: 700; color: #1E1422; letter-spacing: .02em;">pixelblend.ai/r/sarah</span>
             <span style="margin-left: auto; font-size: 9.6px; font-weight: 800; color: #C42E8B;">COPY</span>
           </div>
-          <a href="#" style="text-align: center; text-decoration: none; padding: 12px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.4px; font-weight: 800; box-shadow: 0 11.2px 24px rgba(236,72,153,.4);" style-hover="transform:translateY(-0.8px);">Start Referring</a>
+          <a href="referrals.html" style="text-align: center; text-decoration: none; padding: 12px; border-radius: 799.2px; background: linear-gradient(113deg,#A855F7,#EC4899,#F43F5E); color: #fff; font-size: 12.4px; font-weight: 800; box-shadow: 0 11.2px 24px rgba(236,72,153,.4);" style-hover="transform:translateY(-0.8px);">Start Referring</a>
         </div>
         </div>
       </section>
@@ -1124,7 +1134,7 @@ class Component extends DCLogic {
     ].map(s => Object.assign({}, s, {
       href: 'seller.html?id=' + encodeURIComponent(s.id),
       avatarEl: this.img(s.avatar, avStyle),
-      thumbs: s.thumbs.map(t => this.img(t))
+      thumbs: s.thumbs.map(t => this.img(t, { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }))
     }));
 
     return {

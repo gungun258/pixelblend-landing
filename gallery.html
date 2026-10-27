@@ -14,6 +14,8 @@
     --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
     --bg: #FBFAFC; --accent: #C42E8B;
     --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --pb-rail: 202px;
+    --pb-topbar-h: 64px;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
@@ -79,10 +81,15 @@
   .pb-toggle { display: none; }
 
   .gy-flow { width: min(1200px, 100%); margin: 0 auto; }
-  .gy-tabs {
-    display: flex; justify-content: center; align-items: flex-end; gap: 40px;
+  .gy-tabs-row {
+    position: relative;
+    display: flex; align-items: flex-end; justify-content: center;
     border-bottom: 1px solid #E5E7EB;
-    margin: 0 auto 20px; width: 100%;
+    margin: 0 0 20px; width: 100%;
+    padding: 0 48px; /* room for right-corner ⋯ so tabs stay visually centered */
+  }
+  .gy-tabs {
+    display: flex; align-items: flex-end; justify-content: center; gap: 40px;
   }
   .gy-tab {
     position: relative; border: none; background: none; padding: 12px 4px 14px;
@@ -94,6 +101,36 @@
   .gy-tab.on::after {
     content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 3.5px;
     border-radius: 999px; background: #6366F1;
+  }
+  .gy-more-wrap {
+    position: absolute; right: 0; bottom: 4px; z-index: 2;
+  }
+  .gy-more {
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    background: transparent; color: #64748B;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .gy-more:hover { background: #F1F5F9; color: #0F172A; }
+  .gy-more[aria-expanded="true"] { background: #EEF2FF; color: #6366F1; }
+  .gy-menu {
+    position: absolute; top: calc(100% + 6px); right: 0; z-index: 40;
+    min-width: 200px; padding: 6px;
+    background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
+    box-shadow: 0 16px 40px -18px rgba(15, 23, 42, .35);
+  }
+  .gy-menu[hidden] { display: none !important; }
+  .gy-menu button {
+    width: 100%; border: none; background: none; border-radius: 10px;
+    padding: 11px 12px; text-align: left;
+    font-size: 14px; font-weight: 650; color: #0F172A;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .gy-menu button:hover { background: #F8FAFC; }
+  .gy-menu button.danger { color: #DC2626; }
+  .gy-menu button.danger:hover { background: #FEF2F2; }
+  .gy-menu .gy-menu-ico {
+    width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center;
+    color: inherit; flex-shrink: 0;
   }
   .gy-tip {
     margin: 0 auto 24px; font-size: 14px; font-weight: 500; color: #94A3B8;
@@ -199,27 +236,69 @@
     font-size: 32px; line-height: 1; font-weight: 400;
   }
 
+  /* App-style select bar — attached under topbar, full main width */
   .gy-toolbar {
-    display: none; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px;
+    display: none;
+    position: fixed;
+    left: var(--pb-rail);
+    right: 0;
+    top: var(--pb-topbar-h);
+    z-index: 25;
+    width: auto;
+    height: 52px;
+    margin: 0;
+    padding: 0 24px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: #F3E8FF;
+    border: none;
+    border-bottom: 1px solid #E9D5FF;
+    border-radius: 0;
+    box-shadow: 0 4px 14px rgba(124, 58, 237, .08);
   }
   .gy-toolbar.on { display: flex; }
-  .gy-toolbar button {
-    border: none; border-radius: 999px; padding: 8px 14px;
-    font-size: 13px; font-weight: 700;
+  body.gy-selecting .pb-content { padding-top: 68px; }
+  .gy-cancel {
+    border: none; background: none; padding: 8px 4px;
+    color: #7C3AED; font-size: 15px; font-weight: 700;
   }
-  .gy-del { background: #FEE2E2; color: #DC2626; }
-  .gy-cancel { background: #F1F5F9; color: #475569; }
+  .gy-cancel:hover { color: #6D28D9; }
+  .gy-sel-count {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 15px; font-weight: 800; color: #0F172A; letter-spacing: -.01em;
+    pointer-events: none;
+  }
+  .gy-del {
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    background: transparent; color: #EF4444;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .gy-del:hover { background: #FEE2E2; }
+  .gy-del:disabled { opacity: .35; pointer-events: none; }
+  .gy-del svg { display: block; }
+  body.gy-selecting .gy-fab { display: none; }
 
   .gy-fab {
-    position: fixed; right: 28px; bottom: 28px; z-index: 30;
-    width: 64px; height: 64px; border-radius: 50%; border: none;
-    background: linear-gradient(160deg, #A855F7 0%, #D946EF 42%, #EC4899 100%);
+    position: fixed; right: 36px; bottom: 36px; z-index: 30;
+    width: 68px; height: 68px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #A855F7 0%, #D946EF 45%, #EC4899 100%);
     color: #fff;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 14px 34px rgba(168,85,247,.48), 0 6px 16px rgba(236,72,153,.3);
+    box-shadow:
+      0 0 0 6px rgba(236, 72, 153, .12),
+      0 14px 34px rgba(168, 85, 247, .45),
+      0 8px 20px rgba(236, 72, 153, .28);
     text-decoration: none;
   }
-  .gy-fab:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(168,85,247,.5); }
+  .gy-fab:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 7px rgba(236, 72, 153, .14),
+      0 18px 40px rgba(168, 85, 247, .5),
+      0 10px 22px rgba(236, 72, 153, .3);
+  }
   .gy-fab svg { display: none; }
   .gy-fab.is-generate .fab-spark { display: block; width: 32px; height: 32px; }
   .gy-fab.is-upload .fab-plus { display: block; width: 28px; height: 28px; }
@@ -273,6 +352,7 @@
     .gy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 1079px) {
+    :root { --pb-rail: 61px; }
     .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
     .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
     .pb-main { margin-left: 61px; }
@@ -285,6 +365,7 @@
     .pb-content { padding: 20px; }
   }
   @media (max-width: 640px) {
+    :root { --pb-topbar-h: 56px; }
     .pb-topbar { padding: 12px 16px; min-height: 56px; }
     .gy-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
     .gy-tabs { gap: 22px; }
@@ -342,33 +423,51 @@
         <div class="pb-topbar-sub">Your generations &amp; uploaded photos</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
         </a>
-        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <a href="notifications.html" aria-label="Notifications" style="text-decoration:none;position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
           <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
-        </button>
-        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+        </a>
+        <a href="account.html" aria-label="Account" style="text-decoration:none;display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
           <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+        </a>
       </div>
     </header>
 
     <div class="pb-content">
       <div class="gy-flow">
-        <div class="gy-tabs" role="tablist">
-          <button type="button" class="gy-tab on" data-tab="generated" role="tab" aria-selected="true">Generated</button>
-          <button type="button" class="gy-tab" data-tab="uploads" role="tab" aria-selected="false">My Uploaded Photos</button>
+        <div class="gy-tabs-row">
+          <div class="gy-tabs" role="tablist">
+            <button type="button" class="gy-tab on" data-tab="generated" role="tab" aria-selected="true">Generated</button>
+            <button type="button" class="gy-tab" data-tab="uploads" role="tab" aria-selected="false">My Uploaded Photos</button>
+          </div>
+          <div class="gy-more-wrap">
+            <button type="button" class="gy-more" id="gy-more" aria-label="More options" aria-haspopup="menu" aria-expanded="false" aria-controls="gy-menu">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="5" cy="12" r="1.85"/><circle cx="12" cy="12" r="1.85"/><circle cx="19" cy="12" r="1.85"/>
+              </svg>
+            </button>
+            <div class="gy-menu" id="gy-menu" role="menu" hidden>
+              <button type="button" role="menuitem" id="gy-menu-select">
+                <span class="gy-menu-ico" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.2l2.4 2.4L16.2 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span id="gy-menu-select-label">Select</span>
+              </button>
+              <button type="button" role="menuitem" class="danger" id="gy-menu-delete" hidden>
+                <span class="gy-menu-ico" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M10 7V5h4v2M8 7l.8 12h6.4L16 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                Delete selected
+              </button>
+            </div>
+          </div>
         </div>
         <p class="gy-tip" id="gy-tip">Tip: press &amp; hold an image to select and delete.</p>
-
-        <div class="gy-toolbar" id="gy-toolbar">
-          <button type="button" class="gy-del" id="btn-delete">Delete selected</button>
-          <button type="button" class="gy-cancel" id="btn-cancel-sel">Cancel</button>
-        </div>
 
         <div id="pane-generated">
           <div class="gy-grid" id="grid-generated"></div>
@@ -415,22 +514,32 @@
       <!-- keep outside empty state — display:none parents block 2nd+ file picks -->
       <input type="file" id="upload-file" accept="image/*" multiple class="hidden" hidden>
 
-      <a class="gy-fab is-generate" href="generate.html" id="gy-fab" aria-label="Generate">
-        <svg class="fab-spark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <!-- large center sparkle (fills more of the button) -->
-          <path d="M12 3.2c.95 4.4 3.15 6.6 7.55 7.55-4.4.95-6.6 3.15-7.55 7.55-.95-4.4-3.15-6.6-7.55-7.55 4.4-.95 6.6-3.15 7.55-7.55z" fill="#fff"/>
-          <!-- small top-left -->
-          <path d="M5.1 3.6c.42 2.1 1.5 3.18 3.6 3.6-2.1.42-3.18 1.5-3.6 3.6-.42-2.1-1.5-3.18-3.6-3.6 2.1-.42 3.18-1.5 3.6-3.6z" fill="#fff"/>
-          <!-- small top-right -->
-          <path d="M18.9 3.6c.42 2.1 1.5 3.18 3.6 3.6-2.1.42-3.18 1.5-3.6 3.6-.42-2.1-1.5-3.18-3.6-3.6 2.1-.42 3.18-1.5 3.6-3.6z" fill="#fff"/>
-        </svg>
-        <svg class="fab-plus" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
-        </svg>
-      </a>
     </div>
   </main>
 </div>
+
+<div class="gy-toolbar" id="gy-toolbar" role="toolbar" aria-label="Selection">
+  <button type="button" class="gy-cancel" id="btn-cancel-sel">Cancel</button>
+  <span class="gy-sel-count" id="gy-sel-count">0 selected</span>
+  <button type="button" class="gy-del" id="btn-delete" aria-label="Delete selected" disabled>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 7h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.5 7V5.8A1.3 1.3 0 0 1 10.8 4.5h2.4A1.3 1.3 0 0 1 14.5 5.8V7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M7 7l.85 12.1A1.5 1.5 0 0 0 9.34 20.5h5.32a1.5 1.5 0 0 0 1.49-1.4L17 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.2 11v5.2M13.8 11v5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
+<a class="gy-fab is-generate" href="generate.html" id="gy-fab" aria-label="Generate">
+  <!-- Flutter Icons.auto_awesome — distinct from old soft cluster -->
+  <svg class="fab-spark" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+    <path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"/>
+  </svg>
+  <svg class="fab-plus" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+    <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+  </svg>
+</a>
 
 <div class="lb-overlay" id="lightbox" aria-hidden="true">
   <button type="button" class="lb-close" id="lb-close" aria-label="Close">
@@ -482,6 +591,27 @@
   var lbItemUrl = null;
 
   var fab = document.getElementById('gy-fab');
+  var moreBtn = document.getElementById('gy-more');
+  var moreMenu = document.getElementById('gy-menu');
+  var menuSelect = document.getElementById('gy-menu-select');
+  var menuSelectLabel = document.getElementById('gy-menu-select-label');
+  var menuDelete = document.getElementById('gy-menu-delete');
+
+  function closeMoreMenu() {
+    if (!moreMenu || !moreBtn) return;
+    moreMenu.hidden = true;
+    moreBtn.setAttribute('aria-expanded', 'false');
+  }
+  function openMoreMenu() {
+    if (!moreMenu || !moreBtn) return;
+    moreMenu.hidden = false;
+    moreBtn.setAttribute('aria-expanded', 'true');
+  }
+  function toggleMoreMenu() {
+    if (!moreMenu) return;
+    if (moreMenu.hidden) openMoreMenu();
+    else closeMoreMenu();
+  }
 
   function selIndex(id) {
     return selectedIds.indexOf(id);
@@ -490,29 +620,56 @@
     var i = selIndex(id);
     if (i >= 0) selectedIds.splice(i, 1);
     else selectedIds.push(id);
-    selectMode = selectedIds.length > 0 ? true : selectMode;
-    if (!selectedIds.length) selectMode = false;
+    selectMode = true; // stay in select mode until Cancel (app behavior)
   }
   function syncSelectChrome() {
     var n = selectedIds.length;
-    toolbar.classList.toggle('on', selectMode && n > 0);
-    if (btnDelete) btnDelete.textContent = n ? ('Delete (' + n + ')') : 'Delete selected';
-    if (selectMode && n > 0) {
-      tip.textContent = n + ' selected — tap more to add, or Delete.';
-    } else if (tab === 'generated') {
-      tip.textContent = 'Tip: press & hold an image to select and delete.';
+    var selCount = document.getElementById('gy-sel-count');
+    toolbar.classList.toggle('on', selectMode);
+    document.body.classList.toggle('gy-selecting', selectMode);
+    if (selCount) {
+      selCount.textContent = n === 1 ? '1 selected' : (n + ' selected');
+    }
+    if (btnDelete) btnDelete.disabled = n === 0;
+    if (menuSelectLabel) menuSelectLabel.textContent = selectMode ? 'Cancel selection' : 'Select';
+    if (menuDelete) {
+      if (selectMode && n > 0) {
+        menuDelete.hidden = false;
+        menuDelete.innerHTML =
+          '<span class="gy-menu-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M10 7V5h4v2M8 7l.8 12h6.4L16 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
+          'Delete (' + n + ')';
+      } else {
+        menuDelete.hidden = true;
+      }
+    }
+    if (selectMode) {
+      tip.hidden = true;
     } else {
-      tip.textContent = 'Tip: press & hold a photo to select and delete.';
+      tip.hidden = false;
+      tip.textContent = tab === 'generated'
+        ? 'Tip: press & hold an image to select and delete.'
+        : 'Tip: press & hold a photo to select and delete.';
     }
   }
   function clearSelect() {
     selectMode = false;
     selectedIds = [];
   }
+  function deleteSelected() {
+    var ids = selectedIds.slice();
+    if (!ids.length || !window.pbGallery) return;
+    ids.forEach(function (id) {
+      if (tab === 'generated') pbGallery.removeGenerated(id);
+      else pbGallery.removeUpload(id);
+    });
+    clearSelect();
+    render();
+  }
 
   function setTab(name) {
     tab = name;
     clearSelect();
+    closeMoreMenu();
     document.querySelectorAll('.gy-tab').forEach(function (b) {
       var on = b.getAttribute('data-tab') === name;
       b.classList.toggle('on', on);
@@ -711,15 +868,35 @@
     clearSelect();
     render();
   });
-  document.getElementById('btn-delete').addEventListener('click', function () {
-    var ids = selectedIds.slice();
-    if (!ids.length || !window.pbGallery) return;
-    ids.forEach(function (id) {
-      if (tab === 'generated') pbGallery.removeGenerated(id);
-      else pbGallery.removeUpload(id);
+  document.getElementById('btn-delete').addEventListener('click', deleteSelected);
+
+  if (moreBtn) {
+    moreBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleMoreMenu();
     });
-    clearSelect();
-    render();
+  }
+  if (menuSelect) {
+    menuSelect.addEventListener('click', function () {
+      if (selectMode) clearSelect();
+      else selectMode = true;
+      closeMoreMenu();
+      render();
+    });
+  }
+  if (menuDelete) {
+    menuDelete.addEventListener('click', function () {
+      closeMoreMenu();
+      deleteSelected();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (!moreMenu || moreMenu.hidden) return;
+    if (moreMenu.contains(e.target) || (moreBtn && moreBtn.contains(e.target))) return;
+    closeMoreMenu();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMoreMenu();
   });
 
   function fileToDataURL(file) {

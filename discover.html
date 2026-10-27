@@ -224,6 +224,11 @@
     box-shadow: none;
   }
   .dc-seller-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .dc-seller-link {
+    display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;
+    text-decoration: none; color: inherit;
+  }
+  .dc-seller-link:hover strong { color: var(--accent); }
   .dc-avatar {
     width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: none;
     box-shadow: none; flex-shrink: 0; background: #F7ECF8;
@@ -233,15 +238,18 @@
   .dc-seller-top small { display: block; font-size: 10.5px; color: var(--soft); margin-top: 1px; }
   .dc-follow-btn {
     margin-left: auto; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer;
-    background: #FBEEF6; color: var(--accent); font-size: 10.5px; font-weight: 800;
+    background: #FBEEF6; color: var(--accent); font-size: 10.5px; font-weight: 800; flex-shrink: 0;
   }
   .dc-follow-btn:hover { border-color: var(--accent); }
+  .dc-follow-btn.is-on { background: #fff; color: var(--soft); border-color: var(--line); }
   .dc-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  .dc-thumbs a, .dc-trend-thumbs a {
+    display: block; text-decoration: none; border-radius: 8px; overflow: hidden;
+  }
   .dc-thumbs img, .dc-thumbs span {
     aspect-ratio: 1; border-radius: 8px; object-fit: cover; width: 100%; height: 100%;
     border: none; background: #F7ECF8; display: block;
   }
-
   /* trending = app layout: fixed-width cards, horizontal row */
   .dc-trend {
     display: flex; gap: 14px; overflow-x: auto; padding: 2px 2px 8px;
@@ -259,6 +267,7 @@
   }
   .dc-trend-media {
     position: relative; aspect-ratio: 4/3; overflow: hidden;
+    text-decoration: none; color: inherit; display: block;
   }
   .dc-trend-media img { width: 100%; height: 100%; object-fit: cover; }
   .dc-trend-badge {
@@ -274,9 +283,13 @@
   .dc-trend-body .dc-follow-btn {
     background: var(--grad); border: none; color: #fff; padding: 6px 12px;
   }
+  .dc-trend-body .dc-follow-btn.is-on {
+    background: #fff; color: var(--soft); border: 1px solid var(--line);
+  }
   .dc-trend-thumbs {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
   }
+  .dc-trend-thumbs a { border-radius: 10px; }
   .dc-trend-thumbs img {
     aspect-ratio: 1; border-radius: 10px; object-fit: cover; width: 100%;
     display: block; background: #F7ECF8;
@@ -466,7 +479,7 @@
       <div style="height:6px;border-radius:999px;background:#F0E6F2;overflow:hidden;margin-bottom:11px;">
         <div style="height:100%;width:75%;border-radius:999px;background:linear-gradient(90deg,#A855F7,#EC4899,#F43F5E);"></div>
       </div>
-      <a href="#" class="pb-credits-cta">⚡ Get more credits</a>
+      <a href="buy-credits.html" class="pb-credits-cta">⚡ Get more credits</a>
     </div>
   </aside>
 
@@ -477,18 +490,18 @@
         <div class="pb-topbar-sub">Community blends &amp; seller marketplace</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
         </a>
-        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+        <a href="notifications.html" aria-label="Notifications" style="text-decoration:none;position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
           <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
-        </button>
-        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+        </a>
+        <a href="account.html" aria-label="Account" style="text-decoration:none;display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
           <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+        </a>
       </div>
     </header>
 
@@ -526,7 +539,7 @@
       </div>
 
       <div style="display:flex;justify-content:center;">
-        <a class="dc-cta" href="dashboard.html">✦ Create your own try-on →</a>
+        <a class="dc-cta" href="generate.html">✦ Create your own try-on →</a>
       </div>
 
       <div class="dc-divider">
@@ -561,7 +574,7 @@
             <p class="eyebrow">FOR SELLERS</p>
             <h2>List your catalogue on PixelBlend</h2>
             <p>Upload your backgrounds and earn from your creations.</p>
-            <a class="list-btn" href="sellers.html">List your products for free →</a>
+            <a class="list-btn" href="seller-dashboard.html">List your products for free →</a>
           </div>
           <div class="dc-join">
             <div class="dc-avatars"><i></i><i></i><i></i></div>
@@ -573,85 +586,97 @@
       <section class="dc-section">
         <div class="dc-section-h">
           <h2>Sellers to follow</h2>
-          <a class="dc-link" href="#">View All →</a>
+          <a class="dc-link" href="top-sellers.html">View All →</a>
         </div>
         <div class="dc-follow">
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
-              <div><strong>Visual Vibes</strong><small>3 listings · 11.2k followers</small></div>
+              <a class="dc-seller-link" href="seller.html?id=visual-vibes">
+                <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                <div><strong>Visual Vibes</strong><small>3 listings · 11.2k followers</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img3.jpg" alt="">
-              <img src="assets/dashboard/images/img4.jpg" alt="">
-              <img src="assets/dashboard/images/img5.jpg" alt="">
-              <img src="assets/dashboard/images/img6.jpg" alt="">
+              <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img3.jpg" alt=""></a>
+              <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img4.jpg" alt=""></a>
+              <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img5.jpg" alt=""></a>
+              <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img6.jpg" alt=""></a>
             </div>
           </article>
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <span class="dc-avatar">RS</span>
-              <div><strong>R store</strong><small>6 listings · 3 followers</small></div>
+              <a class="dc-seller-link" href="seller.html?id=r-store">
+                <span class="dc-avatar">RS</span>
+                <div><strong>R store</strong><small>6 listings · 3 followers</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img25.jpg" alt="">
-              <img src="assets/dashboard/images/img20.jpg" alt="">
-              <img src="assets/dashboard/images/img21.jpg" alt="">
-              <img src="assets/dashboard/images/img18.jpg" alt="">
+              <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img25.jpg" alt=""></a>
+              <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img20.jpg" alt=""></a>
+              <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img21.jpg" alt=""></a>
+              <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img18.jpg" alt=""></a>
             </div>
           </article>
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
-              <div><strong>Digital Dreams</strong><small>2 listings · 5.6k followers</small></div>
+              <a class="dc-seller-link" href="seller.html?id=digital-dreams">
+                <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
+                <div><strong>Digital Dreams</strong><small>2 listings · 5.6k followers</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img16.jpg" alt="">
-              <img src="assets/dashboard/images/img17.jpg" alt="">
-              <img src="assets/dashboard/images/img19.jpg" alt="">
-              <img src="assets/dashboard/images/img23.jpg" alt="">
+              <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img16.jpg" alt=""></a>
+              <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img17.jpg" alt=""></a>
+              <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img19.jpg" alt=""></a>
+              <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img23.jpg" alt=""></a>
             </div>
           </article>
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <img class="dc-avatar" src="assets/dashboard/images/img33.jpg" alt="">
-              <div><strong>Emma White</strong><small>1 listing · 19.4k followers</small></div>
+              <a class="dc-seller-link" href="seller.html?id=emma-white">
+                <img class="dc-avatar" src="assets/dashboard/images/img33.jpg" alt="">
+                <div><strong>Emma White</strong><small>1 listing · 19.4k followers</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img7.jpg" alt="">
-              <img src="assets/dashboard/images/img8.jpg" alt="">
-              <img src="assets/dashboard/images/img9.jpg" alt="">
-              <img src="assets/dashboard/images/img10.jpg" alt="">
+              <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img7.jpg" alt=""></a>
+              <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img8.jpg" alt=""></a>
+              <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img9.jpg" alt=""></a>
+              <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img10.jpg" alt=""></a>
             </div>
           </article>
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <span class="dc-avatar">G</span>
-              <div><strong>Gungun</strong><small>1 listing · 1 follower</small></div>
+              <a class="dc-seller-link" href="seller.html?id=gungun">
+                <span class="dc-avatar">G</span>
+                <div><strong>Gungun</strong><small>1 listing · 1 follower</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img11.jpg" alt="">
-              <img src="assets/dashboard/images/img12.jpg" alt="">
-              <img src="assets/dashboard/images/img13.jpg" alt="">
-              <img src="assets/dashboard/images/img14.jpg" alt="">
+              <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img11.jpg" alt=""></a>
+              <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img12.jpg" alt=""></a>
+              <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img13.jpg" alt=""></a>
+              <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img14.jpg" alt=""></a>
             </div>
           </article>
           <article class="dc-seller">
             <div class="dc-seller-top">
-              <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
-              <div><strong>Sarah's Studio</strong><small>3 listings · 12.5k followers</small></div>
+              <a class="dc-seller-link" href="seller.html?id=sarahs-studio">
+                <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                <div><strong>Sarah's Studio</strong><small>3 listings · 12.5k followers</small></div>
+              </a>
               <button class="dc-follow-btn" type="button">Follow</button>
             </div>
             <div class="dc-thumbs">
-              <img src="assets/dashboard/images/img27.jpg" alt="">
-              <img src="assets/dashboard/images/img28.jpg" alt="">
-              <img src="assets/dashboard/images/img29.jpg" alt="">
-              <img src="assets/dashboard/images/img30.jpg" alt="">
+              <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img27.jpg" alt=""></a>
+              <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img28.jpg" alt=""></a>
+              <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img29.jpg" alt=""></a>
+              <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img30.jpg" alt=""></a>
             </div>
           </article>
         </div>
@@ -660,60 +685,66 @@
       <section class="dc-section">
         <div class="dc-section-h">
           <h2>📈 Top Trending Sellers</h2>
-          <a class="dc-link" href="#">View All →</a>
+          <a class="dc-link" href="top-sellers.html">View All →</a>
         </div>
         <div class="dc-trend">
           <article class="dc-trend-card">
-            <div class="dc-trend-media">
+            <a class="dc-trend-media" href="listing.html?id=rustic-charm">
               <img src="assets/dashboard/images/img20.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
-            </div>
+            </a>
             <div class="dc-trend-body">
               <div class="dc-seller-top">
-                <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
-                <div><strong>Visual Vibes</strong><small>3 backgrounds</small></div>
+                <a class="dc-seller-link" href="seller.html?id=visual-vibes">
+                  <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                  <div><strong>Visual Vibes</strong><small>3 backgrounds</small></div>
+                </a>
                 <button class="dc-follow-btn" type="button">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <img src="assets/dashboard/images/img3.jpg" alt="">
-                <img src="assets/dashboard/images/img4.jpg" alt="">
-                <img src="assets/dashboard/images/img5.jpg" alt="">
+                <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img3.jpg" alt=""></a>
+                <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img4.jpg" alt=""></a>
+                <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img5.jpg" alt=""></a>
               </div>
             </div>
           </article>
           <article class="dc-trend-card">
-            <div class="dc-trend-media">
+            <a class="dc-trend-media" href="listing.html?id=mountain-sunset">
               <img src="assets/dashboard/images/img23.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
-            </div>
+            </a>
             <div class="dc-trend-body">
               <div class="dc-seller-top">
-                <span class="dc-avatar">RS</span>
-                <div><strong>R store</strong><small>6 backgrounds</small></div>
+                <a class="dc-seller-link" href="seller.html?id=r-store">
+                  <span class="dc-avatar">RS</span>
+                  <div><strong>R store</strong><small>6 backgrounds</small></div>
+                </a>
                 <button class="dc-follow-btn" type="button">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <img src="assets/dashboard/images/img16.jpg" alt="">
-                <img src="assets/dashboard/images/img25.jpg" alt="">
-                <img src="assets/dashboard/images/img26.jpg" alt="">
+                <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img16.jpg" alt=""></a>
+                <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img25.jpg" alt=""></a>
+                <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img26.jpg" alt=""></a>
               </div>
             </div>
           </article>
           <article class="dc-trend-card">
-            <div class="dc-trend-media">
+            <a class="dc-trend-media" href="listing.html?id=night-sky">
               <img src="assets/dashboard/images/img18.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
-            </div>
+            </a>
             <div class="dc-trend-body">
               <div class="dc-seller-top">
-                <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
-                <div><strong>Digital Dreams</strong><small>2 backgrounds</small></div>
+                <a class="dc-seller-link" href="seller.html?id=digital-dreams">
+                  <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
+                  <div><strong>Digital Dreams</strong><small>2 backgrounds</small></div>
+                </a>
                 <button class="dc-follow-btn" type="button">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <img src="assets/dashboard/images/img17.jpg" alt="">
-                <img src="assets/dashboard/images/img19.jpg" alt="">
-                <img src="assets/dashboard/images/img24.jpg" alt="">
+                <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img17.jpg" alt=""></a>
+                <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img19.jpg" alt=""></a>
+                <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img24.jpg" alt=""></a>
               </div>
             </div>
           </article>
@@ -723,7 +754,7 @@
       <section class="dc-section">
         <div class="dc-section-h">
           <h2>↗ Newly Added Backgrounds</h2>
-          <a class="dc-link" href="#">View All →</a>
+          <a class="dc-link" href="all-listings.html">View All →</a>
         </div>
         <div class="dc-new">
           <div class="dc-bg" data-wish-id="new-img20" data-wish-title="Soft Studio" data-wish-img="assets/dashboard/images/img20.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
@@ -770,7 +801,7 @@
       </section>
 
       <div style="display:flex;justify-content:center;">
-        <a class="dc-explore" href="#">✨ Explore All Sellers →</a>
+        <a class="dc-explore" href="top-sellers.html">✨ Explore All Sellers →</a>
       </div>
 
       <p class="dc-end">You're all caught up ✨</p>
@@ -848,6 +879,37 @@
   });
 
   if (window.pbWishlist) pbWishlist.bindAll(document);
+
+  document.querySelectorAll('.dc-follow-btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var on = btn.classList.toggle('is-on');
+      btn.textContent = on ? 'Following' : 'Follow';
+    });
+  });
+
+  document.querySelectorAll('.dc-thumbs a[href*="listing.html"], .dc-trend-thumbs a[href*="listing.html"], a.dc-trend-media[href*="listing.html"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var img = a.querySelector('img');
+      if (!img) return;
+      try {
+        var idMatch = (a.getAttribute('href') || '').match(/[?&]id=([^&]+)/);
+        var sid = idMatch ? decodeURIComponent(idMatch[1]) : 'listing';
+        var sellerEl = a.closest('.dc-seller, .dc-trend-card');
+        var sellerName = sellerEl && sellerEl.querySelector('.dc-seller-link strong');
+        sessionStorage.setItem('pb-listing-fallback', JSON.stringify({
+          id: sid,
+          title: (sellerName ? sellerName.textContent + ' · ' : '') + 'Background',
+          img: img.getAttribute('src'),
+          seller: sellerName ? sellerName.textContent : 'Seller',
+          sellerId: ((sellerEl && sellerEl.querySelector('.dc-seller-link')) || {}).href
+            ? new URL(sellerEl.querySelector('.dc-seller-link').href, location.href).searchParams.get('id')
+            : 'visual-vibes'
+        }));
+      } catch (err) {}
+    });
+  });
 })();
 </script>
 </body>

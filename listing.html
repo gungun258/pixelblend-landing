@@ -73,6 +73,20 @@
   .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
   .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
   .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-back {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink); flex-shrink: 0;
+  }
+  .pb-back:hover { background: #FBF1FB; }
+  .ld-ico-btn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; color: #1E1422;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; padding: 0;
+  }
+  .ld-ico-btn:hover { background: #FBF1FB; }
+  .ld-ico-btn.pb-heart-btn.is-liked { border-color: #FBCFE8; background: #FDF2F8; }
   .pb-content {
     flex: 1 1 auto; padding: 20px 28px 28px; width: 100%; min-height: 0;
     display: flex; justify-content: center; align-items: center;
@@ -143,6 +157,49 @@
     background: rgba(255,255,255,.45); cursor: pointer;
   }
   .ld-dots button.on { width: 18px; background: #fff; }
+  .ld-nav {
+    position: absolute; top: 50%; z-index: 4;
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,.92); color: #0F172A;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 20px rgba(15,23,42,.2);
+    cursor: pointer;
+  }
+  .ld-nav:hover { background: #fff; }
+  .ld-nav[hidden] { display: none !important; }
+  .ld-nav-prev { left: 12px; }
+  .ld-nav-next { right: 12px; }
+  .ld-hero.is-single .ld-nav { display: none !important; }
+
+  .lb-overlay {
+    position: fixed; inset: 0; z-index: 90;
+    display: flex; align-items: center; justify-content: center;
+    padding: 56px 72px 40px 40px;
+    background: rgba(15, 23, 42, .42);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  .lb-overlay.open { opacity: 1; pointer-events: auto; }
+  .lb-close {
+    position: absolute; top: 20px; right: 20px; z-index: 2;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.55); background: rgba(255,255,255,.92);
+    display: flex; align-items: center; justify-content: center;
+    color: #0F172A; box-shadow: 0 8px 24px rgba(15,23,42,.2);
+  }
+  .lb-close:hover { background: #fff; }
+  .lb-img {
+    max-width: min(720px, 100%);
+    max-height: min(78vh, 720px);
+    width: auto; height: auto;
+    object-fit: contain; border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(15,23,42,.35);
+    background: #fff;
+    transform: scale(.96); transition: transform .2s ease;
+  }
+  .lb-overlay.open .lb-img { transform: none; }
 
   .ld-actions {
     display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
@@ -393,22 +450,27 @@
 
   <main class="pb-main">
     <header class="pb-topbar">
+      <a href="discover.html" class="pb-back" id="ld-back" aria-label="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
       <div>
         <div class="pb-topbar-title">Listing Details</div>
         <div class="pb-topbar-sub">Background scene from the marketplace</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
-          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
-          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
-        </a>
-        <button type="button" aria-label="Notifications" style="position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
+        <button type="button" class="ld-ico-btn" id="ld-share" aria-label="Share listing">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="18" cy="5" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+            <circle cx="6" cy="12" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+            <circle cx="18" cy="19" r="2.2" stroke="currentColor" stroke-width="1.7"/>
+            <path d="M8.3 10.9l7-4M8.3 13.1l7 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
         </button>
-        <button type="button" aria-label="Account" style="display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
-          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button type="button" class="ld-ico-btn pb-heart-btn" id="ld-wish" aria-label="Save to Wishlist" aria-pressed="false"
+          data-wish-id="" data-wish-title="" data-wish-img="" data-wish-seller="" data-wish-tag="Listing" data-wish-trending="0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path class="pb-heart-path" d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="#EC4899" stroke-width="1.9" stroke-linejoin="round"/>
+          </svg>
         </button>
       </div>
     </header>
@@ -425,6 +487,12 @@
                   <path d="M14.2 7.5h4.3v4.3" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
+              <button type="button" class="ld-nav ld-nav-prev" id="ld-prev" aria-label="Previous image">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="ld-nav ld-nav-next" id="ld-next" aria-label="Next image">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
               <div class="ld-dots" id="ld-dots"></div>
               <div class="ld-caption">
                 <strong id="ld-title">Mountain Sunset</strong>
@@ -520,8 +588,56 @@
   </div>
 </div>
 
+<div class="lb-overlay" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo preview">
+  <button type="button" class="lb-close" id="lb-close" aria-label="Close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+  </button>
+  <img class="lb-img" id="lb-img" alt="Preview">
+</div>
+
 <script>
 (function () {
+  var backBtn = document.getElementById('ld-back');
+  if (backBtn) {
+    backBtn.addEventListener('click', function (e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    });
+  }
+
+  function listingShareUrl() {
+    return window.location.href.split('#')[0];
+  }
+  function copyListingLink() {
+    var link = listingShareUrl();
+    function done() {
+      if (window.pbWishlist && pbWishlist.toast) pbWishlist.toast('Link copied');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(done).catch(function () {
+        window.prompt('Copy link', link);
+        done();
+      });
+    } else {
+      window.prompt('Copy link', link);
+      done();
+    }
+  }
+  var shareBtn = document.getElementById('ld-share');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      var title = (currentListing && currentListing.title) || 'Listing';
+      var link = listingShareUrl();
+      if (navigator.share) {
+        navigator.share({ title: title + ' · PixelBlend', url: link }).catch(function () { copyListingLink(); });
+      } else {
+        copyListingLink();
+      }
+    });
+  }
+
   var LISTINGS = {
     'mountain-sunset': {
       id: 'mountain-sunset',
@@ -694,6 +810,15 @@
     return slides[slideIndex] || (currentListing && currentListing.img) || '';
   }
 
+  function syncNav() {
+    var hero = document.getElementById('ld-hero');
+    var prev = document.getElementById('ld-prev');
+    var next = document.getElementById('ld-next');
+    if (hero) hero.classList.toggle('is-single', slides.length <= 1);
+    if (prev) prev.hidden = slideIndex <= 0;
+    if (next) next.hidden = slideIndex >= slides.length - 1;
+  }
+
   function goTo(i) {
     if (!slides.length) return;
     slideIndex = Math.max(0, Math.min(slides.length - 1, i));
@@ -704,6 +829,7 @@
     dots.forEach(function (d, idx) {
       d.classList.toggle('on', idx === slideIndex);
     });
+    syncNav();
   }
 
   function setupCarousel(listing) {
@@ -751,18 +877,37 @@
     function onEnd() {
       if (!drag.active) return;
       drag.active = false;
-      var threshold = (hero.offsetWidth || 1) * 0.18;
-      if (drag.dx < -threshold) goTo(slideIndex + 1);
-      else if (drag.dx > threshold) goTo(slideIndex - 1);
-      else goTo(slideIndex);
+      var dx = drag.dx;
       drag.dx = 0;
+      var threshold = (hero.offsetWidth || 1) * 0.18;
+      if (dx < -threshold) goTo(slideIndex + 1);
+      else if (dx > threshold) goTo(slideIndex - 1);
+      else {
+        goTo(slideIndex);
+        // Tap (not swipe) → lightbox
+        if (Math.abs(dx) < 10) openLightbox(currentBg());
+      }
     }
 
     hero.addEventListener('pointerdown', function (e) {
-      if (e.target.closest('.ld-dots')) return;
+      if (e.target.closest('.ld-dots, .ld-nav')) return;
       hero.setPointerCapture(e.pointerId);
       onStart(e.clientX);
     });
+    var prevBtn = document.getElementById('ld-prev');
+    var nextBtn = document.getElementById('ld-next');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        goTo(slideIndex - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        goTo(slideIndex + 1);
+      });
+    }
     hero.addEventListener('pointermove', function (e) {
       onMove(e.clientX);
     });
@@ -786,6 +931,20 @@
     document.getElementById('ld-id').textContent = listing.id;
 
     setupCarousel(listing);
+
+    var wishBtn = document.getElementById('ld-wish');
+    if (wishBtn) {
+      wishBtn.setAttribute('data-wish-id', listing.id);
+      wishBtn.setAttribute('data-wish-title', listing.title);
+      wishBtn.setAttribute('data-wish-img', listing.img);
+      wishBtn.setAttribute('data-wish-seller', listing.seller || 'Seller');
+      wishBtn.setAttribute('data-wish-tag', 'Listing');
+      wishBtn.setAttribute('data-wish-trending', '0');
+      if (window.pbWishlist) {
+        pbWishlist.bindAll(wishBtn.parentElement || document);
+        pbWishlist.syncHearts(wishBtn.parentElement || document);
+      }
+    }
 
     var more = document.getElementById('ld-more');
     more.innerHTML = '';
@@ -959,6 +1118,28 @@
   document.getElementById('rf-ok').addEventListener('click', closeReportOk);
   reportOkModal.addEventListener('click', function (e) {
     if (e.target === reportOkModal) closeReportOk();
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  function openLightbox(src) {
+    if (!lightbox || !lbImg || !src) return;
+    lbImg.src = src;
+    lbImg.alt = (currentListing && currentListing.title) || 'Preview';
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
   });
 
   var toggle = document.getElementById('pb-toggle');

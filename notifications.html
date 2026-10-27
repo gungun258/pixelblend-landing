@@ -80,22 +80,47 @@
   .pb-toggle { display: none; }
 
   .nt-flow { width: min(680px, 100%); margin: 0 auto; }
-  .nt-status {
+  .nt-toolbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
     margin: 0 0 16px;
+  }
+  .nt-status {
+    margin: 0;
     font-size: 13px; font-weight: 600; color: var(--soft);
+  }
+  .nt-mark-all {
+    border: none; background: none; padding: 0;
+    font-size: 13px; font-weight: 800; color: #7C3AED;
+    cursor: pointer;
+  }
+  .nt-mark-all:hover { color: #6D28D9; }
+  .nt-mark-all:disabled {
+    color: #C4B5FD; cursor: default; opacity: .7;
   }
   .nt-list { display: flex; flex-direction: column; gap: 12px; }
   .nt-card {
+    position: relative;
     display: flex; align-items: flex-start; gap: 14px;
     background: #fff; border: 1px solid var(--line); border-radius: 16px;
     padding: 16px; box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
-    cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease;
+    cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
     text-decoration: none; color: inherit;
   }
   .nt-card:hover {
     border-color: #E9D5FF;
     box-shadow: 0 14px 28px -18px rgba(168,85,247,.3);
   }
+  .nt-card.is-unread {
+    background: #FBF5FF;
+    border-color: #EDE4FF;
+  }
+  .nt-dot {
+    position: absolute; top: 50%; right: 16px; transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%; background: #EC4899;
+    flex-shrink: 0;
+  }
+  .nt-card:not(.is-unread) .nt-dot { display: none; }
+  .nt-card.is-unread .nt-body { padding-right: 18px; }
   .nt-ico {
     width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
     background: #F3E8FF; color: #7C3AED;
@@ -166,7 +191,7 @@
         <div class="pb-topbar-sub">Updates on blends, refunds &amp; more</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
         </a>
@@ -175,29 +200,45 @@
 
     <div class="pb-content">
       <div class="nt-flow">
-        <p class="nt-status" id="nt-status">All caught up.</p>
+        <div class="nt-toolbar">
+          <p class="nt-status" id="nt-status">1 unread</p>
+          <button type="button" class="nt-mark-all" id="nt-mark-all">Mark all read</button>
+        </div>
         <div class="nt-list" id="nt-list">
-          <a class="nt-card" href="generated-result.html">
+          <a class="nt-card is-unread" href="seller-dashboard.html" data-nt-id="listing-live">
+            <div class="nt-ico" aria-hidden="true" style="background:#DBEAFE;color:#2563EB;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M8 12.2l2.4 2.4L16.2 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="nt-body">
+              <h3>“Background Studio 1” is live again</h3>
+              <p>Your listing is back in the marketplace.</p>
+              <time>20h ago</time>
+            </div>
+            <span class="nt-dot" aria-hidden="true"></span>
+          </a>
+          <a class="nt-card" href="generated-result.html" data-nt-id="img-ready-1">
             <div class="nt-ico" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 10-14h-7l1-6z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
             </div>
             <div class="nt-body">
               <h3>Your image is ready</h3>
               <p>Your AI background blend has finished. Tap to see the result.</p>
-              <time>4d ago</time>
+              <time>5d ago</time>
             </div>
+            <span class="nt-dot" aria-hidden="true"></span>
           </a>
-          <a class="nt-card" href="generated-result.html">
+          <a class="nt-card" href="generated-result.html" data-nt-id="img-ready-2">
             <div class="nt-ico" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 10-14h-7l1-6z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
             </div>
             <div class="nt-body">
               <h3>Your image is ready</h3>
               <p>Your AI background blend has finished. Tap to see the result.</p>
-              <time>4d ago</time>
+              <time>5d ago</time>
             </div>
+            <span class="nt-dot" aria-hidden="true"></span>
           </a>
-          <a class="nt-card" href="refunds.html">
+          <a class="nt-card" href="refunds.html" data-nt-id="refund-1">
             <div class="nt-ico" aria-hidden="true" style="background:#DBEAFE;color:#2563EB;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 101.6-4.8M4 4v4h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -206,16 +247,7 @@
               <p>We got your refund request. Review usually takes 24–48 hours.</p>
               <time>1d ago</time>
             </div>
-          </a>
-          <a class="nt-card" href="wishlist.html">
-            <div class="nt-ico" aria-hidden="true" style="background:#FCE7F3;color:#DB2777;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
-            </div>
-            <div class="nt-body">
-              <h3>Saved to wishlist</h3>
-              <p>Backgrounds you heart stay here for quick Try AI access.</p>
-              <time>2d ago</time>
-            </div>
+            <span class="nt-dot" aria-hidden="true"></span>
           </a>
         </div>
       </div>
@@ -230,6 +262,71 @@
   var toggle = document.getElementById('pb-toggle');
   var sidebar = document.getElementById('pb-sidebar');
   if (toggle && sidebar) toggle.addEventListener('click', function () { sidebar.classList.toggle('open'); });
+
+  var KEY = 'pb-notif-read';
+  var statusEl = document.getElementById('nt-status');
+  var markAllBtn = document.getElementById('nt-mark-all');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.nt-card[data-nt-id]'));
+
+  function readSet() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function writeSet(ids) {
+    try { localStorage.setItem(KEY, JSON.stringify(ids)); } catch (e) {}
+  }
+  cards.forEach(function (card) {
+    if (card.classList.contains('is-unread')) {
+      card.setAttribute('data-default-unread', '1');
+    }
+  });
+
+  function syncUI() {
+    var read = readSet();
+    cards.forEach(function (card) {
+      var id = card.getAttribute('data-nt-id');
+      var defaultUnread = card.getAttribute('data-default-unread') === '1';
+      var isUnread = defaultUnread && read.indexOf(id) === -1;
+      card.classList.toggle('is-unread', isUnread);
+    });
+    var count = document.querySelectorAll('.nt-card.is-unread').length;
+    if (statusEl) {
+      statusEl.textContent = count === 0 ? 'All caught up.' : (count === 1 ? '1 unread' : count + ' unread');
+    }
+    if (markAllBtn) markAllBtn.disabled = count === 0;
+  }
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      var id = card.getAttribute('data-nt-id');
+      if (!id) return;
+      var read = readSet();
+      if (read.indexOf(id) === -1) {
+        read.push(id);
+        writeSet(read);
+      }
+      syncUI();
+    });
+  });
+
+  if (markAllBtn) {
+    markAllBtn.addEventListener('click', function () {
+      var read = readSet();
+      cards.forEach(function (card) {
+        var id = card.getAttribute('data-nt-id');
+        if (id && read.indexOf(id) === -1) read.push(id);
+      });
+      writeSet(read);
+      syncUI();
+    });
+  }
+
+  syncUI();
 })();
 </script>
 </body>

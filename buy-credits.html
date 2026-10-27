@@ -14,6 +14,7 @@
     --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
     --bg: #FBFAFC; --accent: #C42E8B;
     --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --pb-rail: 202px;
     --orange: linear-gradient(105deg, #F59E0B 0%, #FBBF24 55%, #FCD34D 100%);
   }
   * { box-sizing: border-box; }
@@ -83,10 +84,15 @@
 
   .cr-flow { width: min(1040px, 100%); margin: 0 auto; }
 
+  .cr-top {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px;
+    align-items: stretch; margin-bottom: 16px;
+  }
   .cr-balance {
     background: linear-gradient(105deg, #F59E0B 0%, #FBBF24 50%, #FCD34D 100%);
     border-radius: 22px; padding: 22px 24px 18px; color: #fff;
-    box-shadow: 0 16px 36px -14px rgba(245,158,11,.45); margin-bottom: 16px;
+    box-shadow: 0 16px 36px -14px rgba(245,158,11,.45); margin: 0;
+    display: flex; flex-direction: column; justify-content: center;
   }
   .cr-balance-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   .cr-coin {
@@ -124,55 +130,66 @@
   }
   .cr-stars { color: #F59E0B; letter-spacing: 1px; }
 
-  .cr-packs-head { margin: 0 0 16px; }
-  .cr-packs-head h2 { margin: 0 0 4px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
-  .cr-packs-head p { margin: 0; font-size: 13px; color: var(--soft); font-weight: 500; }
+  .cr-buy-section { margin-bottom: 16px; }
+  .cr-buy-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) auto minmax(240px, 0.75fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+  .cr-packs-col { min-width: 0; }
+  .cr-packs-head { margin: 0 0 12px; }
+  .cr-packs-head h2 { margin: 0 0 3px; font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+  .cr-packs-head p { margin: 0; font-size: 12px; color: var(--soft); font-weight: 500; }
 
   .cr-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    margin-bottom: 14px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin: 0;
   }
   .cr-pack {
     position: relative;
-    background: #fff; border-radius: 18px; padding: 18px 16px 14px;
+    background: #fff; border-radius: 14px; padding: 12px 11px 10px;
     border: 1.5px solid #DDD6FE;
     box-shadow: 0 8px 22px -18px rgba(30,20,34,.3);
     display: flex; flex-direction: column;
   }
   .cr-pack.green { border-color: #86EFAC; }
   .cr-pack.wide { grid-column: 1 / -1; }
-  .cr-pack-top { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
-  .cr-pack-top strong { font-size: 28px; font-weight: 800; letter-spacing: -.03em; }
-  .cr-pack-top span { font-size: 14px; font-weight: 600; color: var(--soft); }
-  .cr-gens { margin: 0 0 14px; font-size: 13px; font-weight: 600; color: #64748B; }
-  .cr-price-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 2px; }
-  .cr-old { font-size: 13px; color: #9CA3AF; text-decoration: line-through; font-weight: 600; }
-  .cr-new { font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+  .cr-pack-top { display: flex; align-items: baseline; gap: 4px; margin-bottom: 2px; }
+  .cr-pack-top strong { font-size: 20px; font-weight: 800; letter-spacing: -.03em; }
+  .cr-pack-top span { font-size: 11px; font-weight: 600; color: var(--soft); }
+  .cr-gens { margin: 0 0 8px; font-size: 11px; font-weight: 600; color: #64748B; }
+  .cr-price-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 1px; }
+  .cr-old { font-size: 11px; color: #9CA3AF; text-decoration: line-through; font-weight: 600; }
+  .cr-new { font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
   .cr-tag {
-    font-size: 9px; font-weight: 800; letter-spacing: .06em;
-    padding: 3px 7px; border-radius: 6px; background: #F3F4F6; color: #6B7280;
+    font-size: 8px; font-weight: 800; letter-spacing: .05em;
+    padding: 2px 5px; border-radius: 5px; background: #F3F4F6; color: #6B7280;
   }
-  .cr-unit { margin: 0 0 14px; font-size: 11px; color: var(--soft); font-weight: 600; }
+  .cr-unit { margin: 0 0 8px; font-size: 10px; color: var(--soft); font-weight: 600; }
   .cr-recharge {
-    margin-top: auto; width: 100%; border: none; border-radius: 12px;
-    padding: 11px; background: #F3E8FF; color: #7C3AED;
-    font-size: 14px; font-weight: 800;
+    margin-top: auto; width: 100%; border: none; border-radius: 10px;
+    padding: 8px; background: #F3E8FF; color: #7C3AED;
+    font-size: 12px; font-weight: 800;
   }
   .cr-recharge:hover { background: #E9D5FF; }
   .cr-badge {
-    position: absolute; top: -10px; right: 14px;
-    padding: 4px 10px; border-radius: 999px;
-    font-size: 10px; font-weight: 800; color: #fff;
+    position: absolute; top: -9px; right: 10px;
+    padding: 3px 8px; border-radius: 999px;
+    font-size: 8px; font-weight: 800; color: #fff;
     box-shadow: 0 4px 12px rgba(0,0,0,.12);
   }
-  .cr-badge.pop { background: #7C3AED; left: 50%; right: auto; transform: translateX(-50%); top: -11px; }
+  .cr-badge.pop { background: #7C3AED; left: 50%; right: auto; transform: translateX(-50%); top: -9px; }
   .cr-badge.val { background: #16A34A; left: 50%; right: auto; transform: translateX(-50%); }
 
   .cr-or {
-    display: flex; align-items: center; gap: 14px; margin: 22px 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; align-self: stretch; margin: 0; padding: 8px 0;
     color: var(--soft); font-size: 12px; font-weight: 700;
   }
-  .cr-or::before, .cr-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .cr-or::before, .cr-or::after {
+    content: ''; width: 1px; flex: 1; min-height: 28px; background: var(--line);
+  }
   .cr-or span {
     width: 42px; height: 42px; border-radius: 50%;
     background: var(--grad); color: #fff;
@@ -181,121 +198,179 @@
     box-shadow: 0 8px 18px rgba(236,72,153,.28);
   }
 
-  .cr-lower {
-    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px;
-    margin-bottom: 16px;
-  }
-  .cr-custom, .cr-how {
-    background: #fff; border-radius: 20px; padding: 20px;
+  .cr-custom {
+    background: #fff; border-radius: 18px; padding: 22px 18px;
     border: 1px solid var(--line);
     box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
+    margin: 0; align-self: stretch;
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    min-height: 100%;
   }
-  .cr-custom-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+  .cr-custom-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
   .cr-custom-head h3 { margin: 0 0 4px; font-size: 17px; font-weight: 800; }
   .cr-custom-head p { margin: 0; font-size: 12px; color: var(--soft); font-weight: 600; }
   .cr-field {
     width: 100%; border: 1px solid #E5E7EB; background: #F8FAFC;
-    border-radius: 12px; padding: 13px 14px; font-size: 14px; font-weight: 600;
-    color: var(--ink); outline: none; margin-bottom: 10px;
+    border-radius: 12px; padding: 14px 14px; font-size: 14px; font-weight: 600;
+    color: var(--ink); outline: none; margin-bottom: 12px;
   }
   .cr-field:focus { border-color: #C4B5FD; box-shadow: 0 0 0 3px rgba(167,139,250,.2); }
-  .cr-coupon { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 12px; }
+  .cr-coupon { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 14px; }
   .cr-coupon .cr-field { margin: 0; }
   .cr-apply {
     border: none; border-radius: 12px; padding: 0 16px;
     background: #E5E7EB; color: #4B5563; font-size: 13px; font-weight: 800;
   }
   .cr-buy {
-    width: 100%; border: none; border-radius: 14px; padding: 14px;
+    width: 100%; border: none; border-radius: 14px; padding: 15px;
     background: var(--grad); color: #fff; font-size: 15px; font-weight: 800;
     box-shadow: 0 10px 24px rgba(236,72,153,.28);
+    margin-top: auto;
   }
   .cr-how {
-    background: #EFF6FF; border-color: #BFDBFE;
+    background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 20px;
+    padding: 22px 22px 20px;
     display: flex; flex-direction: column; justify-content: center;
+    box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
   }
-  .cr-how h3 { margin: 0 0 12px; font-size: 16px; font-weight: 800; color: #1E3A8A; }
-  .cr-how ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .cr-how h3 { margin: 0 0 14px; font-size: 16px; font-weight: 800; color: #1E3A8A; }
+  .cr-how ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .cr-how li {
     display: flex; align-items: flex-start; gap: 10px;
     font-size: 13px; font-weight: 600; color: #1E3A8A; line-height: 1.35;
   }
   .cr-how li svg { flex-shrink: 0; margin-top: 1px; color: #2563EB; }
 
+  .cr-mid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
+    grid-template-rows: 1fr auto;
+    gap: 16px 22px;
+    align-items: stretch;
+    margin-top: 28px;
+    margin-bottom: 32px;
+  }
+  .cr-mid-left {
+    display: contents;
+  }
   .cr-trust {
+    grid-column: 1;
+    grid-row: 1;
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin-bottom: 12px;
+    margin: 0; align-items: stretch; min-height: 0;
   }
   .cr-trust-card {
-    background: #fff; border-radius: 16px; padding: 16px 12px;
+    background: #fff; border-radius: 12px; padding: 22px 10px;
     text-align: center; border: 1px solid var(--line);
-    box-shadow: 0 8px 20px -16px rgba(30,20,34,.3);
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    box-shadow: 0 6px 16px -14px rgba(30,20,34,.28);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; height: 100%; box-sizing: border-box;
   }
   .cr-trust-card .ico {
-    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
   }
-  .cr-trust-card .ico svg { display: block; width: 26px; height: 26px; }
-  .cr-trust-card span { font-size: 12px; font-weight: 700; color: var(--ink); }
+  .cr-trust-card .ico svg { display: block; width: 24px; height: 24px; }
+  .cr-trust-card span { font-size: 11px; font-weight: 700; color: var(--ink); line-height: 1.2; }
 
   .cr-pay {
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-    margin-bottom: 16px;
+    grid-column: 1;
+    grid-row: 2;
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start;
+    margin: 2px 0 0;
   }
   .cr-pay span {
     padding: 6px 12px; border-radius: 999px; background: #F3F4F6;
-    font-size: 11px; font-weight: 700; color: #6B7280;
+    font-size: 10px; font-weight: 700; color: #6B7280;
   }
 
   .cr-invite {
+    grid-column: 2;
+    grid-row: 1;
     display: flex; align-items: center; gap: 14px;
-    padding: 16px 18px; border-radius: 18px; margin-bottom: 28px;
+    padding: 22px 18px; border-radius: 16px; margin: 0;
+    height: 100%; min-height: 100%;
     background: linear-gradient(100deg, #F3E8FF, #FCE7F3);
+    box-sizing: border-box;
   }
   .cr-invite-ico {
-    width: 44px; height: 44px; border-radius: 14px; background: #fff;
+    width: 40px; height: 40px; border-radius: 12px; background: #fff;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
+    font-size: 20px; flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(124,58,237,.12);
   }
-  .cr-invite strong { display: block; font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-  .cr-invite p { margin: 0; font-size: 12px; color: var(--muted); font-weight: 500; }
+  .cr-invite-copy { min-width: 0; flex: 1; }
+  .cr-invite strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .cr-invite p { margin: 0; font-size: 11px; color: var(--muted); font-weight: 500; line-height: 1.35; }
   .cr-invite-btn {
-    margin-left: auto; border: none; border-radius: 999px;
-    padding: 10px 16px; background: #fff; color: var(--ink);
-    font-size: 13px; font-weight: 800; flex-shrink: 0;
+    margin-left: 0; border: none; border-radius: 999px;
+    padding: 9px 14px; background: #fff; color: var(--ink);
+    font-size: 12px; font-weight: 800; flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(0,0,0,.06);
   }
 
-  .cr-hist-title { margin: 0 0 12px; font-size: 18px; font-weight: 800; }
-  .cr-hist { display: flex; flex-direction: column; gap: 10px; }
+  .cr-hist-title { margin: 8px 0 16px; font-size: 18px; font-weight: 800; }
+  .cr-hist { display: flex; flex-direction: column; gap: 14px; }
   .cr-hist-row {
-    display: flex; align-items: center; gap: 12px;
-    background: #fff; border: 1px solid var(--line); border-radius: 16px;
-    padding: 14px 16px;
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px -18px rgba(30,20,34,.28);
   }
+  .cr-hist-head {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; padding: 18px 18px; border: none; background: transparent;
+    text-align: left; color: inherit; cursor: pointer; font: inherit;
+  }
+  .cr-hist-head:hover { background: #FCF8FC; }
   .cr-hist-ico {
-    width: 40px; height: 40px; border-radius: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .cr-hist-ico.gen { background: #F3E8FF; color: #7C3AED; }
   .cr-hist-ico.bonus { background: #DCFCE7; color: #16A34A; }
+  .cr-hist-ico.buy { background: #FEF3C7; color: #D97706; }
   .cr-hist-copy { flex: 1; min-width: 0; }
-  .cr-hist-copy strong { display: block; font-size: 14px; font-weight: 800; }
+  .cr-hist-copy strong { display: block; font-size: 14px; font-weight: 800; margin-bottom: 3px; }
   .cr-hist-copy span { font-size: 12px; color: var(--soft); font-weight: 500; }
-  .cr-amt { font-size: 15px; font-weight: 800; }
+  .cr-amt { font-size: 15px; font-weight: 800; flex-shrink: 0; }
   .cr-amt.neg { color: #EF4444; }
   .cr-amt.pos { color: #16A34A; }
+  .cr-hist-chev {
+    width: 20px; height: 20px; flex-shrink: 0; color: #94A3B8;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform .2s ease;
+  }
+  .cr-hist-row.open .cr-hist-chev { transform: rotate(180deg); }
+  .cr-hist-detail {
+    display: none;
+    border-top: 1px solid #F1F5F9;
+    padding: 14px 18px 16px;
+  }
+  .cr-hist-row.open .cr-hist-detail { display: block; }
+  .cr-hist-meta {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    padding: 8px 0;
+  }
+  .cr-hist-meta + .cr-hist-meta { border-top: 1px solid #F8FAFC; }
+  .cr-hist-meta dt {
+    margin: 0; font-size: 13px; font-weight: 600; color: #94A3B8;
+  }
+  .cr-hist-meta dd {
+    margin: 0; font-size: 13px; font-weight: 700; color: #1E1422;
+    text-align: right; word-break: break-all;
+  }
 
   .cr-toast {
-    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(16px);
-    background: #1E1422; color: #fff; padding: 12px 18px; border-radius: 999px;
+    position: fixed; left: calc(50% + var(--pb-rail) / 2); top: 78px;
+    transform: translateX(-50%) translateY(-10px);
+    background: #1E1422; color: #fff; padding: 12px 20px; border-radius: 999px;
     font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
-    transition: .25s ease; z-index: 80;
+    box-shadow: 0 10px 28px rgba(30, 20, 34, .22);
+    transition: .25s ease; z-index: 200;
   }
   .cr-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   @media (max-width: 1079px) {
+    :root { --pb-rail: 61px; }
     .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
     .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
     .pb-main { margin-left: 61px; }
@@ -303,14 +378,28 @@
     .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
     .pb-content { padding: 20px; }
+    .cr-top { grid-template-columns: 1fr; }
+    .cr-buy-row { grid-template-columns: 1fr; gap: 14px; }
+    .cr-or {
+      flex-direction: row; align-self: stretch; padding: 4px 0; gap: 14px;
+    }
+    .cr-or::before, .cr-or::after {
+      width: auto; flex: 1; min-height: 0; height: 1px;
+    }
     .cr-grid { grid-template-columns: 1fr 1fr; }
-    .cr-lower { grid-template-columns: 1fr; }
+    .cr-mid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .cr-trust { grid-column: 1; grid-row: 1; }
+    .cr-invite { grid-column: 1; grid-row: 2; height: auto; }
+    .cr-pay { grid-column: 1; grid-row: 3; }
   }
   @media (max-width: 640px) {
     .cr-grid { grid-template-columns: 1fr 1fr; }
     .cr-trust { grid-template-columns: 1fr; }
     .cr-invite { flex-wrap: wrap; }
-    .cr-invite-btn { width: 100%; margin-left: 0; }
+    .cr-invite-btn { width: 100%; }
   }
 </style>
 </head>
@@ -351,7 +440,7 @@
         <div class="pb-topbar-sub">Balance, packs &amp; recharge</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
         </a>
@@ -360,108 +449,30 @@
 
     <div class="pb-content">
       <div class="cr-flow">
-        <section class="cr-balance">
-          <div class="cr-balance-top">
-            <div class="cr-coin" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <circle cx="14.2" cy="9.6" r="5.4" stroke="#fff" stroke-width="1.7"/>
-                <path d="M12.7 8.4h2.2M13.5 8.4v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
-                <circle cx="9.8" cy="14.4" r="5.4" stroke="#fff" stroke-width="1.7"/>
-                <path d="M8.3 13.2h2.2M9.1 13.2v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="cr-balance-label">Available Credits</div>
-              <div class="cr-balance-num">30</div>
-            </div>
-          </div>
-          <div class="cr-split">
-            <div><strong>0</strong><span>Purchased</span></div>
-            <div><strong>30</strong><span>Bonus / Referral</span></div>
-          </div>
-          <div class="cr-balance-foot">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 4.8L18.5 9.5 13.6 12 12 17l-1.6-5L5.5 9.5 10.4 7.8 12 3z" fill="#fff"/></svg>
-            1 generation = 10 credits — about 3 generations left
-          </div>
-        </section>
-
-        <button type="button" class="cr-history-btn" id="btn-jump-hist">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          View transaction history
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-
-        <div class="cr-loved"><span class="cr-stars">★★★★★</span> Loved by 12,000+ creators</div>
-
-        <div class="cr-packs-head">
-          <h2>Choose your pack</h2>
-          <p>Bigger packs, lower price per credit</p>
-        </div>
-
-        <div class="cr-grid">
-          <article class="cr-pack">
-            <div class="cr-pack-top"><strong>42</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 4 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹50</span><span class="cr-new">₹30</span><span class="cr-tag">STARTER</span></div>
-            <p class="cr-unit">₹0.71 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="42">Recharge</button>
-          </article>
-          <article class="cr-pack">
-            <span class="cr-badge pop">★ MOST POPULAR</span>
-            <div class="cr-pack-top"><strong>80</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 8 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹90</span><span class="cr-new">₹55</span></div>
-            <p class="cr-unit">₹0.69 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="80">Recharge</button>
-          </article>
-          <article class="cr-pack green">
-            <span class="cr-badge val">BEST VALUE</span>
-            <div class="cr-pack-top"><strong>100</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 10 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹120</span><span class="cr-new">₹70</span></div>
-            <p class="cr-unit">₹0.70 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="100">Recharge</button>
-          </article>
-          <article class="cr-pack green">
-            <div class="cr-pack-top"><strong>200</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 20 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹220</span><span class="cr-new">₹130</span></div>
-            <p class="cr-unit">₹0.65 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="200">Recharge</button>
-          </article>
-          <article class="cr-pack green">
-            <div class="cr-pack-top"><strong>400</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 40 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹400</span><span class="cr-new">₹240</span></div>
-            <p class="cr-unit">₹0.60 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="400">Recharge</button>
-          </article>
-          <article class="cr-pack green">
-            <span class="cr-badge val">BEST VALUE</span>
-            <div class="cr-pack-top"><strong>1000</strong><span>credits</span></div>
-            <p class="cr-gens">≈ 100 generations</p>
-            <div class="cr-price-row"><span class="cr-old">₹1,200</span><span class="cr-new">₹900</span></div>
-            <p class="cr-unit">₹0.90 / credit</p>
-            <button type="button" class="cr-recharge" data-pack="1000">Recharge</button>
-          </article>
-        </div>
-
-        <div class="cr-or"><span>OR</span></div>
-
-        <div class="cr-lower">
-          <section class="cr-custom">
-            <div class="cr-custom-head">
+        <div class="cr-top">
+          <section class="cr-balance">
+            <div class="cr-balance-top">
+              <div class="cr-coin" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <circle cx="14.2" cy="9.6" r="5.4" stroke="#fff" stroke-width="1.7"/>
+                  <path d="M12.7 8.4h2.2M13.5 8.4v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                  <circle cx="9.8" cy="14.4" r="5.4" stroke="#fff" stroke-width="1.7"/>
+                  <path d="M8.3 13.2h2.2M9.1 13.2v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </div>
               <div>
-                <h3>Buy a custom amount</h3>
-                <p>₹30 – ₹1000 · 1 credit = ₹1</p>
+                <div class="cr-balance-label">Available Credits</div>
+                <div class="cr-balance-num">30</div>
               </div>
             </div>
-            <input class="cr-field" id="cr-amount" type="number" min="30" max="1000" placeholder="₹ Enter amount">
-            <div class="cr-coupon">
-              <input class="cr-field" id="cr-coupon" type="text" placeholder="Coupon code (optional)">
-              <button type="button" class="cr-apply" id="btn-apply">Apply</button>
+            <div class="cr-split">
+              <div><strong>0</strong><span>Purchased</span></div>
+              <div><strong>30</strong><span>Bonus / Referral</span></div>
             </div>
-            <button type="button" class="cr-buy" id="btn-buy">Buy credits</button>
+            <div class="cr-balance-foot">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 4.8L18.5 9.5 13.6 12 12 17l-1.6-5L5.5 9.5 10.4 7.8 12 3z" fill="#fff"/></svg>
+              1 generation = 10 credits — about 3 generations left
+            </div>
           </section>
 
           <section class="cr-how">
@@ -475,55 +486,184 @@
           </section>
         </div>
 
-        <div class="cr-trust">
-          <div class="cr-trust-card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2.2" stroke="#22C55E" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="#22C55E" stroke-width="2" stroke-linecap="round"/></svg>
-            </span>
-            <span>Secure checkout</span>
-          </div>
-          <div class="cr-trust-card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="#A855F7" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 12.2l1.8 1.8 3.8-3.8" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <span>Credits never expire</span>
-          </div>
-          <div class="cr-trust-card">
-            <span class="ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12a7.5 7.5 0 0112.8-5.3M19.5 12a7.5 7.5 0 01-12.8 5.3" stroke="#F97316" stroke-width="2" stroke-linecap="round"/><path d="M17 4.8v3.2h-3.2M7 19.2v-3.2h3.2" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <span>7-day money-back</span>
-          </div>
-        </div>
-        <div class="cr-pay">
-          <span>UPI</span><span>VISA</span><span>Mastercard</span><span>RuPay</span><span>GPay</span>
-        </div>
+        <button type="button" class="cr-history-btn" id="btn-jump-hist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          View transaction history
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
 
-        <div class="cr-invite">
-          <div class="cr-invite-ico">🎁</div>
-          <div>
-            <strong>Invite a friend, both get ₹50</strong>
-            <p>Free credits land the moment they join</p>
+        <div class="cr-loved"><span class="cr-stars">★★★★★</span> Loved by 12,000+ creators</div>
+
+        <section class="cr-buy-section">
+          <div class="cr-buy-row">
+            <div class="cr-packs-col">
+              <div class="cr-packs-head">
+                <h2>Choose your pack</h2>
+                <p>Bigger packs, lower price per credit</p>
+              </div>
+              <div class="cr-grid">
+                <article class="cr-pack">
+                  <div class="cr-pack-top"><strong>42</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 4 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹50</span><span class="cr-new">₹30</span><span class="cr-tag">STARTER</span></div>
+                  <p class="cr-unit">₹0.71 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="42">Recharge</button>
+                </article>
+                <article class="cr-pack">
+                  <span class="cr-badge pop">★ MOST POPULAR</span>
+                  <div class="cr-pack-top"><strong>80</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 8 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹90</span><span class="cr-new">₹55</span></div>
+                  <p class="cr-unit">₹0.69 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="80">Recharge</button>
+                </article>
+                <article class="cr-pack green">
+                  <span class="cr-badge val">BEST VALUE</span>
+                  <div class="cr-pack-top"><strong>100</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 10 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹120</span><span class="cr-new">₹70</span></div>
+                  <p class="cr-unit">₹0.70 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="100">Recharge</button>
+                </article>
+                <article class="cr-pack green">
+                  <div class="cr-pack-top"><strong>200</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 20 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹220</span><span class="cr-new">₹130</span></div>
+                  <p class="cr-unit">₹0.65 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="200">Recharge</button>
+                </article>
+                <article class="cr-pack green">
+                  <div class="cr-pack-top"><strong>400</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 40 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹400</span><span class="cr-new">₹240</span></div>
+                  <p class="cr-unit">₹0.60 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="400">Recharge</button>
+                </article>
+                <article class="cr-pack green">
+                  <span class="cr-badge val">BEST VALUE</span>
+                  <div class="cr-pack-top"><strong>1000</strong><span>credits</span></div>
+                  <p class="cr-gens">≈ 100 generations</p>
+                  <div class="cr-price-row"><span class="cr-old">₹1,200</span><span class="cr-new">₹900</span></div>
+                  <p class="cr-unit">₹0.90 / credit</p>
+                  <button type="button" class="cr-recharge" data-pack="1000">Recharge</button>
+                </article>
+              </div>
+            </div>
+
+            <div class="cr-or" aria-hidden="true"><span>OR</span></div>
+
+            <section class="cr-custom">
+              <div class="cr-custom-head">
+                <div>
+                  <h3>Buy a custom amount</h3>
+                  <p>₹30 – ₹1000 · 1 credit = ₹1</p>
+                </div>
+              </div>
+              <input class="cr-field" id="cr-amount" type="number" min="30" max="1000" placeholder="₹ Enter amount">
+              <div class="cr-coupon">
+                <input class="cr-field" id="cr-coupon" type="text" placeholder="Coupon code (optional)">
+                <button type="button" class="cr-apply" id="btn-apply">Apply</button>
+              </div>
+              <button type="button" class="cr-buy" id="btn-buy">Buy credits</button>
+            </section>
           </div>
-          <button type="button" class="cr-invite-btn" id="btn-invite">Invite</button>
+        </section>
+
+        <div class="cr-mid">
+          <div class="cr-mid-left">
+            <div class="cr-trust">
+              <div class="cr-trust-card">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2.2" stroke="#22C55E" stroke-width="2"/><path d="M8 11V8a4 4 0 018 0v3" stroke="#22C55E" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <span>Secure checkout</span>
+              </div>
+              <div class="cr-trust-card">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="#A855F7" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 12.2l1.8 1.8 3.8-3.8" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span>Credits never expire</span>
+              </div>
+              <div class="cr-trust-card">
+                <span class="ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 12a7.5 7.5 0 0112.8-5.3M19.5 12a7.5 7.5 0 01-12.8 5.3" stroke="#F97316" stroke-width="2" stroke-linecap="round"/><path d="M17 4.8v3.2h-3.2M7 19.2v-3.2h3.2" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span>7-day money-back</span>
+              </div>
+            </div>
+            <div class="cr-pay">
+              <span>UPI</span><span>VISA</span><span>Mastercard</span><span>RuPay</span><span>GPay</span>
+            </div>
+          </div>
+
+          <div class="cr-invite">
+            <div class="cr-invite-ico">🎁</div>
+            <div class="cr-invite-copy">
+              <strong>Invite a friend, both get ₹50</strong>
+              <p>Free credits land the moment they join</p>
+            </div>
+            <button type="button" class="cr-invite-btn" id="btn-invite">Invite</button>
+          </div>
         </div>
 
         <h2 class="cr-hist-title" id="credits-history">Credits History</h2>
-        <div class="cr-hist">
+        <div class="cr-hist" id="cr-hist">
           <div class="cr-hist-row">
-            <div class="cr-hist-ico gen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-            <div class="cr-hist-copy"><strong>AI generation</strong><span>Today · 2:14 PM</span></div>
-            <span class="cr-amt neg">-10</span>
+            <button type="button" class="cr-hist-head" aria-expanded="false">
+              <div class="cr-hist-ico gen" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+              <div class="cr-hist-copy"><strong>AI generation</strong><span>21 Oct 2026, 5:55 pm</span></div>
+              <span class="cr-amt neg">-10</span>
+              <span class="cr-hist-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="cr-hist-detail">
+              <dl class="cr-hist-meta"><dt>Generation ID</dt><dd>6ad8af22358d946f16624aa3</dd></dl>
+              <dl class="cr-hist-meta"><dt>Status</dt><dd>Completed</dd></dl>
+              <dl class="cr-hist-meta"><dt>Credits used</dt><dd>10</dd></dl>
+              <dl class="cr-hist-meta"><dt>Time</dt><dd>21 Oct 2026, 5:55 pm</dd></dl>
+            </div>
           </div>
           <div class="cr-hist-row">
-            <div class="cr-hist-ico gen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-            <div class="cr-hist-copy"><strong>AI generation</strong><span>Yesterday · 6:02 PM</span></div>
-            <span class="cr-amt neg">-10</span>
+            <button type="button" class="cr-hist-head" aria-expanded="false">
+              <div class="cr-hist-ico gen" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+              <div class="cr-hist-copy"><strong>AI generation</strong><span>20 Oct 2026, 6:02 pm</span></div>
+              <span class="cr-amt neg">-10</span>
+              <span class="cr-hist-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="cr-hist-detail">
+              <dl class="cr-hist-meta"><dt>Generation ID</dt><dd>c41e9b7702af18e0aa91d55c</dd></dl>
+              <dl class="cr-hist-meta"><dt>Status</dt><dd>Completed</dd></dl>
+              <dl class="cr-hist-meta"><dt>Credits used</dt><dd>10</dd></dl>
+              <dl class="cr-hist-meta"><dt>Time</dt><dd>20 Oct 2026, 6:02 pm</dd></dl>
+            </div>
           </div>
           <div class="cr-hist-row">
-            <div class="cr-hist-ico bonus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v10M8 11l4-4 4 4M7 20h10a2 2 0 002-2v-2H5v2a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="cr-hist-copy"><strong>Signup bonus</strong><span>Mar 12 · 11:20 AM</span></div>
-            <span class="cr-amt pos">+50</span>
+            <button type="button" class="cr-hist-head" aria-expanded="false">
+              <div class="cr-hist-ico buy" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/></svg></div>
+              <div class="cr-hist-copy"><strong>Credit purchase</strong><span>18 Oct 2026, 1:40 pm</span></div>
+              <span class="cr-amt pos">+100</span>
+              <span class="cr-hist-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="cr-hist-detail">
+              <dl class="cr-hist-meta"><dt>Transaction ID</dt><dd>pay_9f2c1a88b3e04721</dd></dl>
+              <dl class="cr-hist-meta"><dt>Status</dt><dd>Paid</dd></dl>
+              <dl class="cr-hist-meta"><dt>Credits added</dt><dd>100</dd></dl>
+              <dl class="cr-hist-meta"><dt>Amount</dt><dd>₹99</dd></dl>
+              <dl class="cr-hist-meta"><dt>Time</dt><dd>18 Oct 2026, 1:40 pm</dd></dl>
+            </div>
+          </div>
+          <div class="cr-hist-row">
+            <button type="button" class="cr-hist-head" aria-expanded="false">
+              <div class="cr-hist-ico bonus" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v10M8 11l4-4 4 4M7 20h10a2 2 0 002-2v-2H5v2a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="cr-hist-copy"><strong>Signup bonus</strong><span>12 Mar 2026, 11:20 am</span></div>
+              <span class="cr-amt pos">+50</span>
+              <span class="cr-hist-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <div class="cr-hist-detail">
+              <dl class="cr-hist-meta"><dt>Bonus ID</dt><dd>bonus_signup_2026</dd></dl>
+              <dl class="cr-hist-meta"><dt>Status</dt><dd>Credited</dd></dl>
+              <dl class="cr-hist-meta"><dt>Credits added</dt><dd>50</dd></dl>
+              <dl class="cr-hist-meta"><dt>Time</dt><dd>12 Mar 2026, 11:20 am</dd></dl>
+            </div>
           </div>
         </div>
       </div>
@@ -569,6 +709,15 @@
   });
   document.getElementById('btn-invite').addEventListener('click', function () {
     showToast('Invite link copied (demo)');
+  });
+
+  document.querySelectorAll('.cr-hist-head').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var row = btn.closest('.cr-hist-row');
+      if (!row) return;
+      var open = row.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   });
 })();
 </script>
