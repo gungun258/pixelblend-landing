@@ -14,6 +14,7 @@
     --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
     --bg: #FBFAFC; --accent: #C42E8B;
     --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+    --pb-rail: 202px;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
@@ -77,7 +78,7 @@
     width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
     background: #fff; display: inline-flex; align-items: center; justify-content: center;
   }
-  .pb-content { flex: 1 1 auto; padding: 24px 32px 48px; display: flex; justify-content: center; }
+  .pb-content { flex: 1 1 auto; padding: 24px 32px 110px; display: flex; justify-content: center; }
   .pb-toggle { display: none; }
 
   .sp-flow { width: min(720px, 100%); }
@@ -177,21 +178,34 @@
     pointer-events: none;
   }
 
+  .sp-save-bar {
+    position: fixed;
+    left: calc(50% + var(--pb-rail) / 2);
+    bottom: 24px;
+    z-index: 40;
+    transform: translateX(-50%);
+    width: min(440px, calc(100vw - var(--pb-rail) - 48px));
+    display: flex; justify-content: center;
+    pointer-events: none;
+  }
   .sp-save {
-    display: flex; width: fit-content; min-width: 200px;
-    margin: 20px auto 0; align-items: center; justify-content: center;
-    padding: 14px 36px; border: none; border-radius: 999px;
+    pointer-events: auto;
+    display: flex; width: 100%;
+    align-items: center; justify-content: center;
+    padding: 16px 32px; border: none; border-radius: 999px;
     background: var(--grad); color: #fff;
     font-size: 15px; font-weight: 800;
-    box-shadow: 0 12px 28px rgba(236,72,153,.32);
+    box-shadow: 0 14px 32px rgba(168,85,247,.38);
   }
   .sp-save:hover { filter: brightness(1.03); }
 
   .sp-toast {
-    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(16px);
-    background: #1E1422; color: #fff; padding: 12px 18px; border-radius: 999px;
+    position: fixed; left: calc(50% + var(--pb-rail) / 2); top: 78px;
+    transform: translateX(-50%) translateY(-10px);
+    background: #1E1422; color: #fff; padding: 12px 20px; border-radius: 999px;
     font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none;
-    transition: .25s ease; z-index: 80;
+    box-shadow: 0 10px 28px rgba(30, 20, 34, .22);
+    transition: .25s ease; z-index: 200;
   }
   .sp-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -236,19 +250,20 @@
   .sp-btn-discard:hover { background: #FEE2E2; }
 
   @media (max-width: 1079px) {
+    :root { --pb-rail: 61px; }
     .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
     .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
     .pb-main { margin-left: 61px; }
     .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
     .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
-    .pb-content { padding: 20px; }
+    .pb-content { padding: 20px 20px 110px; }
   }
   @media (max-width: 640px) {
-    .pb-content { padding: 16px; }
+    .pb-content { padding: 16px 16px 110px; }
     .sp-logo { width: 78px; height: 78px; }
     .sp-logo-wrap { margin-left: 16px; margin-top: -40px; }
-    .sp-save { width: 100%; }
+    .sp-save-bar { bottom: 16px; width: calc(100vw - var(--pb-rail) - 32px); }
   }
 </style>
 </head>
@@ -289,7 +304,7 @@
         <div class="pb-topbar-sub">Store banner, logo &amp; social links</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
         </a>
@@ -377,11 +392,13 @@
             </div>
           </div>
         </form>
-
-        <button type="button" class="sp-save" id="btn-save">Save</button>
       </div>
     </div>
   </main>
+</div>
+
+<div class="sp-save-bar">
+  <button type="button" class="sp-save" id="btn-save">Save</button>
 </div>
 
 <div class="sp-overlay" id="sp-discard" hidden>

@@ -189,19 +189,23 @@
       toastEl = document.createElement('div');
       toastEl.setAttribute('role', 'status');
       toastEl.style.cssText =
-        'position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);' +
-        'background:#1E1422;color:#fff;padding:12px 18px;border-radius:999px;' +
+        'position:fixed;top:78px;transform:translateX(-50%) translateY(-10px);' +
+        'background:#1E1422;color:#fff;padding:12px 20px;border-radius:999px;' +
         'font-size:13px;font-weight:700;opacity:0;pointer-events:none;' +
+        'box-shadow:0 10px 28px rgba(30,20,34,.22);' +
         'transition:.25s ease;z-index:200;font-family:inherit;';
       document.body.appendChild(toastEl);
     }
+    var rail = document.querySelector('.pb-sidebar');
+    var railW = rail ? rail.getBoundingClientRect().width : 202;
+    toastEl.style.left = 'calc(50% + ' + railW / 2 + 'px)';
     toastEl.textContent = msg;
     toastEl.style.opacity = '1';
     toastEl.style.transform = 'translateX(-50%) translateY(0)';
     clearTimeout(toastT);
     toastT = setTimeout(function () {
       toastEl.style.opacity = '0';
-      toastEl.style.transform = 'translateX(-50%) translateY(16px)';
+      toastEl.style.transform = 'translateX(-50%) translateY(-10px)';
     }, 2000);
   }
 

@@ -114,8 +114,12 @@
   }
   .ac-hero-stat {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 5px; text-align: center; padding: 4px 6px;
+    gap: 5px; text-align: center; padding: 8px 6px; margin: -4px 0;
+    border-radius: 12px; color: inherit; text-decoration: none; cursor: pointer;
+    transition: background .15s ease;
   }
+  a.ac-hero-stat:hover { background: rgba(255,255,255,.14); }
+  a.ac-hero-stat:focus-visible { outline: 2px solid rgba(255,255,255,.7); outline-offset: 2px; }
   .ac-hero-stat-top {
     display: inline-flex; align-items: center; justify-content: center; gap: 7px;
   }
@@ -144,8 +148,10 @@
     display: flex; align-items: center; gap: 12px; width: 100%;
     padding: 14px 16px; border: none; background: #fff; text-align: left;
     color: inherit; cursor: pointer;
+    box-sizing: border-box; height: auto;
+    font: inherit; appearance: none; -webkit-appearance: none;
   }
-  a.ac-row { color: inherit; }
+  a.ac-row { color: inherit; text-decoration: none; }
   .ac-row + .ac-row { border-top: 1px solid #F5EEF5; }
   .ac-row:hover { background: #FCF8FC; }
   .ac-ico {
@@ -156,7 +162,7 @@
   .ac-sub {
     display: block; margin-top: 3px; font-size: 12px; font-weight: 500; color: #94A3B8; line-height: 1.35;
   }
-  .ac-chev { color: #CBD5E1; flex-shrink: 0; }
+  .ac-chev { color: #CBD5E1; flex-shrink: 0; align-self: center; }
   .ac-sec {
     margin: 22px 0 10px; font-size: 15px; font-weight: 800; color: #1E1422; letter-spacing: -.01em;
   }
@@ -174,13 +180,27 @@
 
   .ac-account-row {
     display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+    align-items: stretch;
   }
+  .ac-account-row .ac-card {
+    display: flex; flex-direction: column; min-height: 100%;
+  }
+  .ac-account-row .ac-row {
+    flex: 1 1 auto;
+    height: 100%;
+    align-items: flex-start;
+  }
+  .ac-account-row .ac-label {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  }
+  .ac-account-row .ac-sub { margin-top: 0; }
+  #btn-logout:hover { background: #FEF2F2; }
   .ac-danger-card {
     border-color: #FECACA;
     background: #FFF8F8;
   }
   .ac-danger-card .ac-row { background: transparent; }
-  .ac-danger-card .ac-row:hover { background: #FEF2F2; }
+  .ac-danger-card .ac-row:hover { background: #FEE2E2; }
   .ac-danger { color: #EF4444 !important; }
   .ac-danger-dark { color: #DC2626 !important; }
 
@@ -289,7 +309,7 @@
         <div class="pb-topbar-sub">Profile, settings &amp; sign out</div>
       </div>
       <div class="pb-top-actions">
-        <a href="#" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
           <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
           <span style="font-size:12px;font-weight:800;color:#B7791F;">30</span>
         </a>
@@ -313,7 +333,7 @@
                 </div>
               </div>
               <div class="ac-hero-stats">
-                <div class="ac-hero-stat">
+                <a class="ac-hero-stat" href="gallery.html" aria-label="View generations">
                   <div class="ac-hero-stat-top">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M12 2.8l1.35 3.9 3.9 1.35-3.9 1.35L12 13.3l-1.35-3.9-3.9-1.35 3.9-1.35L12 2.8z" fill="#fff"/>
@@ -323,8 +343,8 @@
                     <strong>0</strong>
                   </div>
                   <span>Generations</span>
-                </div>
-                <div class="ac-hero-stat">
+                </a>
+                <a class="ac-hero-stat" href="buy-credits.html" aria-label="Buy credits">
                   <div class="ac-hero-stat-top">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <rect x="2.5" y="5.5" width="19" height="13" rx="2.2" stroke="#fff" stroke-width="1.8"/>
@@ -333,8 +353,8 @@
                     <strong>30</strong>
                   </div>
                   <span>Credits</span>
-                </div>
-                <div class="ac-hero-stat">
+                </a>
+                <a class="ac-hero-stat" href="top-sellers.html" aria-label="View following">
                   <div class="ac-hero-stat-top">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <circle cx="9" cy="8" r="2.8" stroke="#fff" stroke-width="1.7"/>
@@ -345,7 +365,7 @@
                     <strong>0</strong>
                   </div>
                   <span>Following</span>
-                </div>
+                </a>
               </div>
             </div>
           </aside>
