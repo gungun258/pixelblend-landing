@@ -5,46 +5,53 @@
       '<path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>' +
     '</svg>';
 
+  function normalizePage(name) {
+    var n = (name || '').toLowerCase().split('?')[0].split('#')[0];
+    if (n.slice(-5) === '.html') n = n.slice(0, -5);
+    return n;
+  }
+
   function fileName() {
     try {
       var p = (location.pathname || '').split('/').pop() || '';
-      return decodeURIComponent(p).toLowerCase() || 'dashboard.html';
+      return normalizePage(decodeURIComponent(p)) || 'dashboard';
     } catch (e) {
-      return 'dashboard.html';
+      return 'dashboard';
     }
   }
 
   function activeKey(file) {
-    if (file === 'discover.html' || file === 'results.html') return 'discover';
-    if (file === 'generate.html' || file === 'generating.html' || file === 'generated-result.html') return 'generate';
-    if (file === 'gallery.html') return 'gallery';
+    var f = normalizePage(file);
+    if (f === 'discover' || f === 'results') return 'discover';
+    if (f === 'generate' || f === 'generating' || f === 'generated-result') return 'generate';
+    if (f === 'gallery') return 'gallery';
     if (
-      file === 'account.html' ||
-      file === 'edit-profile.html' ||
-      file === 'settings.html' ||
-      file === 'buy-credits.html' ||
-      file === 'notifications.html' ||
-      file === 'wishlist.html' ||
-      file === 'referrals.html' ||
-      file === 'refunds.html' ||
-      file === 'faqs.html' ||
-      file === 'privacy-policy.html' ||
-      file === 'terms-of-service.html' ||
-      file === 'contact-support.html' ||
-      file === 'seller-dashboard.html' ||
-      file === 'seller-profile.html' ||
-      file === 'seller-benefits.html'
+      f === 'account' ||
+      f === 'edit-profile' ||
+      f === 'settings' ||
+      f === 'buy-credits' ||
+      f === 'notifications' ||
+      f === 'wishlist' ||
+      f === 'referrals' ||
+      f === 'refunds' ||
+      f === 'faqs' ||
+      f === 'privacy-policy' ||
+      f === 'terms-of-service' ||
+      f === 'contact-support' ||
+      f === 'seller-dashboard' ||
+      f === 'seller-profile' ||
+      f === 'seller-benefits'
     ) return 'account';
     return 'home';
   }
 
   function hrefKey(href) {
-    var h = (href || '').split('?')[0].split('#')[0].split('/').pop().toLowerCase();
-    if (h === 'dashboard.html' || h === '' || h === 'index.html') return 'home';
-    if (h === 'discover.html') return 'discover';
-    if (h === 'generate.html') return 'generate';
-    if (h === 'gallery.html') return 'gallery';
-    if (h === 'account.html') return 'account';
+    var h = normalizePage((href || '').split('?')[0].split('#')[0].split('/').pop());
+    if (h === 'dashboard' || h === '' || h === 'index' || h === 'home') return 'home';
+    if (h === 'discover' || h === 'results') return 'discover';
+    if (h === 'generate' || h === 'generating' || h === 'generated-result') return 'generate';
+    if (h === 'gallery') return 'gallery';
+    if (h === 'account') return 'account';
     return '';
   }
 
