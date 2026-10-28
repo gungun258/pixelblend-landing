@@ -5,6 +5,7 @@
 <title>Seller Dashboard · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=17">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,8 +53,8 @@
     display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
     font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
   }
-  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
-  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
   .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .pb-navbadge {
     margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
@@ -84,44 +85,54 @@
   .sd-flow { width: min(960px, 100%); margin: 0 auto; }
   .sd-view[hidden] { display: none !important; }
 
-  /* Stats */
+  /* Stats — compact strip: icon + number side-by-side, actions on the right */
   .sd-stats {
-    background: #fff; border: 1px solid var(--line); border-radius: 22px;
-    padding: 22px 24px 20px; margin-bottom: 22px;
-    box-shadow: 0 12px 28px -22px rgba(30,20,34,.28);
+    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
   }
   .sd-stats-row {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin-bottom: 18px;
+    flex: 1 1 auto; min-width: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
   }
   .sd-stat {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    text-align: center; padding: 8px 4px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px;
+    border-right: 1px solid #F1EAF2;
   }
+  .sd-stat:last-child { border-right: none; }
   .sd-stat-ico {
-    width: 44px; height: 44px; border-radius: 14px;
+    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
   }
   .sd-stat-ico.listings { background: #F3E8FF; color: #7C3AED; }
   .sd-stat-ico.views { background: #DBEAFE; color: #2563EB; }
   .sd-stat-ico.gens { background: #DCFCE7; color: #16A34A; }
-  .sd-stat strong { font-size: 22px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+  .sd-stat-meta {
+    display: flex; flex-direction: column; gap: 2px; min-width: 0;
+  }
+  .sd-stat strong { font-size: 20px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
   .sd-stat span { font-size: 12px; font-weight: 600; color: var(--soft); }
   .sd-profile-actions {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    flex: 0 0 auto;
+    display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px;
+    padding-left: 4px;
   }
   .sd-btn-view {
-    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-    width: auto; min-width: 0; padding: 10px 18px; border: none; border-radius: 999px;
-    background: #3B82F6; color: #fff; font-size: 13px; font-weight: 700;
-    box-shadow: 0 8px 18px rgba(59,130,246,.28);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 14px; border: none; border-radius: 999px;
+    background: #3B82F6; color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 6px 14px rgba(59,130,246,.22);
   }
   .sd-btn-view:hover { filter: brightness(1.05); }
   .sd-btn-share {
-    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-    width: auto; min-width: 0; padding: 10px 18px; border: none; border-radius: 999px;
-    background: var(--grad); color: #fff; font-size: 13px; font-weight: 700;
-    box-shadow: 0 8px 18px rgba(168,85,247,.28);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 14px; border: none; border-radius: 999px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 6px 14px rgba(168,85,247,.22);
   }
   .sd-btn-share:hover { filter: brightness(1.05); }
 
@@ -131,12 +142,78 @@
     gap: 12px; margin-bottom: 12px;
   }
   .sd-list-head h2 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+  .sd-list-tools { display: flex; align-items: center; gap: 8px; }
+  .sd-tip {
+    margin: -4px 0 12px;
+    font-size: 12px; font-weight: 600; color: #A78BBA;
+  }
+  body.sd-selecting .sd-tip { display: none; }
   .sd-sort-wrap { position: relative; }
   .sd-sort-btn {
     display: inline-flex; align-items: center; gap: 6px;
     border: none; background: transparent; padding: 6px 4px;
     font-size: 13px; font-weight: 700; color: #7C3AED;
   }
+
+  .sd-toolbar {
+    display: none;
+    position: fixed;
+    left: var(--pb-rail, 202px);
+    right: 0;
+    top: 64px;
+    z-index: 25;
+    height: 52px;
+    padding: 0 24px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: #F3E8FF;
+    border-bottom: 1px solid #E9D5FF;
+  }
+  .sd-toolbar.on { display: flex; }
+  body.sd-selecting .pb-content { padding-top: 68px; }
+  body.sd-selecting .sd-add-bar { display: none; }
+  #sd-cancel {
+    width: 40px; height: 40px; border: none; border-radius: 50%;
+    padding: 0; background: transparent; color: #0F172A;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  #sd-cancel:hover { background: rgba(124, 58, 237, .1); color: #7C3AED; }
+  .sd-sel-count {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 15px; font-weight: 800; color: #0F172A;
+    pointer-events: none;
+  }
+  .sd-bulk-del {
+    width: 40px; height: 40px; border-radius: 50%; border: none;
+    background: transparent; color: #EF4444;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sd-bulk-del:hover { background: #FEE2E2; }
+  .sd-bulk-del:disabled { opacity: .35; pointer-events: none; }
+
+  .sd-check {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.95);
+    background: rgba(15,23,42,.28);
+    color: #fff;
+    display: none; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; line-height: 1;
+    box-shadow: 0 4px 10px rgba(15,23,42,.18);
+    pointer-events: none;
+  }
+  .sd-card { position: relative; }
+  body.sd-selecting .sd-check { display: flex; }
+  .sd-card.is-selected {
+    border-color: #C084FC;
+    box-shadow: 0 0 0 2px rgba(168,85,247,.25), 0 14px 28px -18px rgba(168,85,247,.32);
+  }
+  .sd-card.is-selected .sd-check {
+    background: #7C3AED; border-color: #7C3AED;
+  }
+  body.sd-selecting .sd-card-actions,
+  body.sd-selecting .sd-share-ico { pointer-events: none; opacity: .45; }
   .sd-sort-menu {
     position: absolute; right: 0; top: calc(100% + 6px); z-index: 30;
     width: 220px; padding: 10px; border-radius: 16px;
@@ -241,36 +318,105 @@
   .sd-act.del { background: #FEE2E2; color: #DC2626; }
 
   .sd-empty {
-    display: none; text-align: center; padding: 48px 20px;
-    background: #fff; border: 1px solid var(--line); border-radius: 18px;
+    display: none;
+    text-align: center;
+    min-height: min(420px, calc(100vh - 260px));
+    padding: 48px 24px 110px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    flex-direction: column; align-items: center; justify-content: center;
+    box-sizing: border-box; gap: 0;
   }
-  .sd-empty.on { display: block; }
-  .sd-empty h3 { margin: 0 0 6px; font-size: 16px; font-weight: 800; }
-  .sd-empty p { margin: 0; font-size: 13px; color: var(--soft); font-weight: 500; }
+  .sd-empty.on { display: flex; }
+  .sd-empty-art {
+    position: relative;
+    width: 88px; height: 88px;
+    margin: 0 auto 22px;
+  }
+  .sd-empty-art .stack {
+    position: absolute; inset: 10px 8px 4px;
+    border-radius: 14px;
+    background: #EEF2FF;
+    border: 1.5px solid #E0E7FF;
+    transform: rotate(-8deg);
+  }
+  .sd-empty-art .stack.b {
+    inset: 6px 4px 8px 12px;
+    background: #F3E8FF;
+    border-color: #E9D5FF;
+    transform: rotate(7deg);
+  }
+  .sd-empty-art .front {
+    position: absolute; inset: 8px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1.5px solid #E9D5FF;
+    box-shadow: 0 10px 24px -14px rgba(124,58,237,.35);
+    display: flex; align-items: center; justify-content: center;
+    color: #A855F7;
+  }
+  .sd-empty h3 {
+    margin: 0 0 8px;
+    font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
+  }
+  .sd-empty p {
+    margin: 0 0 22px;
+    max-width: 280px;
+    font-size: 14px; line-height: 1.45; color: #94A3B8; font-weight: 500;
+  }
+  .sd-empty-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 22px; border: none; border-radius: 14px;
+    background: var(--grad); color: #fff;
+    font-size: 14px; font-weight: 800;
+    box-shadow: 0 12px 26px rgba(168,85,247,.32);
+  }
+  .sd-empty-cta:hover { filter: brightness(1.05); }
+  .sd-empty.is-filter .sd-empty-cta { display: none; }
 
-  .sd-add-bar {
-    position: sticky; bottom: 16px; z-index: 15;
-    display: flex; justify-content: center; pointer-events: none;
+  #view-dash {
+    padding-bottom: 88px;
   }
+  .sd-add-bar {
+    position: fixed;
+    left: calc(var(--pb-rail, 202px) + (100vw - var(--pb-rail, 202px)) / 2);
+    bottom: 20px;
+    z-index: 15;
+    transform: translateX(-50%);
+    display: flex; justify-content: center; pointer-events: none;
+    width: min(440px, calc(100vw - var(--pb-rail, 202px) - 40px));
+  }
+  #view-dash[hidden] .sd-add-bar { display: none !important; }
   .sd-add-btn {
     pointer-events: auto;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    min-width: min(420px, 100%); padding: 14px 28px; border: none; border-radius: 999px;
+    width: 100%; padding: 14px 28px; border: none; border-radius: 999px;
     background: var(--grad); color: #fff; font-size: 15px; font-weight: 800;
     box-shadow: 0 14px 32px rgba(168,85,247,.38);
   }
   .sd-add-btn:hover { filter: brightness(1.05); }
 
   /* Add listing view */
+  .sd-items { width: 100%; display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
   .sd-form-card {
+    position: relative;
     background: #fff; border: 1px solid var(--line); border-radius: 20px;
-    padding: 22px; margin-bottom: 14px;
+    padding: 22px; margin-bottom: 0;
     box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
   }
+  .sd-item-del {
+    position: absolute; top: 14px; right: 14px;
+    width: 34px; height: 34px; border: none; border-radius: 50%;
+    background: #FEE2E2; color: #DC2626;
+    display: none; align-items: center; justify-content: center;
+  }
+  .sd-item-del:hover { background: #FECACA; }
+  #sd-items.has-many .sd-item-del { display: inline-flex; }
   .sd-field { margin-bottom: 18px; }
   .sd-field:last-child { margin-bottom: 0; }
   .sd-field label {
-    display: block; margin-bottom: 8px;
+    display: block; margin-bottom: 8px; padding-right: 40px;
     font-size: 13px; font-weight: 700; color: var(--soft);
   }
   .sd-field input[type="text"] {
@@ -351,6 +497,27 @@
     width: 100%; border: none; border-radius: 14px; padding: 14px;
     background: var(--grad); color: #fff; font-size: 15px; font-weight: 800;
   }
+  .sd-modal-actions {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .sd-modal-actions button {
+    border: none; border-radius: 999px; padding: 12px 14px;
+    font-size: 14px; font-weight: 800;
+  }
+  .sd-modal-cancel { background: #F1F5F9; color: #0F172A; }
+  .sd-modal-cancel:hover { background: #E2E8F0; }
+  .sd-modal-danger {
+    background: #EF4444; color: #fff;
+    box-shadow: 0 10px 20px rgba(239,68,68,.28);
+  }
+  .sd-modal-danger:hover { filter: brightness(1.05); }
+  .sd-modal-keep { background: #EEF2FF; color: #0F172A; }
+  .sd-modal-keep:hover { background: #E0E7FF; }
+  .sd-modal-discard {
+    border: 1.5px solid #FECACA; background: #FEF2F2; color: #EF4444;
+  }
+  .sd-modal-discard:hover { background: #FEE2E2; }
+  .sd-overlay[hidden] { display: none !important; }
   .sd-toast {
     position: fixed; left: calc(50% + var(--pb-rail) / 2); top: 78px;
     transform: translateX(-50%) translateY(-10px);
@@ -370,10 +537,17 @@
     .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
     .pb-content { padding: 20px; }
+    .sd-toolbar { left: 61px; top: 56px; padding: 0 16px; }
+  }
+  @media (max-width: 900px) {
+    .sd-stats { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px; }
+    .sd-stats-row { width: 100%; }
+    .sd-profile-actions { justify-content: stretch; padding-left: 0; }
+    .sd-btn-view, .sd-btn-share { flex: 1 1 0; }
   }
   @media (max-width: 640px) {
-    .sd-stats-row { gap: 4px; }
-    .sd-profile-actions { justify-content: center; }
+    .sd-stat { padding: 6px 8px; gap: 8px; }
+    .sd-stat strong { font-size: 17px; }
     .sd-card { grid-template-columns: 76px 1fr; gap: 12px; }
     .sd-thumb { width: 76px; height: 76px; }
     .sd-filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
@@ -427,6 +601,16 @@
       </div>
     </header>
 
+    <div class="sd-toolbar" id="sd-toolbar" role="toolbar" aria-label="Selection">
+      <button type="button" id="sd-cancel" aria-label="Cancel selection" title="Cancel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="sd-sel-count" id="sd-sel-count">0 selected</span>
+      <button type="button" class="sd-bulk-del" id="sd-bulk-del" aria-label="Delete selected" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h14M10 7V5h4v2M8 7l.8 12h6.4L16 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
     <div class="pb-content">
       <div class="sd-flow">
 
@@ -436,33 +620,39 @@
             <div class="sd-stats-row">
               <div class="sd-stat">
                 <div class="sd-stat-ico listings" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 15l4.5-3.5 3 2.5 3.5-3.5L21 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="9" r="1.4" stroke="currentColor" stroke-width="1.5"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 15l4.5-3.5 3 2.5 3.5-3.5L21 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="9" r="1.4" stroke="currentColor" stroke-width="1.5"/></svg>
                 </div>
-                <strong id="stat-listings">4</strong>
-                <span>Listings</span>
+                <div class="sd-stat-meta">
+                  <strong id="stat-listings">4</strong>
+                  <span>Listings</span>
+                </div>
               </div>
               <div class="sd-stat">
                 <div class="sd-stat-ico views" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
                 </div>
-                <strong id="stat-views">128</strong>
-                <span>Views</span>
+                <div class="sd-stat-meta">
+                  <strong id="stat-views">128</strong>
+                  <span>Views</span>
+                </div>
               </div>
               <div class="sd-stat">
                 <div class="sd-stat-ico gens" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 4.6L18 9.2l-4.4 1.6L12 15.4l-1.6-4.6L6 9.2l4.4-1.6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M18.5 14.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 4.6L18 9.2l-4.4 1.6L12 15.4l-1.6-4.6L6 9.2l4.4-1.6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M18.5 14.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
                 </div>
-                <strong id="stat-gens">36</strong>
-                <span>Generations</span>
+                <div class="sd-stat-meta">
+                  <strong id="stat-gens">36</strong>
+                  <span>Generations</span>
+                </div>
               </div>
             </div>
             <div class="sd-profile-actions">
               <a class="sd-btn-view" href="seller.html?id=visual-vibes">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" stroke="#fff" stroke-width="1.8"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="2.6" stroke="#fff" stroke-width="1.8"/></svg>
                 View Profile
               </a>
               <button type="button" class="sd-btn-share" id="btn-share-profile">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="#fff" stroke-width="1.7"/><circle cx="6" cy="12" r="2.5" stroke="#fff" stroke-width="1.7"/><circle cx="18" cy="19" r="2.5" stroke="#fff" stroke-width="1.7"/><path d="M8.4 10.8l7.2-4.2M8.4 13.2l7.2 4.2" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="2.5" stroke="#fff" stroke-width="1.7"/><circle cx="6" cy="12" r="2.5" stroke="#fff" stroke-width="1.7"/><circle cx="18" cy="19" r="2.5" stroke="#fff" stroke-width="1.7"/><path d="M8.4 10.8l7.2-4.2M8.4 13.2l7.2 4.2" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
                 Share Profile
               </button>
             </div>
@@ -470,21 +660,24 @@
 
           <div class="sd-list-head">
             <h2>My Listings</h2>
-            <div class="sd-sort-wrap">
-              <button type="button" class="sd-sort-btn" id="btn-sort" aria-haspopup="listbox" aria-expanded="false">
-                Sort: <span id="sort-label">Newest first</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <div class="sd-sort-menu" id="sort-menu" hidden role="listbox">
-                <span class="label">Sort by</span>
-                <button type="button" class="sd-sort-opt active" data-sort="newest" role="option">Newest first <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="sd-sort-opt" data-sort="oldest" role="option">Oldest first <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="sd-sort-opt" data-sort="gens" role="option">Generations <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="sd-sort-opt" data-sort="views" role="option">Views <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="sd-sort-opt" data-sort="status" role="option">Status <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="sd-list-tools">
+              <div class="sd-sort-wrap">
+                <button type="button" class="sd-sort-btn" id="btn-sort" aria-haspopup="listbox" aria-expanded="false">
+                  Sort: <span id="sort-label">Newest first</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="sd-sort-menu" id="sort-menu" hidden role="listbox">
+                  <span class="label">Sort by</span>
+                  <button type="button" class="sd-sort-opt active" data-sort="newest" role="option">Newest first <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button type="button" class="sd-sort-opt" data-sort="oldest" role="option">Oldest first <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button type="button" class="sd-sort-opt" data-sort="gens" role="option">Generations <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button type="button" class="sd-sort-opt" data-sort="views" role="option">Views <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button type="button" class="sd-sort-opt" data-sort="status" role="option">Status <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
               </div>
             </div>
           </div>
+          <p class="sd-tip" id="sd-tip">Tip: press &amp; hold a listing to select and delete.</p>
 
           <div class="sd-search">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -502,6 +695,7 @@
 
           <div class="sd-list" id="sd-list">
             <article class="sd-card" data-status="pending" data-listing-id="background-studio-1" data-title="Background Studio 1" data-views="0" data-gens="0" data-ts="4">
+              <span class="sd-check" aria-hidden="true"></span>
               <div class="sd-thumb"><img src="assets/dashboard/images/img3.jpg" alt=""></div>
               <div class="sd-card-body">
                 <div class="sd-card-top">
@@ -525,6 +719,7 @@
             </article>
 
             <article class="sd-card" data-status="live" data-listing-id="rustic-charm" data-title="Rustic Charm" data-views="86" data-gens="22" data-ts="3">
+              <span class="sd-check" aria-hidden="true"></span>
               <div class="sd-thumb"><img src="assets/dashboard/images/img2.jpg" alt=""></div>
               <div class="sd-card-body">
                 <div class="sd-card-top">
@@ -548,6 +743,7 @@
             </article>
 
             <article class="sd-card" data-status="need" data-listing-id="studio-softbox" data-title="Studio Softbox" data-views="24" data-gens="8" data-ts="2">
+              <span class="sd-check" aria-hidden="true"></span>
               <div class="sd-thumb"><img src="assets/dashboard/images/img5.jpg" alt=""></div>
               <div class="sd-card-body">
                 <div class="sd-card-top">
@@ -571,6 +767,7 @@
             </article>
 
             <article class="sd-card" data-status="archived" data-listing-id="marble-luxe" data-title="Marble Luxe" data-views="18" data-gens="6" data-ts="1">
+              <span class="sd-check" aria-hidden="true"></span>
               <div class="sd-thumb"><img src="assets/dashboard/images/img8.jpg" alt=""></div>
               <div class="sd-card-body">
                 <div class="sd-card-top">
@@ -595,8 +792,19 @@
           </div>
 
           <div class="sd-empty" id="sd-empty">
-            <h3>No listings here</h3>
-            <p>Try another filter, or add a new listing.</p>
+            <div class="sd-empty-art" aria-hidden="true">
+              <span class="stack"></span>
+              <span class="stack b"></span>
+              <span class="front">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 15l4.5-3.5 3 2.5 3.5-3.5L21 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="9" r="1.4" stroke="currentColor" stroke-width="1.5"/></svg>
+              </span>
+            </div>
+            <h3 id="sd-empty-title">No listings yet</h3>
+            <p id="sd-empty-copy">Add your first background listing to start selling on PixelBlend.</p>
+            <button type="button" class="sd-empty-cta" id="btn-empty-add">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+              Add New Listing
+            </button>
           </div>
 
           <div class="sd-add-bar">
@@ -609,25 +817,30 @@
 
         <!-- Add listing view -->
         <div class="sd-view" id="view-add" hidden>
-          <div class="sd-form-card" id="item-block-1">
-            <div class="sd-field">
-              <label for="listing-title">Title (optional)</label>
-              <input type="text" id="listing-title" placeholder="Enter item title...">
-            </div>
-            <div class="sd-field">
-              <div class="sd-photos-head">
-                <span>Photos</span>
-                <span class="count" id="photo-count">0/5</span>
+          <div class="sd-items" id="sd-items">
+            <div class="sd-form-card sd-item" data-item>
+              <button type="button" class="sd-item-del" data-item-del aria-label="Remove item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5h6v2M8 7l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="sd-field">
+                <label>Title (optional)</label>
+                <input type="text" class="sd-item-title" placeholder="Enter item title...">
               </div>
-              <div class="sd-photos" id="sd-photos">
-                <button type="button" class="sd-photo-add" id="btn-add-photo">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V8M8.5 11.5L12 8l3.5 3.5M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Add photos
-                </button>
+              <div class="sd-field">
+                <div class="sd-photos-head">
+                  <span>Photos</span>
+                  <span class="count" data-photo-count>0/5</span>
+                </div>
+                <div class="sd-photos" data-photos>
+                  <button type="button" class="sd-photo-add" data-add-photo>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V8M8.5 11.5L12 8l3.5 3.5M5 18h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Add photos
+                  </button>
+                </div>
               </div>
-              <input type="file" id="photo-input" accept="image/*" multiple hidden>
             </div>
           </div>
+          <input type="file" id="photo-input" accept="image/*" multiple hidden>
 
           <button type="button" class="sd-add-more" id="btn-add-more">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
@@ -650,6 +863,36 @@
     <h2 id="sd-success-title">Listing submitted</h2>
     <p>We are working on your listings and will soon make it live. You will get a notification once live.</p>
     <button type="button" class="sd-modal-done" id="btn-success-done">Done</button>
+  </div>
+</div>
+
+<div class="sd-overlay" id="sd-alert" hidden>
+  <div class="sd-modal" role="dialog" aria-modal="true" aria-labelledby="sd-alert-title">
+    <h2 id="sd-alert-title">Image required</h2>
+    <p id="sd-alert-body">Please upload at least one background image for each item.</p>
+    <button type="button" class="sd-modal-done" id="sd-alert-ok">OK</button>
+  </div>
+</div>
+
+<div class="sd-overlay" id="sd-confirm" hidden>
+  <div class="sd-modal" role="dialog" aria-modal="true" aria-labelledby="sd-confirm-title">
+    <h2 id="sd-confirm-title">Delete listing?</h2>
+    <p id="sd-confirm-body">This permanently removes the listing. This cannot be undone.</p>
+    <div class="sd-modal-actions">
+      <button type="button" class="sd-modal-cancel" id="sd-confirm-cancel">Cancel</button>
+      <button type="button" class="sd-modal-danger" id="sd-confirm-ok">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="sd-overlay" id="sd-discard" hidden>
+  <div class="sd-modal" role="dialog" aria-modal="true" aria-labelledby="sd-discard-title">
+    <h2 id="sd-discard-title">Discard changes?</h2>
+    <p>You have unsaved changes. If you leave now, they will be lost.</p>
+    <div class="sd-modal-actions">
+      <button type="button" class="sd-modal-keep" id="sd-discard-keep">Keep editing</button>
+      <button type="button" class="sd-modal-discard" id="sd-discard-ok">Discard</button>
+    </div>
   </div>
 </div>
 
@@ -678,9 +921,9 @@
   var sortLabel = document.getElementById('sort-label');
   var toast = document.getElementById('sd-toast');
   var success = document.getElementById('sd-success');
-  var photos = document.getElementById('sd-photos');
+  var itemsWrap = document.getElementById('sd-items');
   var photoInput = document.getElementById('photo-input');
-  var photoCount = document.getElementById('photo-count');
+  var activeItem = null;
   var filter = 'all';
   var toastT;
   var demoPhotos = [
@@ -690,6 +933,7 @@
     'assets/dashboard/images/img20.jpg',
     'assets/dashboard/images/img7.jpg'
   ];
+  var itemTemplate = itemsWrap ? itemsWrap.innerHTML : '';
 
   function showToast(msg) {
     toast.textContent = msg;
@@ -698,7 +942,54 @@
     toastT = setTimeout(function () { toast.classList.remove('on'); }, 2200);
   }
 
-  function showDash() {
+  var discardEl = document.getElementById('sd-discard');
+  var pendingLeaveHref = null;
+
+  function isAddView() {
+    return viewAdd && !viewAdd.hidden;
+  }
+  function isAddDirty() {
+    if (!isAddView() || !itemsWrap) return false;
+    var blocks = itemBlocks();
+    if (blocks.length > 1) return true;
+    return blocks.some(function (item) {
+      var title = ((item.querySelector('.sd-item-title') || {}).value || '').trim();
+      var photos = item.querySelectorAll('.sd-photo').length;
+      return !!title || photos > 0;
+    });
+  }
+  function openDiscard(href) {
+    pendingLeaveHref = href || null;
+    if (discardEl) {
+      discardEl.hidden = false;
+      discardEl.removeAttribute('hidden');
+    }
+  }
+  function closeDiscard() {
+    pendingLeaveHref = null;
+    if (discardEl) {
+      discardEl.hidden = true;
+      discardEl.setAttribute('hidden', '');
+    }
+  }
+  function requestLeaveAdd(href) {
+    if (!isAddView()) {
+      if (href) window.location.href = href;
+      return;
+    }
+    if (isAddDirty()) openDiscard(href || null);
+    else {
+      resetItemsForm();
+      if (href) window.location.href = href;
+      else showDash(true);
+    }
+  }
+
+  function showDash(force) {
+    if (!force && isAddView() && isAddDirty()) {
+      openDiscard(null);
+      return;
+    }
     viewAdd.hidden = true;
     viewDash.hidden = false;
     titleEl.textContent = 'Seller Dashboard';
@@ -713,12 +1004,143 @@
     titleEl.textContent = 'Add New Listing';
     subEl.textContent = 'Upload photos and submit for review';
     back.removeAttribute('href');
-    back.onclick = function (e) { e.preventDefault(); showDash(); };
+    back.onclick = function (e) {
+      e.preventDefault();
+      requestLeaveAdd(null);
+    };
   }
 
   function cards() {
     return Array.prototype.slice.call(list.querySelectorAll('.sd-card'));
   }
+
+  var selectMode = false;
+  var selectedIds = [];
+  var toolbar = document.getElementById('sd-toolbar');
+  var selCountEl = document.getElementById('sd-sel-count');
+  var bulkDelBtn = document.getElementById('sd-bulk-del');
+  var cancelSelBtn = document.getElementById('sd-cancel');
+
+  function cardId(card) {
+    return card.getAttribute('data-listing-id') || card.getAttribute('data-title') || '';
+  }
+  function syncSelectChrome() {
+    var n = selectedIds.length;
+    toolbar.classList.toggle('on', selectMode);
+    document.body.classList.toggle('sd-selecting', selectMode);
+    if (selCountEl) selCountEl.textContent = n === 1 ? '1 selected' : (n + ' selected');
+    if (bulkDelBtn) bulkDelBtn.disabled = n === 0;
+    cards().forEach(function (card) {
+      var id = cardId(card);
+      var on = selectedIds.indexOf(id) >= 0;
+      card.classList.toggle('is-selected', on);
+      var check = card.querySelector('.sd-check');
+      if (check) check.textContent = on ? String(selectedIds.indexOf(id) + 1) : '';
+    });
+  }
+  function clearSelect() {
+    selectMode = false;
+    selectedIds = [];
+    syncSelectChrome();
+  }
+  function enterSelect() {
+    selectMode = true;
+    syncSelectChrome();
+  }
+  function toggleCardSelect(card) {
+    var id = cardId(card);
+    if (!id) return;
+    var i = selectedIds.indexOf(id);
+    if (i >= 0) selectedIds.splice(i, 1);
+    else selectedIds.push(id);
+    selectMode = true;
+    syncSelectChrome();
+  }
+  var confirmEl = document.getElementById('sd-confirm');
+  var confirmTitle = document.getElementById('sd-confirm-title');
+  var confirmBody = document.getElementById('sd-confirm-body');
+  var confirmOk = document.getElementById('sd-confirm-ok');
+  var confirmCancel = document.getElementById('sd-confirm-cancel');
+  var pendingDelete = null; // { type: 'one'|'bulk', card?, ids? }
+
+  function openConfirm(opts) {
+    pendingDelete = opts || null;
+    if (confirmTitle) confirmTitle.textContent = opts.title || 'Delete listing?';
+    if (confirmBody) confirmBody.textContent = opts.body || 'This permanently removes the listing. This cannot be undone.';
+    if (confirmOk) confirmOk.textContent = opts.okLabel || 'Delete';
+    if (confirmEl) {
+      confirmEl.hidden = false;
+      confirmEl.removeAttribute('hidden');
+    }
+  }
+  function closeConfirm() {
+    pendingDelete = null;
+    if (confirmEl) {
+      confirmEl.hidden = true;
+      confirmEl.setAttribute('hidden', '');
+    }
+  }
+  function performDeleteOne(card) {
+    if (!card) return;
+    var t = card.getAttribute('data-title') || 'Listing';
+    var id = cardId(card);
+    selectedIds = selectedIds.filter(function (x) { return x !== id; });
+    card.remove();
+    syncSelectChrome();
+    syncFilterLabels();
+    applyFilters();
+    showToast('Deleted · ' + t);
+  }
+  function performDeleteBulk() {
+    if (!selectedIds.length) return;
+    var n = selectedIds.length;
+    var ids = selectedIds.slice();
+    cards().forEach(function (card) {
+      if (ids.indexOf(cardId(card)) >= 0) card.remove();
+    });
+    clearSelect();
+    syncFilterLabels();
+    applyFilters();
+    showToast(n === 1 ? '1 listing deleted' : (n + ' listings deleted'));
+  }
+  function askDeleteOne(card) {
+    var t = card.getAttribute('data-title') || 'this listing';
+    openConfirm({
+      type: 'one',
+      card: card,
+      title: 'Delete listing?',
+      body: 'Delete “' + t + '”? This cannot be undone.',
+      okLabel: 'Delete'
+    });
+  }
+  function askDeleteBulk() {
+    if (!selectedIds.length) return;
+    var n = selectedIds.length;
+    openConfirm({
+      type: 'bulk',
+      title: n === 1 ? 'Delete listing?' : ('Delete ' + n + ' listings?'),
+      body: n === 1
+        ? 'This permanently removes the selected listing. This cannot be undone.'
+        : ('This permanently removes ' + n + ' listings. This cannot be undone.'),
+      okLabel: n === 1 ? 'Delete' : ('Delete ' + n)
+    });
+  }
+  if (confirmCancel) confirmCancel.addEventListener('click', closeConfirm);
+  if (confirmOk) {
+    confirmOk.addEventListener('click', function () {
+      if (!pendingDelete) { closeConfirm(); return; }
+      if (pendingDelete.type === 'one') performDeleteOne(pendingDelete.card);
+      else if (pendingDelete.type === 'bulk') performDeleteBulk();
+      closeConfirm();
+    });
+  }
+  if (confirmEl) {
+    confirmEl.addEventListener('click', function (e) {
+      if (e.target === confirmEl) closeConfirm();
+    });
+  }
+  if (cancelSelBtn) cancelSelBtn.addEventListener('click', clearSelect);
+  if (bulkDelBtn) bulkDelBtn.addEventListener('click', askDeleteBulk);
 
   function syncFilterLabels() {
     var all = cards();
@@ -749,7 +1171,8 @@
   function applyFilters() {
     var q = (search.value || '').trim().toLowerCase();
     var visible = 0;
-    cards().forEach(function (card) {
+    var allCards = cards();
+    allCards.forEach(function (card) {
       var status = card.getAttribute('data-status');
       var title = (card.getAttribute('data-title') || '').toLowerCase();
       var matchFilter = filter === 'all' || status === filter;
@@ -758,7 +1181,20 @@
       card.hidden = !show;
       if (show) visible++;
     });
-    empty.classList.toggle('on', visible === 0);
+    var none = visible === 0;
+    empty.classList.toggle('on', none);
+    if (none) {
+      var trulyEmpty = allCards.length === 0;
+      empty.classList.toggle('is-filter', !trulyEmpty);
+      var titleNode = document.getElementById('sd-empty-title');
+      var copyNode = document.getElementById('sd-empty-copy');
+      if (titleNode) titleNode.textContent = trulyEmpty ? 'No listings yet' : 'No listings here';
+      if (copyNode) {
+        copyNode.textContent = trulyEmpty
+          ? 'Add your first background listing to start selling on PixelBlend.'
+          : 'Try another filter, or add a new listing.';
+      }
+    }
   }
 
   function sortCards(mode) {
@@ -834,17 +1270,20 @@
   }
 
   list.addEventListener('click', function (e) {
+    var openCard = e.target.closest('.sd-card');
+    if (selectMode && openCard) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleCardSelect(openCard);
+      return;
+    }
     var del = e.target.closest('[data-del]');
     if (del) {
       e.preventDefault();
       e.stopPropagation();
       var card = del.closest('.sd-card');
       if (!card) return;
-      var t = card.getAttribute('data-title') || 'Listing';
-      card.remove();
-      syncFilterLabels();
-      applyFilters();
-      showToast('Deleted · ' + t);
+      askDeleteOne(card);
       return;
     }
     var share = e.target.closest('.sd-share-ico');
@@ -865,11 +1304,47 @@
       goListing(view.closest('.sd-card'));
       return;
     }
-    var openCard = e.target.closest('.sd-card');
     if (openCard && !e.target.closest('.sd-card-actions')) {
       goListing(openCard);
     }
   });
+
+  // Long-press to enter select mode (app-like)
+  (function () {
+    var holdT = null;
+    var holdCard = null;
+    var suppressClick = false;
+    list.addEventListener('pointerdown', function (e) {
+      var card = e.target.closest('.sd-card');
+      if (!card || e.target.closest('.sd-card-actions, .sd-share-ico, [data-del]')) return;
+      holdCard = card;
+      holdT = setTimeout(function () {
+        enterSelect();
+        toggleCardSelect(holdCard);
+        suppressClick = true;
+        holdT = null;
+        try { if (navigator.vibrate) navigator.vibrate(12); } catch (err) {}
+      }, 380);
+    });
+    function clearHold() {
+      if (holdT) clearTimeout(holdT);
+      holdT = null;
+      holdCard = null;
+    }
+    list.addEventListener('pointerup', clearHold);
+    list.addEventListener('pointercancel', clearHold);
+    list.addEventListener('pointerleave', clearHold);
+    list.addEventListener('pointermove', function (e) {
+      if (!holdT) return;
+      if (Math.abs(e.movementX) + Math.abs(e.movementY) > 6) clearHold();
+    });
+    list.addEventListener('click', function (e) {
+      if (!suppressClick) return;
+      e.preventDefault();
+      e.stopPropagation();
+      suppressClick = false;
+    }, true);
+  })();
 
   document.getElementById('btn-share-profile').addEventListener('click', function () {
     showToast('Profile link copied');
@@ -877,18 +1352,31 @@
 
   document.getElementById('btn-add-listing').addEventListener('click', showAdd);
   document.getElementById('sd-top-add').addEventListener('click', showAdd);
-  document.getElementById('btn-cancel-add').addEventListener('click', showDash);
-
-  document.getElementById('btn-add-more').addEventListener('click', function () {
-    showToast('Extra item block · demo');
+  var emptyAdd = document.getElementById('btn-empty-add');
+  if (emptyAdd) emptyAdd.addEventListener('click', showAdd);
+  document.getElementById('btn-cancel-add').addEventListener('click', function () {
+    requestLeaveAdd(null);
   });
 
-  function syncPhotoCount() {
-    var n = photos.querySelectorAll('.sd-photo').length;
-    photoCount.textContent = n + '/5';
+  function itemBlocks() {
+    return Array.prototype.slice.call(itemsWrap.querySelectorAll('[data-item]'));
   }
-
-  function addPhoto(src) {
+  function syncItemChrome() {
+    var n = itemBlocks().length;
+    itemsWrap.classList.toggle('has-many', n > 1);
+  }
+  function syncPhotoCount(item) {
+    if (!item) return;
+    var photos = item.querySelector('[data-photos]');
+    var countEl = item.querySelector('[data-photo-count]');
+    if (!photos || !countEl) return;
+    countEl.textContent = photos.querySelectorAll('.sd-photo').length + '/5';
+  }
+  function addPhotoToItem(item, src) {
+    if (!item) return;
+    var photos = item.querySelector('[data-photos]');
+    var addBtn = item.querySelector('[data-add-photo]');
+    if (!photos || !addBtn) return;
     if (photos.querySelectorAll('.sd-photo').length >= 5) {
       showToast('Max 5 photos');
       return;
@@ -896,53 +1384,36 @@
     var wrap = document.createElement('div');
     wrap.className = 'sd-photo';
     wrap.innerHTML = '<img src="' + src + '" alt=""><button type="button" class="sd-photo-del" aria-label="Remove">×</button>';
-    photos.insertBefore(wrap, document.getElementById('btn-add-photo'));
-    syncPhotoCount();
+    photos.insertBefore(wrap, addBtn);
+    syncPhotoCount(item);
   }
-
-  document.getElementById('btn-add-photo').addEventListener('click', function () {
-    photoInput.click();
-  });
-
-  photoInput.addEventListener('change', function () {
-    var files = Array.prototype.slice.call(photoInput.files || []);
-    if (!files.length) {
-      // demo fallback
-      addPhoto(demoPhotos[photos.querySelectorAll('.sd-photo').length % demoPhotos.length]);
-      return;
-    }
-    files.forEach(function (file) {
-      if (photos.querySelectorAll('.sd-photo').length >= 5) return;
-      var url = URL.createObjectURL(file);
-      addPhoto(url);
+  function createItemBlock() {
+    var wrap = document.createElement('div');
+    wrap.innerHTML = itemTemplate.trim();
+    return wrap.firstElementChild;
+  }
+  function resetItemsForm() {
+    itemsWrap.innerHTML = '';
+    itemsWrap.appendChild(createItemBlock());
+    activeItem = itemsWrap.querySelector('[data-item]');
+    syncItemChrome();
+  }
+  function collectItems() {
+    return itemBlocks().map(function (item, idx) {
+      var title = ((item.querySelector('.sd-item-title') || {}).value || '').trim() || ('New listing' + (idx ? ' ' + (idx + 1) : ''));
+      var imgEl = item.querySelector('.sd-photo img');
+      return {
+        title: title,
+        img: imgEl ? imgEl.getAttribute('src') : demoPhotos[idx % demoPhotos.length]
+      };
     });
-    photoInput.value = '';
-  });
-
-  photos.addEventListener('click', function (e) {
-    var btn = e.target.closest('.sd-photo-del');
-    if (!btn) return;
-    var ph = btn.closest('.sd-photo');
-    if (ph) ph.remove();
-    syncPhotoCount();
-  });
-
-  document.getElementById('btn-submit-add').addEventListener('click', function () {
-    var n = photos.querySelectorAll('.sd-photo').length;
-    if (!n) {
-      // seed one demo photo so client sees success flow
-      addPhoto(demoPhotos[0]);
-    }
-    success.hidden = false;
-  });
-
-  document.getElementById('btn-success-done').addEventListener('click', function () {
-    success.hidden = true;
-    // prepend a new pending card for demo
-    var title = (document.getElementById('listing-title').value || '').trim() || 'New listing';
-    var img = (photos.querySelector('.sd-photo img') || {}).src || demoPhotos[0];
+  }
+  function prependListingCard(data) {
+    var title = data.title;
+    var img = data.img || demoPhotos[0];
     var article = document.createElement('article');
     var newId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('listing-' + Date.now());
+    newId = newId + '-' + String(Date.now()).slice(-4);
     article.className = 'sd-card';
     article.setAttribute('data-status', 'pending');
     article.setAttribute('data-listing-id', newId);
@@ -951,6 +1422,7 @@
     article.setAttribute('data-gens', '0');
     article.setAttribute('data-ts', String(Date.now()));
     article.innerHTML =
+      '<span class="sd-check" aria-hidden="true"></span>' +
       '<div class="sd-thumb"><img src="' + img + '" alt=""></div>' +
       '<div class="sd-card-body">' +
         '<div class="sd-card-top"><div><h3></h3>' +
@@ -969,30 +1441,170 @@
       }));
     } catch (err) {}
     list.insertBefore(article, list.firstChild);
-    document.getElementById('listing-title').value = '';
-    photos.querySelectorAll('.sd-photo').forEach(function (p) { p.remove(); });
-    syncPhotoCount();
+  }
+
+  document.getElementById('btn-add-more').addEventListener('click', function () {
+    var block = createItemBlock();
+    itemsWrap.appendChild(block);
+    syncItemChrome();
+    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var input = block.querySelector('.sd-item-title');
+    if (input) input.focus();
+  });
+
+  itemsWrap.addEventListener('click', function (e) {
+    var delItem = e.target.closest('[data-item-del]');
+    if (delItem) {
+      var item = delItem.closest('[data-item]');
+      if (!item) return;
+      if (itemBlocks().length <= 1) {
+        showToast('At least one item required');
+        return;
+      }
+      item.remove();
+      syncItemChrome();
+      return;
+    }
+    var addPhotoBtn = e.target.closest('[data-add-photo]');
+    if (addPhotoBtn) {
+      activeItem = addPhotoBtn.closest('[data-item]');
+      photoInput.click();
+      return;
+    }
+    var delPhoto = e.target.closest('.sd-photo-del');
+    if (delPhoto) {
+      var item = delPhoto.closest('[data-item]');
+      var ph = delPhoto.closest('.sd-photo');
+      if (ph) ph.remove();
+      syncPhotoCount(item);
+    }
+  });
+
+  photoInput.addEventListener('change', function () {
+    var item = activeItem || itemsWrap.querySelector('[data-item]');
+    if (!item) return;
+    var files = Array.prototype.slice.call(photoInput.files || []);
+    if (!files.length) {
+      var photos = item.querySelector('[data-photos]');
+      var n = photos ? photos.querySelectorAll('.sd-photo').length : 0;
+      addPhotoToItem(item, demoPhotos[n % demoPhotos.length]);
+      return;
+    }
+    files.forEach(function (file) {
+      var photos = item.querySelector('[data-photos]');
+      if (photos && photos.querySelectorAll('.sd-photo').length >= 5) return;
+      addPhotoToItem(item, URL.createObjectURL(file));
+    });
+    photoInput.value = '';
+  });
+
+  var alertEl = document.getElementById('sd-alert');
+  var alertTitle = document.getElementById('sd-alert-title');
+  var alertBody = document.getElementById('sd-alert-body');
+  var alertOk = document.getElementById('sd-alert-ok');
+  function openAlert(title, body) {
+    if (alertTitle) alertTitle.textContent = title || 'Image required';
+    if (alertBody) alertBody.textContent = body || 'Please upload at least one background image for each item.';
+    if (alertEl) {
+      alertEl.hidden = false;
+      alertEl.removeAttribute('hidden');
+    }
+  }
+  function closeAlert() {
+    if (alertEl) {
+      alertEl.hidden = true;
+      alertEl.setAttribute('hidden', '');
+    }
+  }
+  if (alertOk) alertOk.addEventListener('click', closeAlert);
+  if (alertEl) {
+    alertEl.addEventListener('click', function (e) {
+      if (e.target === alertEl) closeAlert();
+    });
+  }
+
+  document.getElementById('btn-submit-add').addEventListener('click', function () {
+    var missing = itemBlocks().some(function (item) {
+      var photos = item.querySelector('[data-photos]');
+      return !photos || !photos.querySelectorAll('.sd-photo').length;
+    });
+    if (missing) {
+      openAlert('Image required', 'Please upload at least one background image for each item.');
+      return;
+    }
+    success.hidden = false;
+  });
+
+  document.getElementById('btn-success-done').addEventListener('click', function () {
+    success.hidden = true;
+    var payload = collectItems();
+    payload.reverse().forEach(function (data) { prependListingCard(data); });
+    resetItemsForm();
     syncFilterLabels();
     filter = 'all';
     filters.querySelectorAll('.sd-chip').forEach(function (c) {
       c.classList.toggle('active', c.getAttribute('data-filter') === 'all');
     });
-    showDash();
+    showDash(true);
     applyFilters();
-    showToast('Listing submitted');
+    showToast(payload.length === 1 ? 'Listing submitted' : (payload.length + ' listings submitted'));
   });
+
+  syncItemChrome();
+
+  var discardKeep = document.getElementById('sd-discard-keep');
+  var discardOk = document.getElementById('sd-discard-ok');
+  if (discardKeep) discardKeep.addEventListener('click', closeDiscard);
+  if (discardOk) {
+    discardOk.addEventListener('click', function () {
+      var href = pendingLeaveHref;
+      closeDiscard();
+      resetItemsForm();
+      if (href) window.location.href = href;
+      else showDash(true);
+    });
+  }
+  if (discardEl) {
+    discardEl.addEventListener('click', function (e) {
+      if (e.target === discardEl) closeDiscard();
+    });
+  }
+
+  window.addEventListener('beforeunload', function (e) {
+    if (!isAddDirty()) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!isAddDirty()) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    if (a.id === 'sd-back') return;
+    var href = a.getAttribute('href');
+    if (!href || href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDiscard(href);
+  }, true);
 
   success.addEventListener('click', function (e) {
     if (e.target === success) success.hidden = true;
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !success.hidden) success.hidden = true;
+    if (e.key === 'Escape') {
+      if (alertEl && !alertEl.hidden) closeAlert();
+      else if (discardEl && !discardEl.hidden) closeDiscard();
+      else if (confirmEl && !confirmEl.hidden) closeConfirm();
+      else if (success && !success.hidden) success.hidden = true;
+    }
   });
 
   syncFilterLabels();
   applyFilters();
 })();
 </script>
+<script src="js/pb-shell-nav.js?v=17"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@
 <title>Credits · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=17">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,8 +54,8 @@
     display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
     font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
   }
-  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
-  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
   .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .pb-navbadge {
     margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
@@ -84,51 +85,42 @@
 
   .cr-flow { width: min(1040px, 100%); margin: 0 auto; }
 
-  .cr-top {
-    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px;
-    align-items: stretch; margin-bottom: 16px;
-  }
+  .cr-top { margin-bottom: 28px; }
   .cr-balance {
-    background: linear-gradient(105deg, #F59E0B 0%, #FBBF24 50%, #FCD34D 100%);
-    border-radius: 22px; padding: 22px 24px 18px; color: #fff;
-    box-shadow: 0 16px 36px -14px rgba(245,158,11,.45); margin: 0;
-    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(120deg, #F59E0B 0%, #FBBF24 48%, #FDE68A 100%);
+    border-radius: 22px; padding: 22px 24px; color: #78350F;
+    box-shadow: 0 16px 36px -16px rgba(217,119,6,.4); margin: 0;
   }
-  .cr-balance-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .cr-balance::after {
+    content: ''; position: absolute; right: -40px; top: -50px;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: rgba(255,255,255,.22); pointer-events: none;
+  }
+  .cr-balance-top {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 14px;
+  }
   .cr-coin {
-    width: 52px; height: 52px; border-radius: 50%;
-    background: rgba(255,255,255,.28); border: 2px solid rgba(255,255,255,.55);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,.45); border: 1.5px solid rgba(255,255,255,.7);
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    color: #B45309;
+    box-shadow: 0 6px 14px rgba(180,83,9,.12);
   }
-  .cr-balance-label { font-size: 13px; font-weight: 600; opacity: .95; }
-  .cr-balance-num { font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
-  .cr-split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    background: rgba(255,255,255,.28); border-radius: 14px; padding: 12px 0;
-    margin-bottom: 12px;
+  .cr-balance-label {
+    font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    color: rgba(120,53,15,.78); margin-bottom: 2px;
   }
-  .cr-split > div { text-align: center; padding: 0 12px; }
-  .cr-split > div + div { border-left: 1px solid rgba(255,255,255,.35); }
-  .cr-split strong { display: block; font-size: 18px; font-weight: 800; }
-  .cr-split span { font-size: 12px; font-weight: 600; opacity: .95; }
+  .cr-balance-num {
+    font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: 1;
+    color: #78350F;
+  }
   .cr-balance-foot {
-    display: flex; align-items: center; gap: 7px;
-    font-size: 13px; font-weight: 600; opacity: .96;
+    position: relative; z-index: 1;
+    margin: 12px 0 0 62px;
+    font-size: 13px; font-weight: 600; color: rgba(120,53,15,.82);
   }
-
-  .cr-history-btn {
-    width: fit-content; max-width: 100%;
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 18px; border-radius: 999px; border: none;
-    background: #F3E8FF; color: #6D28D9; font-size: 14px; font-weight: 700;
-    margin: 0 auto 14px;
-  }
-  .cr-history-btn svg:last-child { margin-left: 8px; }
-  .cr-loved {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin-bottom: 28px; font-size: 13px; font-weight: 600; color: var(--muted);
-  }
-  .cr-stars { color: #F59E0B; letter-spacing: 1px; }
 
   .cr-buy-section { margin-bottom: 16px; }
   .cr-buy-row {
@@ -138,9 +130,24 @@
     align-items: stretch;
   }
   .cr-packs-col { min-width: 0; }
-  .cr-packs-head { margin: 0 0 12px; }
+  .cr-packs-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 16px; margin: 0 0 14px; flex-wrap: wrap;
+  }
   .cr-packs-head h2 { margin: 0 0 3px; font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
   .cr-packs-head p { margin: 0; font-size: 12px; color: var(--soft); font-weight: 500; }
+  .cr-history-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border-radius: 999px; border: 1px solid #E9D5FF;
+    background: #fff; color: #7C3AED; font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cr-history-btn:hover { background: #FAF5FF; }
+  .cr-loved {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 10px 0 0; font-size: 12px; font-weight: 600; color: var(--soft);
+  }
+  .cr-stars { color: #F59E0B; letter-spacing: 1px; font-size: 11px; }
 
   .cr-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
@@ -227,20 +234,6 @@
     box-shadow: 0 10px 24px rgba(236,72,153,.28);
     margin-top: auto;
   }
-  .cr-how {
-    background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 20px;
-    padding: 22px 22px 20px;
-    display: flex; flex-direction: column; justify-content: center;
-    box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
-  }
-  .cr-how h3 { margin: 0 0 14px; font-size: 16px; font-weight: 800; color: #1E3A8A; }
-  .cr-how ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .cr-how li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 13px; font-weight: 600; color: #1E3A8A; line-height: 1.35;
-  }
-  .cr-how li svg { flex-shrink: 0; margin-top: 1px; color: #2563EB; }
-
   .cr-mid {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
@@ -378,7 +371,7 @@
     .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
     .pb-content { padding: 20px; }
-    .cr-top { grid-template-columns: 1fr; }
+    .cr-balance-foot { margin-left: 0; }
     .cr-buy-row { grid-template-columns: 1fr; gap: 14px; }
     .cr-or {
       flex-direction: row; align-self: stretch; padding: 4px 0; gap: 14px;
@@ -453,11 +446,11 @@
           <section class="cr-balance">
             <div class="cr-balance-top">
               <div class="cr-coin" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <circle cx="14.2" cy="9.6" r="5.4" stroke="#fff" stroke-width="1.7"/>
-                  <path d="M12.7 8.4h2.2M13.5 8.4v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
-                  <circle cx="9.8" cy="14.4" r="5.4" stroke="#fff" stroke-width="1.7"/>
-                  <path d="M8.3 13.2h2.2M9.1 13.2v2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle cx="14.2" cy="9.6" r="5.4" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M12.7 8.4h2.2M13.5 8.4v2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                  <circle cx="9.8" cy="14.4" r="5.4" stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M8.3 13.2h2.2M9.1 13.2v2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
               </div>
               <div>
@@ -465,41 +458,23 @@
                 <div class="cr-balance-num">30</div>
               </div>
             </div>
-            <div class="cr-split">
-              <div><strong>0</strong><span>Purchased</span></div>
-              <div><strong>30</strong><span>Bonus / Referral</span></div>
-            </div>
-            <div class="cr-balance-foot">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.6 4.8L18.5 9.5 13.6 12 12 17l-1.6-5L5.5 9.5 10.4 7.8 12 3z" fill="#fff"/></svg>
-              1 generation = 10 credits — about 3 generations left
-            </div>
-          </section>
-
-          <section class="cr-how">
-            <h3>How Credits Work</h3>
-            <ul>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>1 AI generation = 10 credits</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Credits never expire</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Earn credits through referrals</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>No monthly subscription required</li>
-            </ul>
+            <div class="cr-balance-foot">≈ 3 generations left · 1 gen = 10 credits</div>
           </section>
         </div>
-
-        <button type="button" class="cr-history-btn" id="btn-jump-hist">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          View transaction history
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-
-        <div class="cr-loved"><span class="cr-stars">★★★★★</span> Loved by 12,000+ creators</div>
 
         <section class="cr-buy-section">
           <div class="cr-buy-row">
             <div class="cr-packs-col">
               <div class="cr-packs-head">
-                <h2>Choose your pack</h2>
-                <p>Bigger packs, lower price per credit</p>
+                <div>
+                  <h2>Choose your pack</h2>
+                  <p>Bigger packs, lower price per credit</p>
+                  <div class="cr-loved"><span class="cr-stars">★★★★★</span> Loved by 12,000+ creators</div>
+                </div>
+                <button type="button" class="cr-history-btn" id="btn-jump-hist">
+                  Transaction history
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
               </div>
               <div class="cr-grid">
                 <article class="cr-pack">
@@ -721,5 +696,6 @@
   });
 })();
 </script>
+<script src="js/pb-shell-nav.js?v=17"></script>
 </body>
 </html>

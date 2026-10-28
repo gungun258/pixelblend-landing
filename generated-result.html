@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
 <script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=17">
 <script src="js/pb-gallery.js"></script>
 <script src="js/pb-refunds.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,8 +51,8 @@
     display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
     font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
   }
-  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
-  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
   .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .pb-navbadge {
     margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
@@ -475,7 +476,7 @@
       <span class="pb-logo-mark"><span></span></span>
       <span class="pb-brand-text">PixelBlend</span>
     </a>
-    <a href="generate.html" class="pb-newblend">+ New blend</a>
+    <a href="generate.html" class="pb-newblend">Generate</a>
     <nav class="pb-nav">
       <a href="dashboard.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Home</a>
       <a href="discover.html"><span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>Discover</a>
@@ -1047,5 +1048,6 @@
   });
 })();
 </script>
+<script src="js/pb-shell-nav.js?v=17"></script>
 </body>
 </html>

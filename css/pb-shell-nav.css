@@ -1,0 +1,298 @@
+/* Shared Studio left-nav — consistent menu (original style) */
+
+/* Top CTA — original gradient pill */
+.pb-newblend {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  text-decoration: none !important;
+  padding: 11px 10px !important;
+  border-radius: 12px !important;
+  margin-bottom: 18px !important;
+  background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E) !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 21px rgba(236, 72, 153, .34) !important;
+  transition: transform .15s ease, box-shadow .15s ease;
+  flex-direction: row !important;
+  overflow: hidden;
+  animation: none !important;
+}
+.pb-newblend::before { display: none !important; content: none !important; }
+.pb-newblend:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(236, 72, 153, .48) !important;
+}
+.pb-newblend .pb-label {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  background: none !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+}
+.pb-newblend .pb-gen-orb {
+  display: none !important;
+}
+.pb-newblend .pb-gen-ico {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Nav items — same for everyone */
+.pb-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+  border-radius: 11px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b5060;
+  min-height: 42px;
+  background: transparent;
+}
+.pb-nav a:hover {
+  background: transparent !important;
+  color: #C42E8B !important;
+}
+/* Active for Home / Discover / Gallery / Account — filled pill only when on that page */
+.pb-nav a.active,
+.pb-nav a.active:not(.pb-nav-generate):not([href="generate.html"]):not([href="./generate.html"]) {
+  background: #FBEEF6 !important;
+  color: #C42E8B !important;
+  font-weight: 800 !important;
+  border-radius: 11px !important;
+}
+.pb-nav a.active:hover,
+.pb-nav a.active:hover:not(.pb-nav-generate):not([href="generate.html"]):not([href="./generate.html"]) {
+  background: #FBEEF6 !important;
+  color: #C42E8B !important;
+}
+.pb-nav a .pb-ico {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pb-navbadge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 800;
+  color: #C42E8B;
+  background: #FCE7F0;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+/*
+ * ONLY Generate — settled in the nav row:
+ * compact circular gradient orb as icon + label beside it (same rhythm as Home/Discover).
+ */
+.pb-nav a.pb-nav-generate,
+.pb-nav a[href="generate.html"],
+.pb-nav a[href="./generate.html"] {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  padding: 8px 11px !important;
+  min-height: 42px !important;
+  background: transparent !important;
+  color: #5b5060 !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  border-radius: 11px !important;
+  text-align: left;
+}
+.pb-nav a.pb-nav-generate:hover,
+.pb-nav a[href="generate.html"]:hover,
+.pb-nav a[href="./generate.html"]:hover {
+  background: transparent !important;
+  color: #C42E8B !important;
+}
+.pb-nav a.pb-nav-generate.active,
+.pb-nav a[href="generate.html"].active,
+.pb-nav a[href="./generate.html"].active {
+  background: #FBEEF6 !important;
+  color: #C42E8B !important;
+  border-radius: 11px !important;
+}
+
+.pb-nav a.pb-nav-generate .pb-gen-orb,
+.pb-nav a[href="generate.html"] .pb-gen-orb {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #A855F7 0%, #D946EF 48%, #EC4899 100%);
+  box-shadow:
+    0 0 0 2.5px #fff,
+    0 5px 14px rgba(168, 85, 247, .38);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pb-nav a.pb-nav-generate:hover .pb-gen-orb,
+.pb-nav a[href="generate.html"]:hover .pb-gen-orb {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 2.5px #fff,
+    0 7px 18px rgba(236, 72, 153, .45);
+}
+.pb-nav a.pb-nav-generate .pb-gen-orb svg,
+.pb-nav a[href="generate.html"] .pb-gen-orb svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  overflow: visible;
+}
+.pb-nav a.pb-nav-generate .pb-ico,
+.pb-nav a[href="generate.html"] .pb-ico {
+  display: none !important;
+}
+.pb-nav a.pb-nav-generate .pb-navlabel,
+.pb-nav a[href="generate.html"] .pb-navlabel {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+@media (max-width: 1079px) {
+  .pb-sidebar:not(.open):not(.pb-open) .pb-nav a.pb-nav-generate,
+  .pb-sidebar:not(.open):not(.pb-open) .pb-nav a[href="generate.html"] {
+    justify-content: center !important;
+    padding: 10px !important;
+  }
+  .pb-sidebar:not(.open):not(.pb-open) .pb-nav a.pb-nav-generate .pb-gen-orb,
+  .pb-sidebar:not(.open):not(.pb-open) .pb-nav a[href="generate.html"] .pb-gen-orb {
+    width: 32px;
+    height: 32px;
+  }
+  .pb-sidebar:not(.open):not(.pb-open) .pb-auth-btn,
+  .pb-sidebar:not(.open):not(.pb-open) .pb-support-btn {
+    justify-content: center;
+    padding: 10px;
+    width: auto;
+    align-self: center;
+  }
+  .pb-sidebar:not(.open):not(.pb-open) .pb-auth-label {
+    display: none;
+  }
+  .pb-sidebar.open .pb-auth-label,
+  .pb-sidebar.pb-open .pb-auth-label {
+    display: inline;
+  }
+}
+
+/* Footer stack: Log out directly above credits, both pinned to bottom */
+.pb-sidebar-foot {
+  margin-top: auto !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  flex-shrink: 0;
+}
+.pb-sidebar-foot .pb-credits {
+  margin-top: 0 !important;
+}
+
+.pb-auth-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 10px 11px;
+  border-radius: 11px;
+  border: 1px solid #F0E6F2;
+  background: #fff;
+  color: #5b5060;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.pb-auth-btn:hover {
+  background: #FEF2F2;
+  border-color: #FECACA;
+  color: #DC2626;
+}
+.pb-auth-btn .pb-ico {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pb-auth-btn .pb-auth-label,
+.pb-support-btn .pb-auth-label { line-height: 1.1; }
+
+.pb-support-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 10px 11px;
+  border-radius: 11px;
+  border: 1px solid #F0E6F2;
+  background: #fff;
+  color: #5b5060;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.pb-support-btn:hover {
+  background: #FBF1FB;
+  border-color: #F0E6F2;
+  color: #C42E8B;
+}
+.pb-support-btn .pb-ico {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pb-credits {
+  border: 1px solid #F0E6F2;
+  border-radius: 16px;
+  padding: 14px;
+  background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  box-shadow: 0 10px 24px -18px rgba(168,85,247,.55);
+}
+.pb-credits-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1.2px solid #F0E6F2;
+  background: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #1E1422;
+}
+.pb-credits-cta:hover { border-color: #C42E8B; color: #C42E8B; }

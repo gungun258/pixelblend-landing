@@ -5,6 +5,7 @@
 <title>Edit Profile · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=17">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,8 +53,8 @@
     display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
     font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
   }
-  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
-  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
   .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .pb-navbadge {
     margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
@@ -104,14 +105,6 @@
     border: 3px solid #fff;
     box-shadow: 0 10px 28px -12px rgba(30,20,34,.35);
   }
-  .ep-cam {
-    position: absolute; right: 2px; bottom: 2px;
-    width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid #fff;
-    background: #7C3AED; color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 14px rgba(124,58,237,.35);
-  }
-  .ep-cam:hover { filter: brightness(1.06); }
   .ep-card {
     background: #fff; border: 1px solid var(--line); border-radius: 22px;
     padding: 22px 22px 18px;
@@ -287,7 +280,7 @@
       </a>
       <div>
         <div class="pb-topbar-title">Edit Profile</div>
-        <div class="pb-topbar-sub">Update your name, email &amp; photo</div>
+        <div class="pb-topbar-sub">Update your name &amp; email</div>
       </div>
       <div class="pb-top-actions">
         <button type="button" class="ep-save-ico" id="btn-save-top" aria-label="Save">
@@ -305,10 +298,6 @@
         <div class="ep-avatar-wrap">
           <div class="ep-avatar">
             <img id="ep-photo" src="assets/dashboard/images/img1.jpg" alt="Profile photo">
-            <button type="button" class="ep-cam" id="btn-photo" aria-label="Change photo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 8.5A2.5 2.5 0 016.5 6h1.2l1.1-1.6A1.5 1.5 0 0110 3.5h4a1.5 1.5 0 011.2.9L16.3 6h1.2A2.5 2.5 0 0120 8.5v8A2.5 2.5 0 0117.5 19h-11A2.5 2.5 0 014 16.5v-8z" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3.2" stroke="#fff" stroke-width="1.8"/></svg>
-            </button>
-            <input type="file" id="photo-file" accept="image/*" hidden>
           </div>
         </div>
 
@@ -406,17 +395,6 @@
   document.getElementById('btn-save').addEventListener('click', saveProfile);
   document.getElementById('btn-save-top').addEventListener('click', saveProfile);
 
-  var photoFile = document.getElementById('photo-file');
-  var photoImg = document.getElementById('ep-photo');
-  document.getElementById('btn-photo').addEventListener('click', function () { photoFile.click(); });
-  photoFile.addEventListener('change', function () {
-    var f = photoFile.files && photoFile.files[0];
-    if (!f) return;
-    var url = URL.createObjectURL(f);
-    photoImg.src = url;
-    showToast('Photo updated');
-  });
-
   var overlay = document.getElementById('pw-overlay');
   function openPw() { overlay.hidden = false; document.getElementById('pw-current').focus(); }
   function closePw() { overlay.hidden = true; }
@@ -459,5 +437,6 @@
   });
 })();
 </script>
+<script src="js/pb-shell-nav.js?v=17"></script>
 </body>
 </html>

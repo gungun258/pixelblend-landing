@@ -5,6 +5,7 @@
 <title>Account · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=17">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,8 +51,8 @@
     display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
     font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
   }
-  .pb-nav a:hover { background: #FBF1FB; color: var(--accent); }
-  .pb-nav a.active { background: #FBEEF6; color: var(--accent); font-weight: 800; }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
   .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
   .pb-navbadge {
     margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
@@ -72,142 +73,195 @@
   .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
   .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
   .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-  .pb-content { flex: 1 1 auto; padding: 28px 36px 48px; width: 100%; }
+  .pb-content { flex: 1 1 auto; padding: 24px 28px 40px; width: 100%; }
   .pb-toggle { display: none; }
 
-  .ac-flow { width: min(1120px, 100%); margin: 0 auto; }
+  .ac-flow { width: min(1180px, 100%); margin: 0 auto; }
   .ac-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .ac-profile {
+    background: #fff;
+    border: 1px solid #EEE6F0;
+    border-radius: 22px;
+    padding: 28px 22px 20px;
+    box-shadow: 0 10px 28px -22px rgba(30,20,34,.35);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    text-align: center;
   }
-  .ac-aside {
-    width: 80%;
-    max-width: 920px;
-    display: flex;
-    justify-content: center;
+  .ac-avatar {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: #1F6B5C;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; font-weight: 800; letter-spacing: -.03em;
+    margin-bottom: 14px;
+    box-shadow: 0 10px 22px rgba(31,107,92,.28);
   }
-  .ac-main { min-width: 0; width: 100%; max-width: 920px; }
-
-  .ac-hero {
-    display: flex; flex-direction: column; gap: 0;
-    padding: 0; border-radius: 22px; margin: 0; width: 100%; overflow: hidden;
-    background: linear-gradient(105deg, #A855F7 0%, #EC4899 55%, #F43F5E 100%);
-    color: #fff; box-shadow: 0 18px 40px -20px rgba(168,85,247,.55);
+  .ac-hi {
+    margin: 0 0 18px;
+    font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
   }
-  .ac-hero-top {
-    display: flex; align-items: center; gap: 14px;
-    padding: 20px 22px 16px;
-  }
-  .ac-hero img {
-    width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
-    border: 2.5px solid rgba(255,255,255,.95); margin: 0; flex-shrink: 0;
-  }
-  .ac-hero-copy { min-width: 0; }
-  .ac-hero-hi { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
-  .ac-hero-phone { margin: 3px 0 0; font-size: 14px; font-weight: 600; opacity: .92; }
-  .ac-hero-stats {
+  .ac-stats {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid rgba(255,255,255,.22);
-    padding: 14px 10px 16px;
+    width: 100%; gap: 4px;
+    margin-bottom: 18px;
   }
-  .ac-hero-stat {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 5px; text-align: center; padding: 8px 6px; margin: -4px 0;
-    border-radius: 12px; color: inherit; text-decoration: none; cursor: pointer;
-    transition: background .15s ease;
+  .ac-stat {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 6px 2px; border-radius: 12px;
+    text-decoration: none; color: inherit;
   }
-  a.ac-hero-stat:hover { background: rgba(255,255,255,.14); }
-  a.ac-hero-stat:focus-visible { outline: 2px solid rgba(255,255,255,.7); outline-offset: 2px; }
-  .ac-hero-stat-top {
-    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  .ac-stat:hover { background: #FBF7FB; }
+  .ac-stat strong {
+    font-size: 18px; font-weight: 800; letter-spacing: -.02em; color: #1E1422; line-height: 1.1;
   }
-  .ac-hero-stat svg { display: block; flex-shrink: 0; }
-  .ac-hero-stat strong {
-    font-size: 18px; font-weight: 800; letter-spacing: -.02em; line-height: 1;
+  .ac-stat span {
+    font-size: 11px; font-weight: 600; color: #94A3B8;
   }
-  .ac-hero-stat span {
-    font-size: 12px; font-weight: 600; opacity: .9;
+  .ac-edit {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px 16px; margin-bottom: 22px;
+    border: none; border-radius: 999px;
+    background: var(--grad); color: #fff;
+    font-size: 14px; font-weight: 800; letter-spacing: -.01em;
+    text-decoration: none;
+    box-shadow: 0 12px 24px rgba(168,85,247,.32);
+  }
+  .ac-edit:hover { filter: brightness(1.04); color: #fff; }
+  .ac-connected {
+    width: 100%;
+    border-top: 1px solid #F1EAF2;
+    padding-top: 16px;
+  }
+  .ac-connected-label {
+    margin: 0 0 12px;
+    font-size: 12px; font-weight: 700; color: #94A3B8;
+  }
+  .ac-social {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .ac-social a {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #F8FAFC; border: 1px solid #F1F5F9;
+  }
+  .ac-social a:hover { background: #FBF1FB; border-color: #F0E6F2; }
+  .ac-ver {
+    margin: 18px 0 0;
+    font-size: 12px; font-weight: 600; color: #A8A0B0;
   }
 
-  .ac-panel-title {
-    margin: 0 0 12px; font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
+  .ac-main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
-  .ac-grid {
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
-    margin-bottom: 8px;
+  .ac-top-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
   }
-  .ac-card {
-    background: #fff; border: 1px solid var(--line); border-radius: 18px;
-    overflow: hidden; margin-bottom: 0;
-    box-shadow: 0 10px 24px -20px rgba(30,20,34,.28);
+  .ac-panel {
+    background: #fff;
+    border: 1px solid #EEE6F0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px -22px rgba(30,20,34,.28);
   }
-  .ac-card-full { grid-column: 1 / -1; }
+  .ac-panel-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 18px 8px;
+  }
+  .ac-panel-ico {
+    width: 28px; height: 28px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #9333EA;
+  }
+  .ac-panel-copy {
+    min-width: 0;
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 6px;
+  }
+  .ac-panel-head h2 {
+    margin: 0;
+    font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
+  }
+  .ac-panel-head p {
+    margin: 0;
+    font-size: 13px; font-weight: 500; color: #94A3B8;
+  }
+  .ac-panel-head p::before {
+    content: '·';
+    margin-right: 6px;
+    color: #CBD5E1;
+  }
+  .ac-rows { display: flex; flex-direction: column; }
   .ac-row {
     display: flex; align-items: center; gap: 12px; width: 100%;
-    padding: 14px 16px; border: none; background: #fff; text-align: left;
+    padding: 13px 16px; border: none; background: transparent; text-align: left;
     color: inherit; cursor: pointer;
-    box-sizing: border-box; height: auto;
-    font: inherit; appearance: none; -webkit-appearance: none;
+    box-sizing: border-box; font: inherit;
+    appearance: none; -webkit-appearance: none;
   }
   a.ac-row { color: inherit; text-decoration: none; }
-  .ac-row + .ac-row { border-top: 1px solid #F5EEF5; }
+  .ac-row + .ac-row { border-top: 1px solid #F6F0F7; }
   .ac-row:hover { background: #FCF8FC; }
   .ac-ico {
     width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
   }
-  .ac-label { flex: 1; min-width: 0; font-size: 14px; font-weight: 700; color: #1E1422; }
+  .ac-label {
+    font-size: 14px; font-weight: 700; color: #1E1422;
+    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .ac-label-stack {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  }
   .ac-sub {
-    display: block; margin-top: 3px; font-size: 12px; font-weight: 500; color: #94A3B8; line-height: 1.35;
+    display: block; margin-top: 0;
+    font-size: 12px; font-weight: 500; color: #94A3B8; line-height: 1.35;
   }
-  .ac-chev { color: #CBD5E1; flex-shrink: 0; align-self: center; }
-  .ac-sec {
-    margin: 22px 0 10px; font-size: 15px; font-weight: 800; color: #1E1422; letter-spacing: -.01em;
+  .ac-chev { color: #CBD5E1; flex-shrink: 0; margin-left: auto; }
+  .ac-badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px; border-radius: 999px;
+    background: #FEE2E2; color: #DC2626;
+    font-size: 11px; font-weight: 800; white-space: nowrap;
   }
 
-  .ac-social {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    padding: 16px 18px;
+  .ac-support-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .ac-social a {
-    width: 42px; height: 42px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: #F8FAFC; border: 1px solid #F1F5F9;
-  }
-  .ac-social a:hover { background: #FBF1FB; border-color: #F0E6F2; }
+  .ac-support-grid .ac-row:nth-child(odd) { border-right: 1px solid #F6F0F7; }
+  .ac-support-grid .ac-row:nth-child(-n+2) { border-top: none; }
+  .ac-support-grid .ac-row:nth-child(n+3) { border-top: 1px solid #F6F0F7; }
 
-  .ac-account-row {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
-    align-items: stretch;
+  .ac-account-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .ac-account-row .ac-card {
-    display: flex; flex-direction: column; min-height: 100%;
-  }
-  .ac-account-row .ac-row {
-    flex: 1 1 auto;
-    height: 100%;
+  .ac-account-grid .ac-row {
     align-items: flex-start;
+    min-height: 100%;
+    border-top: none;
+    border-right: 1px solid #F6F0F7;
   }
-  .ac-account-row .ac-label {
-    display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
-  }
-  .ac-account-row .ac-sub { margin-top: 0; }
-  #btn-logout:hover { background: #FEF2F2; }
-  .ac-danger-card {
-    border-color: #FECACA;
-    background: #FFF8F8;
-  }
-  .ac-danger-card .ac-row { background: transparent; }
-  .ac-danger-card .ac-row:hover { background: #FEE2E2; }
+  .ac-account-grid .ac-row:last-child { border-right: none; }
+  .ac-account-grid .ac-row:hover { background: #FCF8FC; }
+  .ac-account-grid .ac-danger-row:hover { background: #FEF2F2; }
   .ac-danger { color: #EF4444 !important; }
   .ac-danger-dark { color: #DC2626 !important; }
-
-  .ac-ver {
-    margin: 22px 0 0; text-align: center;
-    font-size: 12px; font-weight: 600; color: #94A3B8;
-  }
+  #ac-support { scroll-margin-top: 88px; }
 
   .ac-overlay {
     position: fixed; inset: 0; z-index: 80;
@@ -241,17 +295,22 @@
     .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
     .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
     .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
-    .ac-layout { gap: 18px; }
-    .ac-aside { width: 100%; }
-    .ac-hero-top { padding: 16px 16px 14px; }
-    .ac-hero img { width: 56px; height: 56px; }
-    .ac-hero-hi { font-size: 18px; }
-    .ac-hero-stat strong { font-size: 16px; }
-    .ac-hero-stat span { font-size: 11px; }
+    .ac-layout { grid-template-columns: 240px minmax(0, 1fr); gap: 16px; }
+    .ac-profile { padding: 22px 16px 16px; }
   }
   @media (max-width: 900px) {
-    .ac-grid { grid-template-columns: 1fr; }
-    .ac-account-row { grid-template-columns: 1fr; }
+    .ac-layout { grid-template-columns: 1fr; }
+    .ac-profile { max-width: 420px; margin: 0 auto; }
+    .ac-top-grid { grid-template-columns: 1fr; }
+    .ac-support-grid { grid-template-columns: 1fr; }
+    .ac-support-grid .ac-row { border-right: none !important; }
+    .ac-support-grid .ac-row + .ac-row { border-top: 1px solid #F6F0F7; }
+    .ac-account-grid { grid-template-columns: 1fr; }
+    .ac-account-grid .ac-row {
+      border-right: none;
+      border-top: 1px solid #F6F0F7;
+    }
+    .ac-account-grid .ac-row:first-child { border-top: none; }
   }
   @media (max-width: 640px) {
     .pb-content { padding: 16px 14px 36px; }
@@ -323,167 +382,29 @@
     <div class="pb-content">
       <div class="ac-flow">
         <div class="ac-layout">
-          <aside class="ac-aside">
-            <div class="ac-hero">
-              <div class="ac-hero-top">
-                <img src="assets/dashboard/images/img1.jpg" alt="">
-                <div class="ac-hero-copy">
-                  <p class="ac-hero-hi">Hi there,</p>
-                  <p class="ac-hero-phone">9845673647</p>
-                </div>
-              </div>
-              <div class="ac-hero-stats">
-                <a class="ac-hero-stat" href="gallery.html" aria-label="View generations">
-                  <div class="ac-hero-stat-top">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M12 2.8l1.35 3.9 3.9 1.35-3.9 1.35L12 13.3l-1.35-3.9-3.9-1.35 3.9-1.35L12 2.8z" fill="#fff"/>
-                      <path d="M6.2 13.2l.85 2.45 2.45.85-2.45.85-.85 2.45-.85-2.45-2.45-.85 2.45-.85.85-2.45z" fill="#fff"/>
-                      <path d="M17.6 14.4l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z" fill="#fff"/>
-                    </svg>
-                    <strong>0</strong>
-                  </div>
-                  <span>Generations</span>
-                </a>
-                <a class="ac-hero-stat" href="buy-credits.html" aria-label="Buy credits">
-                  <div class="ac-hero-stat-top">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <rect x="2.5" y="5.5" width="19" height="13" rx="2.2" stroke="#fff" stroke-width="1.8"/>
-                      <path d="M2.5 9.5h19" stroke="#fff" stroke-width="1.8"/>
-                    </svg>
-                    <strong>30</strong>
-                  </div>
-                  <span>Credits</span>
-                </a>
-                <a class="ac-hero-stat" href="top-sellers.html" aria-label="View following">
-                  <div class="ac-hero-stat-top">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <circle cx="9" cy="8" r="2.8" stroke="#fff" stroke-width="1.7"/>
-                      <circle cx="16.2" cy="9" r="2.3" stroke="#fff" stroke-width="1.7"/>
-                      <path d="M3.6 18.5c.85-2.9 2.95-4.4 5.4-4.4s4.55 1.5 5.4 4.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
-                      <path d="M14.4 14.6c1.35-.25 2.85.45 3.75 2.35" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
-                    </svg>
-                    <strong>0</strong>
-                  </div>
-                  <span>Following</span>
-                </a>
-              </div>
-            </div>
-          </aside>
-
-          <div class="ac-main">
-            <p class="ac-panel-title">Quick actions</p>
-            <div class="ac-grid">
-              <div class="ac-card">
-                <a class="ac-row" href="edit-profile.html">
-                  <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 19c1-3.4 3.5-5.1 7.2-5.1s6.2 1.7 7.2 5.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-                  </span>
-                  <span class="ac-label">Edit Profile</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="buy-credits.html">
-                  <span class="ac-ico" style="background:#FEF3C7;color:#D97706;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/></svg>
-                  </span>
-                  <span class="ac-label">Buy Credits</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="wishlist.html">
-                  <span class="ac-ico" style="background:#FCE7F3;color:#DB2777;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span class="ac-label">Wishlist</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="referrals.html">
-                  <span class="ac-ico" style="background:#DCFCE7;color:#16A34A;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v10M8 11l4-4 4 4M7 20h10a2 2 0 002-2v-2H5v2a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span class="ac-label">Referrals</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-              </div>
-
-              <div class="ac-card">
-                <a class="ac-row" href="seller-benefits.html">
-                  <span class="ac-ico" style="background:#FFEDD5;color:#EA580C;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 8l5-5 5 5M6 10h12v9a1 1 0 01-1 1H7a1 1 0 01-1-1v-9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span class="ac-label">Seller Benefits</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="seller-profile.html">
-                  <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 8h12l-1 11H7L6 8zM9 8V6a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span class="ac-label">Seller Profile</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="seller-dashboard.html">
-                  <span class="ac-ico" style="background:#DCFCE7;color:#16A34A;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
-                  </span>
-                  <span class="ac-label">Seller Dashboard</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <a class="ac-row" href="refunds.html">
-                  <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 101.6-4.8M4 4v4h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span class="ac-label">Refunds</span>
-                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-              </div>
-            </div>
-
-            <p class="ac-sec">Settings &amp; Support</p>
-            <div class="ac-card ac-card-full" style="margin-bottom:0;">
-              <a class="ac-row" href="notifications.html">
-                <span class="ac-ico" style="background:#FCE7F3;color:#DB2777;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 01-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                <span class="ac-label">Notifications</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <aside class="ac-profile">
+            <div class="ac-avatar" aria-hidden="true">R</div>
+            <h1 class="ac-hi">Hi there, Riya</h1>
+            <div class="ac-stats">
+              <a class="ac-stat" href="gallery.html">
+                <strong>49</strong>
+                <span>Generations</span>
               </a>
-              <a class="ac-row" href="settings.html">
-                <span class="ac-ico" style="background:#F1F5F9;color:#64748B;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                <span class="ac-label">Settings</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a class="ac-stat" href="buy-credits.html">
+                <strong>351</strong>
+                <span>Credits</span>
               </a>
-              <a class="ac-row" href="faqs.html">
-                <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 9a2.5 2.5 0 114 2c-.7.5-1.5 1-1.5 2.2V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r=".8" fill="currentColor"/></svg>
-                </span>
-                <span class="ac-label">FAQs</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-              <a class="ac-row" href="privacy-policy.html">
-                <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8"/></svg>
-                </span>
-                <span class="ac-label">Privacy Policy</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-              <a class="ac-row" href="terms-of-service.html">
-                <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7V3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-                </span>
-                <span class="ac-label">Terms of Service</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-              <a class="ac-row" href="contact-support.html">
-                <span class="ac-ico" style="background:#CCFBF1;color:#0D9488;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span class="ac-label">Contact Support</span>
-                <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a class="ac-stat" href="top-sellers.html">
+                <strong>1</strong>
+                <span>Following</span>
               </a>
             </div>
-
-            <p class="ac-sec">Stay connected</p>
-            <div class="ac-card">
+            <a class="ac-edit" href="edit-profile.html">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.2" stroke="#fff" stroke-width="1.9"/><path d="M4.8 19c1-3.4 3.5-5.1 7.2-5.1s6.2 1.7 7.2 5.1" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg>
+              Edit Profile
+            </a>
+            <div class="ac-connected">
+              <p class="ac-connected-label">Stay connected</p>
               <div class="ac-social">
                 <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
                 <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#E1306C" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#E1306C" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="#E1306C"/></svg></a>
@@ -491,36 +412,200 @@
                 <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0F172A"><path d="M4 4l7.2 9.2L4.5 20H7l5-5.9L16.8 20H20l-7.4-9.5L19.4 4H17l-4.6 5.4L7.2 4H4z"/></svg></a>
               </div>
             </div>
+            <p class="ac-ver">Version 2.0.0</p>
+          </aside>
 
-            <p class="ac-sec">Account</p>
-            <div class="ac-account-row">
-              <div class="ac-card">
+          <div class="ac-main">
+            <div class="ac-top-grid">
+              <section class="ac-panel">
+                <div class="ac-panel-head">
+                  <span class="ac-panel-ico" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 10l2-4h12l2 4v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 10h16M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 6l1.2-2h7.6L17 6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                  </span>
+                  <div class="ac-panel-copy">
+                    <h2>Seller</h2>
+                    <p>Sell your blends and manage orders</p>
+                  </div>
+                </div>
+                <div class="ac-rows">
+                  <a class="ac-row" href="seller-benefits.html">
+                    <span class="ac-ico" style="background:#FFEDD5;color:#EA580C;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 15l-3.2 1.8.7-3.6-2.7-2.6 3.7-.5L12 7l1.5 3.1 3.7.5-2.7 2.6.7 3.6L12 15z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 17.5V20l3.5-1.2L15.5 20v-2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Seller Benefits</span>
+                      <span class="ac-sub">Perks and tiers for sellers</span>
+                    </span>
+                  </a>
+                  <a class="ac-row" href="seller-profile.html">
+                    <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 8h12l-1 11H7L6 8zM9 8V6a3 3 0 016 0v2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Seller Profile</span>
+                      <span class="ac-sub">Your public storefront</span>
+                    </span>
+                  </a>
+                  <a class="ac-row" href="seller-dashboard.html">
+                    <span class="ac-ico" style="background:#DCFCE7;color:#16A34A;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Seller Dashboard</span>
+                      <span class="ac-sub">Orders, payouts and listings</span>
+                    </span>
+                    <span class="ac-badge">4 need action</span>
+                  </a>
+                </div>
+              </section>
+
+              <section class="ac-panel">
+                <div class="ac-panel-head">
+                  <span class="ac-panel-ico" style="color:#D97706;" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="1.8"/><path d="M8 7V5a4 4 0 018 0v2M8 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </span>
+                  <div class="ac-panel-copy">
+                    <h2>Transactions</h2>
+                    <p>Credits, purchases and refunds</p>
+                  </div>
+                </div>
+                <div class="ac-rows">
+                  <a class="ac-row" href="buy-credits.html">
+                    <span class="ac-ico" style="background:#FEF3C7;color:#D97706;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Buy Credits</span>
+                      <span class="ac-sub">Top up your balance</span>
+                    </span>
+                  </a>
+                  <a class="ac-row" href="wishlist.html">
+                    <span class="ac-ico" style="background:#FCE7F3;color:#DB2777;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0112 8.2a3.8 3.8 0 017 2.6C19 15.6 12 20 12 20z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Wishlist</span>
+                      <span class="ac-sub">Saved backgrounds</span>
+                    </span>
+                  </a>
+                  <a class="ac-row" href="referrals.html">
+                    <span class="ac-ico" style="background:#DCFCE7;color:#16A34A;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v10M8 11l4-4 4 4M7 20h10a2 2 0 002-2v-2H5v2a2 2 0 002 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Referrals</span>
+                      <span class="ac-sub">Invite friends, earn credits</span>
+                    </span>
+                  </a>
+                  <a class="ac-row" href="refunds.html">
+                    <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 101.6-4.8M4 4v4h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    <span class="ac-label-stack">
+                      <span class="ac-label">Refunds</span>
+                      <span class="ac-sub">Request or track refunds</span>
+                    </span>
+                  </a>
+                </div>
+              </section>
+            </div>
+
+            <section class="ac-panel" id="ac-support">
+              <div class="ac-panel-head">
+                <span class="ac-panel-ico" style="color:#64748B;" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+                <div class="ac-panel-copy">
+                  <h2>Settings &amp; Support</h2>
+                  <p>Preferences, help and legal</p>
+                </div>
+              </div>
+              <div class="ac-support-grid">
+                <a class="ac-row" href="notifications.html">
+                  <span class="ac-ico" style="background:#FCE7F3;color:#DB2777;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 01-3.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="ac-label">Notifications</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="ac-row" href="faqs.html">
+                  <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M9.5 9a2.5 2.5 0 114 2c-.7.5-1.5 1-1.5 2.2V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r=".8" fill="currentColor"/></svg>
+                  </span>
+                  <span class="ac-label">FAQs</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="ac-row" href="terms-of-service.html">
+                  <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7V3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="ac-label">Terms of Service</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="ac-row" href="settings.html">
+                  <span class="ac-ico" style="background:#F1F5F9;color:#64748B;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="ac-label">Settings</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="ac-row" href="privacy-policy.html">
+                  <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8"/></svg>
+                  </span>
+                  <span class="ac-label">Privacy Policy</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="ac-row" href="contact-support.html">
+                  <span class="ac-ico" style="background:#CCFBF1;color:#0D9488;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span class="ac-label">Contact Support</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </section>
+
+            <section class="ac-panel">
+              <div class="ac-panel-head">
+                <span class="ac-panel-ico" style="color:#DB2777;" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 19c1-3.4 3.5-5.1 7.2-5.1s6.2 1.7 7.2 5.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+                </span>
+                <div class="ac-panel-copy">
+                  <h2>Account</h2>
+                  <p>Sign out or remove your account</p>
+                </div>
+              </div>
+              <div class="ac-account-grid">
                 <button type="button" class="ac-row" id="btn-logout-all">
                   <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                   </span>
-                  <span class="ac-label">Log out from all devices<span class="ac-sub">Sign out everywhere, including this device</span></span>
+                  <span class="ac-label-stack">
+                    <span class="ac-label">Log out from all devices</span>
+                    <span class="ac-sub">Sign out everywhere, including this device</span>
+                  </span>
                 </button>
-              </div>
-              <div class="ac-card">
-                <button type="button" class="ac-row" id="btn-logout">
+                <button type="button" class="ac-row ac-danger-row" id="btn-logout">
                   <span class="ac-ico" style="background:#FEE2E2;color:#EF4444;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M10 4H6a2 2 0 00-2 2v12a2 2 0 002 2h4M15 16l4-4-4-4M9 12h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span class="ac-label ac-danger">Log out<span class="ac-sub">Sign out on this device only</span></span>
+                  <span class="ac-label-stack">
+                    <span class="ac-label ac-danger">Log out</span>
+                    <span class="ac-sub">Sign out on this device only</span>
+                  </span>
                 </button>
-              </div>
-              <div class="ac-card ac-danger-card">
-                <button type="button" class="ac-row" id="btn-delete">
+                <button type="button" class="ac-row ac-danger-row" id="btn-delete">
                   <span class="ac-ico" style="background:#FEE2E2;color:#DC2626;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5h6v2M8 7l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span class="ac-label ac-danger-dark">Delete account<span class="ac-sub">Permanently remove your account and its data</span></span>
+                  <span class="ac-label-stack">
+                    <span class="ac-label ac-danger-dark">Delete account</span>
+                    <span class="ac-sub">Permanently remove your account and its data</span>
+                  </span>
                 </button>
               </div>
-            </div>
-
-            <p class="ac-ver">Version 1.0.0</p>
+            </section>
           </div>
         </div>
       </div>
@@ -633,7 +718,19 @@
       sidebar.classList.toggle('open');
     });
   }
+
+  function scrollToSupport() {
+    if (location.hash !== '#ac-support') return;
+    var el = document.getElementById('ac-support');
+    if (!el) return;
+    requestAnimationFrame(function () {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  scrollToSupport();
+  window.addEventListener('hashchange', scrollToSupport);
 })();
 </script>
+<script src="js/pb-shell-nav.js?v=17"></script>
 </body>
 </html>
