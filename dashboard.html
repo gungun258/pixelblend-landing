@@ -4,7 +4,8 @@
 <title>PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-login-gate.css?v=2">
 <script src="js/pb-gallery.js"></script>
 <script src="js/pb-wishlist.js?v=1"></script>
 <script>window.__resources={"img1":"assets/dashboard/images/img1.jpg","img2":"assets/dashboard/images/img2.jpg","img3":"assets/dashboard/images/img3.jpg","img4":"assets/dashboard/images/img4.jpg","img5":"assets/dashboard/images/img5.jpg","img7":"assets/dashboard/images/img7.jpg","img6":"assets/dashboard/images/img6.jpg","img8":"assets/dashboard/images/img8.jpg","img9":"assets/dashboard/images/img9.jpg","img10":"assets/dashboard/images/img10.jpg","img11":"assets/dashboard/images/img11.jpg","img12":"assets/dashboard/images/img12.jpg","img13":"assets/dashboard/images/img13.jpg","img14":"assets/dashboard/images/img14.jpg","img15":"assets/dashboard/images/img15.jpg","img16":"assets/dashboard/images/img16.jpg","img17":"assets/dashboard/images/img17.jpg","img18":"assets/dashboard/images/img18.jpg","img19":"assets/dashboard/images/img19.jpg","img20":"assets/dashboard/images/img20.jpg","img21":"assets/dashboard/images/img21.jpg","img23":"assets/dashboard/images/img23.jpg","img24":"assets/dashboard/images/img24.jpg","img27":"assets/dashboard/images/img27.jpg","img22":"assets/dashboard/images/img22.jpg","img25":"assets/dashboard/images/img25.jpg","img28":"assets/dashboard/images/img28.jpg","img26":"assets/dashboard/images/img26.jpg","img29":"assets/dashboard/images/img29.jpg","img30":"assets/dashboard/images/img30.jpg","img31":"assets/dashboard/images/img31.jpg","img32":"assets/dashboard/images/img32.jpg","img33":"assets/dashboard/images/img33.jpg"};</script>
@@ -45,7 +46,7 @@
 
 
 </head>
-<body>
+<body data-pb-gate="full">
 
 <x-dc>
 <helmet>
@@ -894,7 +895,9 @@
               <div style="display: flex; align-items: center; gap: 10.4px; margin-bottom: 12.8px;">
                 <div style="position: relative; flex-shrink: 0;">
                   {{ s.avatarEl }}
-                  <span style="position: absolute; right: -1.6px; bottom: -1.6px; width: 17.6px; height: 17.6px; border-radius: 50%; background: linear-gradient(135deg,#F7C948,#EFA12B); border: 1.6px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 8.8px;">{{ s.badge }}</span>
+                  <span style="position: absolute; right: -1.6px; bottom: -1.6px; width: 17.6px; height: 17.6px; border-radius: 50%; background: #3B82F6; border: 1.6px solid #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(59,130,246,.35);" title="Verified" aria-label="Verified">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l5 5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
                 </div>
                 <div style="min-width: 0; flex: 1;">
                   <div style="font-size: 13.2px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ s.name }}</div>
@@ -1117,7 +1120,7 @@ class Component extends DCLogic {
     ].map(c => Object.assign({}, c, { imgEl: this.img(c.img) }));
 
     const trending = [
-      { id: 'mountain-sunset', title: 'Mountain Sunset', uses: '12.4K', img: ((window.__resources||{}).img23 || 'assets/dashboard/images/img23.jpg') },
+      { id: 'mountain-sunset', title: 'Mountains', uses: '12.4K', img: ((window.__resources||{}).img23 || 'assets/dashboard/images/img23.jpg') },
       { id: 'night-sky', title: 'Night Sky', uses: '9.8K', img: ((window.__resources||{}).img24 || 'assets/dashboard/images/img24.jpg') },
       { id: 'beach-waves', title: 'Beach Waves', uses: '8.1K', img: ((window.__resources||{}).img25 || 'assets/dashboard/images/img25.jpg') },
       { id: 'forest-mist', title: 'Forest Mist', uses: '6.5K', img: ((window.__resources||{}).img26 || 'assets/dashboard/images/img26.jpg') }
@@ -1277,9 +1280,31 @@ class Component extends DCLogic {
         try {
           var bg = btn.getAttribute('data-bg');
           var title = btn.getAttribute('data-title') || '';
+          var card = btn.closest('.pb-trend-card');
+          var listingHref = card && card.getAttribute('data-listing');
+          var listingId = '';
+          if (listingHref) {
+            try {
+              listingId = new URL(listingHref, location.href).searchParams.get('id') || '';
+            } catch (e2) {
+              var m = String(listingHref).match(/[?&]id=([^&]+)/);
+              listingId = m ? decodeURIComponent(m[1]) : '';
+            }
+          }
           if (bg) {
             sessionStorage.setItem('pb-prefill-bg', bg);
             sessionStorage.setItem('pb-prefill-bg-title', title);
+          }
+          if (listingId) {
+            sessionStorage.setItem('pb-prefill-listing', JSON.stringify({
+              id: listingId,
+              title: title,
+              seller: '',
+              sellerId: '',
+              img: bg || ''
+            }));
+          } else {
+            sessionStorage.removeItem('pb-prefill-listing');
           }
         } catch (err) {}
       });
@@ -1327,5 +1352,7 @@ class Component extends DCLogic {
   });
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script src="js/pb-login-gate.js?v=1"></script>
 </body></html>

@@ -1,0 +1,117 @@
+/* Softgen-style login gates — vertically centered in main pane */
+body.pb-gated .pb-shell {
+  min-height: 100vh;
+}
+body.pb-gated .pb-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body.pb-gated .pb-content {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: calc(100vh - 72px);
+  width: 100%;
+  box-sizing: border-box;
+}
+.pb-gate {
+  width: min(420px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 20px;
+  box-sizing: border-box;
+}
+.pb-gate-ico {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #F3E8FF;
+  color: #7C3AED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+.pb-gate h1 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: #1E1422;
+}
+.pb-gate p {
+  margin: 0 0 26px;
+  max-width: 320px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #8A7E92;
+}
+.pb-gate-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(236, 72, 153, .28);
+}
+.pb-gate-cta:hover { filter: brightness(1.04); color: #fff; }
+
+/* Credits balance blur gate */
+.pb-credits-gate {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+}
+.pb-credits-gate.is-locked > *:not(.pb-credits-gate-overlay) {
+  filter: blur(7px);
+  pointer-events: none;
+  user-select: none;
+}
+.pb-credits-gate-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, .18);
+}
+.pb-credits-gate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  background: #fff;
+  color: #C42E8B;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(30, 20, 34, .16);
+}
+.pb-credits-gate-btn:hover { color: #A21CAF; }
+
+body.pb-gated .sd-add-bar,
+body.pb-gated .gy-fab,
+body.pb-gated .sp-save-bar,
+body.pb-gated .ep-save,
+body.pb-gated .cr-history-btn,
+body.pb-credits-gated .cr-history-btn {
+  display: none !important;
+}

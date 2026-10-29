@@ -5,7 +5,8 @@
 <title>Generate · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-login-gate.css?v=2">
 <script src="js/pb-gallery.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +87,23 @@
   .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
   .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
   .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-back {
+    display: none;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; color: var(--ink); flex-shrink: 0;
+    align-items: center; justify-content: center; text-decoration: none;
+  }
+  .pb-back:hover { background: #FBF1FB; }
+  body.pb-gated .pb-back { display: inline-flex; }
+  body.pb-gated .pb-topbar {
+    justify-content: flex-start;
+    gap: 12px;
+    background: #fff;
+  }
+  body.pb-gated .pb-topbar-head { text-align: left; }
+  body.pb-gated .pb-topbar-title { font-size: 16px; }
+  body.pb-gated .pb-topbar-sub,
+  body.pb-gated .pb-top-actions { display: none !important; }
   .pb-content {
     padding: 24px 32px 32px;
     width: 100%; flex: 1 1 auto; min-height: 0;
@@ -518,7 +536,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pb-gate="full">
 <div class="pb-shell">
   <aside class="pb-sidebar" id="pb-sidebar">
     <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
@@ -567,7 +585,10 @@
 
   <main class="pb-main">
     <header class="pb-topbar">
-      <div>
+      <a href="dashboard.html" class="pb-back" id="gn-back" aria-label="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="pb-topbar-head">
         <div class="pb-topbar-title">Generate</div>
         <div class="pb-topbar-sub">Source + background → AI blend</div>
       </div>
@@ -956,6 +977,10 @@
       var bgData = urls.slice(1).filter(Boolean);
       if (!bgData.length && bgs[0]) bgData = [bgs[0]];
       try {
+        var listingCtx = null;
+        try {
+          listingCtx = JSON.parse(sessionStorage.getItem('pb-prefill-listing') || 'null');
+        } catch (eL) { listingCtx = null; }
         sessionStorage.setItem('pb-last-generate', JSON.stringify({
           source: sourceData,
           backgrounds: bgData,
@@ -965,17 +990,23 @@
           yOpt: state.yOpt,
           // demo “blend”: use source as result so real photo always shows
           result: sourceData,
+          listing: listingCtx,
           at: Date.now()
         }));
+        try { sessionStorage.removeItem('pb-prefill-listing'); } catch (eR) {}
       } catch (e) {
         // sessionStorage full — store lighter payload
         try {
+          var listingLite = null;
+          try { listingLite = JSON.parse(sessionStorage.getItem('pb-prefill-listing') || 'null'); } catch (e3) {}
           sessionStorage.setItem('pb-last-generate', JSON.stringify({
             source: sourceData,
             backgrounds: bgData.slice(0, 1),
             result: sourceData,
+            listing: listingLite,
             at: Date.now()
           }));
+          try { sessionStorage.removeItem('pb-prefill-listing'); } catch (e4) {}
         } catch (e2) {}
       }
       runGeneratingOverlay(function () {
@@ -1205,6 +1236,7 @@
     if (prefillBg) {
       sessionStorage.removeItem('pb-prefill-bg');
       sessionStorage.removeItem('pb-prefill-bg-title');
+      // keep pb-prefill-listing until generate completes (seller listing context)
       var cat1 = document.querySelector('[data-cat="1"]');
       if (cat1) cat1.click();
       var x1 = document.querySelector('[data-xtype="X1"]');
@@ -1212,12 +1244,42 @@
       var slot0 = bgUploads.querySelector('[data-slot="0"]');
       if (slot0) paintSlot(slot0, 0, prefillBg);
       showSetup(prefill ? 'bg' : 'source');
+    } else {
+      try { sessionStorage.removeItem('pb-prefill-listing'); } catch (eClear) {}
     }
   } catch (e) {}
 
   updateNav();
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script src="js/pb-login-gate.js?v=1"></script>
+<script>
+(function () {
+  var back = document.getElementById('gn-back');
+  if (!back) return;
+  var ref = '';
+  try { ref = document.referrer || ''; } catch (e) {}
+  if (ref) {
+    try {
+      var u = new URL(ref);
+      if (u.origin === location.origin) {
+        var file = (u.pathname.split('/').pop() || '');
+        if (file && file !== 'generate.html' && file !== 'login.html' && file !== 'signup.html') {
+          back.href = u.pathname.split('/').pop() + u.search;
+          return;
+        }
+      }
+    } catch (e2) {}
+  }
+  back.addEventListener('click', function (e) {
+    if (history.length > 1) {
+      e.preventDefault();
+      history.back();
+    }
+  });
+})();
+</script>
 </body>
 </html>

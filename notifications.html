@@ -5,7 +5,8 @@
 <title>Notifications · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-login-gate.css?v=2">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,7 +156,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pb-gate="full">
 <div class="pb-shell">
   <aside class="pb-sidebar" id="pb-sidebar">
     <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
@@ -330,6 +331,8 @@
   syncUI();
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script src="js/pb-login-gate.js?v=1"></script>
 </body>
 </html>

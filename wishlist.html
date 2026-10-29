@@ -5,7 +5,7 @@
 <title>Wishlist · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
 <script src="js/pb-gallery.js?v=3"></script>
 <script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -312,9 +312,23 @@
       try {
         var bg = tryBtn.getAttribute('data-bg');
         var title = tryBtn.getAttribute('data-title') || '';
+        var card = tryBtn.closest('.wl-card');
+        var listingId = card ? (card.getAttribute('data-id') || '') : '';
+        var seller = card ? (card.getAttribute('data-seller') || '') : '';
         if (bg) {
           sessionStorage.setItem('pb-prefill-bg', bg);
           sessionStorage.setItem('pb-prefill-bg-title', title);
+        }
+        if (listingId) {
+          sessionStorage.setItem('pb-prefill-listing', JSON.stringify({
+            id: listingId,
+            title: title,
+            seller: seller,
+            sellerId: '',
+            img: bg || ''
+          }));
+        } else {
+          sessionStorage.removeItem('pb-prefill-listing');
         }
       } catch (err) {}
       return;
@@ -349,6 +363,6 @@
   render();
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
 </body>
 </html>

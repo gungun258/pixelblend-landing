@@ -5,7 +5,8 @@
 <title>Edit Profile · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-login-gate.css?v=2">
 <script src="js/pb-gallery.js?v=3"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,16 +96,42 @@
 
   .ep-flow { width: min(520px, 100%); }
   .ep-avatar-wrap {
-    display: flex; justify-content: center; margin: 8px 0 28px;
+    display: flex; flex-direction: column; align-items: center;
+    margin: 8px 0 28px;
   }
   .ep-avatar {
     position: relative; width: 128px; height: 128px;
-  }
-  .ep-avatar img {
-    width: 128px; height: 128px; border-radius: 50%; object-fit: cover;
+    border-radius: 50%;
+    background: #F3F4F6;
     border: 3px solid #fff;
     box-shadow: 0 10px 28px -12px rgba(30,20,34,.35);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; cursor: pointer; color: #9CA3AF;
   }
+  .ep-avatar img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: none;
+  }
+  .ep-avatar .ep-avatar-ph {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ep-avatar-wrap.has-img .ep-avatar img { display: block; }
+  .ep-avatar-wrap.has-img .ep-avatar .ep-avatar-ph { display: none; }
+  .ep-avatar-actions {
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    margin-top: 12px;
+  }
+  .ep-avatar-actions .upload-only { display: inline; }
+  .ep-avatar-actions .edit-only { display: none; }
+  .ep-avatar-wrap.has-img .ep-avatar-actions .upload-only { display: none; }
+  .ep-avatar-wrap.has-img .ep-avatar-actions .edit-only { display: inline; }
+  .ep-photo-act {
+    border: none; background: none; padding: 0;
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .ep-photo-act.upload { color: #7C3AED; }
+  .ep-photo-act.change { color: #2563EB; }
+  .ep-photo-act.remove { color: #EF4444; }
+  .ep-photo-act:hover { text-decoration: underline; }
   .ep-card {
     background: #fff; border: 1px solid var(--line); border-radius: 22px;
     padding: 22px 22px 18px;
@@ -230,7 +257,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pb-gate="full">
 <div class="pb-shell">
   <aside class="pb-sidebar" id="pb-sidebar">
     <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
@@ -295,10 +322,19 @@
 
     <div class="pb-content">
       <div class="ep-flow">
-        <div class="ep-avatar-wrap">
-          <div class="ep-avatar">
+        <div class="ep-avatar-wrap has-img" id="ep-avatar-wrap">
+          <button type="button" class="ep-avatar" id="ep-avatar-btn" aria-label="Change profile photo">
+            <span class="ep-avatar-ph" aria-hidden="true">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"/><path d="M5 19c1.1-3.5 3.7-5.2 7-5.2s5.9 1.7 7 5.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </span>
             <img id="ep-photo" src="assets/dashboard/images/img1.jpg" alt="Profile photo">
+          </button>
+          <div class="ep-avatar-actions">
+            <button type="button" class="ep-photo-act upload upload-only" id="btn-photo-upload">Upload photo</button>
+            <button type="button" class="ep-photo-act change edit-only" id="btn-photo-change">Change photo</button>
+            <button type="button" class="ep-photo-act remove edit-only" id="btn-photo-remove">Remove</button>
           </div>
+          <input type="file" id="ep-photo-file" accept="image/*" hidden>
         </div>
 
         <form class="ep-card" id="ep-form" autocomplete="on">
@@ -395,6 +431,54 @@
   document.getElementById('btn-save').addEventListener('click', saveProfile);
   document.getElementById('btn-save-top').addEventListener('click', saveProfile);
 
+  var avatarWrap = document.getElementById('ep-avatar-wrap');
+  var avatarBtn = document.getElementById('ep-avatar-btn');
+  var photoImg = document.getElementById('ep-photo');
+  var photoFile = document.getElementById('ep-photo-file');
+  var photoObjectUrl = null;
+
+  function openPhotoPicker() {
+    if (photoFile) photoFile.click();
+  }
+  function setPhoto(url) {
+    if (!photoImg || !avatarWrap) return;
+    if (photoObjectUrl) {
+      try { URL.revokeObjectURL(photoObjectUrl); } catch (e) {}
+      photoObjectUrl = null;
+    }
+    if (url) {
+      photoImg.src = url;
+      photoImg.alt = 'Profile photo';
+      avatarWrap.classList.add('has-img');
+    } else {
+      photoImg.removeAttribute('src');
+      photoImg.alt = '';
+      avatarWrap.classList.remove('has-img');
+      if (photoFile) photoFile.value = '';
+    }
+  }
+  function removePhoto() {
+    setPhoto('');
+    showToast('Profile photo removed');
+  }
+
+  if (avatarBtn) avatarBtn.addEventListener('click', openPhotoPicker);
+  var btnUpload = document.getElementById('btn-photo-upload');
+  var btnChange = document.getElementById('btn-photo-change');
+  var btnRemove = document.getElementById('btn-photo-remove');
+  if (btnUpload) btnUpload.addEventListener('click', openPhotoPicker);
+  if (btnChange) btnChange.addEventListener('click', openPhotoPicker);
+  if (btnRemove) btnRemove.addEventListener('click', removePhoto);
+  if (photoFile) {
+    photoFile.addEventListener('change', function () {
+      var f = photoFile.files && photoFile.files[0];
+      if (!f) return;
+      photoObjectUrl = URL.createObjectURL(f);
+      setPhoto(photoObjectUrl);
+      showToast('Profile photo updated');
+    });
+  }
+
   var overlay = document.getElementById('pw-overlay');
   function openPw() { overlay.hidden = false; document.getElementById('pw-current').focus(); }
   function closePw() { overlay.hidden = true; }
@@ -437,6 +521,8 @@
   });
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script src="js/pb-login-gate.js?v=1"></script>
 </body>
 </html>
