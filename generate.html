@@ -7,7 +7,7 @@
 <script src="js/pb-nav-boot.js?v=4"></script>
 <link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
 <link rel="stylesheet" href="css/pb-login-gate.css?v=2">
-<script src="js/pb-gallery.js"></script>
+<script src="js/pb-gallery.js?v=7"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -988,8 +988,8 @@
           xType: state.xType,
           branch: state.branch,
           yOpt: state.yOpt,
-          // demo “blend”: use source as result so real photo always shows
-          result: sourceData,
+          // result filled on generated-result after real composite
+          result: '',
           listing: listingCtx,
           at: Date.now()
         }));
@@ -1002,7 +1002,7 @@
           sessionStorage.setItem('pb-last-generate', JSON.stringify({
             source: sourceData,
             backgrounds: bgData.slice(0, 1),
-            result: sourceData,
+            result: '',
             listing: listingLite,
             at: Date.now()
           }));

@@ -7,7 +7,7 @@
 <script src="js/pb-nav-boot.js?v=4"></script>
 <link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
 <link rel="stylesheet" href="css/pb-login-gate.css?v=2">
-<script src="js/pb-gallery.js?v=3"></script>
+<script src="js/pb-gallery.js?v=7"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -813,7 +813,8 @@
             result: item.result || item.background || item.source || '',
             at: stamp,
             fromGallery: true,
-            galleryId: item.id || ''
+            galleryId: item.id || '',
+            listing: item.listing || null
           }));
           sessionStorage.setItem('pb-gallery-saved-for', String(stamp));
         } catch (e) {}

@@ -8,7 +8,8 @@
 <script src="js/pb-nav-boot.js?v=4"></script>
 <link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
 <link rel="stylesheet" href="css/pb-login-gate.css?v=2">
-<script src="js/pb-gallery.js"></script>
+<script src="js/pb-gallery.js?v=7"></script>
+<script src="js/pb-listing-catalog.js?v=1"></script>
 <script src="js/pb-refunds.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -231,34 +232,115 @@
   }
   .gr-btn.dl { color: #fff; background: linear-gradient(90deg, #A855F7, #EC4899); box-shadow: 0 10px 22px rgba(168,85,247,.28); }
   .gr-btn.share { color: #64748B; background: #F1F5F9; }
-  .gr-listing-actions {
+  .gr-view-listing {
     display: none;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    max-width: 420px;
-    margin: 12px auto 0;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2563EB;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-align: left;
+    width: 100%;
   }
-  .gr-listing-actions.is-on { display: grid; }
-  .gr-listing-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-    padding: 12px 12px; border-radius: 999px; border: 1.5px solid #E9D5FF;
-    background: #FAF5FF; color: #7C3AED;
-    font-size: 13px; font-weight: 800; text-decoration: none; cursor: pointer;
+  .gr-view-listing.is-on { display: block; }
+  .gr-view-listing:hover { color: #1D4ED8; }
+
+  .gr-seller-card {
+    display: none;
+    background: #fff;
+    border: 1px solid #F1F5F9;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px -18px rgba(15,23,42,.28);
+  }
+  .gr-seller-card.is-on { display: block; }
+  .gr-seller-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .gr-seller-av-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+  }
+  .gr-seller-av-wrap img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: #F1F5F9;
+  }
+  .gr-seller-check {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #3B82F6;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+  }
+  .gr-seller-meta {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .gr-seller-meta span {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #94A3B8;
+  }
+  .gr-seller-meta strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .gr-seller-visit {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #7C3AED;
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  .gr-seller-visit:hover { background: #6D28D9; }
+  .gr-seller-contact {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    border-radius: 12px;
+    border: 1.5px solid #DDD6FE;
+    background: #F5F3FF;
+    color: #5B21B6;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
     font-family: inherit;
   }
-  .gr-listing-btn:hover { background: #F3E8FF; color: #6D28D9; }
-  .gr-listing-btn.seller {
-    border-color: #E2E8F0; background: #F8FAFC; color: #475569;
-  }
-  .gr-listing-btn.seller:hover { background: #F1F5F9; color: #334155; }
-  .gr-listing-note {
-    display: none;
-    max-width: 420px;
-    margin: 10px auto 0;
-    text-align: center;
-    font-size: 12px; font-weight: 600; color: #8A7E92;
-  }
-  .gr-listing-note.is-on { display: block; }
+  .gr-seller-contact:hover { background: #EDE9FE; }
 
   .gr-card {
     background: #fff; border: 1px solid #F1F5F9; border-radius: 22px;
@@ -269,6 +351,7 @@
   .gr-thumbs {
     display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
     width: 100%; margin-bottom: 20px;
+    align-items: start;
   }
   .gr-thumb label {
     display: block; font-size: 12px; font-weight: 500; color: #94A3B8; margin-bottom: 8px;
@@ -291,34 +374,230 @@
   }
   .gr-thumb img[hidden], .gr-thumb .empty[hidden] { display: none !important; }
 
+  /* Seller listing — Softgen: one rounded card, 2 portrait slices, thin white divider */
+  .gr-bg-grid {
+    display: none;
+  }
+  .gr-bg-grid.is-on {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    width: 100%;
+    aspect-ratio: 1; /* same overall height as Source Photo */
+    align-items: stretch;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #F1F5F9;
+  }
+  .gr-bg-grid button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: #E2E8F0;
+    cursor: zoom-in;
+    border-radius: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+  }
+  .gr-bg-grid button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    border: none;
+  }
+  .gr-thumb-bg.has-grid > #detail-bg,
+  .gr-thumb-bg.has-grid > #detail-bg-empty {
+    display: none !important;
+  }
+
   .lb-overlay {
     position: fixed; inset: 0; z-index: 90;
-    display: flex; align-items: center; justify-content: center;
-    padding: 56px 72px 40px 40px;
-    background: rgba(15, 23, 42, .42);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 56px 24px 28px;
+    background: rgba(10, 14, 24, .92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     opacity: 0; pointer-events: none; transition: opacity .2s ease;
   }
   .lb-overlay.open { opacity: 1; pointer-events: auto; }
-  .lb-close {
-    position: absolute; top: 20px; right: 20px; z-index: 2;
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.55); background: rgba(255,255,255,.92);
-    display: flex; align-items: center; justify-content: center;
-    color: #0F172A; box-shadow: 0 8px 24px rgba(15,23,42,.2);
+  .lb-count {
+    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    font-size: 13px; font-weight: 700; color: rgba(255,255,255,.92);
+    letter-spacing: .02em;
+    display: none;
   }
-  .lb-close:hover { background: #fff; }
+  .lb-count.is-on { display: block; }
+  .lb-close {
+    position: absolute; top: 16px; right: 16px; z-index: 2;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.12);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; box-shadow: none;
+  }
+  .lb-close:hover { background: rgba(255,255,255,.22); }
+  .lb-stage {
+    position: relative;
+    width: min(720px, 100%);
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
   .lb-img {
-    max-width: min(720px, 100%);
-    max-height: min(78vh, 720px);
+    max-width: 100%;
+    max-height: min(72vh, 720px);
     width: auto; height: auto;
     object-fit: contain; border-radius: 18px;
-    box-shadow: 0 24px 60px rgba(15,23,42,.35);
-    background: #fff;
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    background: #111;
     transform: scale(.96); transition: transform .2s ease;
   }
   .lb-overlay.open .lb-img { transform: none; }
+  .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.12);
+    color: #fff; display: none; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 2;
+  }
+  .lb-nav.is-on { display: flex; }
+  .lb-nav.prev { left: 4px; }
+  .lb-nav.next { right: 4px; }
+  .lb-nav:hover { background: rgba(255,255,255,.22); }
+  .lb-footer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: min(420px, 100%);
+    margin-top: 16px;
+  }
+  .lb-footer.is-on { display: flex; }
+  .lb-contact {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 40px; padding: 0 16px;
+    border-radius: 999px; border: 1px solid rgba(255,255,255,.35);
+    background: transparent; color: rgba(255,255,255,.88);
+    font-size: 13px; font-weight: 700; text-decoration: none; cursor: pointer;
+    font-family: inherit;
+  }
+  .lb-contact:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+  /* Full generation preview (bg + source inset) — Softgen style */
+  .lb-compose {
+    display: none;
+    position: relative;
+    width: min(420px, 92vw);
+    aspect-ratio: 3 / 4;
+    max-height: min(78vh, 720px);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #111;
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+  }
+  .lb-compose.is-on { display: block; }
+  .lb-compose-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .lb-compose-inset-wrap {
+    position: absolute;
+    left: 50%; top: 46%;
+    transform: translate(-50%, -50%);
+    width: min(58%, 220px);
+    aspect-ratio: 3 / 4;
+    padding: 5px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    box-sizing: border-box;
+  }
+  .lb-compose-inset {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+  }
+  .lb-compose-cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 48px 16px 22px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.72));
+    text-align: center;
+    color: #fff;
+  }
+  .lb-compose-cap strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .lb-compose-cap span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: .88;
+  }
+  .lb-overlay.is-compose .lb-img { display: none; }
+  .lb-overlay.is-compose .lb-nav { display: none !important; }
+  .lb-overlay.is-compose .lb-count { display: none !important; }
+
+  .gr-contact-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(30, 20, 34, .45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .gr-contact-overlay[hidden] { display: none !important; }
+  .gr-contact-sheet {
+    width: min(420px, 100%);
+    background: #fff;
+    border-radius: 22px;
+    padding: 18px 18px 22px;
+    box-shadow: 0 18px 48px rgba(30, 20, 34, .22);
+  }
+  .gr-contact-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; gap: 12px;
+  }
+  .gr-contact-head h3 {
+    margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.02em; color: #0F172A;
+  }
+  .gr-contact-close {
+    width: 36px; height: 36px; border-radius: 50%; border: none;
+    background: #F1F5F9; color: #64748B;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer;
+  }
+  .gr-contact-close:hover { background: #E2E8F0; color: #0F172A; }
+  .gr-wa {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; padding: 14px 16px; border: none; border-radius: 14px;
+    background: #F1F5F9; text-align: left; text-decoration: none; color: inherit;
+    box-sizing: border-box;
+  }
+  .gr-wa:hover { background: #E8EEF5; }
+  .gr-wa-ico {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #25D366; color: #fff; flex-shrink: 0;
+  }
+  .gr-wa-meta { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .gr-wa-meta strong {
+    font-size: 14px; font-weight: 800; color: #0F172A;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .gr-wa-meta span { font-size: 13px; font-weight: 600; color: #64748B; }
   .gr-meta { display: grid; gap: 14px; font-size: 13px; }
   .gr-meta div { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
   .gr-meta span { color: #94A3B8; font-weight: 500; flex-shrink: 0; text-decoration: none !important; border-bottom: none !important; }
@@ -597,32 +876,23 @@
                 Share
               </button>
             </div>
-            <p class="gr-listing-note" id="gr-listing-note">Created with a seller listing</p>
-            <div class="gr-listing-actions" id="gr-listing-actions">
-              <button type="button" class="gr-listing-btn seller" id="gr-seller-contact">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L4 21l1.4-4.6A8.4 8.4 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0121 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-                Seller contact
-              </button>
-              <a class="gr-listing-btn" id="gr-view-listing" href="listing.html">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6S2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.2" stroke="currentColor" stroke-width="1.7"/></svg>
-                View listing
-              </a>
-            </div>
           </div>
 
           <div class="gr-col-side">
             <div class="gr-card">
               <h2>Generation Details</h2>
-              <div class="gr-thumbs">
-                <div class="gr-thumb">
+              <div class="gr-thumbs" id="gr-thumbs">
+                <div class="gr-thumb gr-thumb-source">
                   <label>Source Photo</label>
                   <img id="detail-source" alt="Source" hidden>
                   <div class="empty" id="detail-source-empty">No source</div>
                 </div>
-                <div class="gr-thumb">
+                <div class="gr-thumb gr-thumb-bg">
                   <label>Background Photo</label>
                   <img id="detail-bg" alt="Background" hidden>
                   <div class="empty" id="detail-bg-empty">No background</div>
+                  <div class="gr-bg-grid" id="gr-bg-grid" aria-label="Background photos"></div>
+                  <a class="gr-view-listing" id="gr-view-listing" href="listing.html">View Listing</a>
                 </div>
               </div>
               <div class="gr-meta" spellcheck="false" x-apple-data-detectors="false">
@@ -630,6 +900,26 @@
                 <div><span>Created</span><strong id="meta-created" spellcheck="false">Just now</strong></div>
                 <div><span>Credits Used</span><strong spellcheck="false">10</strong></div>
               </div>
+            </div>
+
+            <div class="gr-seller-card" id="gr-seller-card">
+              <div class="gr-seller-top">
+                <div class="gr-seller-av-wrap">
+                  <img id="gr-seller-av" src="assets/dashboard/images/img31.jpg" alt="">
+                  <span class="gr-seller-check" aria-hidden="true">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+                <div class="gr-seller-meta">
+                  <span>Background by</span>
+                  <strong id="gr-seller-name">Seller</strong>
+                </div>
+                <a class="gr-seller-visit" id="gr-seller-visit" href="seller.html">Visit</a>
+              </div>
+              <button type="button" class="gr-seller-contact" id="gr-seller-contact">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L4 21l1.4-4.6A8.4 8.4 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0121 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                Contact Seller
+              </button>
             </div>
 
             <a class="gr-retry" href="generate.html">
@@ -653,10 +943,55 @@
 </div>
 
 <div class="lb-overlay" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo preview">
+  <div class="lb-count" id="lb-count">1 / 1</div>
   <button type="button" class="lb-close" id="lb-close" aria-label="Close">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
   </button>
-  <img class="lb-img" id="lb-img" alt="Preview">
+  <div class="lb-stage">
+    <button type="button" class="lb-nav prev" id="lb-prev" aria-label="Previous">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="lb-img" id="lb-img" alt="Preview">
+    <div class="lb-compose" id="lb-compose">
+      <img class="lb-compose-bg" id="lb-compose-bg" alt="">
+      <div class="lb-compose-inset-wrap">
+        <img class="lb-compose-inset" id="lb-compose-inset" alt="">
+      </div>
+      <div class="lb-compose-cap">
+        <strong>AI Generated Image</strong>
+        <span>PixelBlend preview</span>
+      </div>
+    </div>
+    <button type="button" class="lb-nav next" id="lb-next" aria-label="Next">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="lb-footer" id="lb-footer">
+    <button type="button" class="lb-contact" id="lb-contact">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L4 21l1.4-4.6A8.4 8.4 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0121 12z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Contact Seller
+    </button>
+  </div>
+</div>
+
+<div class="gr-contact-overlay" id="gr-contact-overlay" hidden>
+  <div class="gr-contact-sheet" role="dialog" aria-modal="true" aria-labelledby="gr-contact-title">
+    <div class="gr-contact-head">
+      <h3 id="gr-contact-title">Contact Seller</h3>
+      <button type="button" class="gr-contact-close" id="gr-contact-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <a class="gr-wa" id="gr-wa-link" href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">
+      <span class="gr-wa-ico" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.83 2.42 8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.8-.23-.09-.39-.12-.56.12-.16.25-.64.8-.79.96-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.23 3.74 1.76.76 2.16.76 2.56.64.4-.1 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.07-.1-.25-.16-.5-.28z"/></svg>
+      </span>
+      <span class="gr-wa-meta">
+        <strong id="gr-wa-label">WhatsApp</strong>
+        <span id="gr-wa-phone">+91 98765 43210</span>
+      </span>
+    </a>
+  </div>
 </div>
 
 <div class="rf-overlay" id="refund-modal" aria-hidden="true">
@@ -771,28 +1106,124 @@
   showImg(detailSource, sourceEmpty, sourceUri);
   showImg(detailBg, bgEmpty, bgUri);
 
+  var bgGalleryUrls = [];
+
   (function setupListingActions() {
     var listing = lastGenMeta && lastGenMeta.listing;
-    var actions = document.getElementById('gr-listing-actions');
-    var note = document.getElementById('gr-listing-note');
     var viewBtn = document.getElementById('gr-view-listing');
+    var sellerCard = document.getElementById('gr-seller-card');
     var contactBtn = document.getElementById('gr-seller-contact');
-    if (!listing || !listing.id || !actions) return;
-    actions.classList.add('is-on');
-    if (note) {
-      note.classList.add('is-on');
-      if (listing.title) note.textContent = 'Created with “' + listing.title + '” listing';
+    var visitBtn = document.getElementById('gr-seller-visit');
+    var nameEl = document.getElementById('gr-seller-name');
+    var avEl = document.getElementById('gr-seller-av');
+    var thumbs = document.getElementById('gr-thumbs');
+    var bgGrid = document.getElementById('gr-bg-grid');
+    var lbContact = document.getElementById('lb-contact');
+    var lbFooter = document.getElementById('lb-footer');
+
+    // Background photo GRID only for seller-listing generations (not normal generate)
+    var urls = [];
+    if (listing && listing.id) {
+      if (window.pbListingCatalog && pbListingCatalog.resolveGallery) {
+        urls = pbListingCatalog.resolveGallery(listing);
+      } else if (listing.gallery && listing.gallery.length > 1) {
+        urls = listing.gallery.filter(Boolean);
+      }
+      // Ensure used background is included / first when possible
+      if (bgUri && urls.indexOf(bgUri) < 0) {
+        // bgUri may be data URL — keep listing gallery as-is, or prepend cover
+        if (listing.img && urls.indexOf(listing.img) < 0) urls.unshift(listing.img);
+      }
     }
-    if (viewBtn) viewBtn.href = 'listing.html?id=' + encodeURIComponent(listing.id);
-    if (contactBtn) {
-      contactBtn.addEventListener('click', function () {
-        if (listing.sellerId) {
-          window.location.href = 'seller.html?id=' + encodeURIComponent(listing.sellerId);
-          return;
+    bgGalleryUrls = urls.slice();
+
+    if (listing && listing.id && urls.length > 1 && bgGrid) {
+      var bgThumb = document.querySelector('.gr-thumb-bg');
+      if (detailBg) detailBg.hidden = true;
+      if (bgEmpty) bgEmpty.hidden = true;
+      if (bgThumb) bgThumb.classList.add('has-grid');
+      bgGrid.innerHTML = '';
+      bgGrid.classList.add('is-on');
+      // Show only 2 thumbs (width split) — full set opens in lightbox
+      var shown = urls.slice(0, 2);
+      shown.forEach(function (url, i) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Background photo ' + (i + 1));
+        btn.innerHTML = '<img alt="" src="' + String(url).replace(/"/g, '&quot;') + '">';
+        btn.addEventListener('click', function () {
+          openLightboxGallery(urls, i, true);
+        });
+        bgGrid.appendChild(btn);
+      });
+      // Persist resolved gallery back onto meta for gallery reopen
+      try {
+        listing.gallery = urls.slice();
+        if (lastGenMeta) {
+          lastGenMeta.listing = listing;
+          sessionStorage.setItem('pb-last-generate', JSON.stringify(lastGenMeta));
         }
-        alert('Seller contact — coming soon in Studio.');
+      } catch (ePersistGal) {}
+    }
+
+    if (!listing || !listing.id) return;
+
+    if (viewBtn) {
+      viewBtn.href = 'listing.html?id=' + encodeURIComponent(listing.id);
+      viewBtn.classList.add('is-on');
+    }
+    if (sellerCard) sellerCard.classList.add('is-on');
+    if (nameEl) nameEl.textContent = listing.seller || 'Seller';
+    if (avEl && listing.sellerAvatar) avEl.src = listing.sellerAvatar;
+    if (visitBtn) {
+      visitBtn.href = listing.sellerId
+        ? ('seller.html?id=' + encodeURIComponent(listing.sellerId))
+        : 'seller.html';
+    }
+    if (lbFooter) lbFooter.setAttribute('data-listing', '1');
+
+    var contactOverlay = document.getElementById('gr-contact-overlay');
+    var contactClose = document.getElementById('gr-contact-close');
+    var waLink = document.getElementById('gr-wa-link');
+    var waLabel = document.getElementById('gr-wa-label');
+    var waPhone = document.getElementById('gr-wa-phone');
+
+    function openContactSheet() {
+      if (!contactOverlay) return;
+      var sellerName = listing.seller || 'Seller';
+      var phoneDisplay = listing.sellerPhone || '+91 98765 43210';
+      var phoneDigits = String(listing.sellerWhatsapp || '919876543210').replace(/\D/g, '');
+      if (waLabel) waLabel.textContent = 'WhatsApp · ' + sellerName;
+      if (waPhone) waPhone.textContent = phoneDisplay;
+      if (waLink) {
+        var msg = encodeURIComponent('Hi! I saw your listing "' + (listing.title || '') + '" on PixelBlend.');
+        waLink.href = 'https://wa.me/' + phoneDigits + (msg ? '?text=' + msg : '');
+      }
+      contactOverlay.removeAttribute('hidden');
+      contactOverlay.hidden = false;
+    }
+    function closeContactSheet() {
+      if (!contactOverlay) return;
+      contactOverlay.setAttribute('hidden', '');
+      contactOverlay.hidden = true;
+    }
+
+    if (contactBtn) contactBtn.addEventListener('click', openContactSheet);
+    if (lbContact) {
+      lbContact.addEventListener('click', function (e) {
+        e.preventDefault();
+        openContactSheet();
       });
     }
+    if (contactClose) contactClose.addEventListener('click', closeContactSheet);
+    if (contactOverlay) {
+      contactOverlay.addEventListener('click', function (e) {
+        if (e.target === contactOverlay) closeContactSheet();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && contactOverlay && !contactOverlay.hidden) closeContactSheet();
+    });
   })();
 
   function saveToGallery(resultUrl) {
@@ -814,7 +1245,8 @@
       result: resultUrl || lastGenMeta.result || sourceUri || bgUri || '',
       source: sourceUri || '',
       background: bgUri || '',
-      at: lastGenMeta.at || Date.now()
+      at: lastGenMeta.at || Date.now(),
+      listing: lastGenMeta.listing || null
     });
     if (entry) {
       try { sessionStorage.setItem('pb-gallery-saved-for', stamp); } catch (e2) {}
@@ -833,16 +1265,27 @@
       previewSource.hidden = true;
     }
     setFinalView();
-    // Prefer stored result (e.g. opened from Gallery)
-    if (lastGenMeta && lastGenMeta.result) {
-      downloadUri = lastGenMeta.result;
-      compareAfterImg.src = lastGenMeta.result;
-      compareBeforeImg.src = sourceUri || bgUri || lastGenMeta.result;
+      // Prefer stored COMPOSITE result from gallery — not raw source demo result
+    var storedResult = lastGenMeta && lastGenMeta.result;
+    var storedIsSourceOnly = !!(storedResult && sourceUri && storedResult === sourceUri);
+    if (storedResult && lastGenMeta.fromGallery && !storedIsSourceOnly) {
+      downloadUri = storedResult;
+      compareAfterImg.src = storedResult;
+      compareBeforeImg.src = sourceUri || bgUri || storedResult;
+    } else {
+      compareBeforeImg.src = sourceUri || bgUri || '';
+      compareAfterImg.src = bgUri || sourceUri || '';
     }
     buildComposite(bgUri || sourceUri, sourceUri).then(function (url) {
-      if (url && !(lastGenMeta && lastGenMeta.fromGallery && lastGenMeta.result)) {
+      if (url) {
         downloadUri = url;
         compareAfterImg.src = url;
+        try {
+          if (lastGenMeta) {
+            lastGenMeta.result = url;
+            sessionStorage.setItem('pb-last-generate', JSON.stringify(lastGenMeta));
+          }
+        } catch (eMeta) {}
       } else if (!downloadUri) {
         compareAfterImg.src = (lastGenMeta && lastGenMeta.result) || bgUri || sourceUri || '';
       }
@@ -898,40 +1341,141 @@
 
   var lightbox = document.getElementById('lightbox');
   var lbImg = document.getElementById('lb-img');
-  function openLightbox(src, alt) {
-    if (!src) return;
-    lbImg.src = src;
-    lbImg.alt = alt || 'Preview';
+  var lbCompose = document.getElementById('lb-compose');
+  var lbComposeBg = document.getElementById('lb-compose-bg');
+  var lbComposeInset = document.getElementById('lb-compose-inset');
+  var lbCount = document.getElementById('lb-count');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbFooter = document.getElementById('lb-footer');
+  var lbItems = [];
+  var lbIndex = 0;
+  var lbShowSeller = false;
+
+  function hideComposeMode() {
+    lightbox.classList.remove('is-compose');
+    if (lbCompose) lbCompose.classList.remove('is-on');
+    if (lbComposeBg) lbComposeBg.removeAttribute('src');
+    if (lbComposeInset) lbComposeInset.removeAttribute('src');
+  }
+
+  function syncLightbox() {
+    if (!lbItems.length) return;
+    hideComposeMode();
+    lbImg.src = lbItems[lbIndex];
+    lbImg.alt = 'Preview ' + (lbIndex + 1);
+    if (lbCount) {
+      if (lbItems.length > 1) {
+        lbCount.textContent = (lbIndex + 1) + ' / ' + lbItems.length;
+        lbCount.classList.add('is-on');
+      } else {
+        lbCount.classList.remove('is-on');
+      }
+    }
+    var multi = lbItems.length > 1;
+    if (lbPrev) lbPrev.classList.toggle('is-on', multi);
+    if (lbNext) lbNext.classList.toggle('is-on', multi);
+    if (lbFooter) lbFooter.classList.toggle('is-on', !!lbShowSeller && lbFooter.getAttribute('data-listing') === '1');
+  }
+
+  function openLightboxGallery(urls, startIndex, showSeller) {
+    lbItems = (urls || []).filter(Boolean);
+    if (!lbItems.length) return;
+    lbIndex = Math.max(0, Math.min(startIndex || 0, lbItems.length - 1));
+    lbShowSeller = !!showSeller;
+    syncLightbox();
     lockScroll();
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
   }
+
+  function openLightbox(src, alt) {
+    if (!src) return;
+    openLightboxGallery([src], 0, false);
+    lbImg.alt = alt || 'Preview';
+  }
+
+  /** Softgen: open full generation (background + source inset), not source alone */
+  function openResultCompose() {
+    var bg = bgUri || (previewBg && previewBg.src) || '';
+    var src = sourceUri || (previewSource && !previewSource.hidden && previewSource.src) || '';
+    // Prefer flat composite when ready; else live compose UI
+    if (downloadUri && downloadUri !== sourceUri && downloadUri !== bgUri) {
+      openLightbox(downloadUri, 'AI Generated Image');
+      return;
+    }
+    if (!bg && !src) return;
+    lbItems = [];
+    lbShowSeller = false;
+    hideComposeMode();
+    if (lbImg) lbImg.removeAttribute('src');
+    if (lbCount) lbCount.classList.remove('is-on');
+    if (lbPrev) lbPrev.classList.remove('is-on');
+    if (lbNext) lbNext.classList.remove('is-on');
+    if (lbFooter) lbFooter.classList.remove('is-on');
+    if (lbComposeBg) lbComposeBg.src = bg || src;
+    if (lbComposeInset) {
+      if (src && bg) {
+        lbComposeInset.src = src;
+        lbComposeInset.parentElement.style.display = '';
+      } else {
+        lbComposeInset.removeAttribute('src');
+        if (lbComposeInset.parentElement) lbComposeInset.parentElement.style.display = 'none';
+      }
+    }
+    if (lbCompose) lbCompose.classList.add('is-on');
+    lightbox.classList.add('is-compose');
+    lockScroll();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+
   function closeLightbox() {
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
     lbImg.removeAttribute('src');
+    lbItems = [];
+    lbShowSeller = false;
+    hideComposeMode();
+    if (lbCount) lbCount.classList.remove('is-on');
+    if (lbPrev) lbPrev.classList.remove('is-on');
+    if (lbNext) lbNext.classList.remove('is-on');
+    if (lbFooter) lbFooter.classList.remove('is-on');
     if (!refundModal.classList.contains('open') && !refundOkModal.classList.contains('open')) unlockScroll();
   }
+
+  function lbStep(delta) {
+    if (lbItems.length < 2) return;
+    lbIndex = (lbIndex + delta + lbItems.length) % lbItems.length;
+    syncLightbox();
+  }
+
   document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  if (lbPrev) lbPrev.addEventListener('click', function (e) { e.stopPropagation(); lbStep(-1); });
+  if (lbNext) lbNext.addEventListener('click', function (e) { e.stopPropagation(); lbStep(1); });
   lightbox.addEventListener('click', function (e) {
-    if (e.target === lightbox) closeLightbox();
+    if (e.target === lightbox || e.target.classList.contains('lb-stage')) closeLightbox();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
   });
   [detailSource, detailBg].forEach(function (img) {
     img.addEventListener('click', function () {
       if (img.hidden || !img.src) return;
+      if (img === detailBg && bgGalleryUrls.length > 1) {
+        var start = bgGalleryUrls.indexOf(img.src);
+        openLightboxGallery(bgGalleryUrls, start >= 0 ? start : 0, true);
+        return;
+      }
       openLightbox(img.src, img.alt);
     });
   });
   frame.addEventListener('click', function () {
     if (frame.hidden) return;
-    var src = downloadUri
-      || (lastGenMeta && lastGenMeta.result)
-      || previewBg.src
-      || '';
-    openLightbox(src, 'AI Generated Image');
+    openResultCompose();
   });
 
   function openRefund() {
@@ -1031,6 +1575,10 @@
     return new Promise(function (resolve, reject) {
       if (!url) return reject();
       var img = new Image();
+      // Needed so canvas composite can export (Unsplash listing BGs)
+      if (/^https?:\/\//i.test(url) && url.indexOf('data:') !== 0) {
+        img.crossOrigin = 'anonymous';
+      }
       img.onload = function () { resolve(img); };
       img.onerror = reject;
       img.src = url;

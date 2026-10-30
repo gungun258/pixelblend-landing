@@ -5,200 +5,127 @@
 <title>Sign Up · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=4"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
-<link rel="stylesheet" href="css/pb-auth-screens.css?v=1">
+<link rel="stylesheet" href="css/pb-auth-screens.css?v=6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #1E1422; --soft: #8A7E92; --line: #F0E6F2; --bg: #FAF4FB;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; font-family: 'Hanken Grotesk', sans-serif; color: var(--ink);
-    background: var(--bg); -webkit-font-smoothing: antialiased;
-  }
-  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
-  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-  .pb-topbar {
-    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
-    min-height: 64px; padding: 14px 32px;
-    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line); flex-shrink: 0;
-  }
-  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
-  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-  .pb-content {
-    padding: 20px 32px 40px; width: 100%; flex: 1 1 auto; min-height: 0;
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;
-  }
-  .pb-auth-page { padding-top: 4px; padding-bottom: 48px; }
-  @media (max-width: 900px) {
-    .pb-main { margin-left: 61px; }
-    .pb-content { padding: 16px 16px 28px; }
-    .pb-topbar { padding: 12px 16px; }
-  }
-</style>
 </head>
-<body class="pb-auth-shell">
-<div class="pb-shell">
-  <aside class="pb-sidebar" id="pb-sidebar">
-    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
-    <a href="index.html" class="pb-brand">
-      <span class="pb-logo-mark"><span></span></span>
-      <span class="pb-brand-text">PixelBlend</span>
-    </a>
-    <a href="generate.html" class="pb-newblend">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
-      <span class="pb-label">New blend</span>
-    </a>
-    <nav class="pb-nav">
-      <a href="dashboard.html">
-        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span class="pb-navlabel">Home</span>
-      </a>
-      <a href="discover.html">
-        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
-        <span class="pb-navlabel">Discover</span>
-      </a>
-      <a href="generate.html">
-        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-        <span class="pb-navlabel">Generate</span>
-      </a>
-      <a href="gallery.html">
-        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span class="pb-navlabel">Gallery</span>
-      </a>
-      <a href="account.html">
-        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
-        <span class="pb-navlabel">Account</span>
-      </a>
-    </nav>
-    <div class="pb-credits">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
-        <span style="font-size:13px;font-weight:800;">140</span>
+<body class="pb-auth-stage">
+  <div class="pb-auth-stage-wrap">
+    <header class="pb-auth-band">
+      <div class="pb-auth-nav">
+        <a class="pb-auth-back" id="auth-back" href="login.html" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="pb-auth-nav-switch">
+          Already have an account?
+          <a id="login-link" href="login.html">Sign in</a>
+        </div>
       </div>
-    </div>
-  </aside>
-
-  <main class="pb-main">
-    <header class="pb-topbar">
-      <div>
-        <div class="pb-topbar-title">Sign Up</div>
-      </div>
-      <div class="pb-top-actions"></div>
+      <div class="pb-auth-brand">PixelBlend</div>
     </header>
 
-    <div class="pb-content">
-      <div class="pb-auth-page">
-        <div class="pb-auth-top">
-          <a class="pb-auth-back" id="auth-back" href="login.html" aria-label="Back">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <div class="pb-auth-top-title">Sign Up</div>
-        </div>
-
-        <div class="pb-auth-hero">
-          <div class="pb-auth-badge" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <circle cx="10" cy="8" r="3.2" stroke="#fff" stroke-width="1.9"/>
-              <path d="M4.5 18.5c.8-3 2.9-4.5 5.5-4.5" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/>
-              <path d="M16 8v6M13 11h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h1>Create your account</h1>
-          <p>Join PixelBlend to generate backgrounds, keep a gallery and sell your designs.</p>
-        </div>
-
-        <form class="pb-auth-card" id="signup-form" novalidate>
-          <div class="pb-auth-field" id="f-phone">
-            <label for="phone">Phone Number</label>
-            <div class="pb-auth-input">
-              <span class="pb-auth-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7.5 3.5h3l1.2 4.2-1.8 1.1a13 13 0 005.3 5.3l1.1-1.8 4.2 1.2v3a2 2 0 01-2.2 2A15.5 15.5 0 015.5 5.7a2 2 0 012-2.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-              </span>
-              <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number">
-            </div>
-            <div class="pb-auth-err">Phone number is required</div>
-          </div>
-
-          <div class="pb-auth-field" id="f-email">
-            <label for="email">Email Address</label>
-            <div class="pb-auth-input">
-              <span class="pb-auth-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="13" rx="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 7.5L12 13l7.5-5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
-            </div>
-            <div class="pb-auth-err">Email address is required</div>
-          </div>
-
-          <div class="pb-auth-field" id="f-pass">
-            <label for="password">Password</label>
-            <div class="pb-auth-input">
-              <span class="pb-auth-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </span>
-              <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password">
-              <button type="button" class="pb-auth-eye" data-eye="password" aria-label="Show password">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
-              </button>
-            </div>
-            <div class="pb-auth-rules" id="pass-rules" aria-label="Password requirements">
-              <span class="pb-auth-rule" data-rule="len"><span class="dot"></span>8+ characters</span>
-              <span class="pb-auth-rule" data-rule="upper"><span class="dot"></span>Uppercase letter</span>
-              <span class="pb-auth-rule" data-rule="lower"><span class="dot"></span>Lowercase letter</span>
-              <span class="pb-auth-rule" data-rule="num"><span class="dot"></span>Number</span>
-              <span class="pb-auth-rule" data-rule="special"><span class="dot"></span>Special character</span>
-            </div>
-            <div class="pb-auth-err">Password must meet all requirements</div>
-          </div>
-
-          <div class="pb-auth-field" id="f-confirm">
-            <label for="confirm">Confirm Password</label>
-            <div class="pb-auth-input">
-              <span class="pb-auth-ico" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </span>
-              <input id="confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Re-enter your password">
-              <button type="button" class="pb-auth-eye" data-eye="confirm" aria-label="Show password">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
-              </button>
-            </div>
-            <div class="pb-auth-err" id="confirm-err">Passwords do not match</div>
-          </div>
-
-          <label class="pb-auth-terms" id="f-terms">
-            <input type="checkbox" id="terms">
-            <span>I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a></span>
-          </label>
-
-          <button class="pb-auth-submit" type="submit">Create Account</button>
-
-          <div class="pb-auth-divider">Or sign up with</div>
-          <div class="pb-auth-social">
-            <button type="button" class="pb-auth-social-btn" id="btn-google">
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.8 7.5 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.4 2.8 5.3 4.8 3.9 7.4z"/><path fill="#4A90E2" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.9-2.2c-.8.5-1.8.9-3.2.9-3.5 0-6.5-2.4-7.5-5.6l-3 2.3c1.4 2.9 4.5 4.8 8.5 4.8z"/><path fill="#FBBC05" d="M4.5 14.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9l-3-2.3C1.2 10 1 11 1 12.8s.2 2.8.5 4.1l3-2.2z"/></svg>
-              Google
-            </button>
-            <button type="button" class="pb-auth-social-btn" id="btn-apple">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.7 0-1.7-.7-2.8-.7-1.4 0-2.8.9-3.5 2.2-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.6zM14.7 6.5c.6-.7 1-1.7.9-2.7-0.9.1-1.9.6-2.5 1.3-.6.6-1.1 1.6-1 2.6 1 .1 1.9-.5 2.6-1.2z"/></svg>
-              Apple
-            </button>
-          </div>
-
-          <p class="pb-auth-switch">Already have an account? <a class="pb-auth-link" id="login-link" href="login.html">Sign in</a></p>
-        </form>
+    <div class="pb-auth-sheet">
+      <div class="pb-auth-sheet-head">
+        <h1>Get started free.</h1>
+        <p>Join PixelBlend to generate backgrounds, keep a gallery and sell your designs.</p>
       </div>
+
+      <form id="signup-form" novalidate>
+        <div class="pb-auth-field" id="f-phone">
+          <label for="phone">Phone Number</label>
+          <div class="pb-auth-input">
+            <span class="pb-auth-ico" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7.5 3.5h3l1.2 4.2-1.8 1.1a13 13 0 005.3 5.3l1.1-1.8 4.2 1.2v3a2 2 0 01-2.2 2A15.5 15.5 0 015.5 5.7a2 2 0 012-2.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </span>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number">
+          </div>
+          <div class="pb-auth-err">Phone number is required</div>
+        </div>
+
+        <div class="pb-auth-field" id="f-pass">
+          <label for="password">Password</label>
+          <div class="pb-auth-input">
+            <span class="pb-auth-ico" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password">
+            <button type="button" class="pb-auth-eye" data-eye="password" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
+            </button>
+          </div>
+          <div class="pb-auth-rules" id="pass-rules" aria-label="Password requirements">
+            <span class="pb-auth-rule" data-rule="len"><span class="dot"></span>8+ characters</span>
+            <span class="pb-auth-rule" data-rule="upper"><span class="dot"></span>Uppercase letter</span>
+            <span class="pb-auth-rule" data-rule="lower"><span class="dot"></span>Lowercase letter</span>
+            <span class="pb-auth-rule" data-rule="num"><span class="dot"></span>Number</span>
+            <span class="pb-auth-rule" data-rule="special"><span class="dot"></span>Special character</span>
+          </div>
+          <div class="pb-auth-err">Password must meet all requirements</div>
+        </div>
+
+        <div class="pb-auth-field" id="f-confirm">
+          <label for="confirm">Confirm Password</label>
+          <div class="pb-auth-input">
+            <span class="pb-auth-ico" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <input id="confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Re-enter your password">
+            <button type="button" class="pb-auth-eye" data-eye="confirm" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
+            </button>
+          </div>
+          <div class="pb-auth-err" id="confirm-err">Passwords do not match</div>
+        </div>
+
+        <label class="pb-auth-terms" id="f-terms">
+          <input type="checkbox" id="terms">
+          <span>I agree to the <a href="terms-of-service.html" target="_blank">Terms of Service</a> and <a href="privacy-policy.html" target="_blank">Privacy Policy</a></span>
+        </label>
+
+        <button class="pb-auth-submit" type="submit">Create Account</button>
+
+        <div class="pb-auth-divider">Or sign up with</div>
+        <div class="pb-auth-social">
+          <button type="button" class="pb-auth-social-btn" id="btn-google">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.8 7.5 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.4 2.8 5.3 4.8 3.9 7.4z"/><path fill="#4A90E2" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.9-2.2c-.8.5-1.8.9-3.2.9-3.5 0-6.5-2.4-7.5-5.6l-3 2.3c1.4 2.9 4.5 4.8 8.5 4.8z"/><path fill="#FBBC05" d="M4.5 14.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9l-3-2.3C1.2 10 1 11 1 12.8s.2 2.8.5 4.1l3-2.2z"/></svg>
+            Google
+          </button>
+          <button type="button" class="pb-auth-social-btn" id="btn-apple">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.7 0-1.7-.7-2.8-.7-1.4 0-2.8.9-3.5 2.2-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.6zM14.7 6.5c.6-.7 1-1.7.9-2.7-0.9.1-1.9.6-2.5 1.3-.6.6-1.1 1.6-1 2.6 1 .1 1.9-.5 2.6-1.2z"/></svg>
+            Apple
+          </button>
+        </div>
+
+        <!-- After social so referral applies to phone + Google/Apple -->
+        <div class="pb-auth-referral" id="referral-block">
+          <div class="pb-auth-referral-row">
+            <div class="pb-auth-referral-ico" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><rect x="4" y="8" width="6.5" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="8" width="6.5" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><path d="M7.2 8V6.8a1.8 1.8 0 013.6 0V8M13.2 8V6.8a1.8 1.8 0 013.6 0V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pb-auth-referral-copy">
+              <strong>I have a referral code</strong>
+              <span>Optional — works with phone or Google / Apple sign up</span>
+            </div>
+            <label class="pb-auth-switch" for="referral-toggle">
+              <input type="checkbox" id="referral-toggle">
+              <span class="pb-auth-switch-ui" aria-hidden="true"></span>
+              <span class="sr-only">Show referral code</span>
+            </label>
+          </div>
+          <div class="pb-auth-field pb-auth-referral-field" id="f-referral" hidden>
+            <label for="referral">Referral Code</label>
+            <div class="pb-auth-input">
+              <input id="referral" name="referral" type="text" autocomplete="off" placeholder="Enter referral code">
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-  </main>
-</div>
+  </div>
 
 <script src="js/pb-auth.js?v=1"></script>
 <script src="js/pb-auth-screens.js?v=1"></script>
-<script src="js/pb-shell-nav.js?v=19"></script>
 <script>
 (function () {
   if (window.pbAuth && pbAuth.isLoggedIn()) {
@@ -217,7 +144,7 @@
     pbAuthScreens.setError(document.getElementById('f-pass'), false);
   });
 
-  ['phone', 'email', 'confirm'].forEach(function (id) {
+  ['phone', 'confirm'].forEach(function (id) {
     document.getElementById(id).addEventListener('input', function () {
       pbAuthScreens.setError(document.getElementById('f-' + (id === 'confirm' ? 'confirm' : id)), false);
     });
@@ -226,37 +153,57 @@
     document.getElementById('f-terms').classList.remove('is-error');
   });
 
+  var referralToggle = document.getElementById('referral-toggle');
+  var referralField = document.getElementById('f-referral');
+  var referralInput = document.getElementById('referral');
+
+  function getReferral() {
+    if (!referralToggle.checked) return null;
+    var code = referralInput.value.trim();
+    return code || null;
+  }
+
+  referralToggle.addEventListener('change', function () {
+    referralField.hidden = !referralToggle.checked;
+    if (referralToggle.checked) {
+      setTimeout(function () { referralInput.focus(); }, 0);
+    } else {
+      referralInput.value = '';
+    }
+  });
+
   function finish(extra) {
-    pbAuthScreens.loginDemo(Object.assign({ at: Date.now(), via: 'signup' }, extra || {}));
+    pbAuthScreens.loginDemo(Object.assign({
+      at: Date.now(),
+      via: 'signup',
+      referral: getReferral()
+    }, extra || {}));
   }
 
   document.getElementById('signup-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var phone = document.getElementById('phone').value.trim();
-    var email = document.getElementById('email').value.trim();
     var pass = passInput.value;
     var confirm = document.getElementById('confirm').value;
     var terms = document.getElementById('terms').checked;
     var rules = pbAuthScreens.passwordRules(pass);
 
     var okPhone = pbAuthScreens.validPhone(phone);
-    var okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     var okPass = pbAuthScreens.allRulesOk(rules);
     var okConfirm = !!confirm && confirm === pass;
     var okTerms = !!terms;
 
     pbAuthScreens.setError(document.getElementById('f-phone'), !okPhone);
-    pbAuthScreens.setError(document.getElementById('f-email'), !okEmail);
     pbAuthScreens.setError(document.getElementById('f-pass'), !okPass);
     pbAuthScreens.setError(document.getElementById('f-confirm'), !okConfirm);
     document.getElementById('f-terms').classList.toggle('is-error', !okTerms);
     document.getElementById('confirm-err').textContent = !confirm ? 'Confirm password is required' : 'Passwords do not match';
 
-    if (!okPhone || !okEmail || !okPass || !okConfirm || !okTerms) return;
+    if (!okPhone || !okPass || !okConfirm || !okTerms) return;
 
     finish({
       phone: pbAuthScreens.digitsOnly(phone),
-      email: email
+      via: 'signup'
     });
   });
 
