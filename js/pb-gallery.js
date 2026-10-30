@@ -132,12 +132,9 @@
         }
       }
     }
-    // Put seeded user gens first (stable order by id), then personal
+    // Newest first (recent generations at the top)
     next.sort(function (a, b) {
-      var as = a.seeded ? 0 : 1;
-      var bs = b.seeded ? 0 : 1;
-      if (as !== bs) return as - bs;
-      return String(a.id).localeCompare(String(b.id));
+      return (Number(b.at) || 0) - (Number(a.at) || 0);
     });
     if (added || next.length !== list.length) write(GEN_KEY, next);
     return next;
@@ -145,11 +142,19 @@
 
   function getGenerated() {
     ensureSeed();
-    return read(GEN_KEY);
+    var list = read(GEN_KEY).slice();
+    list.sort(function (a, b) {
+      return (Number(b.at) || 0) - (Number(a.at) || 0);
+    });
+    return list;
   }
 
   function getUploads() {
-    return read(UP_KEY);
+    var list = read(UP_KEY).slice();
+    list.sort(function (a, b) {
+      return (Number(b.at) || 0) - (Number(a.at) || 0);
+    });
+    return list;
   }
 
   function generatedCount() {
@@ -171,6 +176,19 @@
       at: item.at || Date.now(),
       seen: false
     };
+    if (item.listing && item.listing.id) {
+      entry.listing = {
+        id: item.listing.id,
+        title: item.listing.title || '',
+        seller: item.listing.seller || '',
+        sellerId: item.listing.sellerId || '',
+        sellerAvatar: item.listing.sellerAvatar || '',
+        sellerPhone: item.listing.sellerPhone || '',
+        sellerWhatsapp: item.listing.sellerWhatsapp || '',
+        img: item.listing.img || '',
+        gallery: Array.isArray(item.listing.gallery) ? item.listing.gallery.filter(Boolean).slice(0, 12) : []
+      };
+    }
     if (!entry.result && !entry.source && !entry.background) return null;
     list = list.filter(function (x) { return x.id !== entry.id; });
     list.unshift(entry);

@@ -1465,7 +1465,13 @@
           title: listing.title,
           seller: listing.seller || '',
           sellerId: listing.sellerId || '',
-          img: currentBg() || listing.img || ''
+          sellerAvatar: listing.sellerAvatar || 'assets/dashboard/images/img31.jpg',
+          sellerPhone: listing.sellerPhone || '+91 98765 43210',
+          sellerWhatsapp: listing.sellerWhatsapp || '919876543210',
+          img: currentBg() || listing.img || '',
+          gallery: (listing.gallery && listing.gallery.length)
+            ? listing.gallery.slice()
+            : [currentBg() || listing.img || ''].filter(Boolean)
         }));
       } catch (err) {}
       window.location.href = 'generate.html';
@@ -1604,6 +1610,12 @@
   var contactInline = document.getElementById('ld-contact-inline');
   if (contactInline) contactInline.addEventListener('click', onContactSeller);
   if (contactClose) contactClose.addEventListener('click', closeContactSheet);
+  // Open contact sheet when arriving from Generation Result → Contact Seller
+  try {
+    if (qs('contact') === '1') {
+      setTimeout(function () { onContactSeller(); }, 80);
+    }
+  } catch (eContactQs) {}
   if (contactOverlay) {
     contactOverlay.addEventListener('click', function (e) {
       if (e.target === contactOverlay) closeContactSheet();

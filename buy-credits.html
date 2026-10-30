@@ -87,40 +87,90 @@
   .cr-flow { width: min(1040px, 100%); margin: 0 auto; }
 
   .cr-top { margin-bottom: 52px; }
+  /* Softgen-style credits hero — orange card, clearer hierarchy */
   .cr-balance {
     position: relative; overflow: hidden;
-    background: linear-gradient(120deg, #F59E0B 0%, #FBBF24 48%, #FDE68A 100%);
-    border-radius: 22px; padding: 22px 24px; color: #78350F;
-    box-shadow: 0 16px 36px -16px rgba(217,119,6,.4); margin: 0;
+    background: linear-gradient(115deg, #FBBF24 0%, #F59E0B 42%, #EA580C 100%);
+    border-radius: 24px; padding: 22px 22px 18px; color: #fff;
+    box-shadow: 0 18px 40px -18px rgba(234, 88, 12, .45); margin: 0;
+  }
+  .cr-balance::before {
+    content: ''; position: absolute; left: -48px; bottom: -60px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: rgba(255,255,255,.1); pointer-events: none;
   }
   .cr-balance::after {
-    content: ''; position: absolute; right: -40px; top: -50px;
-    width: 180px; height: 180px; border-radius: 50%;
-    background: rgba(255,255,255,.22); pointer-events: none;
+    content: ''; position: absolute; right: -36px; top: -48px;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: rgba(255,255,255,.14); pointer-events: none;
   }
   .cr-balance-top {
     position: relative; z-index: 1;
     display: flex; align-items: center; gap: 14px;
+    margin-bottom: 16px;
   }
   .cr-coin {
     width: 48px; height: 48px; border-radius: 50%;
-    background: rgba(255,255,255,.45); border: 1.5px solid rgba(255,255,255,.7);
+    background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.35);
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    color: #B45309;
-    box-shadow: 0 6px 14px rgba(180,83,9,.12);
+    color: #fff;
+    backdrop-filter: blur(6px);
   }
   .cr-balance-label {
-    font-size: 12px; font-weight: 700; letter-spacing: .02em;
-    color: rgba(120,53,15,.78); margin-bottom: 2px;
+    font-size: 13px; font-weight: 600; letter-spacing: .01em;
+    color: rgba(255,255,255,.88); margin-bottom: 4px;
   }
   .cr-balance-num {
-    font-size: 40px; font-weight: 800; letter-spacing: -.04em; line-height: 1;
-    color: #78350F;
+    font-size: 42px; font-weight: 800; letter-spacing: -.04em; line-height: 1;
+    color: #fff; text-shadow: 0 2px 12px rgba(120, 53, 15, .18);
+  }
+  .cr-balance-split {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 16px;
+    padding: 14px 10px;
+    backdrop-filter: blur(8px);
+    margin-bottom: 14px;
+  }
+  .cr-balance-split > div {
+    text-align: center;
+    padding: 2px 8px;
+  }
+  .cr-balance-split > div + div {
+    border-left: 1px solid rgba(255,255,255,.35);
+  }
+  .cr-balance-split strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .cr-balance-split span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,.86);
   }
   .cr-balance-foot {
     position: relative; z-index: 1;
-    margin: 12px 0 0 62px;
-    font-size: 13px; font-weight: 600; color: rgba(120,53,15,.82);
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.92);
+    line-height: 1.35;
+  }
+  .cr-balance-foot svg {
+    flex: 0 0 auto;
+    margin-top: 1px;
+    opacity: .95;
   }
 
   .cr-buy-section { margin-bottom: 8px; }
@@ -449,7 +499,7 @@
     <div class="pb-content">
       <div class="cr-flow">
         <div class="cr-top">
-          <section class="cr-balance">
+          <section class="cr-balance" aria-label="Credit balance">
             <div class="cr-balance-top">
               <div class="cr-coin" aria-hidden="true">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -464,7 +514,20 @@
                 <div class="cr-balance-num">30</div>
               </div>
             </div>
-            <div class="cr-balance-foot">≈ 3 generations left · 1 gen = 10 credits</div>
+            <div class="cr-balance-split">
+              <div>
+                <strong>20</strong>
+                <span>Purchased</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>Bonus / Referral</span>
+              </div>
+            </div>
+            <p class="cr-balance-foot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l1.6 4.6L18 9.2l-4.4 1.6L12 15.4l-1.6-4.6L6 9.2l4.4-1.6L12 3zM18.5 14l.9 2.5 2.6.9-2.6.9-.9 2.5-.9-2.5-2.6-.9 2.6-.9.9-2.5zM5.5 15l.7 1.9 2 .7-2 .7-.7 1.9-.7-1.9-2-.7 2-.7.7-1.9z" fill="#fff"/></svg>
+              <span>1 generation = 10 credits — about 3 generations left</span>
+            </p>
           </section>
           <div class="cr-top-actions">
             <button type="button" class="cr-history-btn" id="btn-jump-hist">
