@@ -45,19 +45,34 @@
     return true;
   }
 
-  function auto() {
-    var body = document.body;
-    if (!body) return;
-    var mode = body.getAttribute('data-pb-gate');
-    if (!mode) return;
-    if (mode === 'credits') lockCredits();
-    else lockFull();
+  function clearGatePending() {
+    try {
+      document.documentElement.classList.remove('pb-gate-pending');
+    } catch (e) {}
   }
 
+  function auto() {
+    try {
+      var body = document.body;
+      if (!body) return;
+      var mode = body.getAttribute('data-pb-gate');
+      if (!mode) return;
+      if (mode === 'credits') lockCredits();
+      else lockFull();
+    } finally {
+      clearGatePending();
+    }
+  }
+
+  function boot() {
+    var gated = document.body && document.body.getAttribute('data-pb-gate');
+    if (gated) auto();
+    else clearGatePending();
+  }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', auto);
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    auto();
+    boot();
   }
 
   global.pbLoginGate = {
