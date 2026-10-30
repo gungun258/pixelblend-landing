@@ -22,9 +22,10 @@
 
   function activeKey(file) {
     var f = normalizePage(file);
-    if (f === 'discover' || f === 'results') return 'discover';
+    if (f === 'discover' || f === 'results' || f === 'top-sellers' || f === 'followed-sellers' || f === 'all-listings') return 'discover';
     if (f === 'generate' || f === 'generating' || f === 'generated-result') return 'generate';
     if (f === 'gallery') return 'gallery';
+    if (f === 'login' || f === 'signup' || f === 'forgot-password') return '';
     if (
       f === 'account' ||
       f === 'edit-profile' ||
@@ -48,7 +49,7 @@
   function hrefKey(href) {
     var h = normalizePage((href || '').split('?')[0].split('#')[0].split('/').pop());
     if (h === 'dashboard' || h === '' || h === 'index' || h === 'home') return 'home';
-    if (h === 'discover' || h === 'results') return 'discover';
+    if (h === 'discover' || h === 'results' || h === 'top-sellers' || h === 'followed-sellers' || h === 'all-listings') return 'discover';
     if (h === 'generate' || h === 'generating' || h === 'generated-result') return 'generate';
     if (h === 'gallery') return 'gallery';
     if (h === 'account') return 'account';
@@ -144,12 +145,23 @@
     }
   }
 
+  function isLoggedIn() {
+    try {
+      if (window.pbAuth) return pbAuth.isLoggedIn();
+      return !!localStorage.getItem('pb-studio-auth');
+    } catch (e) {
+      return false;
+    }
+  }
+
   function clearStudioSession() {
     try {
-      localStorage.removeItem('pb-studio-auth');
+      if (window.pbAuth) pbAuth.logout();
+      else localStorage.removeItem('pb-studio-auth');
       sessionStorage.removeItem('pb-last-generate');
       sessionStorage.removeItem('pb-prefill-bg');
       sessionStorage.removeItem('pb-prefill-bg-title');
+      sessionStorage.removeItem('pb-prefill-listing');
       sessionStorage.removeItem('pb-prefill-source');
       sessionStorage.removeItem('pb-gallery-saved-for');
       sessionStorage.removeItem('pb-listing-fallback');
@@ -198,14 +210,24 @@
     }
 
     existing.type = 'button';
-    existing.classList.remove('is-login');
     existing.removeAttribute('href');
-    existing.innerHTML = LOGOUT_ICO + '<span class="pb-auth-label">Log out</span>';
-    existing.onclick = function (e) {
-      e.preventDefault();
-      clearStudioSession();
-      window.location.href = 'index.html';
-    };
+    if (isLoggedIn()) {
+      existing.classList.remove('is-login');
+      existing.innerHTML = LOGOUT_ICO + '<span class="pb-auth-label">Log out</span>';
+      existing.onclick = function (e) {
+        e.preventDefault();
+        clearStudioSession();
+        window.location.href = 'dashboard.html';
+      };
+    } else {
+      existing.classList.add('is-login');
+      existing.innerHTML = LOGOUT_ICO + '<span class="pb-auth-label">Log in</span>';
+      existing.onclick = function (e) {
+        e.preventDefault();
+        var next = (location.pathname.split('/').pop() || 'dashboard.html') + (location.search || '');
+        window.location.href = 'login.html?next=' + encodeURIComponent(next);
+      };
+    }
 
     var support = foot.querySelector('.pb-support-btn');
     if (!support) {

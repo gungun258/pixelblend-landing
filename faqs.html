@@ -5,8 +5,10 @@
 <title>FAQs · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-search-empty.css?v=1">
 <script src="js/pb-gallery.js?v=3"></script>
+<script src="js/pb-search-empty.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -130,12 +132,8 @@
   }
   .fq-item.open .fq-a { display: block; }
 
-  .fq-empty {
-    display: none; text-align: center; padding: 40px 16px;
-    background: #fff; border: 1px dashed #E5E7EB; border-radius: 16px;
-    color: var(--soft); font-size: 13px; font-weight: 600;
-  }
-  .fq-empty.on { display: block; }
+  .fq-empty { display: none; margin-top: 8px; }
+  .fq-empty.on { display: flex !important; }
 
   .fq-more {
     margin-top: 22px; text-align: center;
@@ -264,7 +262,7 @@
           </article>
         </div>
 
-        <div class="fq-empty" id="fq-empty">No matching FAQs. Try another search.</div>
+        <div class="fq-empty pb-search-empty" id="fq-empty" hidden></div>
 
         <p class="fq-more">Need more help? <a href="contact.html">Contact support</a> · <a href="faq.html">Full FAQ site</a></p>
       </div>
@@ -283,6 +281,9 @@
   var list = document.getElementById('fq-list');
   var empty = document.getElementById('fq-empty');
   var search = document.getElementById('fq-search');
+  if (window.pbSearchEmpty) {
+    pbSearchEmpty.fill(empty, 'No results found', 'Try another keyword — or clear search to browse all FAQs.');
+  }
 
   list.addEventListener('click', function (e) {
     var btn = e.target.closest('.fq-q');
@@ -302,11 +303,12 @@
       if (show) n++;
     });
     empty.classList.toggle('on', n === 0);
+    empty.hidden = n !== 0;
   }
 
   search.addEventListener('input', filter);
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
 </body>
 </html>

@@ -5,8 +5,9 @@
 <title>Discover · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
 <script src="js/pb-gallery.js"></script>
+<script src="js/pb-follows.js?v=1"></script>
 <script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -230,10 +231,24 @@
     text-decoration: none; color: inherit;
   }
   .dc-seller-link:hover strong { color: var(--accent); }
+  .dc-avatar-wrap {
+    position: relative; flex-shrink: 0; width: 36px; height: 36px;
+  }
   .dc-avatar {
     width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: none;
     box-shadow: none; flex-shrink: 0; background: #F7ECF8;
     display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--accent); font-size: 12px;
+  }
+  .dc-avatar-wrap .dc-avatar { display: block; }
+  .dc-avatar-wrap span.dc-avatar {
+    display: flex; width: 100%; height: 100%;
+  }
+  .dc-verified {
+    position: absolute; right: -2px; bottom: -2px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #3B82F6; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid #fff; box-shadow: 0 2px 5px rgba(59,130,246,.35);
   }
   .dc-seller-top strong { display: block; font-size: 12.5px; letter-spacing: -.01em; }
   .dc-seller-top small { display: block; font-size: 10.5px; color: var(--soft); margin-top: 1px; }
@@ -243,6 +258,17 @@
   }
   .dc-follow-btn:hover { border-color: var(--accent); }
   .dc-follow-btn.is-on { background: #fff; color: var(--soft); border-color: var(--line); }
+  .dc-followed-empty {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 18px; border-radius: 16px;
+    background: #fff; border: 1px dashed #E9D5FF;
+    color: var(--soft); font-size: 13px; font-weight: 600;
+  }
+  .dc-followed-empty span {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    background: #FCE7F3; color: #C42E8B;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
   .dc-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
   .dc-thumbs a, .dc-trend-thumbs a {
     display: block; text-decoration: none; border-radius: 8px; overflow: hidden;
@@ -306,6 +332,7 @@
     position: relative; flex: 0 0 168px; width: 168px;
     border-radius: 16px; overflow: hidden; aspect-ratio: 3/4;
     background: #1E1422; scroll-snap-align: start;
+    cursor: pointer;
   }
 
   /* Desktop horizontal scroll: peek + arrows */
@@ -584,19 +611,30 @@
         </section>
       </div>
 
+      <section class="dc-section" id="dc-followed-section">
+        <div class="dc-section-h">
+          <h2>Followed by you</h2>
+          <a class="dc-link" href="followed-sellers.html">View All →</a>
+        </div>
+        <div class="dc-follow" id="dc-followed-track"></div>
+      </section>
+
       <section class="dc-section">
         <div class="dc-section-h">
           <h2>Sellers to follow</h2>
           <a class="dc-link" href="top-sellers.html">View All →</a>
         </div>
         <div class="dc-follow">
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="visual-vibes">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=visual-vibes">
-                <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                <span class="dc-avatar-wrap">
+                  <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
+                  <span class="dc-verified" title="Verified" aria-label="Verified"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l5 5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </span>
                 <div><strong>Visual Vibes</strong><small>3 listings · 11.2k followers</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="visual-vibes">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img3.jpg" alt=""></a>
@@ -605,13 +643,16 @@
               <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img6.jpg" alt=""></a>
             </div>
           </article>
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="r-store">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=r-store">
-                <span class="dc-avatar">RS</span>
+                <span class="dc-avatar-wrap">
+                  <span class="dc-avatar">RS</span>
+                  <span class="dc-verified" title="Verified" aria-label="Verified"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l5 5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </span>
                 <div><strong>R store</strong><small>6 listings · 3 followers</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="r-store">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img25.jpg" alt=""></a>
@@ -620,13 +661,13 @@
               <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img18.jpg" alt=""></a>
             </div>
           </article>
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="digital-dreams">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=digital-dreams">
                 <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
                 <div><strong>Digital Dreams</strong><small>2 listings · 5.6k followers</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="digital-dreams">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img16.jpg" alt=""></a>
@@ -635,13 +676,16 @@
               <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img23.jpg" alt=""></a>
             </div>
           </article>
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="emma-white">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=emma-white">
-                <img class="dc-avatar" src="assets/dashboard/images/img33.jpg" alt="">
+                <span class="dc-avatar-wrap">
+                  <img class="dc-avatar" src="assets/dashboard/images/img33.jpg" alt="">
+                  <span class="dc-verified" title="Verified" aria-label="Verified"><svg width="8" height="8" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l5 5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </span>
                 <div><strong>Emma White</strong><small>1 listing · 19.4k followers</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="emma-white">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img7.jpg" alt=""></a>
@@ -650,13 +694,13 @@
               <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img10.jpg" alt=""></a>
             </div>
           </article>
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="gungun">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=gungun">
                 <span class="dc-avatar">G</span>
                 <div><strong>Gungun</strong><small>1 listing · 1 follower</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="gungun">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img11.jpg" alt=""></a>
@@ -665,13 +709,13 @@
               <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img14.jpg" alt=""></a>
             </div>
           </article>
-          <article class="dc-seller">
+          <article class="dc-seller" data-seller-id="sarahs-studio">
             <div class="dc-seller-top">
               <a class="dc-seller-link" href="seller.html?id=sarahs-studio">
                 <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
                 <div><strong>Sarah's Studio</strong><small>3 listings · 12.5k followers</small></div>
               </a>
-              <button class="dc-follow-btn" type="button">Follow</button>
+              <button class="dc-follow-btn" type="button" data-seller-id="sarahs-studio">Follow</button>
             </div>
             <div class="dc-thumbs">
               <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img27.jpg" alt=""></a>
@@ -689,8 +733,8 @@
           <a class="dc-link" href="top-sellers.html">View All →</a>
         </div>
         <div class="dc-trend">
-          <article class="dc-trend-card">
-            <a class="dc-trend-media" href="listing.html?id=rustic-charm">
+          <article class="dc-trend-card" data-seller-id="visual-vibes">
+            <a class="dc-trend-media" href="seller.html?id=visual-vibes">
               <img src="assets/dashboard/images/img20.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
             </a>
@@ -700,17 +744,17 @@
                   <img class="dc-avatar" src="assets/dashboard/images/img31.jpg" alt="">
                   <div><strong>Visual Vibes</strong><small>3 backgrounds</small></div>
                 </a>
-                <button class="dc-follow-btn" type="button">Follow</button>
+                <button class="dc-follow-btn" type="button" data-seller-id="visual-vibes">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img3.jpg" alt=""></a>
-                <a href="listing.html?id=cosmic-drift"><img src="assets/dashboard/images/img4.jpg" alt=""></a>
-                <a href="listing.html?id=rustic-charm"><img src="assets/dashboard/images/img5.jpg" alt=""></a>
+                <a href="seller.html?id=visual-vibes"><img src="assets/dashboard/images/img3.jpg" alt=""></a>
+                <a href="seller.html?id=visual-vibes"><img src="assets/dashboard/images/img4.jpg" alt=""></a>
+                <a href="seller.html?id=visual-vibes"><img src="assets/dashboard/images/img5.jpg" alt=""></a>
               </div>
             </div>
           </article>
-          <article class="dc-trend-card">
-            <a class="dc-trend-media" href="listing.html?id=mountain-sunset">
+          <article class="dc-trend-card" data-seller-id="r-store">
+            <a class="dc-trend-media" href="seller.html?id=r-store">
               <img src="assets/dashboard/images/img23.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
             </a>
@@ -720,17 +764,17 @@
                   <span class="dc-avatar">RS</span>
                   <div><strong>R store</strong><small>6 backgrounds</small></div>
                 </a>
-                <button class="dc-follow-btn" type="button">Follow</button>
+                <button class="dc-follow-btn" type="button" data-seller-id="r-store">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img16.jpg" alt=""></a>
-                <a href="listing.html?id=beach-waves"><img src="assets/dashboard/images/img25.jpg" alt=""></a>
-                <a href="listing.html?id=forest-mist"><img src="assets/dashboard/images/img26.jpg" alt=""></a>
+                <a href="seller.html?id=r-store"><img src="assets/dashboard/images/img16.jpg" alt=""></a>
+                <a href="seller.html?id=r-store"><img src="assets/dashboard/images/img25.jpg" alt=""></a>
+                <a href="seller.html?id=r-store"><img src="assets/dashboard/images/img26.jpg" alt=""></a>
               </div>
             </div>
           </article>
-          <article class="dc-trend-card">
-            <a class="dc-trend-media" href="listing.html?id=night-sky">
+          <article class="dc-trend-card" data-seller-id="digital-dreams">
+            <a class="dc-trend-media" href="seller.html?id=digital-dreams">
               <img src="assets/dashboard/images/img18.jpg" alt="">
               <span class="dc-trend-badge">↗</span>
             </a>
@@ -740,12 +784,12 @@
                   <img class="dc-avatar" src="assets/dashboard/images/img32.jpg" alt="">
                   <div><strong>Digital Dreams</strong><small>2 backgrounds</small></div>
                 </a>
-                <button class="dc-follow-btn" type="button">Follow</button>
+                <button class="dc-follow-btn" type="button" data-seller-id="digital-dreams">Follow</button>
               </div>
               <div class="dc-trend-thumbs">
-                <a href="listing.html?id=meadow-light"><img src="assets/dashboard/images/img17.jpg" alt=""></a>
-                <a href="listing.html?id=mountain-sunset"><img src="assets/dashboard/images/img19.jpg" alt=""></a>
-                <a href="listing.html?id=night-sky"><img src="assets/dashboard/images/img24.jpg" alt=""></a>
+                <a href="seller.html?id=digital-dreams"><img src="assets/dashboard/images/img17.jpg" alt=""></a>
+                <a href="seller.html?id=digital-dreams"><img src="assets/dashboard/images/img19.jpg" alt=""></a>
+                <a href="seller.html?id=digital-dreams"><img src="assets/dashboard/images/img24.jpg" alt=""></a>
               </div>
             </div>
           </article>
@@ -758,42 +802,42 @@
           <a class="dc-link" href="all-listings.html">View All →</a>
         </div>
         <div class="dc-new">
-          <div class="dc-bg" data-wish-id="new-img20" data-wish-title="Soft Studio" data-wish-img="assets/dashboard/images/img20.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="rustic-charm" data-wish-id="new-img20" data-wish-title="Soft Studio" data-wish-img="assets/dashboard/images/img20.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img20.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img16" data-wish-title="Forest Path" data-wish-img="assets/dashboard/images/img16.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="forest-mist" data-wish-id="new-img16" data-wish-title="Forest Path" data-wish-img="assets/dashboard/images/img16.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img16.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img26" data-wish-title="Mist Valley" data-wish-img="assets/dashboard/images/img26.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="beach-waves" data-wish-id="new-img26" data-wish-title="Mist Valley" data-wish-img="assets/dashboard/images/img26.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img26.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img5" data-wish-title="Studio Softbox" data-wish-img="assets/dashboard/images/img5.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="meadow-light" data-wish-id="new-img5" data-wish-title="Studio Softbox" data-wish-img="assets/dashboard/images/img5.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img5.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img4" data-wish-title="Night Glow" data-wish-img="assets/dashboard/images/img4.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="night-sky" data-wish-id="new-img4" data-wish-title="Night Glow" data-wish-img="assets/dashboard/images/img4.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img4.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img23" data-wish-title="Mountain Sunset" data-wish-img="assets/dashboard/images/img23.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="mountain-sunset" data-wish-id="new-img23" data-wish-title="Mountain Sunset" data-wish-img="assets/dashboard/images/img23.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img23.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img18" data-wish-title="City Lights" data-wish-img="assets/dashboard/images/img18.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="cosmic-drift" data-wish-id="new-img18" data-wish-title="City Lights" data-wish-img="assets/dashboard/images/img18.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img18.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
           </div>
-          <div class="dc-bg" data-wish-id="new-img3" data-wish-title="Portrait Soft" data-wish-img="assets/dashboard/images/img3.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
+          <div class="dc-bg" data-listing-id="meadow-light" data-wish-id="new-img3" data-wish-title="Portrait Soft" data-wish-img="assets/dashboard/images/img3.jpg" data-wish-seller="Discover" data-wish-tag="New" data-wish-trending="1">
             <img src="assets/dashboard/images/img3.jpg" alt="">
             <span class="tl">↗</span><button type="button" class="tr" data-wish-btn="emoji" aria-label="Save to Wishlist" aria-pressed="false">♡</button>
             <a class="dc-blend" href="generate.html">✨ Blend it</a>
@@ -875,19 +919,103 @@
     setTimeout(function () { syncHScrollBtns(wrap); }, 40);
   }
 
+  var FOLLOWED_CATALOG = {
+    'visual-vibes': { id: 'visual-vibes', name: 'Visual Vibes', meta: '3 listings · 11.2k followers', avatar: 'assets/dashboard/images/img31.jpg', thumbs: ['assets/dashboard/images/img3.jpg','assets/dashboard/images/img4.jpg','assets/dashboard/images/img5.jpg','assets/dashboard/images/img6.jpg'] },
+    'r-store': { id: 'r-store', name: 'R store', meta: '6 listings · 3 followers', avatar: '', initial: 'RS', thumbs: ['assets/dashboard/images/img25.jpg','assets/dashboard/images/img20.jpg','assets/dashboard/images/img21.jpg','assets/dashboard/images/img18.jpg'] },
+    'digital-dreams': { id: 'digital-dreams', name: 'Digital Dreams', meta: '2 listings · 5.6k followers', avatar: 'assets/dashboard/images/img32.jpg', thumbs: ['assets/dashboard/images/img16.jpg','assets/dashboard/images/img17.jpg','assets/dashboard/images/img19.jpg','assets/dashboard/images/img23.jpg'] },
+    'emma-white': { id: 'emma-white', name: 'Emma White', meta: '1 listing · 19.4k followers', avatar: 'assets/dashboard/images/img33.jpg', thumbs: ['assets/dashboard/images/img7.jpg','assets/dashboard/images/img8.jpg','assets/dashboard/images/img9.jpg','assets/dashboard/images/img10.jpg'] },
+    'gungun': { id: 'gungun', name: 'Gungun', meta: '1 listing · 1 follower', avatar: '', initial: 'G', thumbs: ['assets/dashboard/images/img11.jpg','assets/dashboard/images/img12.jpg','assets/dashboard/images/img13.jpg','assets/dashboard/images/img14.jpg'] },
+    'sarahs-studio': { id: 'sarahs-studio', name: "Sarah's Studio", meta: '3 listings · 12.5k followers', avatar: 'assets/dashboard/images/img31.jpg', thumbs: ['assets/dashboard/images/img27.jpg','assets/dashboard/images/img28.jpg','assets/dashboard/images/img29.jpg','assets/dashboard/images/img30.jpg'] },
+    'alex-visuals': { id: 'alex-visuals', name: 'Alex Visuals', meta: '6 listings', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&q=90&auto=format&fit=crop', thumbs: ['assets/dashboard/images/img3.jpg','assets/dashboard/images/img16.jpg','assets/dashboard/images/img23.jpg','assets/dashboard/images/img4.jpg'] },
+    'mira-scenes': { id: 'mira-scenes', name: 'Mira Scenes', meta: '5 listings', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&q=90&auto=format&fit=crop', thumbs: ['assets/dashboard/images/img25.jpg','assets/dashboard/images/img20.jpg','assets/dashboard/images/img5.jpg','assets/dashboard/images/img6.jpg'] }
+  };
+
+  function syncFollowButtons() {
+    document.querySelectorAll('.dc-follow-btn[data-seller-id]').forEach(function (btn) {
+      var id = btn.getAttribute('data-seller-id');
+      var on = window.pbFollows ? pbFollows.isFollowing(id) : false;
+      btn.classList.toggle('is-on', on);
+      btn.textContent = on ? 'Following' : 'Follow';
+    });
+  }
+
+  function renderFollowedStrip() {
+    var track = document.getElementById('dc-followed-track');
+    if (!track) return;
+    var ids = (window.pbFollows && pbFollows.all()) || [];
+    track.innerHTML = '';
+    if (!ids.length) {
+      track.innerHTML = '<div class="dc-followed-empty"><span aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div>No sellers followed yet — tap Follow below, then open View All.</div></div>';
+      return;
+    }
+    ids.forEach(function (id) {
+      var s = FOLLOWED_CATALOG[id];
+      if (!s) return;
+      var avatar = s.avatar
+        ? '<img class="dc-avatar" src="' + s.avatar + '" alt="">'
+        : '<span class="dc-avatar">' + (s.initial || (s.name || '?').charAt(0)) + '</span>';
+      var thumbs = (s.thumbs || []).slice(0, 4).map(function (src) {
+        return '<a href="seller.html?id=' + encodeURIComponent(id) + '"><img src="' + src + '" alt=""></a>';
+      }).join('');
+      var art = document.createElement('article');
+      art.className = 'dc-seller';
+      art.setAttribute('data-seller-id', id);
+      art.innerHTML =
+        '<div class="dc-seller-top">' +
+          '<a class="dc-seller-link" href="seller.html?id=' + encodeURIComponent(id) + '">' +
+            avatar +
+            '<div><strong>' + s.name + '</strong><small>' + s.meta + '</small></div>' +
+          '</a>' +
+          '<button class="dc-follow-btn is-on" type="button" data-seller-id="' + id + '">Following</button>' +
+        '</div>' +
+        '<div class="dc-thumbs">' + thumbs + '</div>';
+      track.appendChild(art);
+    });
+    wireHScroll(track);
+  }
+
   ['.dc-new', '.dc-follow', '.dc-trend', '.dc-community'].forEach(function (sel) {
     document.querySelectorAll(sel).forEach(wireHScroll);
   });
 
   if (window.pbWishlist) pbWishlist.bindAll(document);
 
-  document.querySelectorAll('.dc-follow-btn').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var on = btn.classList.toggle('is-on');
-      btn.textContent = on ? 'Following' : 'Follow';
+  document.querySelectorAll('.dc-new .dc-bg[data-listing-id]').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('.tr, [data-wish-btn], .dc-blend')) return;
+      var id = card.getAttribute('data-listing-id');
+      if (!id) return;
+      var title = card.getAttribute('data-wish-title') || 'Background';
+      var img = card.getAttribute('data-wish-img') || '';
+      var seller = card.getAttribute('data-wish-seller') || 'Seller';
+      try {
+        sessionStorage.setItem('pb-listing-fallback', JSON.stringify({
+          id: id,
+          title: title,
+          img: img,
+          seller: seller,
+          sellerId: 'visual-vibes'
+        }));
+      } catch (err) {}
+      window.location.href = 'listing.html?id=' + encodeURIComponent(id);
     });
+  });
+
+  syncFollowButtons();
+  renderFollowedStrip();
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.dc-follow-btn[data-seller-id]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var id = btn.getAttribute('data-seller-id');
+    var on = window.pbFollows ? pbFollows.toggle(id) : btn.classList.toggle('is-on');
+    document.querySelectorAll('.dc-follow-btn[data-seller-id="' + id + '"]').forEach(function (b) {
+      b.classList.toggle('is-on', on);
+      b.textContent = on ? 'Following' : 'Follow';
+    });
+    renderFollowedStrip();
   });
 
   document.querySelectorAll('.dc-thumbs a[href*="listing.html"], .dc-trend-thumbs a[href*="listing.html"], a.dc-trend-media[href*="listing.html"]').forEach(function (a) {
@@ -913,6 +1041,6 @@
   });
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
 </body>
 </html>

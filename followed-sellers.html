@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Followed Sellers · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=3"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-search-empty.css?v=1">
+<script src="js/pb-gallery.js?v=3"></script>
+<script src="js/pb-follows.js?v=1"></script>
+<script src="js/pb-search-empty.js?v=1"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FBFAFC; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-navbadge {
+    margin-left: auto; font-size: 9px; font-weight: 800; color: var(--accent);
+    background: #FCE7F0; padding: 2px 6px; border-radius: 999px; min-width: 18px; text-align: center;
+  }
+  .pb-navbadge[hidden] { display: none !important; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-content { flex: 1 1 auto; padding: 24px 32px 48px; width: 100%; }
+  .pb-toggle { display: none; }
+  .pb-back {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: #fff; color: var(--ink); margin-right: 4px; flex-shrink: 0;
+  }
+  .pb-back:hover { background: #FBF1FB; color: var(--accent); }
+
+  .ts-flow { width: min(720px, 100%); margin: 0 auto; }
+  .ts-search {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 12px 14px; margin-bottom: 16px;
+  }
+  .ts-search svg { color: #94A3B8; flex-shrink: 0; }
+  .ts-search input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+  }
+  .ts-search input::placeholder { color: #94A3B8; font-weight: 500; }
+  .ts-meta-line {
+    margin: 0 0 14px; font-size: 13px; font-weight: 600; color: var(--soft);
+  }
+
+  .ts-list { display: flex; flex-direction: column; gap: 14px; }
+  .ts-card {
+    display: block; background: #fff; border: 1px solid var(--line);
+    border-radius: 18px; padding: 14px 14px 12px;
+    box-shadow: none;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .ts-card:hover {
+    border-color: #E9D5FF;
+    transform: translateY(-1px);
+  }
+  .ts-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  }
+  .ts-avatar {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    overflow: hidden; background: linear-gradient(135deg, #A855F7, #EC4899);
+    color: #fff; font-size: 18px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #E9D5FF;
+  }
+  .ts-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .ts-meta { min-width: 0; flex: 1; }
+  .ts-name {
+    margin: 0 0 3px; font-size: 15px; font-weight: 800; letter-spacing: -.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .ts-stats {
+    font-size: 12px; font-weight: 600; color: var(--soft);
+  }
+  .ts-follow {
+    flex-shrink: 0; padding: 8px 14px; border-radius: 999px; border: none;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 800;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .ts-follow.is-on { background: #F1F5F9; color: #64748B; }
+  .ts-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .ts-thumb {
+    aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden;
+    background: #F1F5F9; border: 1px solid var(--line);
+  }
+  .ts-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .ts-thumb.empty { background: #F8FAFC; }
+  .ts-empty { margin-top: 8px; }
+  .fs-empty {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 72px 24px 48px; min-height: 52vh;
+  }
+  .fs-empty.on { display: flex; }
+  .fs-empty-ico {
+    width: 88px; height: 88px; border-radius: 50%;
+    background: #FCE7F3; color: #C42E8B;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 22px;
+  }
+  .fs-empty h2 {
+    margin: 0 0 10px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--ink);
+  }
+  .fs-empty p {
+    margin: 0 0 26px; max-width: 320px; font-size: 14px; font-weight: 500;
+    color: var(--soft); line-height: 1.45;
+  }
+  .fs-explore {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 220px; padding: 14px 28px; border: none; border-radius: 999px;
+    background: var(--grad); color: #fff; font-size: 15px; font-weight: 800;
+    text-decoration: none; box-shadow: 0 12px 28px rgba(236,72,153,.28);
+  }
+  .fs-explore:hover { filter: brightness(1.04); }
+  .fs-list-wrap[hidden], .fs-search-wrap[hidden], .ts-meta-line[hidden] { display: none !important; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+  }
+  @media (max-width: 820px) {
+    .pb-content { padding: 20px 16px 40px; }
+    .pb-topbar { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html" class="active">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+        <span class="pb-navbadge" data-pb-gallery-count hidden>0</span>
+      </a>
+      <a href="account.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">140</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <a class="pb-back" href="discover.html" aria-label="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div class="pb-topbar-title">Followed by you</div>
+        <div class="pb-topbar-sub">Sellers you follow</div>
+      </div>
+      <div class="pb-top-actions">
+        <a href="buy-credits.html" aria-label="Buy credits" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid #F4E2B8;box-shadow:0 2px 8px rgba(224,168,40,.12);">
+          <span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#F7C948,#EFA12B);align-items:center;justify-content:center;color:#fff;font-size:10px;">◆</span>
+          <span style="font-size:12px;font-weight:800;color:#B7791F;">150</span>
+        </a>
+        <a href="notifications.html" aria-label="Notifications" style="text-decoration:none;position:relative;width:36px;height:36px;border-radius:50%;border:1px solid #F0E6F2;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 0 1-3.4 0" stroke="#1E1422" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:#F43F5E;border:1.5px solid #fff;"></span>
+        </a>
+        <a href="account.html" aria-label="Account" style="text-decoration:none;display:flex;align-items:center;gap:7px;padding:4px;border-radius:999px;border:1px solid #F0E6F2;background:#fff;cursor:pointer;">
+          <img src="assets/dashboard/images/img1.jpg" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" style="margin-right:6px;"><path d="M6 9l6 6 6-6" stroke="#8A7E92" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="ts-flow">
+        <div class="fs-empty" id="fs-empty">
+          <div class="fs-empty-ico" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h2>No sellers followed yet</h2>
+          <p>Discover creators and tap Follow to see them here.</p>
+          <a class="fs-explore" href="top-sellers.html">Explore Sellers</a>
+        </div>
+
+        <div class="fs-search-wrap" id="fs-search-wrap" hidden>
+          <div class="ts-search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="M16.2 16.2L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input type="search" id="ts-q" placeholder="Search sellers..." autocomplete="off">
+          </div>
+        </div>
+        <p class="ts-meta-line" id="ts-count" hidden>0 sellers</p>
+        <div class="fs-list-wrap" id="fs-list-wrap" hidden>
+          <div class="ts-list" id="ts-grid"></div>
+          <div class="ts-empty pb-search-empty" id="ts-empty" hidden></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  if (typeof window.__pbNavReady === 'function') window.__pbNavReady();
+  if (window.pbGallery) pbGallery.refreshBadges();
+
+  var SELLERS = [
+    {
+      id: 'sarahs-studio',
+      name: "Sarah's Studio",
+      listings: 6,
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=160&q=90&auto=format&fit=crop',
+      thumbs: [
+        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 'alex-visuals',
+      name: 'Alex Visuals',
+      listings: 6,
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&q=90&auto=format&fit=crop',
+      thumbs: [
+        'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400&q=80&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 'mira-scenes',
+      name: 'Mira Scenes',
+      listings: 5,
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&q=90&auto=format&fit=crop',
+      thumbs: [
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1511497584788-876760111969?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&q=80&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 'visual-vibes',
+      name: 'Visual Vibes',
+      listings: 6,
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&q=90&auto=format&fit=crop',
+      thumbs: [
+        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 'gungun',
+      name: 'gungun',
+      listings: 5,
+      avatar: '',
+      thumbs: [
+        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80&auto=format&fit=crop'
+      ]
+    },
+    {
+      id: 'r-store',
+      name: 'R store',
+      listings: 6,
+      avatar: '',
+      thumbs: [
+        'assets/dashboard/images/img25.jpg',
+        'assets/dashboard/images/img20.jpg',
+        'assets/dashboard/images/img21.jpg'
+      ]
+    },
+    {
+      id: 'digital-dreams',
+      name: 'Digital Dreams',
+      listings: 4,
+      avatar: 'assets/dashboard/images/img32.jpg',
+      thumbs: [
+        'assets/dashboard/images/img16.jpg',
+        'assets/dashboard/images/img23.jpg',
+        'assets/dashboard/images/img24.jpg'
+      ]
+    },
+    {
+      id: 'emma-white',
+      name: 'Emma White',
+      listings: 4,
+      avatar: 'assets/dashboard/images/img33.jpg',
+      thumbs: [
+        'assets/dashboard/images/img7.jpg',
+        'assets/dashboard/images/img8.jpg',
+        'assets/dashboard/images/img9.jpg'
+      ]
+    }
+  ];
+
+  var grid = document.getElementById('ts-grid');
+  var countEl = document.getElementById('ts-count');
+  var emptyEl = document.getElementById('ts-empty');
+  var q = document.getElementById('ts-q');
+  if (window.pbSearchEmpty) {
+    pbSearchEmpty.fill(emptyEl, 'No results found', 'Try another name — or clear search to see everyone you follow.');
+  }
+  var emptyState = document.getElementById('fs-empty');
+  var searchWrap = document.getElementById('fs-search-wrap');
+  var listWrap = document.getElementById('fs-list-wrap');
+  var byId = {};
+  SELLERS.forEach(function (s) { byId[s.id] = s; });
+
+  function followLabel(on) {
+    return on
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 19c.9-3 3-4.6 5.5-4.6s4.6 1.6 5.5 4.6M17 8v6M14 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Following'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 19c.9-3 3-4.6 5.5-4.6s4.6 1.6 5.5 4.6M17 8v6M14 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Follow';
+  }
+
+  function followedCatalog() {
+    var ids = (window.pbFollows && pbFollows.all()) || [];
+    return ids.map(function (id) { return byId[id]; }).filter(Boolean);
+  }
+
+  function setMode(hasFollows) {
+    emptyState.classList.toggle('on', !hasFollows);
+    searchWrap.hidden = !hasFollows;
+    listWrap.hidden = !hasFollows;
+    countEl.hidden = !hasFollows;
+  }
+
+  function render(list) {
+    grid.innerHTML = '';
+    countEl.textContent = list.length + (list.length === 1 ? ' seller' : ' sellers');
+    emptyEl.hidden = list.length > 0;
+    list.forEach(function (s) {
+      var on = window.pbFollows ? pbFollows.isFollowing(s.id) : true;
+      var thumbs = '';
+      for (var i = 0; i < 3; i++) {
+        thumbs += s.thumbs[i]
+          ? '<div class="ts-thumb"><img src="' + s.thumbs[i] + '" alt=""></div>'
+          : '<div class="ts-thumb empty"></div>';
+      }
+      var initial = (s.name || '?').trim().charAt(0).toUpperCase();
+      var avatarHtml = s.avatar
+        ? '<img src="' + s.avatar + '" alt="">'
+        : initial;
+      var a = document.createElement('a');
+      a.className = 'ts-card';
+      a.href = 'seller.html?id=' + encodeURIComponent(s.id);
+      a.innerHTML =
+        '<div class="ts-row">' +
+          '<div class="ts-avatar">' + avatarHtml + '</div>' +
+          '<div class="ts-meta">' +
+            '<h2 class="ts-name">' + s.name + '</h2>' +
+            '<div class="ts-stats">' + s.listings + ' backgrounds</div>' +
+          '</div>' +
+          '<button type="button" class="ts-follow' + (on ? ' is-on' : '') + '" data-follow="' + s.id + '">' + followLabel(on) + '</button>' +
+        '</div>' +
+        '<div class="ts-thumbs">' + thumbs + '</div>';
+      grid.appendChild(a);
+    });
+  }
+
+  function refresh() {
+    var catalog = followedCatalog();
+    setMode(catalog.length > 0);
+    if (!catalog.length) return;
+    var term = (q.value || '').trim().toLowerCase();
+    if (!term) {
+      render(catalog);
+      return;
+    }
+    render(catalog.filter(function (s) {
+      return s.name.toLowerCase().indexOf(term) !== -1 || s.id.indexOf(term) !== -1;
+    }));
+  }
+
+  q.addEventListener('input', refresh);
+  refresh();
+
+  grid.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-follow]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var id = btn.getAttribute('data-follow');
+    var on = window.pbFollows ? pbFollows.toggle(id) : btn.classList.toggle('is-on');
+    btn.classList.toggle('is-on', on);
+    btn.innerHTML = followLabel(on);
+    refresh();
+  });
+
+  var toggle = document.getElementById('pb-toggle');
+  var sidebar = document.getElementById('pb-sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function () {
+      sidebar.classList.toggle('open');
+    });
+  }
+})();
+</script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+</body>
+</html>

@@ -5,7 +5,8 @@
 <title>Seller · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=3"></script>
-<link rel="stylesheet" href="css/pb-shell-nav.css?v=18">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-login-gate.css?v=2">
 <script src="js/pb-gallery.js?v=3"></script>
 <script src="js/pb-wishlist.js?v=1"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,7 +85,7 @@
     position: absolute;
     top: 14px;
     right: 14px;
-    z-index: 5;
+    z-index: 30;
   }
   .sp-more {
     width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.7);
@@ -137,16 +138,21 @@
     position: relative;
     width: 100%;
     height: 220px;
-    overflow: hidden;
+    overflow: visible;
     background: #FBFAFC;
     border-bottom: none;
   }
-  .sp-cover img {
+  .sp-cover > img {
+    position: absolute; inset: 0;
     width: 100%; height: 100%; object-fit: cover; display: block;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: 0;
   }
   .sp-cover::after {
     content: '';
     position: absolute; left: 0; right: 0; bottom: 0; height: 72%;
+    z-index: 1;
     background: linear-gradient(
       180deg,
       rgba(251,250,252,0) 0%,
@@ -350,9 +356,145 @@
     .sp-avatar-wrap { width: 88px; height: 88px; }
     .sp-identity { padding-top: 0; }
   }
+
+  .sp-login-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(15, 23, 42, .48);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .18s ease;
+  }
+  .sp-login-overlay.open { opacity: 1; pointer-events: auto; }
+  .sp-login-modal {
+    width: min(340px, 100%);
+    background: #fff; border-radius: 28px;
+    padding: 28px 24px 22px; text-align: center;
+    box-shadow: 0 28px 60px rgba(15, 23, 42, .28);
+    transform: translateY(10px) scale(.98);
+    transition: transform .18s ease;
+  }
+  .sp-login-overlay.open .sp-login-modal { transform: none; }
+  .sp-login-modal h3 {
+    margin: 0 0 10px;
+    font-size: 22px; font-weight: 800; letter-spacing: -.03em; color: #1A1C2E;
+  }
+  .sp-login-modal p {
+    margin: 0 0 24px;
+    font-size: 14.5px; font-weight: 500; line-height: 1.45; color: #5E6278;
+  }
+  .sp-login-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sp-login-cancel {
+    padding: 13px 14px; border: none; border-radius: 999px;
+    background: #F1F5F9; color: #1A1C2E;
+    font-size: 15px; font-weight: 800; font-family: inherit; cursor: pointer;
+  }
+  .sp-login-cancel:hover { background: #E2E8F0; }
+  .sp-login-go {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 13px 14px; border-radius: 999px; border: none;
+    background: linear-gradient(113deg, #A855F7, #EC4899);
+    color: #fff; font-size: 15px; font-weight: 800; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(236, 72, 153, .28);
+  }
+  .sp-login-go:hover { filter: brightness(1.04); color: #fff; }
+
+  .rf-overlay {
+    position: fixed; inset: 0; z-index: 80;
+    background: rgba(15, 23, 42, .45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  .rf-overlay.open { opacity: 1; pointer-events: auto; }
+  .rf-modal {
+    width: min(420px, 100%); max-height: min(90vh, 720px);
+    background: #fff; border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(10px); transition: transform .2s ease;
+  }
+  .rf-overlay.open .rf-modal { transform: none; }
+  .rf-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 18px 10px; flex-shrink: 0;
+  }
+  .rf-head h3 { margin: 0; font-size: 18px; font-weight: 800; color: #0F172A; }
+  .rf-close {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid #E2E8F0;
+    background: #F8FAFC; display: flex; align-items: center; justify-content: center; color: #64748B;
+  }
+  .rf-body { padding: 0 18px 8px; overflow: auto; flex: 1 1 auto; }
+  .rf-policy {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 12px; border-radius: 14px; margin-bottom: 16px;
+    background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E;
+  }
+  .rf-policy svg { flex-shrink: 0; margin-top: 1px; }
+  .rf-policy strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 3px; }
+  .rf-policy p { margin: 0; font-size: 12px; line-height: 1.4; font-weight: 500; }
+  .rf-label { margin: 0 0 10px; font-size: 14px; font-weight: 700; color: #0F172A; }
+  .rf-opts { display: grid; gap: 8px; margin-bottom: 16px; }
+  .rf-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 14px; border: 1.5px solid #E2E8F0;
+    background: #fff; cursor: pointer; font-size: 13px; font-weight: 600; color: #0F172A;
+  }
+  .rf-opt:has(input:checked) { border-color: #C084FC; background: #FAF5FF; }
+  .rf-opt input {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid #CBD5E1; background: #fff; margin: 0;
+  }
+  .rf-opt input:checked {
+    border-color: #A855F7;
+    background: radial-gradient(circle at center, #A855F7 0 5px, #fff 6px);
+  }
+  .rf-area {
+    width: 100%; min-height: 96px; resize: vertical;
+    border: none; border-radius: 16px; padding: 12px 14px;
+    background: #F1F5F9; color: #0F172A; font: inherit; font-size: 13px; margin-bottom: 12px;
+  }
+  .rf-area::placeholder { color: #94A3B8; }
+  .rf-area:focus { outline: 2px solid #DDD6FE; background: #F8FAFC; }
+  .rf-gid {
+    padding: 10px 12px; border-radius: 12px; margin-bottom: 8px;
+    background: #EFF6FF; border: 1px solid #BFDBFE;
+    font-size: 12px; color: #1E3A8A; font-weight: 600; word-break: break-all;
+  }
+  .rf-gid strong { font-weight: 800; }
+  .rf-foot {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px;
+    padding: 14px 18px 18px; flex-shrink: 0; border-top: 1px solid #F1F5F9;
+  }
+  .rf-foot button {
+    padding: 13px 14px; border-radius: 999px; border: none; font-size: 14px; font-weight: 700;
+  }
+  .rf-cancel { background: #F1F5F9; color: #0F172A; }
+  .rf-submit {
+    color: #fff; background: linear-gradient(90deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 20px rgba(168,85,247,.28);
+  }
+  .rf-submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  .rf-ok-modal {
+    width: min(340px, 100%); background: #fff; border-radius: 20px;
+    padding: 28px 22px 20px; text-align: center;
+    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+  }
+  .rf-ok-modal h3 { margin: 0 0 8px; font-size: 18px; font-weight: 800; color: #0F172A; }
+  .rf-ok-modal p { margin: 0 0 22px; font-size: 14px; font-weight: 500; color: #64748B; line-height: 1.4; }
+  .rf-ok-btn {
+    width: 100%; padding: 14px 16px; border: none; border-radius: 999px;
+    color: #fff; font-size: 15px; font-weight: 800; letter-spacing: .04em;
+    background: linear-gradient(90deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 22px rgba(168,85,247,.3);
+  }
+  .sp-menu button.is-reported {
+    opacity: .55; pointer-events: none;
+  }
 </style>
 </head>
-<body>
+<body data-pb-gate="full">
 <div class="pb-shell">
   <aside class="pb-sidebar" id="pb-sidebar">
     <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
@@ -493,6 +635,61 @@
 
 <div class="sp-toast" id="sp-toast" role="status">Copied</div>
 
+<div class="sp-login-overlay" id="sp-login-modal" aria-hidden="true">
+  <div class="sp-login-modal" role="dialog" aria-labelledby="sp-login-title" aria-modal="true">
+    <h3 id="sp-login-title">Login Required</h3>
+    <p id="sp-login-msg">Please log in to report this seller.</p>
+    <div class="sp-login-actions">
+      <button type="button" class="sp-login-cancel" id="sp-login-cancel">Cancel</button>
+      <a class="sp-login-go" id="sp-login-go" href="login.html">Log in</a>
+    </div>
+  </div>
+</div>
+
+<div class="rf-overlay" id="report-modal" aria-hidden="true">
+  <div class="rf-modal" role="dialog" aria-labelledby="rf-title">
+    <div class="rf-head">
+      <h3 id="rf-title">Report Seller</h3>
+      <button type="button" class="rf-close" id="rf-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="rf-body">
+      <div class="rf-policy">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#D97706" stroke-width="2"/><path d="M12 8v5M12 16.5v.5" stroke="#D97706" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <div>
+          <strong>Report Policy</strong>
+          <p>Reports are reviewed within 24-48 hours. Fake or abusive reports may affect your account.</p>
+        </div>
+      </div>
+      <p class="rf-label">Why are you reporting this seller?</p>
+      <div class="rf-opts" id="rf-opts">
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="inappropriate"> Inappropriate content</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="copyright"> Copyright / stolen work</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="spam"> Spam or scam</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="harassment"> Harassment or abuse</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="impersonation"> Impersonation</label>
+        <label class="rf-opt"><input type="radio" name="rf-reason" value="other"> Other</label>
+      </div>
+      <p class="rf-label">Additional Details (Optional)</p>
+      <textarea class="rf-area" id="rf-details" placeholder="Please provide any additional information..."></textarea>
+      <div class="rf-gid">Seller ID: <strong id="rf-sid">—</strong></div>
+    </div>
+    <div class="rf-foot">
+      <button type="button" class="rf-cancel" id="rf-cancel">Cancel</button>
+      <button type="button" class="rf-submit" id="rf-submit" disabled>Submit Report</button>
+    </div>
+  </div>
+</div>
+
+<div class="rf-overlay" id="report-ok-modal" aria-hidden="true">
+  <div class="rf-ok-modal" role="dialog" aria-labelledby="rf-ok-title">
+    <h3 id="rf-ok-title">Report submitted</h3>
+    <p>We will review your report within 24-48 hours.</p>
+    <button type="button" class="rf-ok-btn" id="rf-ok">OK</button>
+  </div>
+</div>
+
 <div class="sp-contact-overlay" id="sp-contact-overlay" hidden>
   <div class="sp-contact-sheet" role="dialog" aria-modal="true" aria-labelledby="sp-contact-title">
     <div class="sp-contact-head">
@@ -587,12 +784,6 @@
       copyProfileLink();
     });
   }
-  if (reportBtn) {
-    reportBtn.addEventListener('click', function () {
-      closeMoreMenu();
-      showToast('Report submitted · demo');
-    });
-  }
   document.addEventListener('click', function (e) {
     if (!moreMenu || moreMenu.hidden) return;
     if (moreMenu.contains(e.target) || (moreBtn && moreBtn.contains(e.target))) return;
@@ -600,6 +791,168 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeMoreMenu();
+  });
+
+  var currentSeller = null;
+  var reportModal = document.getElementById('report-modal');
+  var reportOkModal = document.getElementById('report-ok-modal');
+  var rfSubmit = document.getElementById('rf-submit');
+  var loginModal = document.getElementById('sp-login-modal');
+  var loginGo = document.getElementById('sp-login-go');
+  var scrollLockY = 0;
+  var scrollLocked = false;
+
+  function isLoggedIn() {
+    try {
+      if (window.pbAuth) return pbAuth.isLoggedIn();
+      return !!localStorage.getItem('pb-studio-auth');
+    } catch (e) {
+      return false;
+    }
+  }
+  function reportedKey(id) {
+    return 'pb-seller-reported:' + id;
+  }
+  function isSellerReported(id) {
+    try { return localStorage.getItem(reportedKey(id)) === '1'; }
+    catch (e) { return false; }
+  }
+  function markSellerReported(id) {
+    try { localStorage.setItem(reportedKey(id), '1'); } catch (e) {}
+    if (reportBtn) {
+      reportBtn.classList.add('is-reported');
+      reportBtn.textContent = '';
+      reportBtn.innerHTML =
+        '<span class="sp-menu-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 4.5h10.5L13 9l2.5 4.5H5V4.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 4.5V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span> Reported';
+    }
+  }
+  function lockScroll() {
+    if (scrollLocked) return;
+    scrollLocked = true;
+    scrollLockY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + scrollLockY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    if (!scrollLocked) return;
+    scrollLocked = false;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo(0, scrollLockY);
+  }
+  function openLoginModal(msg) {
+    var msgEl = document.getElementById('sp-login-msg');
+    if (msgEl && msg) msgEl.textContent = msg;
+    if (loginGo) {
+      var next = (window.location.pathname.split('/').pop() || 'seller.html') + window.location.search;
+      loginGo.href = 'login.html?next=' + encodeURIComponent(next);
+    }
+    if (!loginModal) return;
+    loginModal.classList.add('open');
+    loginModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeLoginModal() {
+    if (!loginModal) return;
+    loginModal.classList.remove('open');
+    loginModal.setAttribute('aria-hidden', 'true');
+  }
+  function openReport() {
+    if (!reportModal) return;
+    var sid = (currentSeller && currentSeller.id) || '—';
+    var sidEl = document.getElementById('rf-sid');
+    if (sidEl) sidEl.textContent = sid;
+    document.querySelectorAll('input[name="rf-reason"]').forEach(function (r) { r.checked = false; });
+    var details = document.getElementById('rf-details');
+    if (details) details.value = '';
+    if (rfSubmit) rfSubmit.disabled = true;
+    lockScroll();
+    reportModal.classList.add('open');
+    reportModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeReport() {
+    if (!reportModal) return;
+    reportModal.classList.remove('open');
+    reportModal.setAttribute('aria-hidden', 'true');
+    if (!reportOkModal || !reportOkModal.classList.contains('open')) unlockScroll();
+  }
+  function openReportOk() {
+    if (!reportOkModal) return;
+    lockScroll();
+    reportOkModal.classList.add('open');
+    reportOkModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeReportOk() {
+    if (!reportOkModal) return;
+    reportOkModal.classList.remove('open');
+    reportOkModal.setAttribute('aria-hidden', 'true');
+    unlockScroll();
+  }
+  function syncReportSubmit() {
+    if (!rfSubmit) return;
+    rfSubmit.disabled = !document.querySelector('input[name="rf-reason"]:checked');
+  }
+
+  if (reportBtn) {
+    reportBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMoreMenu();
+      if (currentSeller && isSellerReported(currentSeller.id)) {
+        showToast('Already reported');
+        return;
+      }
+      if (!isLoggedIn()) {
+        openLoginModal('Please log in to report this seller.');
+        return;
+      }
+      openReport();
+    });
+  }
+  var loginCancel = document.getElementById('sp-login-cancel');
+  if (loginCancel) loginCancel.addEventListener('click', closeLoginModal);
+  if (loginModal) {
+    loginModal.addEventListener('click', function (e) {
+      if (e.target === loginModal) closeLoginModal();
+    });
+  }
+  document.getElementById('rf-close').addEventListener('click', closeReport);
+  document.getElementById('rf-cancel').addEventListener('click', closeReport);
+  if (reportModal) {
+    reportModal.addEventListener('click', function (e) {
+      if (e.target === reportModal) closeReport();
+    });
+  }
+  document.querySelectorAll('input[name="rf-reason"]').forEach(function (r) {
+    r.addEventListener('change', syncReportSubmit);
+  });
+  if (rfSubmit) {
+    rfSubmit.addEventListener('click', function () {
+      if (rfSubmit.disabled) return;
+      var sid = (currentSeller && currentSeller.id) || '';
+      if (sid) markSellerReported(sid);
+      closeReport();
+      openReportOk();
+    });
+  }
+  document.getElementById('rf-ok').addEventListener('click', closeReportOk);
+  if (reportOkModal) {
+    reportOkModal.addEventListener('click', function (e) {
+      if (e.target === reportOkModal) closeReportOk();
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (loginModal && loginModal.classList.contains('open')) closeLoginModal();
+    else if (reportOkModal && reportOkModal.classList.contains('open')) closeReportOk();
+    else if (reportModal && reportModal.classList.contains('open')) closeReport();
   });
 
   var SELLERS = {
@@ -758,8 +1111,10 @@
   }
 
   function render(seller) {
+    currentSeller = seller;
     document.title = seller.name + ' · PixelBlend Studio';
     document.getElementById('sp-top-title').textContent = seller.name;
+    if (seller && isSellerReported(seller.id)) markSellerReported(seller.id);
     document.getElementById('sp-avatar').src = seller.avatar;
     document.getElementById('sp-avatar').alt = seller.name;
     var banner = document.getElementById('sp-banner');
@@ -876,6 +1231,8 @@
   }
 })();
 </script>
-<script src="js/pb-shell-nav.js?v=18"></script>
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script src="js/pb-login-gate.js?v=1"></script>
 </body>
 </html>
