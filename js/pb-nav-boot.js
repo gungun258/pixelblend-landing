@@ -1,4 +1,22 @@
 /* Early head boot — soft in-site hops: skip splash, cover hydrate blank */
+
+/* Prevent logged-out gate flash: hide gated content until pb-login-gate settles.
+   Safe on non-gated pages — CSS only matches body[data-pb-gate]. */
+(function () {
+  try {
+    if (localStorage.getItem('pb-studio-auth')) return;
+    document.documentElement.classList.add('pb-gate-pending');
+    if (document.getElementById('pb-gate-pending-css')) return;
+    var s = document.createElement('style');
+    s.id = 'pb-gate-pending-css';
+    s.textContent =
+      'html.pb-gate-pending body[data-pb-gate="full"] .pb-content{visibility:hidden!important}' +
+      'html.pb-gate-pending body[data-pb-gate="credits"] .cr-top,' +
+      'html.pb-gate-pending body[data-pb-gate="credits"] .cr-balance{visibility:hidden!important}';
+    (document.head || document.documentElement).appendChild(s);
+  } catch (e) {}
+})();
+
 function pbLoaderMark() {
   return '<div data-pb-nav-mark style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:11px;">' +
     '<span class="pb-logo-pulse" style="width:34px;height:34px;border-radius:11px;background:linear-gradient(113.667deg,#A855F7,#EC4899,#F43F5E);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(196,46,139,.32);flex:none;">' +
