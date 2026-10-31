@@ -5,84 +5,227 @@
 <title>Sign In · PixelBlend Studio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/pb-nav-boot.js?v=4"></script>
-<link rel="stylesheet" href="css/pb-auth-screens.css?v=6">
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-auth-screens.css?v=14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FAF4FB; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-top-actions .pb-auth-link { font-size: 13px; font-weight: 700; }
+  .pb-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100dvh - 72px);
+    padding: 24px 28px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .pb-content .pb-auth-stage-wrap { margin: auto; flex-shrink: 0; }
+  .pb-toggle { display: none; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 16px 14px 36px; }
+    .pb-topbar { padding: 12px 16px; }
+  }
+</style>
 </head>
-<body class="pb-auth-stage">
-  <div class="pb-auth-stage-wrap">
-    <header class="pb-auth-band">
-      <div class="pb-auth-nav">
-        <a class="pb-auth-back" id="auth-back" href="discover.html" aria-label="Back">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <div class="pb-auth-nav-switch">
-          Don't have an account?
-          <a id="signup-link" href="signup.html">Sign up</a>
-        </div>
+<body class="pb-auth-shell">
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+      </a>
+      <a href="account.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">140</span>
       </div>
-      <div class="pb-auth-brand">PixelBlend</div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div class="pb-topbar-title">Sign In</div>
+        <div class="pb-topbar-sub">Welcome back to PixelBlend Studio</div>
+      </div>
+      <div class="pb-top-actions">
+        <a id="signup-link" href="signup.html" class="pb-auth-link">Sign up</a>
+      </div>
     </header>
 
-    <div class="pb-auth-sheet">
-      <div class="pb-auth-sheet-head">
-        <h1>Welcome back</h1>
-        <p>Sign in to create, save and sell your PixelBlend designs.</p>
+    <div class="pb-content">
+      <div class="pb-auth-stage-wrap">
+        <header class="pb-auth-band">
+          <div class="pb-auth-nav">
+            <a class="pb-auth-back" id="auth-back" href="discover.html" aria-label="Back">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="pb-auth-nav-switch">
+              Don't have an account?
+              <a id="signup-link-band" href="signup.html">Sign up</a>
+            </div>
+          </div>
+          <div class="pb-auth-brand">PixelBlend</div>
+        </header>
+
+        <div class="pb-auth-sheet">
+          <div class="pb-auth-sheet-head">
+            <h1>Welcome back</h1>
+            <p>Sign in to create, save and sell your PixelBlend designs.</p>
+          </div>
+
+          <form id="login-form" novalidate>
+            <div class="pb-auth-field" id="f-phone">
+              <label for="phone">Phone Number</label>
+              <div class="pb-auth-input">
+                <span class="pb-auth-ico" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7.5 3.5h3l1.2 4.2-1.8 1.1a13 13 0 005.3 5.3l1.1-1.8 4.2 1.2v3a2 2 0 01-2.2 2A15.5 15.5 0 015.5 5.7a2 2 0 012-2.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                </span>
+                <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number">
+              </div>
+              <div class="pb-auth-err">Phone number is required</div>
+            </div>
+
+            <div class="pb-auth-field" id="f-pass">
+              <label for="password">Password</label>
+              <div class="pb-auth-input">
+                <span class="pb-auth-ico" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </span>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password">
+                <button type="button" class="pb-auth-eye" data-eye="password" aria-label="Show password">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
+                </button>
+              </div>
+              <div class="pb-auth-err">Password is required</div>
+            </div>
+
+            <div class="pb-auth-row">
+              <label class="pb-auth-check"><input type="checkbox" id="remember" checked> Remember me</label>
+              <a class="pb-auth-link" id="forgot-link" href="forgot-password.html">Forgot password?</a>
+            </div>
+
+            <button class="pb-auth-submit" type="submit">Sign In</button>
+
+            <div class="pb-auth-divider">Or continue with</div>
+            <div class="pb-auth-social">
+              <button type="button" class="pb-auth-social-btn" id="btn-google" aria-label="Continue with Google">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.8 7.5 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.4 2.8 5.3 4.8 3.9 7.4z"/><path fill="#4A90E2" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.9-2.2c-.8.5-1.8.9-3.2.9-3.5 0-6.5-2.4-7.5-5.6l-3 2.3c1.4 2.9 4.5 4.8 8.5 4.8z"/><path fill="#FBBC05" d="M4.5 14.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9l-3-2.3C1.2 10 1 11 1 12.8s.2 2.8.5 4.1l3-2.2z"/></svg>
+                Google
+              </button>
+              <button type="button" class="pb-auth-social-btn" id="btn-apple" aria-label="Continue with Apple">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.7 0-1.7-.7-2.8-.7-1.4 0-2.8.9-3.5 2.2-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.6zM14.7 6.5c.6-.7 1-1.7.9-2.7-0.9.1-1.9.6-2.5 1.3-.6.6-1.1 1.6-1 2.6 1 .1 1.9-.5 2.6-1.2z"/></svg>
+                Apple
+              </button>
+            </div>
+
+            <p class="pb-auth-legal">By continuing, you agree to our <a href="terms-of-service.html">Terms</a> and <a href="privacy-policy.html">Privacy Policy</a>.</p>
+          </form>
+        </div>
       </div>
-
-      <form id="login-form" novalidate>
-        <div class="pb-auth-field" id="f-phone">
-          <label for="phone">Phone Number</label>
-          <div class="pb-auth-input">
-            <span class="pb-auth-ico" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7.5 3.5h3l1.2 4.2-1.8 1.1a13 13 0 005.3 5.3l1.1-1.8 4.2 1.2v3a2 2 0 01-2.2 2A15.5 15.5 0 015.5 5.7a2 2 0 012-2.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            </span>
-            <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number">
-          </div>
-          <div class="pb-auth-err">Phone number is required</div>
-        </div>
-
-        <div class="pb-auth-field" id="f-pass">
-          <label for="password">Password</label>
-          <div class="pb-auth-input">
-            <span class="pb-auth-ico" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </span>
-            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password">
-            <button type="button" class="pb-auth-eye" data-eye="password" aria-label="Show password">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 6.5 12 6.5 21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="1.8"/></svg>
-            </button>
-          </div>
-          <div class="pb-auth-err">Password is required</div>
-        </div>
-
-        <div class="pb-auth-row">
-          <label class="pb-auth-check"><input type="checkbox" id="remember" checked> Remember me</label>
-          <a class="pb-auth-link" id="forgot-link" href="forgot-password.html">Forgot password?</a>
-        </div>
-
-        <button class="pb-auth-submit" type="submit">Sign In</button>
-
-        <div class="pb-auth-divider">Or continue with</div>
-        <div class="pb-auth-social">
-          <button type="button" class="pb-auth-social-btn" id="btn-google" aria-label="Continue with Google">
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.9 9.1-9.3 0-.6-.1-1.1-.2-1.6H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.8 7.5 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.4 2.8 5.3 4.8 3.9 7.4z"/><path fill="#4A90E2" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.9-2.2c-.8.5-1.8.9-3.2.9-3.5 0-6.5-2.4-7.5-5.6l-3 2.3c1.4 2.9 4.5 4.8 8.5 4.8z"/><path fill="#FBBC05" d="M4.5 14.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9l-3-2.3C1.2 10 1 11 1 12.8s.2 2.8.5 4.1l3-2.2z"/></svg>
-            Google
-          </button>
-          <button type="button" class="pb-auth-social-btn" id="btn-apple" aria-label="Continue with Apple">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.7 0-1.7-.7-2.8-.7-1.4 0-2.8.9-3.5 2.2-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.6.7 2.8.7c1.2 0 1.9-1 2.6-2 .8-1.2 1.1-2.3 1.1-2.4-.1 0-2.1-.8-2.1-3.6zM14.7 6.5c.6-.7 1-1.7.9-2.7-0.9.1-1.9.6-2.5 1.3-.6.6-1.1 1.6-1 2.6 1 .1 1.9-.5 2.6-1.2z"/></svg>
-            Apple
-          </button>
-        </div>
-
-        <p class="pb-auth-legal">By continuing, you agree to our <a href="terms-of-service.html">Terms</a> and <a href="privacy-policy.html">Privacy Policy</a>.</p>
-      </form>
     </div>
-  </div>
+  </main>
+</div>
 
 <script src="js/pb-auth.js?v=1"></script>
 <script src="js/pb-auth-screens.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
 <script>
 (function () {
   if (window.pbAuth && pbAuth.isLoggedIn()) {
@@ -95,7 +238,10 @@
   if (back) back.href = (dest.indexOf('login.html') >= 0 || dest.indexOf('signup.html') >= 0) ? 'discover.html' : dest;
 
   document.getElementById('forgot-link').href = pbAuthScreens.withNext('forgot-password.html');
-  document.getElementById('signup-link').href = pbAuthScreens.withNext('signup.html');
+  var signupHref = pbAuthScreens.withNext('signup.html');
+  document.getElementById('signup-link').href = signupHref;
+  var band = document.getElementById('signup-link-band');
+  if (band) band.href = signupHref;
 
   Array.prototype.forEach.call(document.querySelectorAll('.pb-auth-eye'), pbAuthScreens.bindEye);
 

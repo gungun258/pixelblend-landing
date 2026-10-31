@@ -20,6 +20,172 @@ body.pb-auth-stage {
   background: var(--pb-auth-bg);
 }
 
+/* Auth inside Studio shell (sidebar + topbar) */
+body.pb-auth-shell {
+  margin: 0;
+  font-family: 'Hanken Grotesk', sans-serif;
+  color: var(--pb-auth-ink);
+  -webkit-font-smoothing: antialiased;
+  background: #FAF4FB;
+}
+body.pb-auth-shell .pb-main {
+  min-height: 100vh;
+  display: flex !important;
+  flex-direction: column;
+}
+body.pb-auth-shell .pb-content {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto !important;
+  min-height: calc(100dvh - 72px);
+  overflow-y: auto;
+  padding-top: 24px !important;
+  padding-bottom: 24px !important;
+  box-sizing: border-box;
+}
+body.pb-auth-shell .pb-auth-stage-wrap {
+  width: min(430px, 100%);
+  margin: auto;
+  min-height: 0;
+  flex-shrink: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(30, 20, 34, .12);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+body.pb-auth-shell .pb-auth-band {
+  border-radius: 0;
+  padding: 18px 20px 66px;
+}
+body.pb-auth-shell .pb-auth-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+body.pb-auth-shell .pb-auth-nav-switch {
+  font-size: 12px;
+  gap: 8px;
+}
+body.pb-auth-shell .pb-auth-nav-switch a {
+  padding: 7px 12px;
+  font-size: 12px;
+}
+body.pb-auth-shell .pb-auth-brand {
+  margin-top: 18px;
+  font-size: 28px;
+}
+body.pb-auth-shell .pb-auth-sheet {
+  margin: -44px 0 0;
+  border-radius: 0;
+  box-shadow: none;
+  flex: 0 0 auto;
+  padding: 22px 20px 18px;
+}
+body.pb-auth-shell .pb-auth-sheet-head {
+  margin-bottom: 16px;
+}
+body.pb-auth-shell .pb-auth-sheet-head h1 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+body.pb-auth-shell .pb-auth-sheet-head p {
+  font-size: 13px;
+  line-height: 1.4;
+}
+body.pb-auth-shell .pb-auth-field {
+  margin-bottom: 12px;
+}
+body.pb-auth-shell .pb-auth-field label {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+body.pb-auth-shell .pb-auth-input {
+  min-height: 46px;
+  border-radius: 12px;
+  padding: 0 12px;
+}
+body.pb-auth-shell .pb-auth-input .pb-auth-ico {
+  margin-right: 10px;
+}
+body.pb-auth-shell .pb-auth-input input {
+  font-size: 14px;
+  padding: 11px 0;
+}
+body.pb-auth-shell .pb-auth-rules {
+  gap: 4px;
+  margin-top: 6px;
+}
+body.pb-auth-shell .pb-auth-rule {
+  padding: 3px 7px;
+  font-size: 10px;
+}
+body.pb-auth-shell .pb-auth-row {
+  margin: 2px 0 14px;
+}
+body.pb-auth-shell .pb-auth-check,
+body.pb-auth-shell .pb-auth-link {
+  font-size: 13px;
+}
+body.pb-auth-shell .pb-auth-terms {
+  margin: 10px 0 14px;
+  font-size: 12px;
+  gap: 8px;
+}
+body.pb-auth-shell .pb-auth-submit {
+  padding: 13px 16px;
+  font-size: 15px;
+  box-shadow: 0 12px 26px rgba(236, 72, 153, .28);
+}
+body.pb-auth-shell .pb-auth-divider {
+  margin: 16px 0 12px;
+  font-size: 12px;
+  gap: 12px;
+}
+body.pb-auth-shell .pb-auth-social {
+  gap: 10px;
+}
+body.pb-auth-shell .pb-auth-social-btn {
+  min-height: 44px;
+  border-radius: 12px;
+  font-size: 13px;
+  gap: 8px;
+}
+body.pb-auth-shell .pb-auth-legal {
+  margin-top: 14px;
+  font-size: 11px;
+}
+body.pb-auth-shell .pb-auth-referral {
+  margin-top: 16px;
+  padding-top: 14px;
+}
+body.pb-auth-shell .pb-auth-referral-row {
+  gap: 12px;
+}
+body.pb-auth-shell .pb-auth-referral-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+body.pb-auth-shell .pb-auth-referral-copy strong {
+  font-size: 13.5px;
+}
+body.pb-auth-shell .pb-auth-referral-copy span {
+  font-size: 11.5px;
+}
+body.pb-auth-shell .pb-otp-digit {
+  width: 46px;
+  height: 52px;
+  font-size: 20px;
+}
+body.pb-auth-shell .pb-topbar {
+  min-height: 56px;
+}
+
 .pb-auth-stage-wrap {
   width: min(440px, 100%);
   margin: 0 auto;
@@ -605,6 +771,96 @@ body.pb-auth-stage {
   text-align: center;
 }
 .pb-forgot-ok.is-show { display: block; }
+
+/* Forgot inside Studio shell — match login/signup compact card */
+body.pb-auth-shell .pb-forgot-ok {
+  margin-top: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+body.pb-auth-shell .pb-forgot-foot {
+  margin-top: 12px;
+  text-align: center;
+}
+body.pb-auth-shell .pb-forgot-foot a {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pb-auth-link);
+}
+
+/* OTP digit row */
+.pb-otp-phone {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pb-auth-soft);
+  text-align: center;
+}
+.pb-otp-phone strong {
+  color: var(--pb-auth-ink);
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.pb-otp-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+.pb-otp-digit {
+  width: 46px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1.5px solid #E5E7EB;
+  background: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: inherit;
+  color: var(--pb-auth-ink);
+  outline: none;
+  caret-color: #A855F7;
+  transition: border-color .15s, box-shadow .15s;
+}
+.pb-otp-digit:focus {
+  border-color: #C4B5FD;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, .18);
+}
+.pb-otp-digit.is-error {
+  border-color: var(--pb-auth-err);
+  background: #FEF2F2;
+}
+.pb-otp-err {
+  display: none;
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pb-auth-err);
+}
+.pb-otp-err.is-show { display: block; }
+.pb-otp-resend {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pb-auth-soft);
+}
+.pb-otp-resend button {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 800;
+  color: var(--pb-auth-link);
+  cursor: pointer;
+}
+.pb-otp-resend button:disabled {
+  color: #9CA3AF;
+  cursor: default;
+  font-weight: 600;
+}
 
 @media (min-width: 520px) {
   .pb-auth-stage-wrap {

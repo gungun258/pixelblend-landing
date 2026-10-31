@@ -25,7 +25,7 @@
     if (f === 'discover' || f === 'results' || f === 'top-sellers' || f === 'followed-sellers' || f === 'all-listings') return 'discover';
     if (f === 'generate' || f === 'generating' || f === 'generated-result') return 'generate';
     if (f === 'gallery') return 'gallery';
-    if (f === 'login' || f === 'signup' || f === 'forgot-password') return '';
+    if (f === 'login' || f === 'signup' || f === 'forgot-password' || f === 'verify-otp' || f === 'reset-password') return '';
     if (
       f === 'account' ||
       f === 'edit-profile' ||

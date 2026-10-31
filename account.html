@@ -188,20 +188,11 @@
   }
   .ac-panel-copy {
     min-width: 0;
-    display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 6px;
   }
   .ac-panel-head h2 {
     margin: 0;
-    font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
-  }
-  .ac-panel-head p {
-    margin: 0;
-    font-size: 13px; font-weight: 500; color: #94A3B8;
-  }
-  .ac-panel-head p::before {
-    content: '·';
-    margin-right: 6px;
-    color: #CBD5E1;
+    font-size: 18px; font-weight: 800; letter-spacing: -.03em; color: #1E1422;
+    line-height: 1.2;
   }
   .ac-rows { display: flex; flex-direction: column; }
   .ac-row {
@@ -246,47 +237,113 @@
   .ac-support-grid .ac-row:nth-child(-n+2) { border-top: none; }
   .ac-support-grid .ac-row:nth-child(n+3) { border-top: 1px solid #F6F0F7; }
 
-  .ac-account-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .ac-badge-soft {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px; border-radius: 999px;
+    background: #F3E8FF; color: #9333EA;
+    font-size: 11px; font-weight: 800; white-space: nowrap;
   }
-  .ac-account-grid .ac-row {
-    align-items: flex-start;
-    min-height: 100%;
-    border-top: none;
-    border-right: 1px solid #F6F0F7;
+  .ac-devices-toggle .ac-chev {
+    transition: transform .18s ease;
   }
-  .ac-account-grid .ac-row:last-child { border-right: none; }
-  .ac-account-grid .ac-row:hover { background: #FCF8FC; }
-  .ac-account-grid .ac-danger-row:hover { background: #FEF2F2; }
+  .ac-devices-toggle[aria-expanded="true"] .ac-chev {
+    transform: rotate(180deg);
+  }
+  .ac-devices-panel {
+    display: none;
+    border-top: 1px solid #F6F0F7;
+    background: #FCFBFD;
+    padding: 4px 0 8px;
+  }
+  .ac-devices-panel.is-open { display: block; }
+  #btn-logout-all { border-top: 1px solid #F6F0F7; }
+  .ac-device {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px;
+  }
+  .ac-device + .ac-device { border-top: 1px solid #F1EAF2; }
+  .ac-device-ico {
+    width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #F3E8FF; color: #9333EA;
+  }
+  .ac-device-body { flex: 1; min-width: 0; }
+  .ac-device-top {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px;
+  }
+  .ac-device-name {
+    font-size: 13.5px; font-weight: 800; color: #1E1422; letter-spacing: -.01em;
+  }
+  .ac-device-tag {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px; border-radius: 999px;
+    background: #ECFDF5; color: #059669;
+    font-size: 10px; font-weight: 800;
+  }
+  .ac-device-meta {
+    margin: 3px 0 0;
+    font-size: 12px; font-weight: 500; color: #94A3B8; line-height: 1.35;
+  }
+  .ac-device-revoke {
+    flex-shrink: 0;
+    margin-top: 4px;
+    border: none; background: transparent;
+    font: inherit; font-size: 12px; font-weight: 700;
+    color: #EF4444; cursor: pointer; padding: 4px 6px; border-radius: 8px;
+  }
+  .ac-device-revoke:hover { background: #FEF2F2; }
+  .ac-device-revoke:disabled {
+    color: #94A3B8; cursor: default;
+  }
+  .ac-device-revoke:disabled:hover { background: transparent; }
   .ac-danger { color: #EF4444 !important; }
   .ac-danger-dark { color: #DC2626 !important; }
+  .ac-danger-row:hover { background: #FEF2F2; }
   #ac-support { scroll-margin-top: 88px; }
 
   .ac-overlay {
     position: fixed; inset: 0; z-index: 80;
-    background: rgba(15, 23, 42, .45);
+    background: rgba(30, 20, 34, .48);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     display: flex; align-items: center; justify-content: center;
     padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s ease;
   }
   .ac-overlay.open { opacity: 1; pointer-events: auto; }
   .ac-modal {
-    width: min(360px, 100%); background: #fff; border-radius: 20px;
-    padding: 24px 22px 18px; text-align: center;
-    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+    width: min(340px, 100%); background: #fff; border-radius: 24px;
+    padding: 28px 22px 20px; text-align: center;
+    box-shadow: 0 24px 60px rgba(30,20,34,.28);
   }
-  .ac-modal h3 { margin: 0 0 8px; font-size: 18px; font-weight: 800; }
-  .ac-modal p { margin: 0 0 20px; font-size: 14px; font-weight: 500; color: #64748B; line-height: 1.4; }
+  .ac-modal-ico {
+    width: 56px; height: 56px; margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #F3E8FF;
+    color: #9333EA;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ac-modal-ico svg { display: block; }
+  .ac-modal h3 {
+    margin: 0 0 8px;
+    font-size: 18px; font-weight: 800; letter-spacing: -.02em; color: #1E1422;
+  }
+  .ac-modal p {
+    margin: 0 0 22px;
+    font-size: 13.5px; font-weight: 500; color: #64748B; line-height: 1.45;
+  }
   .ac-modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .ac-modal-actions button {
-    padding: 12px 14px; border-radius: 999px; border: none; font-size: 14px; font-weight: 700;
+    padding: 13px 14px; border-radius: 999px; border: none;
+    font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
   }
-  .ac-btn-cancel { background: #F1F5F9; color: #0F172A; }
+  .ac-btn-cancel { background: #F1F5F9; color: #1E1422; }
+  .ac-btn-cancel:hover { background: #E8EEF5; }
   .ac-btn-ok {
-    color: #fff; background: linear-gradient(90deg, #A855F7, #EC4899);
-    box-shadow: 0 10px 20px rgba(168,85,247,.28);
+    color: #fff;
+    background: linear-gradient(90deg, #A855F7, #EC4899);
+    box-shadow: 0 10px 22px rgba(168,85,247,.32);
   }
-  .ac-btn-danger { color: #fff; background: #EF4444; box-shadow: 0 10px 20px rgba(239,68,68,.28); }
+  .ac-btn-ok:hover { filter: brightness(1.03); }
 
   @media (max-width: 1079px) {
     .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
@@ -305,12 +362,6 @@
     .ac-support-grid { grid-template-columns: 1fr; }
     .ac-support-grid .ac-row { border-right: none !important; }
     .ac-support-grid .ac-row + .ac-row { border-top: 1px solid #F6F0F7; }
-    .ac-account-grid { grid-template-columns: 1fr; }
-    .ac-account-grid .ac-row {
-      border-right: none;
-      border-top: 1px solid #F6F0F7;
-    }
-    .ac-account-grid .ac-row:first-child { border-top: none; }
   }
   @media (max-width: 640px) {
     .pb-content { padding: 16px 14px 36px; }
@@ -424,7 +475,6 @@
                   </span>
                   <div class="ac-panel-copy">
                     <h2>Seller</h2>
-                    <p>Sell your blends and manage orders</p>
                   </div>
                 </div>
                 <div class="ac-rows">
@@ -466,7 +516,6 @@
                   </span>
                   <div class="ac-panel-copy">
                     <h2>Transactions</h2>
-                    <p>Credits, purchases and refunds</p>
                   </div>
                 </div>
                 <div class="ac-rows">
@@ -517,7 +566,6 @@
                 </span>
                 <div class="ac-panel-copy">
                   <h2>Settings &amp; Support</h2>
-                  <p>Preferences, help and legal</p>
                 </div>
               </div>
               <div class="ac-support-grid">
@@ -573,36 +621,68 @@
                 </span>
                 <div class="ac-panel-copy">
                   <h2>Account</h2>
-                  <p>Sign out or remove your account</p>
                 </div>
               </div>
-              <div class="ac-account-grid">
+              <div class="ac-rows">
+                <button type="button" class="ac-row ac-devices-toggle" id="btn-devices" aria-expanded="false" aria-controls="ac-devices-panel">
+                  <span class="ac-ico" style="background:#F3E8FF;color:#9333EA;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </span>
+                  <span class="ac-label" style="flex:1;">
+                    Logged-in devices
+                    <span class="ac-badge-soft" id="devices-count">2 active</span>
+                  </span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+
+                <div class="ac-devices-panel" id="ac-devices-panel" hidden>
+                  <div class="ac-device" data-device="this">
+                    <span class="ac-device-ico" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </span>
+                    <div class="ac-device-body">
+                      <div class="ac-device-top">
+                        <span class="ac-device-name">Chrome on macOS</span>
+                        <span class="ac-device-tag">This device</span>
+                      </div>
+                      <p class="ac-device-meta">Mumbai, India · Active now</p>
+                    </div>
+                    <button type="button" class="ac-device-revoke" disabled>Current</button>
+                  </div>
+                  <div class="ac-device" data-device="iphone">
+                    <span class="ac-device-ico" style="background:#DBEAFE;color:#2563EB;" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </span>
+                    <div class="ac-device-body">
+                      <div class="ac-device-top">
+                        <span class="ac-device-name">Safari on iPhone</span>
+                      </div>
+                      <p class="ac-device-meta">Delhi, India · Active 2 days ago</p>
+                    </div>
+                    <button type="button" class="ac-device-revoke" data-revoke="iphone">Revoke</button>
+                  </div>
+                </div>
+
                 <button type="button" class="ac-row" id="btn-logout-all">
                   <span class="ac-ico" style="background:#DBEAFE;color:#2563EB;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                   </span>
-                  <span class="ac-label-stack">
-                    <span class="ac-label">Log out from all devices</span>
-                    <span class="ac-sub">Sign out everywhere, including this device</span>
-                  </span>
+                  <span class="ac-label" style="flex:1;">Log out from all devices</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
                 <button type="button" class="ac-row ac-danger-row" id="btn-logout">
                   <span class="ac-ico" style="background:#FEE2E2;color:#EF4444;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M10 4H6a2 2 0 00-2 2v12a2 2 0 002 2h4M15 16l4-4-4-4M9 12h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span class="ac-label-stack">
-                    <span class="ac-label ac-danger">Log out</span>
-                    <span class="ac-sub">Sign out on this device only</span>
-                  </span>
+                  <span class="ac-label ac-danger" style="flex:1;">Log out</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
                 <button type="button" class="ac-row ac-danger-row" id="btn-delete">
                   <span class="ac-ico" style="background:#FEE2E2;color:#DC2626;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5h6v2M8 7l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span class="ac-label-stack">
-                    <span class="ac-label ac-danger-dark">Delete account</span>
-                    <span class="ac-sub">Permanently remove your account and its data</span>
-                  </span>
+                  <span class="ac-label ac-danger-dark" style="flex:1;">Delete account</span>
+                  <svg class="ac-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
               </div>
             </section>
@@ -615,6 +695,9 @@
 
 <div class="ac-overlay" id="ac-modal" aria-hidden="true">
   <div class="ac-modal" role="dialog" aria-labelledby="ac-modal-title">
+    <div class="ac-modal-ico" id="ac-modal-ico" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 4H6a2 2 0 00-2 2v12a2 2 0 002 2h4M15 16l4-4-4-4M9 12h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
     <h3 id="ac-modal-title">Confirm</h3>
     <p id="ac-modal-body">Are you sure?</p>
     <div class="ac-modal-actions">
@@ -633,14 +716,23 @@
   var titleEl = document.getElementById('ac-modal-title');
   var bodyEl = document.getElementById('ac-modal-body');
   var confirmBtn = document.getElementById('ac-confirm');
+  var icoEl = document.getElementById('ac-modal-ico');
   var pendingAction = null;
+
+  var ICONS = {
+    logout: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M10 4H6a2 2 0 00-2 2v12a2 2 0 002 2h4M15 16l4-4-4-4M9 12h10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    delete: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5h6v2M8 7l1 12h6l1-12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    revoke: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    soon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v5M12 16.5v.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>'
+  };
 
   function openModal(opts) {
     pendingAction = opts.action || null;
     titleEl.textContent = opts.title || 'Confirm';
     bodyEl.textContent = opts.body || 'Are you sure?';
     confirmBtn.textContent = opts.confirmLabel || 'Confirm';
-    confirmBtn.className = opts.danger ? 'ac-btn-danger' : 'ac-btn-ok';
+    confirmBtn.className = 'ac-btn-ok';
+    if (icoEl) icoEl.innerHTML = ICONS[opts.icon] || ICONS.logout;
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
   }
@@ -659,12 +751,44 @@
     } catch (e) {}
   }
 
+  var devicesBtn = document.getElementById('btn-devices');
+  var devicesPanel = document.getElementById('ac-devices-panel');
+  var devicesCount = document.getElementById('devices-count');
+  var pendingRevokeEl = null;
+
+  function refreshDeviceCount() {
+    var n = devicesPanel.querySelectorAll('.ac-device').length;
+    devicesCount.textContent = n + ' active';
+  }
+
+  if (devicesBtn && devicesPanel) {
+    devicesBtn.addEventListener('click', function () {
+      var open = devicesBtn.getAttribute('aria-expanded') === 'true';
+      devicesBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      devicesPanel.hidden = open;
+      devicesPanel.classList.toggle('is-open', !open);
+    });
+  }
+
+  document.querySelectorAll('[data-revoke]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      pendingRevokeEl = btn.closest('.ac-device');
+      openModal({
+        title: 'Revoke this device?',
+        body: 'That session will be signed out. You can log in again later on that device.',
+        confirmLabel: 'Revoke',
+        icon: 'revoke',
+        action: 'revoke'
+      });
+    });
+  });
+
   document.getElementById('btn-logout').addEventListener('click', function () {
     openModal({
       title: 'Log out?',
-      body: 'You will be signed out on this device only.',
+      body: "You'll be signed out on this device. Your other devices stay signed in.",
       confirmLabel: 'Log out',
-      danger: true,
+      icon: 'logout',
       action: 'logout'
     });
   });
@@ -673,16 +797,16 @@
       title: 'Log out everywhere?',
       body: 'This signs you out on all devices, including this one.',
       confirmLabel: 'Log out all',
-      danger: true,
+      icon: 'logout',
       action: 'logout-all'
     });
   });
   document.getElementById('btn-delete').addEventListener('click', function () {
     openModal({
-      title: 'Delete account?',
-      body: 'This permanently removes your account and data. This cannot be undone.',
+      title: 'Delete your account?',
+      body: 'This permanently removes your account, saved images, credits and data. This cannot be undone.',
       confirmLabel: 'Delete',
-      danger: true,
+      icon: 'delete',
       action: 'delete'
     });
   });
@@ -692,6 +816,15 @@
     if (e.target === overlay) closeModal();
   });
   confirmBtn.addEventListener('click', function () {
+    if (pendingAction === 'revoke') {
+      if (pendingRevokeEl && pendingRevokeEl.parentNode) {
+        pendingRevokeEl.parentNode.removeChild(pendingRevokeEl);
+        refreshDeviceCount();
+      }
+      pendingRevokeEl = null;
+      closeModal();
+      return;
+    }
     if (pendingAction === 'logout' || pendingAction === 'logout-all' || pendingAction === 'delete') {
       clearStudioSession();
       window.location.href = 'index.html';
@@ -706,6 +839,7 @@
         title: el.getAttribute('data-soon'),
         body: 'Coming soon in Studio preview.',
         confirmLabel: 'OK',
+        icon: 'soon',
         action: 'soon'
       });
     });

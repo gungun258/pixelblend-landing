@@ -53,21 +53,30 @@
     ]
   };
 
+  function uniqueUrls(list) {
+    var out = [];
+    (list || []).forEach(function (u) {
+      if (u && out.indexOf(u) < 0) out.push(u);
+    });
+    return out;
+  }
+
   function resolveGallery(listing) {
     if (!listing) return [];
-    var fromMeta = Array.isArray(listing.gallery) ? listing.gallery.filter(Boolean) : [];
+    var fromMeta = uniqueUrls(Array.isArray(listing.gallery) ? listing.gallery : []);
     if (fromMeta.length > 1) return fromMeta;
     var id = listing.id || '';
-    if (id && GALLERIES[id] && GALLERIES[id].length > 1) {
-      return GALLERIES[id].slice();
+    if (id && GALLERIES[id] && GALLERIES[id].length) {
+      var catalog = uniqueUrls(GALLERIES[id]);
+      if (catalog.length > 1) return catalog;
     }
-    // Fallback: listing cover + used bg (if different) so grid can still show 2
+    // Fallback: listing cover + any meta urls (deduped) — never fake-duplicate for a 2-up grid
     var urls = [];
     if (listing.img) urls.push(listing.img);
     fromMeta.forEach(function (u) {
       if (u && urls.indexOf(u) < 0) urls.push(u);
     });
-    return urls;
+    return uniqueUrls(urls);
   }
 
   global.pbListingCatalog = {

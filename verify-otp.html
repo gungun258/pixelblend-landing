@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Verify OTP · PixelBlend Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/pb-nav-boot.js?v=4"></script>
+<link rel="stylesheet" href="css/pb-shell-nav.css?v=19">
+<link rel="stylesheet" href="css/pb-auth-screens.css?v=14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1E1422; --muted: #5b5060; --soft: #8A7E92; --line: #F0E6F2;
+    --bg: #FAF4FB; --accent: #C42E8B;
+    --grad: linear-gradient(113.667deg, #A855F7, #EC4899, #F43F5E);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
+
+  .pb-shell { display: flex; min-height: 100vh; background: var(--bg); }
+  .pb-sidebar {
+    width: 202px; flex: 0 0 202px; position: sticky; top: 0; height: 100vh;
+    padding: 28px 14px 16px; display: flex; flex-direction: column;
+    background: #fff; border-right: 1px solid var(--line);
+  }
+  .pb-brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px; margin-bottom: 18px; }
+  .pb-logo-mark {
+    width: 32px; height: 32px; border-radius: 11px; background: var(--grad);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(196,46,139,.32); flex-shrink: 0;
+  }
+  .pb-logo-mark span { width: 12px; height: 12px; border: 2.5px solid #fff; border-radius: 50%; box-sizing: border-box; }
+  .pb-brand-text {
+    font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+    background: linear-gradient(90deg, #9333EA, #DB2777);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .pb-newblend {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 10px; border-radius: 12px; margin-bottom: 18px;
+    background: var(--grad); color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .pb-nav { display: flex; flex-direction: column; gap: 3.2px; }
+  .pb-nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 11px;
+    font-size: 12px; font-weight: 600; color: var(--muted); min-height: 42px;
+  }
+  .pb-nav a:hover { background: transparent; color: var(--accent); }
+  .pb-nav a.active { background: #FBEEF6 !important; color: var(--accent) !important; font-weight: 800 !important; }
+  .pb-nav a .pb-ico { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .pb-credits {
+    margin-top: auto; border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    background: linear-gradient(165deg, #FBF1FB 0%, #fff 70%);
+  }
+  .pb-main { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .pb-topbar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 32px;
+    background: rgba(250,244,251,.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line); flex-shrink: 0; box-sizing: border-box;
+  }
+  .pb-topbar-title { font-size: 15px; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
+  .pb-topbar-sub { font-size: 11px; color: #8A7E92; margin-top: 2px; line-height: 1.3; }
+  .pb-top-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .pb-top-actions .pb-auth-link { font-size: 13px; font-weight: 700; }
+  .pb-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100dvh - 72px);
+    padding: 24px 28px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .pb-content .pb-auth-stage-wrap { margin: auto; flex-shrink: 0; }
+  .pb-toggle { display: none; }
+
+  @media (max-width: 1079px) {
+    .pb-sidebar { position: fixed; left: 0; top: 0; z-index: 50; width: 61px; flex-basis: 61px; padding: 22px 10px 14px; align-items: center; }
+    .pb-sidebar.open { width: 202px; flex-basis: 202px; padding: 28px 14px 16px; align-items: stretch; box-shadow: 14px 0 38px -22px rgba(30,20,34,.4); }
+    .pb-main { margin-left: 61px; }
+    .pb-brand-text, .pb-label, .pb-navlabel, .pb-credits { display: none; }
+    .pb-sidebar.open .pb-brand-text, .pb-sidebar.open .pb-label, .pb-sidebar.open .pb-navlabel, .pb-sidebar.open .pb-credits { display: block; }
+    .pb-toggle { display: flex; width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--line); background: #fff; align-items: center; justify-content: center; margin-bottom: 14px; }
+  }
+  @media (max-width: 640px) {
+    .pb-content { padding: 16px 14px 36px; }
+    .pb-topbar { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body class="pb-auth-shell">
+<div class="pb-shell">
+  <aside class="pb-sidebar" id="pb-sidebar">
+    <button class="pb-toggle" id="pb-toggle" aria-label="Toggle menu">☰</button>
+    <a href="index.html" class="pb-brand">
+      <span class="pb-logo-mark"><span></span></span>
+      <span class="pb-brand-text">PixelBlend</span>
+    </a>
+    <a href="generate.html" class="pb-newblend">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <span class="pb-label">New blend</span>
+    </a>
+    <nav class="pb-nav">
+      <a href="dashboard.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 9.5V20h5v-5h4v5h5V9.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Home</span>
+      </a>
+      <a href="discover.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Discover</span>
+      </a>
+      <a href="generate.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Generate</span>
+      </a>
+      <a href="gallery.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.9"/><circle cx="8.5" cy="9.5" r="1.6" stroke="currentColor" stroke-width="1.6"/><path d="M5 17l4.5-4 3 2.5L16 11l3 3.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="pb-navlabel">Gallery</span>
+      </a>
+      <a href="account.html">
+        <span class="pb-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M4.8 20c1-3.5 3.7-5.4 7.2-5.4s6.2 1.9 7.2 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></span>
+        <span class="pb-navlabel">Account</span>
+      </a>
+    </nav>
+    <div class="pb-credits">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-size:10px;font-weight:700;color:#8A7E92;">Credits left</span>
+        <span style="font-size:13px;font-weight:800;">140</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pb-main">
+    <header class="pb-topbar">
+      <div>
+        <div class="pb-topbar-title">Verify OTP</div>
+        <div class="pb-topbar-sub">Enter the code sent to your phone</div>
+      </div>
+      <div class="pb-top-actions">
+        <a id="login-link-top" href="login.html" class="pb-auth-link">Sign in</a>
+      </div>
+    </header>
+
+    <div class="pb-content">
+      <div class="pb-auth-stage-wrap">
+        <header class="pb-auth-band">
+          <div class="pb-auth-nav">
+            <a class="pb-auth-back" id="auth-back" href="forgot-password.html" aria-label="Back">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="pb-auth-nav-switch">
+              Wrong number?
+              <a id="change-link" href="forgot-password.html">Change</a>
+            </div>
+          </div>
+          <div class="pb-auth-brand">PixelBlend</div>
+        </header>
+
+        <div class="pb-auth-sheet">
+          <div class="pb-auth-sheet-head">
+            <h1>Enter OTP</h1>
+            <p>We've sent a 6-digit code to your phone. Enter it below to continue.</p>
+          </div>
+
+          <p class="pb-otp-phone">Sent to <strong id="otp-phone-label">••••••••••</strong></p>
+
+          <form id="otp-form" novalidate>
+            <div class="pb-otp-row" id="otp-row" role="group" aria-label="One-time password">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 5">
+              <input class="pb-otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 6">
+            </div>
+            <div class="pb-otp-err" id="otp-err">Please enter the 6-digit code</div>
+
+            <button class="pb-auth-submit" type="submit" id="verify-btn">Verify OTP</button>
+
+            <div class="pb-otp-resend">
+              <span id="resend-wait">Resend code in <strong id="resend-sec">30</strong>s</span>
+              <button type="button" id="resend-btn" hidden disabled>Resend OTP</button>
+            </div>
+
+            <div class="pb-forgot-foot">
+              <a id="back-login" href="login.html">← Back to login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/pb-auth.js?v=1"></script>
+<script src="js/pb-auth-screens.js?v=1"></script>
+<script src="js/pb-shell-nav.js?v=19"></script>
+<script>
+(function () {
+  function qs(name) {
+    try { return new URL(location.href).searchParams.get(name); } catch (e) { return null; }
+  }
+
+  var phone = pbAuthScreens.digitsOnly(qs('phone') || sessionStorage.getItem('pb-otp-phone') || '');
+  var flow = qs('flow') || sessionStorage.getItem('pb-otp-flow') || 'reset';
+  if (phone) sessionStorage.setItem('pb-otp-phone', phone);
+  sessionStorage.setItem('pb-otp-flow', flow);
+
+  var backHref = flow === 'signup'
+    ? pbAuthScreens.withNext('signup.html')
+    : pbAuthScreens.withNext('forgot-password.html');
+  document.getElementById('auth-back').href = backHref;
+  document.getElementById('change-link').href = backHref;
+  document.getElementById('login-link-top').href = pbAuthScreens.withNext('login.html');
+  document.getElementById('back-login').href = pbAuthScreens.withNext('login.html');
+
+  var label = document.getElementById('otp-phone-label');
+  if (phone.length >= 10) {
+    label.textContent = '+91 ' + phone.slice(0, 2) + '******' + phone.slice(-2);
+  } else if (phone) {
+    label.textContent = phone;
+  } else {
+    label.textContent = 'your phone';
+  }
+
+  var digits = Array.prototype.slice.call(document.querySelectorAll('.pb-otp-digit'));
+  var errEl = document.getElementById('otp-err');
+
+  function clearErr() {
+    errEl.classList.remove('is-show');
+    digits.forEach(function (d) { d.classList.remove('is-error'); });
+  }
+
+  function codeValue() {
+    return digits.map(function (d) { return d.value; }).join('');
+  }
+
+  function showErr(msg) {
+    errEl.textContent = msg || 'Please enter the 6-digit code';
+    errEl.classList.add('is-show');
+    digits.forEach(function (d) { d.classList.add('is-error'); });
+  }
+
+  digits.forEach(function (input, idx) {
+    input.addEventListener('input', function () {
+      clearErr();
+      var v = input.value.replace(/\D/g, '');
+      if (v.length > 1) {
+        /* paste into this box */
+        var chars = v.slice(0, digits.length - idx).split('');
+        chars.forEach(function (ch, i) {
+          if (digits[idx + i]) digits[idx + i].value = ch;
+        });
+        var next = Math.min(idx + chars.length, digits.length - 1);
+        digits[next].focus();
+        return;
+      }
+      input.value = v.slice(0, 1);
+      if (input.value && idx < digits.length - 1) digits[idx + 1].focus();
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && !input.value && idx > 0) {
+        digits[idx - 1].focus();
+        digits[idx - 1].value = '';
+      }
+      if (e.key === 'ArrowLeft' && idx > 0) digits[idx - 1].focus();
+      if (e.key === 'ArrowRight' && idx < digits.length - 1) digits[idx + 1].focus();
+    });
+
+    input.addEventListener('paste', function (e) {
+      e.preventDefault();
+      clearErr();
+      var text = (e.clipboardData || window.clipboardData).getData('text') || '';
+      var chars = text.replace(/\D/g, '').slice(0, digits.length).split('');
+      chars.forEach(function (ch, i) {
+        if (digits[i]) digits[i].value = ch;
+      });
+      var focusIdx = Math.min(chars.length, digits.length - 1);
+      digits[focusIdx].focus();
+    });
+  });
+
+  var waitEl = document.getElementById('resend-wait');
+  var secEl = document.getElementById('resend-sec');
+  var resendBtn = document.getElementById('resend-btn');
+  var timer = null;
+  var left = 30;
+
+  function startTimer() {
+    left = 30;
+    resendBtn.hidden = true;
+    resendBtn.disabled = true;
+    waitEl.hidden = false;
+    secEl.textContent = String(left);
+    clearInterval(timer);
+    timer = setInterval(function () {
+      left -= 1;
+      secEl.textContent = String(Math.max(0, left));
+      if (left <= 0) {
+        clearInterval(timer);
+        waitEl.hidden = true;
+        resendBtn.hidden = false;
+        resendBtn.disabled = false;
+      }
+    }, 1000);
+  }
+
+  resendBtn.addEventListener('click', function () {
+    digits.forEach(function (d) { d.value = ''; });
+    clearErr();
+    digits[0].focus();
+    startTimer();
+  });
+
+  document.getElementById('otp-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var code = codeValue();
+    if (code.length !== 6) {
+      showErr('Please enter the 6-digit code');
+      return;
+    }
+    /* Demo: any 6-digit code works */
+    sessionStorage.setItem('pb-otp-verified', '1');
+    if (flow === 'reset') {
+      var href = 'reset-password.html';
+      if (phone) href += '?phone=' + encodeURIComponent(phone);
+      location.href = pbAuthScreens.withNext(href);
+      return;
+    }
+    pbAuthScreens.loginDemo({ at: Date.now(), via: 'otp', phone: phone });
+  });
+
+  startTimer();
+  setTimeout(function () { digits[0].focus(); }, 50);
+})();
+</script>
+</body>
+</html>
