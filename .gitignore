@@ -7,3 +7,9 @@ index.bundled.html
 .vscode/
 frame_*.png
 .vid_preview.png
+PixelBlend Landing (standalone).html
+
+# Local scratch / frame dumps (not used by the site)
+.tmp-*/
+temp_script.js
+gallery-export.json
